@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify } from "jose";
+import { SignJWT, decodeJwt, jwtVerify } from "jose";
 import { NextRequest } from "next/server";
 
 const tokenType = "Bearer ";
@@ -15,6 +15,10 @@ export async function signToken(data: any) {
         .setProtectedHeader({ alg: encryptionAlgorytm })
         .setExpirationTime(expirationTime)
         .sign(getSecret());
+}
+
+export function decodeToken(request: NextRequest) {
+    return decodeJwt(getTokenFromCookie(request));
 }
 
 function getTokenFromCookie(request: NextRequest) {
