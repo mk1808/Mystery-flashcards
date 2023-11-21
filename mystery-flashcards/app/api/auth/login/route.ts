@@ -1,3 +1,4 @@
+import connectToDB from "@/utils/server/database";
 import { NextRequest, NextResponse } from "next/server";
 import { checkPasswordMatch } from '@/utils/encryptionUtils';
 import { signToken } from '@/utils/jwtUtils';

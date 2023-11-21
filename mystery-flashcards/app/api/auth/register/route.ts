@@ -1,3 +1,4 @@
+import connectToDB from "@/utils/server/database";
 import { NextRequest, NextResponse } from "next/server";
 import { hashPassword } from '@/utils/encryptionUtils';
 
