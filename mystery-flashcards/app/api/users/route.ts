@@ -1,16 +1,32 @@
 import User from "@/models/User";
+import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
+import { hashPassword } from "@/utils/server/encryptionUtils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
     await connectToDB();
-    const user = await User.findById("655d06c50eb839e48eb1763a");
-    return NextResponse.json(user)
+    return new NextResponse(JSON.stringify(await getUser(request)));
 }
 
 export async function PUT(request: NextRequest) {
-    const body = await request.json();
     await connectToDB();
+    const userForm = await request.json();
+    const logged = await getUser(request);
+    if (userForm.password && userForm.password !== userForm.confirmPassword) {
+        return new NextResponse('Password do not match!', { status: 400 });
+    }
 
-    return NextResponse.json(body);
+    const updatedUser = {
+        _id: logged._id,
+        points: logged.points,
+        rang: logged.rang,
+        statistics: logged.statistics,
+        mail: userForm.mail,
+        name: userForm.name,
+        password: await hashPassword(userForm.password)
+    }
+    const result = await User.findOneAndReplace({ _id: logged._id }, updatedUser, { new: true });
+
+    return NextResponse.json(result);
 }

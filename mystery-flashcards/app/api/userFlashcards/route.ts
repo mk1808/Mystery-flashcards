@@ -1,9 +1,29 @@
+import FlashcardSet from "@/models/FlashcardSet";
+import UserFlashcard from "@/models/UserFlashcard";
+import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-    const body = await request.json();
+    const requestBody = await request.json();
     await connectToDB();
 
-    return NextResponse.json(body)
+    const currentUser = await getUser(request);
+    const flashcardSet = await FlashcardSet.findById(requestBody.flashcardSetId);
+    const existingUserFlashcard = await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser });
+
+    if (existingUserFlashcard) {
+        existingUserFlashcard.type = requestBody.type;
+        const updatedUserFlashCard = await UserFlashcard.findOneAndReplace({ _id: existingUserFlashcard._id }, existingUserFlashcard, { new: true });
+        return new NextResponse(JSON.stringify(updatedUserFlashCard), { status: 200 });
+    }
+
+    const newUserFlashCard = {
+        user: currentUser,
+        flashcardSet: flashcardSet,
+        learningHistory: [],
+        type: requestBody.type,
+    }
+    const savedUserFlashcard = await UserFlashcard.create(newUserFlashCard);
+    return new NextResponse(JSON.stringify(savedUserFlashcard), { status: 200 });
 }
