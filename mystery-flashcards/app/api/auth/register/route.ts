@@ -1,13 +1,14 @@
+
+import User from "@/models/User";
 import connectToDB from "@/utils/server/database";
 import { NextRequest, NextResponse } from "next/server";
 import { hashPassword } from '@/utils/encryptionUtils';
 
 export async function POST(request: NextRequest) {
+    await connectToDB();
     const registerForm: RegisterForm = await request.json();
 
-    // Find existing user by registerForm.login
-    // if exists, throw register error
-    const userExists = false;
+    const userExists = await User.findOne({ login: registerForm.login });
     if (userExists) {
         return new Response('User already exists!', { status: 409 });
     }
@@ -22,7 +23,8 @@ export async function POST(request: NextRequest) {
         password: await hashPassword(registerForm.password)
     }
 
-    //save newUser
+    const user = await User.create(newUser);
+    console.log(user)
 
     return new Response('User created!', { status: 201 });
 }
