@@ -1,3 +1,4 @@
+import FlashcardSet from "@/models/FlashcardSet";
 import connectToDB from "@/utils/server/database";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -19,8 +20,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
-    console.log(id);
     await connectToDB();
+    const existingSet = await FlashcardSet.findById(id);
+    if (existingSet == null) {
+        return new NextResponse('FlashcardSet does not exist!', { status: 409 });
+    }
 
-    return NextResponse.json(id);
+    const result = await FlashcardSet.deleteOne({ _id: id })
+    return NextResponse.json(result);
 }
