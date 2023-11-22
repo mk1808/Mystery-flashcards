@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { checkPasswordMatch } from '@/utils/encryptionUtils';
 import { signToken } from '@/utils/jwtUtils';
 import User from "@/models/User";
@@ -11,12 +11,12 @@ export async function POST(request: NextRequest) {
     const existingUser = await User.findOne({ name: loginForm.name });
 
     if (!existingUser || ! await checkPasswordMatch(loginForm.password, existingUser.password)) {
-        return new Response('Invalid credentials!', { status: 401 });
+        return new NextResponse('Invalid credentials!', { status: 401 });
     }
 
     const token = await signToken({ name: existingUser.name, id: existingUser.id });
 
-    return new Response('Successful login!', {
+    return new NextResponse('Successful login!', {
         status: 200,
         headers: { 'Set-Cookie': `token=Bearer ${token}; Path=/` },
     });

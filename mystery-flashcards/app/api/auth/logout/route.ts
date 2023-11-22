@@ -1,8 +1,8 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
 
-    return new Response('Successful logout!', {
+    return new NextResponse('Successful logout!', {
         status: 200,
         headers: { 'Set-Cookie': `token=; Path=/` },
     });
