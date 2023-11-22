@@ -1,17 +1,17 @@
-export const getParam:any = (params: any, values: any) => {
-    return  (paramName: any) => {
-        const value = params.get(paramName);
+export const getSearchParam: any = (searchParams: any, paramsValues: any) => {
+    return (possibleParamName: any) => {
+        const value = searchParams.get(possibleParamName);
         if (value) {
-            values[paramName] = value;
+            paramsValues[possibleParamName] = value;
         }
     };
 }
 
-export const getArrParam:any = (params: any, values: any) => {
-    return  (paramName: any) => {
-        const value = params.getAll(paramName);
+export const getArrParam: any = (searchParams: any, paramsValues: any) => {
+    return (possibleParamName: any) => {
+        const value = searchParams.getAll(possibleParamName);
         if (value?.length>0) {
-            values[paramName] = value;
+            paramsValues[possibleParamName] = value;
         }
     };
 }

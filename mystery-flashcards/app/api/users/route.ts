@@ -16,16 +16,12 @@ export async function PUT(request: NextRequest) {
     if (userForm.password && userForm.password !== userForm.confirmPassword) {
         return new NextResponse('Password do not match!', { status: 400 });
     }
-    const existingUser = await User.findById(logged._id);
-    if (existingUser == null) {
-        return new NextResponse('User does not exist!', { status: 409 });
-    }
 
     const updatedUser = {
-        _id: existingUser._id,
-        points: existingUser.points,
-        rang: existingUser.rang,
-        statistics: existingUser.statistics,
+        _id: logged._id,
+        points: logged.points,
+        rang: logged.rang,
+        statistics: logged.statistics,
         mail: userForm.mail,
         name: userForm.name,
         password: await hashPassword(userForm.password)

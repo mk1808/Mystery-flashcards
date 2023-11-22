@@ -42,7 +42,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     await connectToDB();
     const existingSet = await FlashcardSet.findById(id);
     if (existingSet == null) {
-        return new NextResponse('FlashcardSet does not exist!', { status: 409 });
+        return new NextResponse('FlashcardSet does not exist!', { status: 404 });
     }
 
     const result = await FlashcardSet.deleteOne({ _id: id })
