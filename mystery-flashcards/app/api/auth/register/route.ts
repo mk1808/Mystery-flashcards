@@ -8,8 +8,8 @@ export async function POST(request: NextRequest) {
     await connectToDB();
     const registerForm: RegisterForm = await request.json();
 
-    const userExists = await User.findOne({ login: registerForm.login });
-    if (userExists) {
+    const existingUser = await User.findOne({ name: registerForm.name });
+    if (existingUser) {
         return new Response('User already exists!', { status: 409 });
     }
 
@@ -18,9 +18,11 @@ export async function POST(request: NextRequest) {
     }
 
     const newUser = {
-        email: registerForm.email,
-        login: registerForm.login,
-        password: await hashPassword(registerForm.password)
+        mail: registerForm.mail,
+        name: registerForm.name,
+        password: await hashPassword(registerForm.password),
+        points: 0,
+        rang: 0
     }
 
     const user = await User.create(newUser);

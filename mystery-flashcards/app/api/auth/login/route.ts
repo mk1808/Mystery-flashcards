@@ -1,20 +1,20 @@
-import connectToDB from "@/utils/server/database";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { checkPasswordMatch } from '@/utils/encryptionUtils';
 import { signToken } from '@/utils/jwtUtils';
+import User from "@/models/User";
+import connectToDB from "@/utils/server/database";
 
 export async function POST(request: NextRequest) {
+    await connectToDB();
     const loginForm: LoginForm = await request.json();
 
-    // Find existing user by loginForm.login
-    // if not exists, throw login error
-    const existingUser = { id: "1", login: "login", password: "$2b$10$GbDHZZ/gqafT/llNQFWsX.E4EfKeG.RWkBxXSt1k4W7erU6v61TDK" }
+    const existingUser = await User.findOne({ name: loginForm.name });
 
-    if (!existingUser || !checkPasswordMatch(loginForm.password, existingUser.password)) {
+    if (!existingUser || ! await checkPasswordMatch(loginForm.password, existingUser.password)) {
         return new Response('Invalid credentials!', { status: 401 });
     }
 
-    const token = await signToken({ login: existingUser.login, id: existingUser.id });
+    const token = await signToken({ name: existingUser.name, id: existingUser.id });
 
     return new Response('Successful login!', {
         status: 200,
