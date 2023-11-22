@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyToken } from "./utils/jwtUtils";
+import { verifyToken } from "./utils/server/jwtUtils";
 
 const unsecuredRoutes = [
     '/api/auth/register',

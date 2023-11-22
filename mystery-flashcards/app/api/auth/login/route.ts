@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { checkPasswordMatch } from '@/utils/encryptionUtils';
-import { signToken } from '@/utils/jwtUtils';
+import { checkPasswordMatch } from '@/utils/server/encryptionUtils';
+import { signToken } from '@/utils/server/jwtUtils';
 import User from "@/models/User";
 import connectToDB from "@/utils/server/database";
 

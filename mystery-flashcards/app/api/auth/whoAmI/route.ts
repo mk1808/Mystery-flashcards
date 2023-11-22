@@ -1,4 +1,4 @@
-import { getUser } from "@/utils/authUtils";
+import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
 import { NextRequest, NextResponse } from "next/server";
 

@@ -2,7 +2,7 @@
 import User from "@/models/User";
 import connectToDB from "@/utils/server/database";
 import { NextRequest, NextResponse } from "next/server";
-import { hashPassword } from '@/utils/encryptionUtils';
+import { hashPassword } from '@/utils/server/encryptionUtils';
 
 export async function POST(request: NextRequest) {
     await connectToDB();
