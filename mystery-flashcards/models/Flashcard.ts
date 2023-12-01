@@ -1,6 +1,6 @@
 import { Schema, SchemaTypes, model, models } from 'mongoose';
 
-const flashcardSchema = new Schema({
+export const flashcardSchema = new Schema({
     wordLang1: {
         type: String,
         required: [true, 'wordLang1 is required.'],

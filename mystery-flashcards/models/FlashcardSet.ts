@@ -1,4 +1,5 @@
-import { Schema, SchemaTypes, model, models } from 'mongoose';
+import mongoose, { Schema, SchemaTypes, model, models } from 'mongoose';
+import { flashcardSchema } from './Flashcard';
 
 const flashcardSetSchema = new Schema({
     user: {
@@ -17,7 +18,7 @@ const flashcardSetSchema = new Schema({
         type: []
     },
     flashcards: {
-        type: []
+        type: [flashcardSchema]
     },
     isPublic: {
         type: Boolean,
