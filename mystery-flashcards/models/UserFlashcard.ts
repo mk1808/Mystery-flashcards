@@ -1,13 +1,13 @@
 import { Schema, SchemaTypes, model, models } from 'mongoose';
 
 const userFlashcardSchema = new Schema({
-  user: {
-    type: SchemaTypes.Mixed,
-    required: [true, 'user is required.'],
+  userId: {
+    type: Schema.Types.ObjectId,
+    required: [true, 'userId is required.'],
   },
-  flashcardSet: {
-    type: SchemaTypes.Mixed,
-    required: [true, 'flashcardSet is required.'],
+  flashcardSetId: {
+    type: Schema.Types.ObjectId,
+    required: [true, 'flashcardSetId is required.'],
   },
   learningHistory: {
     type: []

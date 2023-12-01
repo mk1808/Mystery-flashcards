@@ -1,9 +1,9 @@
 import { Schema, SchemaTypes, model, models } from 'mongoose';
 
-const answerSchema = new Schema({
-    flashcard: {
-        type: SchemaTypes.Mixed,
-        required: [true, 'flashcard is required.'],
+export const answerSchema = new Schema({
+    flashcardId: {
+        type: Schema.Types.ObjectId,
+        required: [true, 'flashcardId is required.'],
     },
     isCorrect: {
         type: Boolean,
