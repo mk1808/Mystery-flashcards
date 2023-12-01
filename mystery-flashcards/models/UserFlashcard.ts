@@ -1,4 +1,5 @@
 import { Schema, SchemaTypes, model, models } from 'mongoose';
+import { answerSchema } from './Answer';
 
 const userFlashcardSchema = new Schema({
   userId: {
@@ -10,7 +11,8 @@ const userFlashcardSchema = new Schema({
     required: [true, 'flashcardSetId is required.'],
   },
   learningHistory: {
-    type: []
+    type: [answerSchema],
+    default: []
   },
   type: {
     type: String,
