@@ -1,4 +1,6 @@
 import FlashcardSet from "@/models/FlashcardSet";
+import TestResult from "@/models/TestResult";
+import UserFlashcard from "@/models/UserFlashcard";
 import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
 import { NextRequest, NextResponse } from "next/server";
@@ -6,8 +8,18 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
     await connectToDB();
-
-    return new NextResponse(JSON.stringify(await FlashcardSet.findById(id)));
+    const flashCardSetDto: FlashCardSetDto = {};
+    flashCardSetDto.flashcardSet = await FlashcardSet.findById(id);
+    const currentUser = await getUser(request);
+    if (!flashCardSetDto.flashcardSet) {
+        return new NextResponse('Flash card set not found!', { status: 404 });
+    } else if (currentUser) {
+        flashCardSetDto.userFlashcard = await UserFlashcard.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id });
+        if (flashCardSetDto.userFlashcard) {
+            flashCardSetDto.testResult = await TestResult.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id });
+        }
+    }
+    return new NextResponse(JSON.stringify(flashCardSetDto));
 }
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
