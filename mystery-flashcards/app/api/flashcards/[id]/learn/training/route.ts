@@ -112,7 +112,7 @@ function getForNo3AndNext(flashcards: FlashcardT[], learningHistoryTab: any, pre
         correct1: [],
         incorrect: []
     }
-    const allPrev: AnswerT[] = learningHistoryTab.push(...prevAnswers);
+    const allPrev: AnswerT[] = [...learningHistoryTab, ...prevAnswers];
     const cardsIdsWithAnswers: idWithAns[] = [];
     flashcards.forEach((element: any) => {
         const singleArrElement: idWithAns = {
