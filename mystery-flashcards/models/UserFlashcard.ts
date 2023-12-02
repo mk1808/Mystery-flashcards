@@ -1,16 +1,18 @@
 import { Schema, SchemaTypes, model, models } from 'mongoose';
+import { AnswerT, answerSchema } from './Answer';
 
 const userFlashcardSchema = new Schema({
-  user: {
-    type: SchemaTypes.Mixed,
-    required: [true, 'user is required.'],
+  userId: {
+    type: Schema.Types.ObjectId,
+    required: [true, 'userId is required.'],
   },
-  flashcardSet: {
-    type: SchemaTypes.Mixed,
-    required: [true, 'flashcardSet is required.'],
+  flashcardSetId: {
+    type: Schema.Types.ObjectId,
+    required: [true, 'flashcardSetId is required.'],
   },
   learningHistory: {
-    type: []
+    type: [answerSchema],
+    default: []
   },
   type: {
     type: String,
@@ -19,5 +21,13 @@ const userFlashcardSchema = new Schema({
 });
 
 const UserFlashcard = models.UserFlashcard || model('UserFlashcard', userFlashcardSchema);
+
+export type UserFlashcardT = {
+  _id?: string,
+  userId?: string,
+  flashcardSetId?: string,
+  learningHistory?: AnswerT[],
+  type?: string
+};
 
 export default UserFlashcard;

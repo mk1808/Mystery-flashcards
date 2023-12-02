@@ -1,13 +1,14 @@
 import { Schema, SchemaTypes, model, models } from 'mongoose';
+import { AnswerT, answerSchema } from './Answer';
 
 const testResultSchema = new Schema({
-    user: {
-        type: SchemaTypes.Mixed,
-        required: [true, 'user is required.'],
+    userId: {
+        type: Schema.Types.ObjectId,
+        required: [true, 'userId is required.'],
     },
-    flashcardSet: {
-        type: SchemaTypes.Mixed,
-        required: [true, 'flashcardSet is required.'],
+    flashcardSetId: {
+        type: Schema.Types.ObjectId,
+        required: [true, 'flashcardSetId is required.'],
     },
     resultPercent: {
         type: Number
@@ -19,7 +20,7 @@ const testResultSchema = new Schema({
         type: Number
     },
     answers: {
-        type: [],
+        type: [answerSchema],
         default: []
     },
     direction: {
@@ -29,5 +30,16 @@ const testResultSchema = new Schema({
 });
 
 const TestResult = models.TestResult || model('TestResult', testResultSchema);
+
+export type TestResultT = {
+    _id?: string,
+    userId?: string,
+    flashcardSetId?: string,
+    resultPercent?: number,
+    validCount?: number,
+    allCount?: number,
+    answers?: AnswerT[],
+    direction?: string
+};
 
 export default TestResult;

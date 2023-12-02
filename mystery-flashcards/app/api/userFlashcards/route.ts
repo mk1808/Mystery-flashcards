@@ -9,8 +9,7 @@ export async function POST(request: NextRequest) {
     await connectToDB();
 
     const currentUser = await getUser(request);
-    const flashcardSet = await FlashcardSet.findById(requestBody.flashcardSetId);
-    const existingUserFlashcard = await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser });
+    const existingUserFlashcard = await UserFlashcard.findOne({ flashcardSetId: requestBody.flashcardSetId, userId: currentUser._id });
 
     if (existingUserFlashcard) {
         existingUserFlashcard.type = requestBody.type;
@@ -19,8 +18,8 @@ export async function POST(request: NextRequest) {
     }
 
     const newUserFlashCard = {
-        user: currentUser,
-        flashcardSet: flashcardSet,
+        userId: currentUser._id,
+        flashcardSetId: requestBody.flashcardSetId,
         learningHistory: [],
         type: requestBody.type,
     }

@@ -1,4 +1,6 @@
-import { Schema, SchemaTypes, model, models } from 'mongoose';
+import mongoose, { Schema, SchemaTypes, model, models } from 'mongoose';
+import { FlashcardT, flashcardSchema } from './Flashcard';
+import { UserT } from './User';
 
 const flashcardSetSchema = new Schema({
     user: {
@@ -17,7 +19,7 @@ const flashcardSetSchema = new Schema({
         type: []
     },
     flashcards: {
-        type: []
+        type: [flashcardSchema]
     },
     isPublic: {
         type: Boolean,
@@ -38,5 +40,18 @@ const flashcardSetSchema = new Schema({
 });
 
 const FlashcardSet = models.FlashcardSet || model('FlashcardSet', flashcardSetSchema);
+
+export type FlashcardSetT = {
+    _id?: string,
+    user?: UserT,
+    name?: string,
+    level?: string,
+    hashtags?: string[],
+    flashcards?: FlashcardT[],
+    isPublic?: Boolean,
+    creationDate?: Date,
+    lang1?: string,
+    lang2?: string
+};
 
 export default FlashcardSet;

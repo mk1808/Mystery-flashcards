@@ -1,6 +1,6 @@
 import { Schema, SchemaTypes, model, models } from 'mongoose';
 
-const flashcardSchema = new Schema({
+export const flashcardSchema = new Schema({
     wordLang1: {
         type: String,
         required: [true, 'wordLang1 is required.'],
@@ -18,5 +18,13 @@ const flashcardSchema = new Schema({
 });
 
 const Flashcard = models.Flashcard || model('Flashcard', flashcardSchema);
+
+export type FlashcardT = {
+    _id?: string,
+    wordLang1?: string,
+    wordLang2?: string,
+    description1?: string
+    givenAnswer?: string
+};
 
 export default Flashcard;
