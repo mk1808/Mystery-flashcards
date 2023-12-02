@@ -23,10 +23,23 @@ const userSchema = new Schema({
   },
   statistics: {
     type: [],
-    default:[]
+    default: []
   },
 });
 
 const User = models.User || model('User', userSchema);
+
+export type UserT = {
+  _id?: string,
+  mail?: string,
+  password?: string,
+  name?: string,
+  points?: Number,
+  rang?: Number,
+  statistics?: {
+    type?: [],
+    default?: []
+  }
+};
 
 export default User;

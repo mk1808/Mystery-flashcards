@@ -17,4 +17,11 @@ export const answerSchema = new Schema({
 
 const Answer = models.Answer || model('Answer', answerSchema);
 
+export type AnswerT = {
+    _id: string,
+    flashcardId: string,
+    isCorrect: Boolean,
+    givenAnswer: string
+};
+
 export default Answer;
