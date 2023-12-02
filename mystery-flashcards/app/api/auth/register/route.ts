@@ -3,6 +3,7 @@ import User from "@/models/User";
 import connectToDB from "@/utils/server/database";
 import { NextRequest, NextResponse } from "next/server";
 import { hashPassword } from '@/utils/server/encryptionUtils';
+import { UserRangs } from "@/enums/UserRang";
 
 export async function POST(request: NextRequest) {
     await connectToDB();
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
         name: registerForm.name,
         password: await hashPassword(registerForm.password),
         points: 0,
-        rang: 0
+        rang: UserRangs[0].id
     }
 
     const user = await User.create(newUser);

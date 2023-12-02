@@ -6,6 +6,7 @@ import UserFlashcard from "@/models/UserFlashcard";
 import { shouldArrayContain, shuffleArray } from "@/utils/server/arrayUtils";
 import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
+import { findRangByPoints } from "@/utils/server/userRangUtils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
@@ -198,6 +199,7 @@ function getCorrectCardIds(learningHistoryTab: any) {
 async function updateUserPoints(user: UserT, learningHistoryTab: any) {
     const correctCardsIds: any[] = getCorrectCardIds(learningHistoryTab);
     user.points += correctCardsIds.length;
+    user.rang = findRangByPoints(user.points).id;
     await User.findOneAndReplace({ _id: user._id }, user, { new: true });
 }
 
