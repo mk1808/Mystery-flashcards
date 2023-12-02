@@ -1,3 +1,5 @@
+import { AnswerT } from "@/models/Answer";
+import { FlashcardT } from "@/models/Flashcard";
 import FlashcardSet from "@/models/FlashcardSet";
 import UserFlashcard from "@/models/UserFlashcard";
 import { shouldArrayContain, shuffleArray } from "@/utils/server/arrayUtils";
@@ -7,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
-    const learningHistoryTab = await request.json();
+    const learningHistoryTab: AnswerT[] = await request.json();
     // console.log(learningHistoryTab);
     await connectToDB();
 
@@ -17,6 +19,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         existingUserFlashcard = await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser }),
         userFlashcard = existingUserFlashcard || newUserFlashcard;
     updateAttemptNo(learningHistoryTab);
+    const randStrategy = getRandomizeStrategy(userFlashcard.learningHistory);
     const prevAnswers = filterLastAndUpdateAttemptNo(userFlashcard.learningHistory);
     userFlashcard.learningHistory = prevAnswers;
     userFlashcard.learningHistory.push(...learningHistoryTab);
@@ -33,13 +36,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     }
     const { flashcards } = flashcardSet;
     console.log("cards " + flashcards);
-let finalArray:any[] = [];
-    //1st
-    finalArray = getForNo1(flashcards);
-    //2nd
-    finalArray = getForNo2(flashcards, learningHistoryTab);
-    //3rd ....
-    finalArray = getForNo3AndNext(flashcards, learningHistoryTab, prevAnswers);
+    const finalArray: any = randomize(randStrategy, flashcards, learningHistoryTab, prevAnswers);
     return NextResponse.json(finalArray);
 }
 
@@ -58,10 +55,7 @@ function updateAttemptNo(currentTab: any) {
     });
 }
 function filterLastAndUpdateAttemptNo(previousTab: any) {
-    const filtered = previousTab
-        .filter((element: any) => {
-            element.attempt = "LAST";
-        });
+    const filtered = getOnlyLastAnswers(previousTab);
     filtered
         .forEach((element: any) => {
             element.attempt = "PREV";
@@ -70,16 +64,23 @@ function filterLastAndUpdateAttemptNo(previousTab: any) {
 
 }
 
-function getForNo1(flashcards:any):any[]{
+function getOnlyLastAnswers(previousTab: any) {
+    return previousTab
+        .filter((element: any) => {
+            element.attempt = "LAST";
+        });
+}
+
+function getForNo1(flashcards: any): any[] {
     //1st 
     shuffleArray(flashcards)
     return flashcards;
 }
 
-function getForNo2(flashcards:any, learningHistoryTab:any):any[]{
-    const wrongCards:any[] = [];
-    const correctCards:any[] = [];
-    const finalArray:any[]=[];
+function getForNo2(flashcards: any, learningHistoryTab: any): any[] {
+    const wrongCards: any[] = [];
+    const correctCards: any[] = [];
+    const finalArray: any[] = [];
     const correctCardsIds: any[] = []
     learningHistoryTab.forEach((element: any) => {
         if (element.isCorrect) {
@@ -92,17 +93,73 @@ function getForNo2(flashcards:any, learningHistoryTab:any):any[]{
         if (isCorrect) { correctCards.push(flashcard); } else { wrongCards.push(flashcard); };
     })
     correctCards.forEach((flashcard: any) => {
-        if (shouldArrayContain()) {finalArray.push(flashcard)}
+        if (shouldArrayContain()) { finalArray.push(flashcard) }
     })
     wrongCards.forEach((flashcard: any) => {
-        if (shouldArrayContain()) {finalArray.push(flashcard)}
+        if (shouldArrayContain()) { finalArray.push(flashcard) }
     })
     finalArray.push(...wrongCards);
     shuffleArray(finalArray);
     return finalArray;
 }
 
-function getForNo3AndNext(flashcards:any, learningHistoryTab:any, prevAnswers:any):any[]{
-    const last
+function getForNo3AndNext(flashcards: FlashcardT[], learningHistoryTab: any, prevAnswers: AnswerT[]): any[] {
+    const prevAnswersCardsIds = prevAnswers.map((element: AnswerT) => { element.flashcardId });
+    const allCardsIds = flashcards.map((element: FlashcardT) => { element._id });
 
+    const idsWithNumOfCorrectAns: any = {
+        correct2: [],
+        correct1: [],
+        incorrect: []
+    }
+    const allPrev: AnswerT[] = learningHistoryTab.push(...prevAnswers);
+    const cardsIdsWithAnswers: idWithAns[] = [];
+    flashcards.forEach((element: any) => {
+        const singleArrElement: idWithAns = {
+            id: element._id,
+            answers: allPrev.filter(prev => prev.flashcardId = element._id)
+        }
+        cardsIdsWithAnswers.push(singleArrElement);
+    });
+    cardsIdsWithAnswers.forEach((element: idWithAns) => {
+        const noOfCorrect = element.answers.filter(el => el.isCorrect).length;
+        const category = noOfCorrect > 1 ? "correct2" : noOfCorrect == 1 ? "correct1" : "incorrect";
+        idsWithNumOfCorrectAns[category].push(element.id);
+    })
+
+    const finalIds = [];
+    const idsNotInPrev = allCardsIds.filter(element => !prevAnswersCardsIds.includes(element));
+    finalIds.push(...idsNotInPrev);
+    idsWithNumOfCorrectAns.correct2.forEach((id: any) => {
+        if (shouldArrayContain()) { finalIds.push(id) }
+    })
+    finalIds.push(...idsWithNumOfCorrectAns.correct1);
+    finalIds.push(...idsWithNumOfCorrectAns.noOfCorrect);
+    finalIds.push(...idsWithNumOfCorrectAns.noOfCorrect);
+    const finalArray = finalIds.map(id => {
+        return flashcards.filter(card => card._id == id)[0]
+    })
+    shuffleArray(finalArray);
+    return finalArray;
+}
+
+function getRandomizeStrategy(answersFromDb: any[]) {
+    const isSecond = answersFromDb.every((ans: AnswerT) => ans.attempt == "LAST")
+    return answersFromDb.length == 0 ? 1 : isSecond ? 2 : 3;
+}
+
+interface idWithAns {
+    id: any,
+    answers: AnswerT[]
+}
+
+function randomize(randStrategy: number, flashcards: any, learningHistoryTab: any, prevAnswers: any) {
+    switch (randStrategy) {
+        case 1:
+            return getForNo1(flashcards);
+        case 2:
+            return getForNo2(flashcards, learningHistoryTab);
+        default:
+            return getForNo3AndNext(flashcards, learningHistoryTab, prevAnswers);
+    }
 }

@@ -24,7 +24,8 @@ export type AnswerT = {
     _id: string,
     flashcardId: string,
     isCorrect: Boolean,
-    givenAnswer: string
+    givenAnswer: string,
+    attempt: string
 };
 
 export default Answer;
