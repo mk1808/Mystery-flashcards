@@ -1,5 +1,5 @@
 import { Schema, SchemaTypes, model, models } from 'mongoose';
-import { answerSchema } from './Answer';
+import { AnswerT, answerSchema } from './Answer';
 
 const testResultSchema = new Schema({
     userId: {
@@ -30,5 +30,16 @@ const testResultSchema = new Schema({
 });
 
 const TestResult = models.TestResult || model('TestResult', testResultSchema);
+
+export type TestResultT = {
+    _id?: string,
+    userId?: string,
+    flashcardSetId?: string,
+    resultPercent?: Number,
+    validCount?: Number,
+    allCount?: Number,
+    answers?: AnswerT[],
+    direction?: string
+};
 
 export default TestResult;

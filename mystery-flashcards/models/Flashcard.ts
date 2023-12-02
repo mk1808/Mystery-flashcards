@@ -19,4 +19,12 @@ export const flashcardSchema = new Schema({
 
 const Flashcard = models.Flashcard || model('Flashcard', flashcardSchema);
 
+export type FlashcardT = {
+    _id?: string,
+    wordLang1?: string,
+    wordLang2?: string,
+    description1?: string
+    givenAnswer?: string
+};
+
 export default Flashcard;

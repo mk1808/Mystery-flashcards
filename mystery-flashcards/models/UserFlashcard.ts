@@ -1,5 +1,5 @@
 import { Schema, SchemaTypes, model, models } from 'mongoose';
-import { answerSchema } from './Answer';
+import { AnswerT, answerSchema } from './Answer';
 
 const userFlashcardSchema = new Schema({
   userId: {
@@ -21,5 +21,13 @@ const userFlashcardSchema = new Schema({
 });
 
 const UserFlashcard = models.UserFlashcard || model('UserFlashcard', userFlashcardSchema);
+
+export type UserFlashcardT = {
+  _id?: string,
+  userId?: string,
+  flashcardSetId?: string,
+  learningHistory?: AnswerT[],
+  type?: string
+};
 
 export default UserFlashcard;
