@@ -35,9 +35,9 @@ export type TestResultT = {
     _id?: string,
     userId?: string,
     flashcardSetId?: string,
-    resultPercent?: Number,
-    validCount?: Number,
-    allCount?: Number,
+    resultPercent?: number,
+    validCount?: number,
+    allCount?: number,
     answers?: AnswerT[],
     direction?: string
 };

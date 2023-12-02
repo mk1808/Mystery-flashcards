@@ -1,21 +1,61 @@
+import { TestResultDto } from "@/dtos/TestResultDto";
+import { AnswerT } from "@/models/Answer";
 import FlashcardSet from "@/models/FlashcardSet";
-import TestResult from "@/models/TestResult";
+import TestResult, { TestResultT } from "@/models/TestResult";
+import User, { UserT } from "@/models/User";
+import UserFlashcard, { UserFlashcardT } from "@/models/UserFlashcard";
 import { shuffleArray } from "@/utils/server/arrayUtils";
 import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
+import { checkAnswers } from "@/utils/server/testUtils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
-    const id = params.id;
-    const body = await request.json();
-    console.log(body);
+    const flashcardSetId = params.id;
+    const testAnswers: AnswerT[] = await request.json();
     await connectToDB();
+    const currentUser: UserT = await getUser(request);
+    const flashcardSet = (await FlashcardSet.findById(flashcardSetId));
 
-    const user = await getUser(request);
-    body.flashcardSetId = id;
-    body.userId = user._id;
-    const savedResult = await TestResult.create(body);
-    return NextResponse.json(savedResult);
+    const newResults = checkAnswers(flashcardSet, testAnswers);
+
+    let testResult: TestResultT = (await TestResult.findOne({ userId: currentUser._id, flashcardSetId: flashcardSetId })).toObject();
+    if (testResult) {
+        testResult.allCount = newResults.allCount;
+        testResult.answers = newResults.answers;
+        testResult.resultPercent = newResults.resultPercent;
+        testResult.validCount = newResults.validCount;
+        await TestResult.findOneAndReplace({ _id: testResult._id }, testResult, { new: true });
+    } else {
+        testResult = newResults;
+        testResult.userId = currentUser._id;
+        testResult.direction = "?"
+        testResult = await TestResult.create(testResult);
+    }
+
+    const existingUserFlashcard: UserFlashcardT = (await UserFlashcard.findOne({ flashcardSetId: flashcardSetId, userId: currentUser._id })).toObject()
+    if (existingUserFlashcard) {
+        existingUserFlashcard.type = "TESTING";
+        await UserFlashcard.findOneAndReplace({ _id: existingUserFlashcard._id }, existingUserFlashcard, { new: true });
+    } else {
+        const newUserFlashCard = {
+            userId: currentUser._id,
+            flashcardSetId: flashcardSetId,
+            learningHistory: [],
+            type: "TESTING"
+        }
+        await UserFlashcard.create(newUserFlashCard);
+    }
+    const points = (testResult?.validCount || 0) * 10;
+    currentUser.points += points;
+    await User.findOneAndReplace({ _id: currentUser._id }, currentUser, { new: true });
+    const response: TestResultDto = {
+        testResults: testResult!,
+        gainPoints: points,
+        currentPoints: currentUser.points,
+        currentRang: currentUser.rang
+    }
+    return NextResponse.json(response);
 }
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
