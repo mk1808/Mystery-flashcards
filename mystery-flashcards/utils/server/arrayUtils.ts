@@ -24,3 +24,7 @@ export const shuffleArray = (array: any[]) => {
         array[j] = temp;
     }
 }
+
+export const shouldArrayContain = ()=>{
+    return !Math.round(Math.random());
+}

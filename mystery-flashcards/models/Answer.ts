@@ -12,6 +12,9 @@ export const answerSchema = new Schema({
     givenAnswer: {
         type: SchemaTypes.Mixed,
         required: [true, 'givenAnswer is required.'],
+    },
+    attempt:{
+        type:String
     }
 });
 
