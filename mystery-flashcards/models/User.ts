@@ -15,6 +15,7 @@ const userSchema = new Schema({
   },
   points: {
     type: Number,
+    default: 0,
     required: [true, 'points is required.'],
   },
   rang: {
@@ -34,8 +35,8 @@ export type UserT = {
   mail?: string,
   password?: string,
   name?: string,
-  points?: Number,
-  rang?: Number,
+  points: number,
+  rang?: number,
   statistics?: {
     type?: [],
     default?: []

@@ -1,6 +1,7 @@
 import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
 import FlashcardSet from "@/models/FlashcardSet";
+import User, { UserT } from "@/models/User";
 import UserFlashcard from "@/models/UserFlashcard";
 import { shouldArrayContain, shuffleArray } from "@/utils/server/arrayUtils";
 import { getUser } from "@/utils/server/authUtils";
@@ -10,7 +11,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
     const learningHistoryTab: AnswerT[] = await request.json();
-    // console.log(learningHistoryTab);
     await connectToDB();
 
     const currentUser = await getUser(request),
@@ -18,36 +18,29 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         newUserFlashcard = { userId: currentUser._id, flashcardSetId: id, learningHistory: [] },
         existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser })).toObject(),
         userFlashcard = existingUserFlashcard || newUserFlashcard;
-    userFlashcard.learningHistory.forEach((card: any) => { card._id = card._id.valueOf(); card.flashcardId = card.flashcardId.valueOf(); });
-    updateAttemptNo(learningHistoryTab);
-    const randStrategy = getRandomizeStrategy(userFlashcard.learningHistory);
-    const prevAnswers = filterLastAndUpdateAttemptNo(userFlashcard.learningHistory);
-    userFlashcard.learningHistory = prevAnswers;
-    userFlashcard.learningHistory.push(...learningHistoryTab);
-    userFlashcard.type = "LEARNING";
-    if (existingUserFlashcard) {
-        await UserFlashcard.findOneAndReplace({ _id: userFlashcard._id }, userFlashcard, { new: true });
-    }
-    else {
-        await UserFlashcard.create(userFlashcard);
-    }
-
+    const { randStrategy, prevAnswers } = addOrUpdateUserFlashcard(userFlashcard, learningHistoryTab, existingUserFlashcard);
     if (!flashcardSet) {
         return new NextResponse('Flash card set not found!', { status: 404 });
     }
     const { flashcards } = flashcardSet;
-    //console.log("cards " + flashcards);
     const finalArray: any = randomize(randStrategy, flashcards, learningHistoryTab, prevAnswers);
+    updateUserPoints(currentUser, learningHistoryTab);
     return NextResponse.json(finalArray);
 }
 
 export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
-    const body = await request.json();
-    //console.log(body);
+    const learningHistoryTab: AnswerT[] = await request.json();
     await connectToDB();
 
-    return NextResponse.json(id);
+    const currentUser = await getUser(request),
+        flashcardSet = (await FlashcardSet.findById(id)).toObject(),
+        newUserFlashcard = { userId: currentUser._id, flashcardSetId: id, learningHistory: [] },
+        existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser })).toObject(),
+        userFlashcard = existingUserFlashcard || newUserFlashcard;
+    const { udpatedUserFlashcard } = addOrUpdateUserFlashcard(userFlashcard, learningHistoryTab, existingUserFlashcard);
+    updateUserPoints(currentUser, learningHistoryTab);
+    return NextResponse.json(udpatedUserFlashcard);
 }
 
 function updateAttemptNo(currentTab: any) {
@@ -83,12 +76,8 @@ function getForNo2(flashcards: any, learningHistoryTab: any): any[] {
     const wrongCards: any[] = [];
     const correctCards: any[] = [];
     const finalArray: any[] = [];
-    const correctCardsIds: any[] = []
-    learningHistoryTab.forEach((element: any) => {
-        if (element.isCorrect) {
-            correctCardsIds.push(element.flashcardId);
-        }
-    });
+    const correctCardsIds: any[] = getCorrectCardIds(learningHistoryTab);
+
     flashcards.forEach((flashcard: any) => {
         const flashCardId = flashcard._id.valueOf(),
             isCorrect = correctCardsIds.includes(flashCardId);
@@ -130,7 +119,7 @@ function getForNo3AndNext(flashcards: FlashcardT[], learningHistoryTab: any, pre
     })
 
     const finalIds = [];
-    const idsNotInPrev = allCardsIds.filter(element => !prevAnswersCardsIds.includes(element));
+    const idsNotInPrev = allCardsIds.filter((element: any) => !prevAnswersCardsIds.includes(element));
     finalIds.push(...idsNotInPrev);
     idsWithNumOfCorrectAns.correct2.forEach((id: any) => {
         if (shouldArrayContain()) { finalIds.push(id) }
@@ -166,3 +155,49 @@ function randomize(randStrategy: number, flashcards: any, learningHistoryTab: an
             return getForNo3AndNext(flashcards, learningHistoryTab, prevAnswers);
     }
 }
+
+function addOrUpdateUserFlashcard(userFlashcard: any, learningHistoryTab: any, existingUserFlashcard: any) {
+    userFlashcard.learningHistory.forEach((card: any) => {
+        card._id = card._id.valueOf();
+        card.flashcardId = card.flashcardId.valueOf();
+    });
+    updateAttemptNo(learningHistoryTab);
+    const randStrategy = getRandomizeStrategy(userFlashcard.learningHistory);
+    const prevAnswers = filterLastAndUpdateAttemptNo(userFlashcard.learningHistory);
+    userFlashcard.learningHistory = prevAnswers;
+    userFlashcard.learningHistory.push(...learningHistoryTab);
+    userFlashcard.type = "LEARNING";
+    const udpatedUserFlashcard = updateOrCreate(existingUserFlashcard, userFlashcard);
+
+    return { randStrategy, prevAnswers, udpatedUserFlashcard };
+}
+
+async function updateOrCreate(existingUserFlashcard: any, userFlashcard: any) {
+    let udpatedUserFlashcard;
+    if (existingUserFlashcard) {
+        udpatedUserFlashcard =
+            await UserFlashcard.findOneAndReplace({ _id: userFlashcard._id }, userFlashcard, { new: true });
+    }
+    else {
+        udpatedUserFlashcard =
+            await UserFlashcard.create(userFlashcard);
+    }
+    return udpatedUserFlashcard;
+}
+
+function getCorrectCardIds(learningHistoryTab: any) {
+    const correctCardsIds: any[] = []
+    learningHistoryTab.forEach((element: any) => {
+        if (element.isCorrect) {
+            correctCardsIds.push(element.flashcardId);
+        }
+    });
+    return correctCardsIds;
+}
+
+async function updateUserPoints(user: UserT, learningHistoryTab: any) {
+    const correctCardsIds: any[] = getCorrectCardIds(learningHistoryTab);
+    user.points += correctCardsIds.length;
+    await User.findOneAndReplace({ _id: user._id }, user, { new: true });
+}
+
