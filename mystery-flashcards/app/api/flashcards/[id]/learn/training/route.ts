@@ -14,10 +14,11 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     await connectToDB();
 
     const currentUser = await getUser(request),
-        flashcardSet = await FlashcardSet.findById(id),
+        flashcardSet = (await FlashcardSet.findById(id)).toObject(),
         newUserFlashcard = { userId: currentUser._id, flashcardSetId: id, learningHistory: [] },
-        existingUserFlashcard = await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser }),
+        existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser })).toObject(),
         userFlashcard = existingUserFlashcard || newUserFlashcard;
+    userFlashcard.learningHistory.forEach((card: any) => { card._id = card._id.valueOf(); card.flashcardId = card.flashcardId.valueOf(); });
     updateAttemptNo(learningHistoryTab);
     const randStrategy = getRandomizeStrategy(userFlashcard.learningHistory);
     const prevAnswers = filterLastAndUpdateAttemptNo(userFlashcard.learningHistory);
@@ -35,7 +36,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         return new NextResponse('Flash card set not found!', { status: 404 });
     }
     const { flashcards } = flashcardSet;
-    console.log("cards " + flashcards);
+    //console.log("cards " + flashcards);
     const finalArray: any = randomize(randStrategy, flashcards, learningHistoryTab, prevAnswers);
     return NextResponse.json(finalArray);
 }
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
     const body = await request.json();
-    console.log(body);
+    //console.log(body);
     await connectToDB();
 
     return NextResponse.json(id);
@@ -66,9 +67,10 @@ function filterLastAndUpdateAttemptNo(previousTab: any) {
 
 function getOnlyLastAnswers(previousTab: any) {
     return previousTab
-        .filter((element: any) => {
-            element.attempt = "LAST";
-        });
+        .filter((element: any) =>
+            element.attempt == "LAST"
+        );
+
 }
 
 function getForNo1(flashcards: any): any[] {
@@ -104,20 +106,20 @@ function getForNo2(flashcards: any, learningHistoryTab: any): any[] {
 }
 
 function getForNo3AndNext(flashcards: FlashcardT[], learningHistoryTab: any, prevAnswers: AnswerT[]): any[] {
-    const prevAnswersCardsIds = prevAnswers.map((element: AnswerT) => { element.flashcardId });
-    const allCardsIds = flashcards.map((element: FlashcardT) => { element._id });
+    const prevAnswersCardsIds = prevAnswers.map((element: AnswerT) => element.flashcardId.valueOf());
+    const allCardsIds = flashcards.map((element: FlashcardT) => element._id?.valueOf());
 
     const idsWithNumOfCorrectAns: any = {
         correct2: [],
         correct1: [],
         incorrect: []
     }
-    const allPrev: AnswerT[] = [...learningHistoryTab, ...prevAnswers];
+    const allPrev: AnswerT[] = [...prevAnswers];
     const cardsIdsWithAnswers: idWithAns[] = [];
     flashcards.forEach((element: any) => {
         const singleArrElement: idWithAns = {
             id: element._id,
-            answers: allPrev.filter(prev => prev.flashcardId = element._id)
+            answers: allPrev.filter(prev => prev.flashcardId == element._id)
         }
         cardsIdsWithAnswers.push(singleArrElement);
     });
@@ -134,8 +136,8 @@ function getForNo3AndNext(flashcards: FlashcardT[], learningHistoryTab: any, pre
         if (shouldArrayContain()) { finalIds.push(id) }
     })
     finalIds.push(...idsWithNumOfCorrectAns.correct1);
-    finalIds.push(...idsWithNumOfCorrectAns.noOfCorrect);
-    finalIds.push(...idsWithNumOfCorrectAns.noOfCorrect);
+    finalIds.push(...idsWithNumOfCorrectAns.incorrect);
+    finalIds.push(...idsWithNumOfCorrectAns.incorrect);
     const finalArray = finalIds.map(id => {
         return flashcards.filter(card => card._id == id)[0]
     })
@@ -154,6 +156,7 @@ interface idWithAns {
 }
 
 function randomize(randStrategy: number, flashcards: any, learningHistoryTab: any, prevAnswers: any) {
+    console.log("randStrategy: " + randStrategy)
     switch (randStrategy) {
         case 1:
             return getForNo1(flashcards);
