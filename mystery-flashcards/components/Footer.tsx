@@ -1,6 +1,8 @@
+import { getDictionary } from '@/dictionaries/dictionaries';
 import React from 'react'
 
-function Footer() {
+async function Footer({ locale }:  { locale: string }) {
+    const dictionary = await getDictionary(locale);
     return (
         <footer className="footer p-10 mt-4 bg-base-200 text-base-content">
             <aside>
@@ -11,11 +13,11 @@ function Footer() {
             <nav />
             <nav />
             <nav className="ps-3 border-s-2 border-slate-600">
-                <header className="footer-title">Przeglądaj</header>
-                <a className="link link-hover">Strona główna</a>
-                <a className="link link-hover">Szukaj kolekcji</a>
-                <a className="link link-hover">Zaloguj</a>
-                <a className="link link-hover">Zarejestruj</a>
+                <header className="footer-title">{dictionary.common.browse}</header>
+                <a className="link link-hover">{dictionary.common.mainPage}</a>
+                <a className="link link-hover">{dictionary.common.searchSets}</a>
+                <a className="link link-hover">{dictionary.common.login}</a>
+                <a className="link link-hover">{dictionary.common.register}</a>
             </nav>
         </footer>
     )

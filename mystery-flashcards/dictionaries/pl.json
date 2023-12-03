@@ -4,6 +4,10 @@
         "searchSets":"Szukaj kolekcji",
         "login":"Zaloguj",
         "register":"Zarejestruj",
-        "account":"Konto"
+        "account":"Konto",
+        "browse":"Przeglądaj",
+        "loginTitle":"Logowanie",
+        "registerTitle":"Rejestracja",
+        "notFound":"Nie znaleziono strony"
     }
 }

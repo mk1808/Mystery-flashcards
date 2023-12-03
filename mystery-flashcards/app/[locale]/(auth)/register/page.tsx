@@ -1,6 +1,8 @@
+import { getDictionary } from '@/dictionaries/dictionaries';
 import React from 'react'
 
-export default function Register() {
+async function Register({ locale }: { locale: string }) {
+  const dictionary = await getDictionary(locale);
   return (
     <div>
       Register
@@ -10,3 +12,5 @@ export default function Register() {
     </div>
   )
 }
+
+export default Register

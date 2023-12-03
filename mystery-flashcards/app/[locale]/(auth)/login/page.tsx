@@ -1,6 +1,8 @@
+import { getDictionary } from '@/dictionaries/dictionaries';
 import React from 'react'
 
-export default function Login() {
+async function Login({ locale }:  { locale: string }) {
+  const dictionary = await getDictionary(locale);
   return (
     <div>
       Login
@@ -10,3 +12,5 @@ export default function Login() {
     </div>
   )
 }
+
+export default Login
