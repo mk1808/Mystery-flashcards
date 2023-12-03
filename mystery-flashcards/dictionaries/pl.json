@@ -1,5 +1,13 @@
 {
     "common": {
-        "mainPage": "Strona główna"
+        "mainPage": "Strona główna",
+        "searchSets":"Szukaj kolekcji",
+        "login":"Zaloguj",
+        "register":"Zarejestruj",
+        "account":"Konto",
+        "browse":"Przeglądaj",
+        "loginTitle":"Logowanie",
+        "registerTitle":"Rejestracja",
+        "notFound":"Nie znaleziono strony"
     }
 }
