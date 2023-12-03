@@ -1,19 +1,8 @@
-import Image from 'next/image'
+import { defaultLocale } from '@/dictionaries/dictionaries';
 import { redirect } from 'next/navigation'
 
 export default function Home() {
 
-  return (
-    <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
-      <div className="h-96">
-        first
-      </div>
-      <div className="h-96" id="search-sets">
-        second
-      </div>
-    </div>
-  )
-  redirect('/pl');
 }
 
 /*

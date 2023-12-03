@@ -1,31 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
-import { verifyToken } from "./utils/server/jwtUtils";
+import { NextResponse } from "next/server";
+import { apiAccessControlMiddleware } from "./middleware/apiAccessControlMiddleware";
+import { localeManagerMiddleware } from "./middleware/localeManagerMiddleware";
+import { stackMiddlewares } from "./middleware/stackMiddlewares";
 
-type UnsecuredRoutesTypes = { GET: string[], POST: string[] };
-
-const unsecuredRoutes: UnsecuredRoutesTypes = {
-    GET: [
-        '^/api/flashcards/.*$'
-    ],
-    POST: [
-        '^/api/auth/register$',
-        '^/api/auth/login$'
-    ]
-}
-
-export async function middleware(request: NextRequest) {
-    try {
-        await verifyToken(request);
-    } catch (err) {
-        const unsecuredMethodRoutes = unsecuredRoutes[request.method as keyof UnsecuredRoutesTypes];
-        const matchAnyRoute = unsecuredMethodRoutes?.find(unsecuredRoute => request.nextUrl.pathname.match(unsecuredRoute))
-        if (!matchAnyRoute) {
-            return new Response("No access!", { status: 401 });
-        }
-    }
-    return NextResponse.next();
-}
+const middlewares = [apiAccessControlMiddleware, localeManagerMiddleware];
+export default stackMiddlewares(middlewares);
 
 export const config = {
-    matcher: '/api/:path*',
+    matcher: [
+        '/((?!_next).*)'
+    ],
 }
