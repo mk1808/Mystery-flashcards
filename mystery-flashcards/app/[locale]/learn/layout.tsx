@@ -1,7 +1,7 @@
 import Sidebar from '@/components/Sidebar'
 import React from 'react'
 
-function FlashcardsLayout({ children }: { children: any }) {
+function LearnLayout({ children }: { children: any }) {
     return (
         <Sidebar drawerContent={getDrawerContent()}>{children}</Sidebar>
     )
@@ -11,4 +11,4 @@ function FlashcardsLayout({ children }: { children: any }) {
     }
 }
 
-export default FlashcardsLayout
+export default LearnLayout

@@ -11,7 +11,7 @@ function Sidebar({ children, drawerContent }: any) {
                 </div>
                 <div className="drawer-side rounded-e-lg">
                     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                    <ul className="menu p-4 w-80 min-h-full bg-base-100/70 text-base-content">
                         {drawerContent}
                     </ul>
                 </div>
