@@ -1,6 +1,8 @@
 import Image from 'next/image'
+import { redirect } from 'next/navigation'
 
 export default function Home() {
+
   return (
     <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
       <div className="h-96">
@@ -11,6 +13,7 @@ export default function Home() {
       </div>
     </div>
   )
+  redirect('/pl');
 }
 
 /*
