@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: { locale: string } }) {
                 <button className="btn btn-link">Link</button>
                 <div style={{ width: 200, height: 200 }} className="bg-primary"></div>
             </div>
-            <Sidebar></Sidebar>
+
         </div>
     )
 }
