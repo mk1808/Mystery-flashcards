@@ -1,5 +1,7 @@
 import Sidebar from "@/components/Sidebar";
+import RoundActionButton from "@/components/common/RoundActionButton";
 import { getDictionary } from "@/dictionaries/dictionaries"
+import { ArrowLongDownIcon } from '@heroicons/react/24/solid'
 
 export default async function Page({ params }: { params: { locale: string } }) {
     const dictionary = await getDictionary(params.locale);
@@ -9,6 +11,7 @@ export default async function Page({ params }: { params: { locale: string } }) {
             <div className="h-96">
                 first
             </div>
+            <RoundActionButton content={getButtonContent()} borderWidth="border-[3px]" />
             <div className="h-96" id="search-sets">
                 second
                 <button className="btn">Button</button>
@@ -23,5 +26,9 @@ export default async function Page({ params }: { params: { locale: string } }) {
 
         </div>
     )
+
+    function getButtonContent() {
+        return <ArrowLongDownIcon className="h-11 w-11" />
+    }
 }
 //return <div>{dictionary.common.mainPage}</div>
