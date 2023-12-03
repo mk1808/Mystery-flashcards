@@ -1,6 +1,28 @@
+import Link from 'next/link'
 import React from 'react'
 
 function Header() {
+    const mainMenuElements = [
+        {
+            name: "Strona główna",
+            link: "/"
+        },
+        {
+            name: "Szukaj kolekcji",
+            link: "/#search-sets"
+        },
+    ]
+
+    const nestedMenuElements = [
+        {
+            name: "Zaloguj",
+            link: "/login"
+        },
+        {
+            name: "Zarejestruj",
+            link: "/register"
+        },
+    ]
     return (
         <div className="m-4">
             <div className="navbar bg-base-100 rounded-lg ">
@@ -9,16 +31,14 @@ function Header() {
                 </div>
                 <div className="flex-none">
                     <ul className="menu menu-horizontal px-1">
-                        <li><a>Strona główna</a></li>
-                        <li><a>Szukaj kolekcji</a></li>
+                        {mainMenuElements.map(renderMenuElement)}
                         <li>
                             <details>
                                 <summary>
                                     Konto
                                 </summary>
                                 <ul className="p-2 bg-base-100 rounded-t-none">
-                                    <li><a>Zaloguj</a></li>
-                                    <li><a>Zarejestruj</a></li>
+                                    {nestedMenuElements.map(renderMenuElement)}
                                 </ul>
                             </details>
                         </li>
@@ -27,6 +47,14 @@ function Header() {
             </div>
         </div>
     )
+
+    function renderMenuElement(element: any) {
+        return (
+            <li key={element.name}>
+                <Link href={element.link}>{element.name}</Link>
+            </li>
+        )
+    }
 }
 
 export default Header
