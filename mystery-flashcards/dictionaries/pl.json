@@ -1,5 +1,9 @@
 {
     "common": {
-        "mainPage": "Strona główna"
+        "mainPage": "Strona główna",
+        "searchSets":"Szukaj kolekcji",
+        "login":"Zaloguj",
+        "register":"Zarejestruj",
+        "account":"Konto"
     }
 }
