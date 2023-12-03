@@ -1,26 +1,26 @@
 import Link from 'next/link'
 import React from 'react'
 
-function Header() {
+function Header({ locale }:  { locale: string }) {
     const mainMenuElements = [
         {
             name: "Strona główna",
-            link: "/"
+            link: `/${locale}`
         },
         {
             name: "Szukaj kolekcji",
-            link: "/#search-sets"
+            link: `/${locale}#search-sets`
         },
     ]
 
     const nestedMenuElements = [
         {
             name: "Zaloguj",
-            link: "/login"
+            link: `/${locale}/login`
         },
         {
             name: "Zarejestruj",
-            link: "/register"
+            link: `/${locale}/register`
         },
     ]
     return (
