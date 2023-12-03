@@ -6,7 +6,7 @@ export const localeManagerMiddleware: MiddlewareFactory = (next: NextMiddleware)
     return async (request: NextRequest, _next: NextFetchEvent) => {
         const { pathname } = request.nextUrl;
         const possibleDictionaries = Object.keys(dictionaries);
-        const dictionaryMatch = possibleDictionaries.some(locale => pathname.match(`/${locale}.*`))
+        const dictionaryMatch = possibleDictionaries.some(locale => pathname == `/${locale}` || pathname.match(`/${locale}/.*`))
         if (dictionaryMatch) {
             return await next(request, _next);
         }
