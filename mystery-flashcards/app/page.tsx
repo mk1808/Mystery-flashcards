@@ -2,7 +2,7 @@ import { defaultLocale } from '@/dictionaries/dictionaries';
 import { redirect } from 'next/navigation'
 
 export default function Home() {
-  redirect(`/${defaultLocale}`);
+
 }
 
 /*
