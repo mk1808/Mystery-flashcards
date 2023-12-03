@@ -8,6 +8,7 @@ import { shuffleArray } from "@/utils/server/arrayUtils";
 import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
 import { checkAnswers } from "@/utils/server/testUtils";
+import { findNextRang, findRangByPoints, getRang } from "@/utils/server/userRangUtils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
@@ -48,12 +49,14 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     }
     const points = (testResult?.validCount || 0) * 10;
     currentUser.points += points;
+    currentUser.rang = findRangByPoints(currentUser.points).id;
     await User.findOneAndReplace({ _id: currentUser._id }, currentUser, { new: true });
     const response: TestResultDto = {
         testResults: testResult!,
         gainPoints: points,
         currentPoints: currentUser.points,
-        currentRang: currentUser.rang
+        currentRang: getRang(currentUser.rang),
+        nextRang: findNextRang(currentUser.rang)
     }
     return NextResponse.json(response);
 }
