@@ -1,6 +1,7 @@
 import Sidebar from "@/components/Sidebar";
 import RoundActionButton from "@/components/common/RoundActionButton";
 import FirstPanel from "@/components/mainPage/FirstPanel";
+import SecondPanel from "@/components/mainPage/SecondPanel";
 import { getDictionary } from "@/dictionaries/dictionaries"
 import { ArrowLongDownIcon } from '@heroicons/react/24/solid'
 
@@ -9,6 +10,7 @@ export default async function Page({ params }: { params: { locale: string } }) {
 
     return (<>
         <FirstPanel />
+        <SecondPanel />
         <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
             <div className="h-96">
                 first
