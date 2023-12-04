@@ -1,25 +1,27 @@
+import { getDictionary } from '@/dictionaries/dictionaries';
 import Link from 'next/link'
 import React from 'react'
 
-function Header({ locale }:  { locale: string }) {
+async function Header({ locale }:  { locale: string }) {
+    const dictionary = await getDictionary(locale);
     const mainMenuElements = [
         {
-            name: "Strona główna",
+            name: dictionary.common.mainPage,
             link: `/${locale}`
         },
         {
-            name: "Szukaj kolekcji",
+            name: dictionary.common.searchSets,
             link: `/${locale}#search-sets`
         },
     ]
 
     const nestedMenuElements = [
         {
-            name: "Zaloguj",
+            name: dictionary.common.login,
             link: `/${locale}/login`
         },
         {
-            name: "Zarejestruj",
+            name: dictionary.common.register,
             link: `/${locale}/register`
         },
     ]
@@ -35,7 +37,7 @@ function Header({ locale }:  { locale: string }) {
                         <li>
                             <details>
                                 <summary>
-                                    Konto
+                                    {dictionary.common.account}
                                 </summary>
                                 <ul className="p-2 bg-base-100 rounded-t-none">
                                     {nestedMenuElements.map(renderMenuElement)}

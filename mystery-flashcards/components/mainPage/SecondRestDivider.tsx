@@ -4,7 +4,7 @@ import { ArrowLongUpIcon, ArrowLongDownIcon } from "@heroicons/react/24/outline"
 
 export default function SecondRestDivider() {
     const onUpClick = () => document.getElementById("secondPanel")?.scrollIntoView({ behavior: "smooth" });
-    const onDownClick = () => document.getElementById("rest")?.scrollIntoView({ behavior: "smooth" });
+    const onDownClick = () => document.getElementById("flashcardSetsSearch")?.scrollIntoView({ behavior: "smooth" });
     const onClick = (isUpperHalf: boolean) => isUpperHalf ? onUpClick() : onDownClick();
 
     function renderContent(isUpperHalf: boolean) {

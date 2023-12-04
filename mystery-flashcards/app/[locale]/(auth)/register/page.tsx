@@ -1,7 +1,16 @@
+import { getDictionary } from '@/dictionaries/dictionaries';
 import React from 'react'
 
-export default function Register() {
+async function Register({ locale }: { locale: string }) {
+  const dictionary = await getDictionary(locale);
   return (
-    <div>Register</div>
+    <div>
+      Register
+      <div className="card-actions justify-center">
+        <button className="btn btn-primary">Buy Now</button>
+      </div>
+    </div>
   )
 }
+
+export default Register
