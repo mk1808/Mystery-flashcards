@@ -5,6 +5,7 @@ import SecondPanel from "@/components/mainPage/SecondPanel";
 import { getDictionary } from "@/dictionaries/dictionaries"
 import { ArrowLongDownIcon } from '@heroicons/react/24/solid'
 import FirstSecondDivider from "@/components/mainPage/FirstSecondDivider";
+import SecondRestDivider from "@/components/mainPage/SecondRestDivider";
 
 export default async function Page({ params }: { params: { locale: string } }) {
     const dictionary = await getDictionary(params.locale);
@@ -13,7 +14,8 @@ export default async function Page({ params }: { params: { locale: string } }) {
         <FirstPanel />
         <FirstSecondDivider />
         <SecondPanel />
-        <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
+        <SecondRestDivider />
+        <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm" id="rest">
             <div className="h-96">
                 first
             </div>

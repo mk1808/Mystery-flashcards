@@ -16,7 +16,7 @@ export default function DividerButton({
         <div className={`w-full ${containerStyle}`}>
             <div className="w-full border-solid border-b-4 border-secondary"></div>
             <div className={`w-full flex justify-center ${buttonStyle}`}>
-                <RoundActionButton styles="border-secondary text-primary bg-neutral" content={content} />
+                <RoundActionButton styles="border-secondary text-primary bg-neutral" content={content} onClick={onClick} />
             </div>
         </div>
     )
