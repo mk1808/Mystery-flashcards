@@ -1,7 +1,7 @@
 import RoundActionButton from "@/components/common/RoundActionButton";
 import { getDictionary } from "@/dictionaries/dictionaries"
 import { ArrowLongDownIcon } from '@heroicons/react/24/solid'
-import SetsFilters from "@/components/main/SetsFilters";
+import FlashcardSetsSearch from "@/components/main/search/FlashcardSetsSearch";
 
 export default async function Page({ params }: { params: { locale: string } }) {
     const dictionary = await getDictionary(params.locale);
@@ -25,7 +25,7 @@ export default async function Page({ params }: { params: { locale: string } }) {
                     <div style={{ width: 200, height: 200 }} className="bg-primary"></div>
                 </div>
             </div>
-            <SetsFilters dictionary={dictionary}></SetsFilters>
+            <FlashcardSetsSearch dictionary={dictionary}/>
         </>
     )
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { ArrowRightIcon } from "@heroicons/react/24/outline"
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline"
 
-function SetCard() {
+function FlashcardSetCard() {
     return (
         <div className="card w-[350px] bg-base-100 shadow-xl">
             <div className="absolute left-[120px] -top-6" >
@@ -32,4 +32,4 @@ function SetCard() {
     )
 }
 
-export default SetCard
+export default FlashcardSetCard
