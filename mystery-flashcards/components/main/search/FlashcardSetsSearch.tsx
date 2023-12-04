@@ -3,10 +3,10 @@ import SetCard from './FlashcardSetCard'
 
 import FlashcardSetsFilters from './FlashcardSetsFilters';
 
-function FlashcardSetsSearch({ dictionary }: { dictionary: any  }) {
+function FlashcardSetsSearch({ dictionary }: { dictionary: any }) {
     return (
-        <div>
-            <FlashcardSetsFilters dictionary={dictionary}/>
+        <div id='flashcardSetsSearch'>
+            <FlashcardSetsFilters dictionary={dictionary} />
             {renderResults()}
         </div>
     )

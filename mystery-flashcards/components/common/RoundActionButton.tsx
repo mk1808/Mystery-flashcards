@@ -4,20 +4,18 @@ import { useMemo } from "react"
 
 export default function RoundActionButton({
     content,
-    size = "h-[60px] w-[60px]",
-    borderWidth = "border-[10px]",
+    styles = "",
     onClick = () => { }
 }: {
     content: any,
-    size?: string,
-    borderWidth?: string,
+    styles?: string,
     onClick?: () => any
 }) {
 
     return (
-        <div className={`${size} ${borderWidth}
+        <div className={`h-[60px] w-[60px] border-[10px]
                 rounded-full box-content cursor-pointer inline-flex
-                items-center justify-center border-black border-solid`}
+                items-center justify-center border-black border-solid ${styles}`}
             onClick={onClick}>
             {content}
         </div>
