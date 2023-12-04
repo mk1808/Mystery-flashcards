@@ -4,7 +4,7 @@ import SecondPanel from "@/components/mainPage/SecondPanel";
 import { getDictionary } from "@/dictionaries/dictionaries"
 import { ArrowLongDownIcon } from '@heroicons/react/24/solid'
 import FirstSecondDivider from "@/components/mainPage/FirstSecondDivider";
-import SecondRestDivider from "@/components/mainPage/SecondRestDivider";
+import SecondThirdDivider from "@/components/mainPage/SecondThirdDivider";
 import FlashcardSetsSearch from "@/components/main/search/FlashcardSetsSearch";
 
 export default async function Page({ params }: { params: { locale: string } }) {
@@ -15,12 +15,12 @@ export default async function Page({ params }: { params: { locale: string } }) {
             <FirstPanel />
             <FirstSecondDivider />
             <SecondPanel />
-            <SecondRestDivider />
+            <SecondThirdDivider />
             <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
                 <div className="h-96">
                     first
                 </div>
-                <RoundActionButton content={getButtonContent()} borderWidth="border-[3px]" />
+                <RoundActionButton content={getButtonContent()} styles="border-[3px]" />
                 <div className="h-96" id="search-sets">
                     second
                     <button className="btn">Button</button>
@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: { locale: string } }) {
                     <div style={{ width: 200, height: 200 }} className="bg-primary"></div>
                 </div>
             </div>
-            <FlashcardSetsSearch dictionary={dictionary}/>
+            <FlashcardSetsSearch dictionary={dictionary} />
         </>
     )
 
