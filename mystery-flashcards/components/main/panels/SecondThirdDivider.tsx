@@ -1,5 +1,5 @@
 "use client"
-import PanelDivider from "../common/PanelDivider";
+import PanelDivider from "../../common/PanelDivider";
 import { ArrowLongUpIcon, ArrowLongDownIcon } from "@heroicons/react/24/outline";
 
 export default function SecondThirdDivider() {

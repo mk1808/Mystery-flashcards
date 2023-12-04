@@ -1,4 +1,4 @@
-import RoundActionButton from "../common/RoundActionButton";
+import RoundActionButton from "../../common/RoundActionButton";
 
 type StepType = {
     number: string,
