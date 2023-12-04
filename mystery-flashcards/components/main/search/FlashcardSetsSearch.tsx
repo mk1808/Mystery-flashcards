@@ -5,7 +5,7 @@ import FlashcardSetsFilters from './FlashcardSetsFilters';
 
 function FlashcardSetsSearch({ dictionary }: { dictionary: any }) {
     return (
-        <div id='flashcardSetsSearch'>
+        <div id='flashcardSetsSearch' className="mt-16">
             <FlashcardSetsFilters dictionary={dictionary} />
             {renderResults()}
         </div>

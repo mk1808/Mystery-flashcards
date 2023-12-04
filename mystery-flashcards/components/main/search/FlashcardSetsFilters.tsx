@@ -42,8 +42,8 @@ function FlashcardSetsFilters({ dictionary }: { dictionary: any }) {
                 <div className="label">
                     <span className="label-text">Pick the best fantasy franchise</span>
                 </div>
-                <select className="select select-bordered">
-                    <option disabled selected>Pick one</option>
+                <select className="select select-bordered" defaultValue="Star Wars">
+                    <option disabled>Pick one</option>
                     <option>Star Wars</option>
                     <option>Harry Potter</option>
                     <option>Lord of the Rings</option>
