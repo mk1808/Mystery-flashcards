@@ -1,3 +1,5 @@
+import RoundActionButton from "../common/RoundActionButton";
+
 type StepType = {
     number: string,
     text: string
@@ -14,14 +16,14 @@ const steps: StepType[] = [
 export default function SecondPanel() {
 
     return (
-        <div className="w-full p-12 h-screen">
+        <div className="w-full p-12 h-screen" id='secondPanel'>
             {steps.map(renderStep)}
         </div>
     )
 
     function renderStep(step: StepType, index: number) {
         return (
-            <div className='flex items-center h-1/5'>
+            <div className='flex items-center h-1/5' key={step.number}>
                 {renderSpace(step.number, index)}
                 {renderNumberCircle(step.number)}
                 <div className='text-4xl font-bold text-secondary h-min'>{step.text}</div>
@@ -30,13 +32,7 @@ export default function SecondPanel() {
     }
 
     function renderNumberCircle(number: string) {
-        return (
-            <div className={`h-[60px] w-[60px] border-[10px] bg-neutral m-5
-                rounded-full box-content cursor-pointer inline-flex text-4xl font-bold text-primary
-                items-center justify-center border-secondary border-solid`}>
-                {number}
-            </ div>
-        )
+        return <RoundActionButton content={number} styles="bg-neutral m-5 text-4xl font-bold text-primary border-secondary " />
     }
 
     function renderSpace(id: string, amount: number) {
