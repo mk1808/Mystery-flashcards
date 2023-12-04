@@ -8,6 +8,8 @@
         "browse":"Przeglądaj",
         "loginTitle":"Logowanie",
         "registerTitle":"Rejestracja",
-        "notFound":"Nie znaleziono strony"
+        "notFound":"Nie znaleziono strony",
+        "whatLanguage":"Jaki język Cię interesuje?",
+        "search":"Szukaj"
     }
 }
