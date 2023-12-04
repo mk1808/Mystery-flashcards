@@ -1,10 +1,10 @@
 import RoundActionButton from "@/components/common/RoundActionButton";
-import FirstPanel from "@/components/mainPage/FirstPanel";
-import SecondPanel from "@/components/mainPage/SecondPanel";
+import FirstPanel from "@/components/main/panels/FirstPanel";
+import SecondPanel from "@/components/main/panels/SecondPanel";
 import { getDictionary } from "@/dictionaries/dictionaries"
 import { ArrowLongDownIcon } from '@heroicons/react/24/solid'
-import FirstSecondDivider from "@/components/mainPage/FirstSecondDivider";
-import SecondThirdDivider from "@/components/mainPage/SecondThirdDivider";
+import FirstSecondDivider from "@/components/main/panels/FirstSecondDivider";
+import SecondThirdDivider from "@/components/main/panels/SecondThirdDivider";
 import FlashcardSetsSearch from "@/components/main/search/FlashcardSetsSearch";
 
 export default async function Page({ params }: { params: { locale: string } }) {

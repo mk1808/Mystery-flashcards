@@ -1,4 +1,4 @@
-import styles from '@/components/mainPage/styles.module.scss'
+import styles from '@/components/main/panels/styles.module.scss'
 
 export default function FirstPanel() {
 
