@@ -24,8 +24,8 @@ export default function UserStatistics({ locale }: { locale: string }) {
     function renderCell(title: string, value: string) {
         return (
             <div className="grid grid-cols-1 text-center p-10">
-                <div className="h-[100px]">{title}</div>
-                <div>{value}</div>
+                <div className="font-bold">{title}</div>
+                <div className="mt-[40px] mb-[20px]">{value}</div>
             </div>
         );
     }
