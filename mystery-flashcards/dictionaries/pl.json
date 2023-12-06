@@ -1,15 +1,25 @@
 {
     "common": {
         "mainPage": "Strona główna",
-        "searchSets":"Szukaj kolekcji",
-        "login":"Zaloguj",
-        "register":"Zarejestruj",
-        "account":"Konto",
-        "browse":"Przeglądaj",
-        "loginTitle":"Logowanie",
-        "registerTitle":"Rejestracja",
-        "notFound":"Nie znaleziono strony",
-        "whatLanguage":"Jaki język Cię interesuje?",
-        "search":"Szukaj"
+        "searchSets": "Szukaj kolekcji",
+        "login": "Zaloguj",
+        "register": "Zarejestruj",
+        "account": "Konto",
+        "browse": "Przeglądaj",
+        "loginTitle": "Logowanie",
+        "registerTitle": "Rejestracja",
+        "notFound": "Nie znaleziono strony",
+        "whatLanguage": "Jaki język Cię interesuje?",
+        "search": "Szukaj",
+        "helloUser": "Witaj",
+        "userLevel": "Poziom",
+        "availableLevels": "Dostępne poziomy",
+        "userRange": "Ranga",
+        "userPoints": "Liczba punktów",
+        "toNextLevel": "Do następnego poziomu brakuje",
+        "userTestsCount": "Liczba testów",
+        "learnedWordsCount": "Liczba nauczonych słówek",
+        "userAccountEdit": "Edycja konta",
+        "userAvatarAlt": "Zdjęcie użytkownika"
     }
 }
