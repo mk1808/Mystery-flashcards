@@ -7,7 +7,7 @@ import React from 'react'
 export default function UserDetails({ params }: { params: { locale: string } }) {
 
   return (
-    <Card title={<UserHeader locale={params.locale} />} className='h-fit w-[1200px]'>
+    <Card title={<UserHeader locale={params.locale} />} className='h-fit w-[1000px] px-[100px]'>
       <UserStatistics locale={params.locale} />
       <UserEdit locale={params.locale} />
     </Card>

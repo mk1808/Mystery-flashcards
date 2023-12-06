@@ -8,7 +8,7 @@ export default function UserEdit({ locale }: { locale: string }) {
     const dictionary = use(getDictionary(locale));
     return (
         <div>
-            <Title text={"Edycja konta"} />
+            <Title text={dictionary.common.userAccountEdit} />
             <div className="grid grid-cols-2 gap-4">
                 {renderUserAvatar()}
                 {renderUserEditForm()}
@@ -23,7 +23,7 @@ export default function UserEdit({ locale }: { locale: string }) {
                     src="/images/defaultAvatar.jpg"
                     width={300}
                     height={200}
-                    alt="User avatar"
+                    alt={dictionary.common.userAvatarAlt}
                 />
             </div>
         );

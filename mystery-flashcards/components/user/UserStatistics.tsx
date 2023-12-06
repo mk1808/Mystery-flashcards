@@ -7,16 +7,16 @@ export default function UserStatistics({ locale }: { locale: string }) {
     return (
         <div className="grid grid-cols-2 mt-10 text-xl">
             <div className="border-r-4 border-b-4  border-secondary border-dashed">
-                {renderCell("Liczba punktów", "300")}
+                {renderCell(dictionary.common.userPoints, "300")}
             </div>
             <div className="border-b-4 border-secondary border-dashed">
-                {renderCell("Do następnego poziomu brakuje", "300")}
+                {renderCell(dictionary.common.toNextLevel, "300")}
             </div>
             <div className="border-r-4 border-secondary border-dashed">
-                {renderCell("Liczba testów", "10")}
+                {renderCell(dictionary.common.userTestsCount, "10")}
             </div>
             <div>
-                {renderCell("Liczba nauczonych słówek", "10")}
+                {renderCell(dictionary.common.learnedWordsCount, "10")}
             </div>
         </div>
     )
