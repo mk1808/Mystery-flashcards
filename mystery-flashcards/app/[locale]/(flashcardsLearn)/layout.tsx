@@ -1,9 +1,10 @@
 import Sidebar from '@/components/Sidebar'
 import React from 'react'
 
-function FlashcardsLayout({ children, locale, flashcardsSidebar }: { children: any, flashcardsSidebar: any, locale: any }) {
+function FlashcardsLayout({ children, locale, sidebar }: { children: any, locale: any, sidebar:any }) {
+    
     return (
-        <Sidebar drawerContent={flashcardsSidebar}>{children}</Sidebar>
+        <Sidebar drawerContent={sidebar}>{children}</Sidebar>
     )
 }
 
