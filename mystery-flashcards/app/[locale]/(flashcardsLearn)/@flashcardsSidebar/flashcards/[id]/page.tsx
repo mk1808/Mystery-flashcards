@@ -1,11 +1,7 @@
-import FlashcardContainer from '@/components/common/FlashcardContainer';
-import { FlashcardT } from '@/models/Flashcard'
-import { HeartIcon } from "@heroicons/react/24/outline"
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
-
 import React from 'react'
 
-export default function FlashcardsDetails({ params }: { params: { id: String } }) {
+export default function FlashcardsDetailsSidebar({ params }: { params: { id: String } }) {
   return (
     <div>
       <h1 className="text-4xl text-center mt-3 mb-8">Zwierzęta</h1>

@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function FlashcardsEdit({ params }: { params: { id: String } }) {
+export default function FlashcardsEditSidebar({ params }: { params: { id: String } }) {
   return (
-    <div>FlashcardsEdit {params.id}</div>
+    <div>FlashcardsEditSidebar {params.id}</div>
   )
 }
