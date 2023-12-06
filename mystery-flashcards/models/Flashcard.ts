@@ -23,7 +23,8 @@ export type FlashcardT = {
     _id?: string,
     wordLang1?: string,
     wordLang2?: string,
-    description1?: string
+    description1?: string,
+    description2?: string,
     givenAnswer?: string
 };
 
