@@ -6,8 +6,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --main-blue:hsla(197, 96%, 72%, 1);
-  --main-purple:hsla(294, 100%, 55%, 1);
+  --main-blue: hsla(197, 96%, 72%, 1);
+  --main-purple: hsla(294, 100%, 55%, 1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,8 +20,16 @@
 
 body {
   background: var(--main-blue);
-  background: linear-gradient(135deg, var(--main-blue) 5%,  var(--main-purple) 100%);
-  background: -moz-linear-gradient(135deg,  var(--main-blue) 5%,  var(--main-purple) 100%);
-  background: -webkit-linear-gradient(135deg,  var(--main-blue) 5%,  var(--main-purple) 100%);
+  background: linear-gradient(135deg, var(--main-blue) 5%, var(--main-purple) 100%);
+  background: -moz-linear-gradient(135deg, var(--main-blue) 5%, var(--main-purple) 100%);
+  background: -webkit-linear-gradient(135deg, var(--main-blue) 5%, var(--main-purple) 100%);
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#74D5FC", endColorstr="#E81CFF", GradientType=1);
+}
+
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
 }
