@@ -1,6 +1,5 @@
 import Card from '@/components/Card'
-import AuthTitle from '@/components/auth/AuthTitle'
-import Title from '@/components/common/Title'
+import LearnSubmitButtons from '@/components/learn/LearnSubmitButtons'
 import LearnTitle from '@/components/learn/LearnTitle'
 import React from 'react'
 
@@ -11,8 +10,7 @@ function LearnLayout({ children }: { children: any }) {
                 {children}
             </Card>
             <div className='grid justify-center'>
-                <button className="btn btn-primary mb-3 btn-wide">Zatwierdź odpowiedź</button>
-                <button className="btn btn-secondary mb-3 btn-wide">Zakończ naukę</button>
+                <LearnSubmitButtons/>
             </div >
 
         </div>
