@@ -5,7 +5,7 @@ export default function AuthLayout({ children, params }: any) {
     
     return (
         <div className="my-5">
-            <Card title={<AuthTitle/>}>
+            <Card title={<AuthTitle locale="" />}>
                 {children}
             </Card>
         </div>
