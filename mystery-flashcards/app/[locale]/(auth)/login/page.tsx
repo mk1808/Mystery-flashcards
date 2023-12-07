@@ -19,11 +19,11 @@ async function Login({ locale }: { locale: string }) {
   function renderInput() {
     return (
       <div className="mt-6">
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control w-full ">
           <div className="label">
             <span className="label-text">What is your name?</span>
           </div>
-          <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+          <input type="text" placeholder="Type here" className="input input-bordered w-full " />
         </label>
       </div>
     )
