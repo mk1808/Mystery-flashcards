@@ -5,7 +5,7 @@ import { use } from "react";
 export default function UserStatistics({ locale }: { locale: string }) {
     const dictionary = use(getDictionary(locale));
     return (
-        <div className="grid grid-cols-2 mt-10 text-xl">
+        <div className="grid grid-cols-2 my-20 text-xl">
             <div className="border-r-4 border-b-4  border-secondary border-dashed">
                 {renderCell(dictionary.common.userPoints, "300")}
             </div>

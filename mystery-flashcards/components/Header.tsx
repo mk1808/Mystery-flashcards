@@ -2,7 +2,7 @@ import { getDictionary } from '@/dictionaries/dictionaries';
 import Link from 'next/link'
 import React from 'react'
 
-async function Header({ locale }:  { locale: string }) {
+async function Header({ locale }: { locale: string }) {
     const dictionary = await getDictionary(locale);
     const mainMenuElements = [
         {
@@ -39,7 +39,7 @@ async function Header({ locale }:  { locale: string }) {
                                 <summary>
                                     {dictionary.common.account}
                                 </summary>
-                                <ul className="p-2 bg-base-100 rounded-t-none">
+                                <ul className="p-2 bg-base-100 rounded-t-none z-20 right-0">
                                     {nestedMenuElements.map(renderMenuElement)}
                                 </ul>
                             </details>
