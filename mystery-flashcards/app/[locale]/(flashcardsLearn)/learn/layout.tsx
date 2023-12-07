@@ -1,12 +1,13 @@
 import Card from '@/components/Card'
 import AuthTitle from '@/components/auth/AuthTitle'
 import Title from '@/components/common/Title'
+import LearnTitle from '@/components/learn/LearnTitle'
 import React from 'react'
 
 function LearnLayout({ children }: { children: any }) {
     return (
         <div className='grid items-start'>
-            <Card title={<Title text={"Nauka"}></Title>} className='h-[60vh] w-[1000px] mb-8'>
+            <Card title={<LearnTitle></LearnTitle>} className='h-[60vh] w-[1000px] mb-8'>
                 {children}
             </Card>
             <div className='grid justify-center'>

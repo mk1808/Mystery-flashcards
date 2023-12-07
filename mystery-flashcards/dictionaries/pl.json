@@ -20,6 +20,9 @@
         "userTestsCount": "Liczba testów",
         "learnedWordsCount": "Liczba nauczonych słówek",
         "userAccountEdit": "Edycja konta",
-        "userAvatarAlt": "Zdjęcie użytkownika"
+        "userAvatarAlt": "Zdjęcie użytkownika",
+        "learnTitle": "Nauka",
+        "testTitle": "Test",
+        "answersResultsTitle": "Wyniki i odpowiedzi"
     }
 }
