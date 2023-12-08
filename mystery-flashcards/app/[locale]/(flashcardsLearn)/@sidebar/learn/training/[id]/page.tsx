@@ -1,7 +1,5 @@
-
-import SingleSidebarStat from '@/components/common/SIngleSidebarStat';
 import SingleSidebarInfo from '@/components/common/SingleSidebarInfo';
-import { ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
+import SingleSidebarStat from '@/components/common/SingleSidebarStat';
 import { ChartBarIcon } from "@heroicons/react/24/outline";
 import React from 'react'
 
