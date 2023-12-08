@@ -1,3 +1,4 @@
+'use client'
 import FlashcardContainer from '@/components/common/FlashcardContainer';
 import { FlashcardT } from '@/models/Flashcard';
 import { HeartIcon } from '@heroicons/react/24/outline';
@@ -12,12 +13,17 @@ export default function NewFlashcards({ params }: { params: { id: String } }) {
   }
 
   const flashcards: FlashcardT[] = Array(20).fill(singleFlashcard);
+
+  function onDelete() {
+    console.log("onDelete")
+  }
+
   return (
     <>
       <div className="w-[1000px]">
         {renderActionButtons()}
         {flashcards.map(card => <FlashcardContainer key={card.wordLang1} card={card} renderInput={renderInput}
-        renderTextarea={renderTextarea}
+          renderTextarea={renderTextarea} onDelete={onDelete}
         />)}
       </div>
       <div>FlashcardsDetails {params.id}</div>
@@ -33,7 +39,7 @@ export default function NewFlashcards({ params }: { params: { id: String } }) {
     )
   }
 
-  function renderInput(label:any="What is your name?") {
+  function renderInput(label: any = "What is your name?") {
     return (
       <label className="form-control w-full ">
         <div className="label">
@@ -44,14 +50,14 @@ export default function NewFlashcards({ params }: { params: { id: String } }) {
     )
   }
 
-  function renderTextarea(){
+  function renderTextarea() {
     return (
       <label className="form-control">
-  <div className="label">
-    <span className="label-text">Your bio</span>
-  </div>
-  <textarea className="textarea textarea-bordered h-24" placeholder="Bio"></textarea>
-</label>
+        <div className="label">
+          <span className="label-text">Your bio</span>
+        </div>
+        <textarea className="textarea textarea-bordered h-24" placeholder="Bio"></textarea>
+      </label>
     )
   }
 }

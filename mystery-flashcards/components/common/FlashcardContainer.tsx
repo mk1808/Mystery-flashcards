@@ -1,7 +1,18 @@
 import { FlashcardT } from '@/models/Flashcard'
 import React from 'react'
+import { TrashIcon } from "@heroicons/react/24/outline";
 
-function FlashcardContainer({ card, renderInput, renderTextarea }: { card: FlashcardT, renderInput: any, renderTextarea:any }) {
+function FlashcardContainer({
+  card,
+  renderInput,
+  renderTextarea,
+  onDelete
+}: {
+  card: FlashcardT,
+  renderInput: any,
+  renderTextarea: any,
+  onDelete?: () => any
+}) {
   return (
     <div className="card w-[1000px] bg-base-100 shadow-xl mb-10">
       <div className="card-body">
@@ -14,7 +25,7 @@ function FlashcardContainer({ card, renderInput, renderTextarea }: { card: Flash
             {renderRightSide()}
           </div>
         </div>
-
+        {renderDeleteIcon()}
       </div>
     </div>
   )
@@ -51,6 +62,14 @@ function FlashcardContainer({ card, renderInput, renderTextarea }: { card: Flash
         <p>{card.description2}</p>
       </div>
     );
+  }
+
+  function renderDeleteIcon() {
+    return onDelete && (
+      <div className='absolute top-5 right-8 cursor-pointer'>
+        <TrashIcon className="h-6 w-6 text-red-500" onClick={onDelete} />
+      </div>
+    )
   }
 }
 
