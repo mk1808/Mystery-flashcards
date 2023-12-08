@@ -1,8 +1,10 @@
+"use client"
 import RoundActionButton from '@/components/common/RoundActionButton'
 import React from 'react'
 import { ArrowLongDownIcon } from '@heroicons/react/24/solid'
 import Steps from '@/components/user/Steps'
 import Card from '@/components/Card'
+import Modal from '@/components/common/Modal'
 
 function Playground() {
     return (
@@ -32,12 +34,12 @@ function Playground() {
         return <ArrowLongDownIcon className="h-11 w-11" />
     }
 
-    function renderStepsCard(){
-        return (
-            <Card title="" className=' w-[1000px] mb-8'>
-                <Steps />
-            </Card>
-        )
+    function renderStepsCard() {
+        return <Modal modalTrigger={<button className="btn">open modal</button>}
+            dialogHeader={<h3 className="font-bold text-lg">Hello!</h3>}
+            dialogActions={<button className="btn">Close</button>}
+            dialogContent={<Steps />}
+        />
     }
 }
 
