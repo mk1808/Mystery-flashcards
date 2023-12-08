@@ -1,6 +1,8 @@
 import RoundActionButton from '@/components/common/RoundActionButton'
 import React from 'react'
 import { ArrowLongDownIcon } from '@heroicons/react/24/solid'
+import Steps from '@/components/user/Steps'
+import Card from '@/components/Card'
 
 function Playground() {
     return (
@@ -22,12 +24,20 @@ function Playground() {
                     <div style={{ width: 200, height: 200 }} className="bg-primary"></div>
                 </div>
             </div>
-
+            {renderStepsCard()}
         </div>
     )
 
     function getButtonContent() {
         return <ArrowLongDownIcon className="h-11 w-11" />
+    }
+
+    function renderStepsCard(){
+        return (
+            <Card title="" className=' w-[1000px] mb-8'>
+                <Steps />
+            </Card>
+        )
     }
 }
 
