@@ -36,7 +36,7 @@ function Playground() {
             </div>
             <MySelect label="Język" options={selectOptions}/>
             <MyTextarea label="Opis" placeholder="Wpisz opis"/>
-            <MyInput label="Nazwa" placeholder="Podaj nazwę"/>
+            <MyInput label="Nazwa" placeholder="Podaj nazwę" inputParams=""/>
         </div>
     )
 
