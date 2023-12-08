@@ -25,11 +25,3 @@ body {
   background: -webkit-linear-gradient(135deg, var(--main-blue) 5%, var(--main-purple) 100%);
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#74D5FC", endColorstr="#E81CFF", GradientType=1);
 }
-
-.tooltip {
-  @apply invisible absolute;
-}
-
-.has-tooltip:hover .tooltip {
-  @apply visible z-50;
-}
