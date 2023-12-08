@@ -18,7 +18,11 @@ export default function UserRangesModal({ locale }: { locale: string }) {
     />
 
     function renderDialogTrigger() {
-        return <InformationCircleIcon className="h-6 w-6 text-secondary" />
+        return (
+            <div className="tooltip tooltip-right" data-tip={dictionary.common.availableLevels}>
+                <InformationCircleIcon className="h-6 w-6 ml-2 text-secondary cursor-pointer" />
+            </div>
+        )
     }
 
     function renderDialogHeader() {
