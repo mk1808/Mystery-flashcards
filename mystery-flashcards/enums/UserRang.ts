@@ -4,7 +4,7 @@ export type UserRang = {
     pointsFrom: number
 };
 
-export const UserRangs: UserRang[] = [
+export const UserRanges: UserRang[] = [
     { id: 1, name: "Przedszkolak", pointsFrom: 0 },
     { id: 2, name: "Uczeń", pointsFrom: 100 },
     { id: 3, name: "Gimnazista", pointsFrom: 1000 },

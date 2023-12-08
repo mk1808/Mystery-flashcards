@@ -1,11 +1,12 @@
 
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { use } from "react";
-import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import Title from "../common/Title";
+import UserRangesModal from "./UserRangesModal";
 
 export default function UserHeader({ locale }: { locale: string }) {
     const dictionary = use(getDictionary(locale));
+
     return (
         <div className="text-center ">
             {renderTitle()}
@@ -23,8 +24,8 @@ export default function UserHeader({ locale }: { locale: string }) {
             <div className="text-2xl flex items-center place-content-center ">
                 {`${dictionary.common.userLevel}: 3`}
                 <div className='has-tooltip'>
-                    <span className='tooltip rounded shadow-lg ms-4 p-1 bg-neutral text-primary -mt-8'>{`${dictionary.common.availableLevels}: `}</span>
-                    <InformationCircleIcon className="h-6 w-6 text-secondary" />
+                    <span className='tooltip rounded shadow-lg ms-4 p-1 bg-neutral text-primary -mt-8'>{`${dictionary.common.availableLevels} `}</span>
+                    <UserRangesModal locale={locale} />
                 </div>
             </div>
         );
