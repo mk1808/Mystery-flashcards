@@ -6,7 +6,7 @@ import Steps from '@/components/common/Steps'
 import Card from '@/components/Card'
 import Modal from '@/components/common/Modal'
 
-function Playground() {
+function Playground() { 
     return (
         <div>
             <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
@@ -48,21 +48,22 @@ function Playground() {
 
     function renderCard() {
         return (
-<> <div className='w-3 h-3 bg-black'>abc</div>
-            <div className="card w-[1000px] bg-base-100 shadow-xl mb-10">
-                <div className="card-body">
-                    <div className="flex justify-around">
-                        <div className="w-full flex justify-end">
-                          text  
-                        </div>
-                        <div className="divider divider-horizontal"></div>
-                        <div className="w-full">
-                          text  
+            <>
+                <div className='w-3 h-3 bg-black'>abc</div>
+                <div className="card w-[1000px] bg-base-100 shadow-xl mb-10">
+                    <div className="card-body">
+                        <div className="flex justify-around">
+                            <div className="w-full flex justify-end">
+                                text
+                            </div>
+                            <div className="divider divider-horizontal"></div>
+                            <div className="w-full">
+                                text
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-</>
+            </>
         )
     }
 }
