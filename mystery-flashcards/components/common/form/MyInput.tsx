@@ -5,20 +5,23 @@ function MyInput({
     placeholder = "",
     className = "",
     inputParams,
-    type = "text"
+    type = "text",
+    isValid = true
 }: {
     label: string,
     placeholder?: string,
     className?: string,
     inputParams: any,
-    type?: string
+    type?: string,
+    isValid?: boolean
 }) {
+    const errorClass = () => isValid ? "" : "input-error";
     return (
         <label className={`form-control w-full mb-3${className}`}>
             <div className="label">
                 <span className="label-text">{label}</span>
             </div>
-            <input type={type} placeholder={placeholder} className="input input-bordered w-full" {...inputParams} />
+            <input type={type} placeholder={placeholder} className={`input input-bordered w-full ${errorClass()}`} {...inputParams} />
         </label>
     )
 }

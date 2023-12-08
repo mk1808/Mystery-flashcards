@@ -27,7 +27,7 @@ const config: Config = {
           "info": "#ffffff",
           "success": "#bbf7d0",
           "warning": "#ffffff",
-          "error": "#ffffff",
+          "error": "#f00",
         },
       },
     ],
