@@ -1,5 +1,6 @@
 import SingleSidebarInfo from '@/components/common/SingleSidebarInfo';
 import SingleSidebarStat from '@/components/common/SingleSidebarStat';
+import StatisticsIcon from '@/components/common/StatisticsIcon';
 import { ChartBarIcon } from "@heroicons/react/24/outline";
 import React from 'react'
 
@@ -12,7 +13,7 @@ export default function LearnTrainingSidebar({ params }: { params: { id: String 
       <SingleSidebarInfo title="Języki" value="pl -> ang"/>
       <SingleSidebarInfo title="Poziom" value="A2"/>
       <div className="divider"></div>
-      {renderStatIcon()}
+      <StatisticsIcon/>
       <SingleSidebarStat title="Liczba odpowiedzi" value="10"/>
       <SingleSidebarStat title="Liczba poprawnych odpowiedzi" value="8"/>
       <SingleSidebarStat title="% poprawnych odpowiedzi" value="80"/>
@@ -30,16 +31,6 @@ export default function LearnTrainingSidebar({ params }: { params: { id: String 
           <div className="badge badge-secondary badge-outline mr-2">szkolne</div>
         </div>
       </>
-    )
-  }
-
-  function renderStatIcon() {
-    return (
-      <div className='flex justify-center'>
-        <div className='py-[4px] px-[8px] bg-base-100 border border-base-100 rounded '>
-          <ChartBarIcon className="h-8 w-8 text-primary" />
-        </div>
-      </div>
     )
   }
 }
