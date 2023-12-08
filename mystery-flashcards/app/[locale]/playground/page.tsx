@@ -5,8 +5,12 @@ import { ArrowLongDownIcon } from '@heroicons/react/24/solid'
 import Steps from '@/components/common/Steps'
 import Card from '@/components/Card'
 import Modal from '@/components/common/Modal'
+import MySelect from '@/components/common/form/MySelect'
+import MyTextarea from '@/components/common/form/MyTextarea'
+import MyInput from '@/components/common/form/MyInput'
 
-function Playground() { 
+function Playground() {
+    const selectOptions = [{value:"eng", label:"angielski"}, {value:"ge", label:"niemiecki"}]
     return (
         <div>
             <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
@@ -30,7 +34,9 @@ function Playground() {
             <div className='my-5'>
                 {renderCard()}
             </div>
-
+            <MySelect label="Język" options={selectOptions}/>
+            <MyTextarea label="Opis" placeholder="Wpisz opis"/>
+            <MyInput label="Nazwa" placeholder="Podaj nazwę"/>
         </div>
     )
 
