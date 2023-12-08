@@ -27,6 +27,10 @@ function Playground() {
                 </div>
             </div>
             {renderStepsCard()}
+            <div className='my-5'>
+                {renderCard()}
+            </div>
+
         </div>
     )
 
@@ -40,6 +44,26 @@ function Playground() {
             dialogActions={<button className="btn">Close</button>}
             dialogContent={<Steps steps={[{ title: 1 }, { title: 2 }, { title: 3 }]} />}
         />
+    }
+
+    function renderCard() {
+        return (
+<> <div className='w-3 h-3 bg-black'>abc</div>
+            <div className="card w-[1000px] bg-base-100 shadow-xl mb-10">
+                <div className="card-body">
+                    <div className="flex justify-around">
+                        <div className="w-full flex justify-end">
+                          text  
+                        </div>
+                        <div className="divider divider-horizontal"></div>
+                        <div className="w-full">
+                          text  
+                        </div>
+                    </div>
+                </div>
+            </div>
+</>
+        )
     }
 }
 

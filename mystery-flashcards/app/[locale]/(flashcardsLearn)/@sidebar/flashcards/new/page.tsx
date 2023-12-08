@@ -4,21 +4,16 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 export default function NewFlashcardsSidebar({ params }: { params: { id: String } }) {
   return (
     <div>
-      <h1 className="text-4xl text-center mt-3 mb-8">Zwierzęta</h1>
-      <div className="flex">
-        <div className="badge badge-secondary badge-outline mr-2">nowe</div>
-        <div className="badge badge-secondary badge-outline mr-2">podstawy</div>
-        <div className="badge badge-secondary badge-outline mr-2">szkolne</div>
-      </div>
+      <h1 className="text-4xl text-center mt-3 mb-8">Nowa kolekcja</h1>
       <div className="divider"></div>
       {renderSingleInfo("Liczba kart", "20")}
-      {renderSingleInfo("Języki", "pl -> ang")}
-      {renderSingleInfo("Poziom", "A2")}
-      <div className="divider"></div>
-      {renderSingleInfo("Twórca", "admin0101")}
-      {renderSingleInfo("Data dodania", "20.02.2023")}
-      {renderSingleInfo("Popularność", "100")}
-      <br />
+      {renderInput()}
+      {renderInput()}
+      {renderInput()}
+      {renderInput()}
+      {renderInput()}
+      {renderInput()}
+
     </div>
   )
 
@@ -32,6 +27,17 @@ export default function NewFlashcardsSidebar({ params }: { params: { id: String 
 
         <span className="text-xl">{value}</span>
       </div>
+    )
+  }
+
+  function renderInput() {
+    return (
+      <label className="form-control w-full ">
+        <div className="label">
+          <span className="label-text">What is your name?</span>
+        </div>
+        <input type="text" placeholder="Type here" className="input input-bordered w-full" />
+      </label>
     )
   }
 }
