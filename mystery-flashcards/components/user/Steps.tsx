@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from '@/components/user/styles.module.scss'
 
 function Steps() {
     return (
@@ -93,6 +94,7 @@ function Steps() {
                     </div>
                 </div>
             </div>
+            <button className={`${styles.btn} ${styles['btn--primary']}`}>Decline</button>
         </div>
     )
 }
