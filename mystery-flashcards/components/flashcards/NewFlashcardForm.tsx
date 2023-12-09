@@ -5,6 +5,7 @@ import React from 'react'
 import MyInput from '../common/form/MyInput';
 import { useForm } from 'react-hook-form';
 import MySelect from '../common/form/MySelect';
+import MyToggle from '../common/form/MyToggle';
 
 function NewFlashcardForm({ dictionary }: { dictionary: any }) {
     const langOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
@@ -62,6 +63,11 @@ function NewFlashcardForm({ dictionary }: { dictionary: any }) {
                     noValueLabel="Wybierz hashtagi"
                     inputParams={{ ...register("hashtags") }}
                     isValid={isValid("hashtags")} />
+                <MyToggle
+                    label="Publiczna"
+                    inputParams={{ ...register("isPublic") }}
+                    isValid={isValid("isPublic")}
+                />
 
 
             </div>
