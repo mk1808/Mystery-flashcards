@@ -1,9 +1,13 @@
-import { getDictionary } from '@/dictionaries/dictionaries';
 import Link from 'next/link'
 import React from 'react'
 
-async function Header({ locale }: { locale: string }) {
-    const dictionary = await getDictionary(locale);
+async function Header({
+    locale, 
+    dictionary 
+}: {
+    locale:string, 
+    dictionary: any 
+}) {
     const mainMenuElements = [
         {
             name: dictionary.common.mainPage,

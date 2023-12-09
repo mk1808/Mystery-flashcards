@@ -4,10 +4,8 @@ import React from 'react'
 import { use } from "react";
 import Title from '../common/Title'
 import { usePathname } from 'next/navigation'
-import { getDictionary } from '@/dictionaries/dictionaries';
 
-function AuthTitle({ locale }:  { locale: string }) {
-    const dictionary = use(getDictionary(locale));
+function AuthTitle({dictionary}:{dictionary:any}) {
     const pathname = usePathname();
     const title = pathname.includes("login") ? dictionary.common.loginTitle : dictionary.common.registerTitle;
     return (

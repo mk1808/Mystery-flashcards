@@ -9,7 +9,33 @@ import MySelect from '@/components/common/form/MySelect'
 import MyTextarea from '@/components/common/form/MyTextarea'
 import MyInput from '@/components/common/form/MyInput'
 
-function Playground() {
+
+//import { getDictionary } from '@/dictionaries/dictionaries';
+import { use } from 'react'
+import { useForm} from 'react-hook-form';
+
+function Playground({ locale }: { locale: string }) {
+     //   const dictionary = use(getDictionary(locale));
+        const {
+          register,
+          handleSubmit,
+          watch,
+        //  getFieldState,
+          formState
+        } = useForm<LoginForm>({mode: 'onBlur'});
+      
+        const onSubmit = (data: LoginForm, e:any) => {
+          e.preventDefault()
+          console.log("subm")
+          console.log(event)
+        };
+        const onErrors = (errors:any) => console.error(errors);
+        const isValid = (name:string)=>{
+         // console.log(getFieldState("name", formState));
+       // const {errors} = formState;
+        console.log(formState.errors.root)
+           return true;};
+      //  const errorClass = () => isValid ? "" : "input-error";
     const selectOptions = [{value:"eng", label:"angielski"}, {value:"ge", label:"niemiecki"}]
     return (
         <div>
@@ -37,6 +63,27 @@ function Playground() {
             <MySelect label="Język" options={selectOptions}/>
             <MyTextarea label="Opis" placeholder="Wpisz opis"/>
             <MyInput label="Nazwa" placeholder="Podaj nazwę" inputParams=""/>
+            <form onSubmit={handleSubmit(onSubmit, onErrors)}>
+      <div className='px-24'>
+  
+        <MyInput
+          label="Login"
+          placeholder="Podaj login"
+          inputParams={{...register("name", { required: true })}}
+          isValid={isValid("name")} />
+        <MyInput
+          label="Hasło"
+          placeholder="Podaj hasło"
+          type="password"
+          inputParams={{...register("password", { required: true })}}
+          isValid={isValid("password")} />
+
+        <div className='grid justify-center mt-6'>
+          <button type="submit" className="btn btn-primary mb-3 btn-wide">Zaloguj</button>
+          <button className="btn btn-secondary btn-outline  mb-3 btn-wide">Zarejestruj</button>
+        </div >
+      </div>
+    </form>
         </div>
     )
 

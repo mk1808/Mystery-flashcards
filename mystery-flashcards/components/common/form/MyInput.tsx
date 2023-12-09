@@ -15,13 +15,13 @@ function MyInput({
     type?: string,
     isValid?: boolean
 }) {
-    const errorClass = () => isValid ? "" : "input-error";
+    const errorClass = (isValid:any) => isValid ? "" : "input-error";
     return (
         <label className={`form-control w-full mb-3${className}`}>
             <div className="label">
                 <span className="label-text">{label}</span>
             </div>
-            <input type={type} placeholder={placeholder} className={`input input-bordered w-full ${errorClass()}`} {...inputParams} />
+            <input type={type} placeholder={placeholder} className={`input input-bordered w-full ${errorClass(isValid)}`} {...inputParams} />
         </label>
     )
 }

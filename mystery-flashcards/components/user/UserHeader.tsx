@@ -1,11 +1,8 @@
-
-import { getDictionary } from "@/dictionaries/dictionaries";
 import { use } from "react";
 import Title from "../common/Title";
 import UserRangesModal from "./UserRangesModal";
 
-export default function UserHeader({ locale }: { locale: string }) {
-    const dictionary = use(getDictionary(locale));
+export default function UserHeader({ dictionary }: { dictionary: any }) {
 
     return (
         <div className="text-center ">
@@ -23,7 +20,7 @@ export default function UserHeader({ locale }: { locale: string }) {
         return (
             <div className="text-2xl flex items-center place-content-center ">
                 {`${dictionary.common.userLevel}: 3`}
-                    <UserRangesModal locale={locale} />
+                    <UserRangesModal dictionary={dictionary} />
                 </div>
            
         );

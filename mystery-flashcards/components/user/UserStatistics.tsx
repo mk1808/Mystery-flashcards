@@ -1,9 +1,6 @@
-
-import { getDictionary } from "@/dictionaries/dictionaries";
 import { use } from "react";
 
-export default function UserStatistics({ locale }: { locale: string }) {
-    const dictionary = use(getDictionary(locale));
+export default function UserStatistics({ dictionary }: { dictionary: any }) {
     return (
         <div className="grid grid-cols-2 my-20 text-xl">
             <div className="border-r-4 border-b-4  border-secondary border-dashed">

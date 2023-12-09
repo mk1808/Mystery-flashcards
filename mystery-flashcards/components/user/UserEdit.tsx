@@ -1,11 +1,9 @@
 
-import { getDictionary } from "@/dictionaries/dictionaries";
 import { use } from "react";
 import Image from 'next/image'
 import Title from "../common/Title";
 
-export default function UserEdit({ locale }: { locale: string }) {
-    const dictionary = use(getDictionary(locale));
+export default function UserEdit({ dictionary }: { dictionary: any }) {
     return (
         <div>
             <Title text={dictionary.common.userAccountEdit} />

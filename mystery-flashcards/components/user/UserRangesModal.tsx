@@ -3,10 +3,8 @@ import Modal from "../common/Modal"
 import Steps, { Step } from "../common/Steps"
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { use } from "react";
-import { getDictionary } from "@/dictionaries/dictionaries";
 
-export default function UserRangesModal({ locale }: { locale: string }) {
-    const dictionary = use(getDictionary(locale));
+export default function UserRangesModal({ dictionary }: { dictionary: any }) {
 
     function getRanges(): Step[] {
         return UserRanges.map(rang => ({ title: rang.name, description: rang.pointsFrom }));

@@ -1,8 +1,8 @@
-import { getDictionary } from '@/dictionaries/dictionaries';
+import { fetchDictionary } from '@/dictionaries/dictionaries';
 import React from 'react'
 
-async function Register({ locale }: { locale: string }) {
-  const dictionary = await getDictionary(locale);
+async function Register({ params }: { params: { locale: string } }) {
+  const dictionary = await fetchDictionary(params.locale);
   return (
     <div className='px-24'>
       {renderInput()}
