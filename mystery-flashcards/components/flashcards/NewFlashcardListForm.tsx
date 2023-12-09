@@ -3,7 +3,6 @@ import React from 'react'
 import FlashcardContainer from '../common/FlashcardContainer'
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
 
-
 function NewFlashcardListForm({ dictionary, flashcards }: { dictionary: any, flashcards: any }) {
 
     const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList)
