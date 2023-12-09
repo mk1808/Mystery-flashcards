@@ -4,7 +4,7 @@ import React from 'react'
 function MySelect({
     label,
     defaultValue = "",
-    noValueLabel="Pick",
+    noValueLabel = "Pick",
     options,
     inputParams,
     className = "",
@@ -12,7 +12,7 @@ function MySelect({
 }: {
     label: string,
     defaultValue?: string,
-    noValueLabel?:string,
+    noValueLabel?: string,
     options: any[],
     className?: string,
     inputParams: any,
@@ -25,7 +25,7 @@ function MySelect({
             <div className="label">
                 <span className="label-text">{label}</span>
             </div>
-            <select className={`select select-bordered w-full  ${errorSelectClass(isValid)}`}
+            <select className={`select select-bordered w-full mb-3  ${errorSelectClass(isValid)}`}
                 defaultValue={defaultValue}
                 {...inputParams}>
                 <option disabled value="">{noValueLabel}</option>

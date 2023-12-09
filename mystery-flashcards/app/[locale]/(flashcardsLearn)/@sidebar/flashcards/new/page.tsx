@@ -11,13 +11,6 @@ export default async function NewFlashcardsSidebar({ params }: { params: { id: s
       <div className="divider"></div>
       {renderSingleInfo("Liczba kart", "20")}
       <NewFlashcardForm dictionary={dictionary} />
-      {renderInput()}
-      {renderInput()}
-      {renderInput()}
-      {renderInput()}
-      {renderInput()}
-      {renderInput()}
-
     </div>
   )
 
@@ -31,17 +24,6 @@ export default async function NewFlashcardsSidebar({ params }: { params: { id: s
 
         <span className="text-xl">{value}</span>
       </div>
-    )
-  }
-
-  function renderInput() {
-    return (
-      <label className="form-control w-full ">
-        <div className="label">
-          <span className="label-text">What is your name?</span>
-        </div>
-        <input type="text" placeholder="Type here" className="input input-bordered w-full" />
-      </label>
     )
   }
 }

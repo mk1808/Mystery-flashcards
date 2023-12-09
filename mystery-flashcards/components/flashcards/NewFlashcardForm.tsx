@@ -8,6 +8,9 @@ import MySelect from '../common/form/MySelect';
 
 function NewFlashcardForm({ dictionary }: { dictionary: any }) {
     const langOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
+    const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }]
+    const levelOptions = [{ value: "A1", label: "A1" }, { value: "A2", label: "A2" }]
+
     const router = useRouter();
     const {
         register,
@@ -20,8 +23,8 @@ function NewFlashcardForm({ dictionary }: { dictionary: any }) {
 
     const onSubmit = async (data: NewFlashcardSetForm, e: any) => {
         // const response = await login(data);
-       // reset();
-       // router.push('/user')
+        // reset();
+        // router.push('/user')
         console.log(data);
     };
     const onErrors = (errors: any) => console.error(errors);
@@ -30,7 +33,6 @@ function NewFlashcardForm({ dictionary }: { dictionary: any }) {
     return (
         <form onSubmit={handleSubmit(onSubmit, onErrors)}>
             <div>
-
                 <MyInput
                     label={dictionary.common.basicName}
                     placeholder={dictionary.common.fillBasicName}
@@ -42,10 +44,29 @@ function NewFlashcardForm({ dictionary }: { dictionary: any }) {
                     noValueLabel="Wybierz język"
                     inputParams={{ ...register("lang1", { required: true }) }}
                     isValid={isValid("lang1")} />
+                <MySelect
+                    label="Język obcy"
+                    options={langOptions}
+                    noValueLabel="Wybierz język"
+                    inputParams={{ ...register("lang2", { required: true }) }}
+                    isValid={isValid("lang2")} />
+                <MySelect
+                    label="Poziom"
+                    options={levelOptions}
+                    noValueLabel="Wybierz poziom języka"
+                    inputParams={{ ...register("level", { required: true }) }}
+                    isValid={isValid("level")} />
+                <MySelect
+                    label="Hashtagi"
+                    options={hashtagsOptions}
+                    noValueLabel="Wybierz hashtagi"
+                    inputParams={{ ...register("hashtags") }}
+                    isValid={isValid("hashtags")} />
+
 
             </div>
-            <button type="submit" className="btn btn-primary mb-3 btn-wide">Zatwierdź</button>
-                 
+            <button type="submit" className="btn btn-primary my-6 btn-wide">Zatwierdź</button>
+
         </form>
     )
 }
