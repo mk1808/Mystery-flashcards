@@ -3,20 +3,25 @@ import { useForm } from 'react-hook-form';
 import MyInput from '../common/form/MyInput';
 import { isFieldValid } from '@/utils/client/FormUtils';
 import useRest from '@/hooks/useRest';
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm({ dictionary }: { dictionary: any }) {
     const { login } = useRest();
+    const router = useRouter();
     const {
         register,
         handleSubmit,
         watch,
         getFieldState,
-        formState
+        formState,
+        reset
     } = useForm<LoginForm>({ mode: 'onBlur' });
 
     const onSubmit = async (data: LoginForm, e: any) => {
         console.log(data);
         const response = await login(data);
+        reset();
+        router.push('/user')
         console.log(response)
     };
     const onErrors = (errors: any) => console.error(errors);
