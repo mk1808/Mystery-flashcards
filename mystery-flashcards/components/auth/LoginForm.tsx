@@ -2,8 +2,10 @@
 import { useForm } from 'react-hook-form';
 import MyInput from '../common/form/MyInput';
 import { isFieldValid } from '@/utils/client/FormUtils';
+import useRest from '@/hooks/useRest';
 
 export default function LoginForm({ dictionary }: { dictionary: any }) {
+    const { login } = useRest();
     const {
         register,
         handleSubmit,
@@ -12,8 +14,10 @@ export default function LoginForm({ dictionary }: { dictionary: any }) {
         formState
     } = useForm<LoginForm>({ mode: 'onBlur' });
 
-    const onSubmit = (data: LoginForm, e: any) => {
+    const onSubmit = async (data: LoginForm, e: any) => {
         console.log(data);
+        const response = await login(data);
+        console.log(response)
     };
     const onErrors = (errors: any) => console.error(errors);
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
