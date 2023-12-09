@@ -27,7 +27,9 @@
         "name":"Login",
         "password":"Hasło",
         "fillName":"Podaj login",
-        "fillPassword":"Podaj hasło"
+        "fillPassword":"Podaj hasło",
+        "basicName":"Nazwa",
+        "fillBasicName":"Podaj nazwę kolekcji"
 
     }
 }
