@@ -1,3 +1,4 @@
+import { updateElement } from "@/utils/server/arrayUtils";
 import { create } from "zustand";
 
 type State = {
@@ -25,7 +26,7 @@ const useNewFlashcardSetStore = create<State & Action>((set) => ({
     },
     flashcardsList: [getInitailFlashcard()],
     updateSidebarForm: (sidebarForm) => set(() => ({ sidebarForm: sidebarForm })),
-    updateFlashcard:(flashcardsList)=>set(() => ({ flashcardsList: flashcardsList })),
+    updateFlashcard:(flashCard)=>set((state) => ({ flashcardsList: [...updateElement(state.flashcardsList, flashCard)] })),
     addFlashcard:()=>set((state) => ({ flashcardsList: [...state.flashcardsList, getInitailFlashcard() ] })),
 
 }))

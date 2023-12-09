@@ -24,5 +24,6 @@ interface FlashcardsForm {
     wordLang1: string,
     wordLang2: string,
     description1: string,
-    description2: string
+    description2: string,
+    _id:any
 }
