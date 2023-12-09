@@ -15,8 +15,8 @@ export async function POST(request: NextRequest) {
     }
 
     const token = await signToken({ name: existingUser.name, id: existingUser.id });
-
-    return new NextResponse('Successful login!', {
+    
+    return new NextResponse(JSON.stringify({ message: 'Successful login!' }), {
         status: 200,
         headers: { 'Set-Cookie': `token=Bearer ${token}; Path=/` },
     });
