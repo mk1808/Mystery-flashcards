@@ -1,5 +1,5 @@
 import { FlashcardT } from '@/models/Flashcard'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { useForm } from 'react-hook-form';
 import MyInput from './form/MyInput';
@@ -17,9 +17,14 @@ function FlashcardContainer({
   dictionary: any
 }) {
 
+  const updateFlashcard = useNewFlashcardSetStore((state) => state.updateFlashcard);
+  const addFlashcard = useNewFlashcardSetStore((state) => state.addFlashcard)
+  const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList)
+  const allFlashCards = useRef(flashcardsList)
 
-  const updateFlashcard = useNewFlashcardSetStore((state) => state.updateFlashcard)
-
+  useEffect(() => {
+    allFlashCards.current = flashcardsList
+  }, [flashcardsList])
 
   const {
     register,
@@ -27,15 +32,18 @@ function FlashcardContainer({
     watch,
     getFieldState,
     formState,
-    reset
   } = useForm<FlashcardsForm>({ mode: 'onBlur' });
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       console.log(value, name, type)
       updateFlashcard({ ...card, ...value })
-    }
-    )
+      const lastFlashcard = allFlashCards.current[allFlashCards.current.length - 1],
+        isLast = lastFlashcard._id === card._id;
+      if (isLast) {
+        addFlashcard();
+      }
+    })
     return () => subscription.unsubscribe()
   }, [watch])
 
@@ -53,7 +61,7 @@ function FlashcardContainer({
             </div>
             <div className="divider divider-horizontal"></div>
             <div className="w-full">
-
+              {renderRightSide()}
             </div>
           </div>
           {renderDeleteIcon()}
