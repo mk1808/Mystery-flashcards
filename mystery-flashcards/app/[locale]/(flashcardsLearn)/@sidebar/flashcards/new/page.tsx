@@ -1,19 +1,16 @@
 import React from 'react'
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
+import { fetchDictionary } from '@/dictionaries/dictionaries';
+import NewFlashcardForm from '@/components/flashcards/NewFlashcardForm';
 
-export default function NewFlashcardsSidebar({ params }: { params: { id: String } }) {
+export default async function NewFlashcardsSidebar({ params }: { params: { id: string, locale: string } }) {
+  const dictionary = await fetchDictionary(params.locale);
   return (
     <div>
       <h1 className="text-4xl text-center mt-3 mb-8">Nowa kolekcja</h1>
       <div className="divider"></div>
       {renderSingleInfo("Liczba kart", "20")}
-      {renderInput()}
-      {renderInput()}
-      {renderInput()}
-      {renderInput()}
-      {renderInput()}
-      {renderInput()}
-
+      <NewFlashcardForm dictionary={dictionary} />
     </div>
   )
 
@@ -27,17 +24,6 @@ export default function NewFlashcardsSidebar({ params }: { params: { id: String 
 
         <span className="text-xl">{value}</span>
       </div>
-    )
-  }
-
-  function renderInput() {
-    return (
-      <label className="form-control w-full ">
-        <div className="label">
-          <span className="label-text">What is your name?</span>
-        </div>
-        <input type="text" placeholder="Type here" className="input input-bordered w-full" />
-      </label>
     )
   }
 }
