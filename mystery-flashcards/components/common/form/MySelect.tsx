@@ -1,24 +1,34 @@
+import { errorSelectClass } from '@/utils/client/FormUtils';
 import React from 'react'
 
 function MySelect({
     label,
-    defaultValue = "Pick one",
+    defaultValue = "",
+    noValueLabel="Pick",
     options,
-    className = ""
+    inputParams,
+    className = "",
+    isValid = true
 }: {
     label: string,
     defaultValue?: string,
+    noValueLabel?:string,
     options: any[],
-    className?: string
+    className?: string,
+    inputParams: any,
+    isValid?: boolean
 }) {
-    const renderOption = ({ value, label }: { value: any, label: any }) => <option value={value}>{label}</option>;
+    console.log(isValid)
+    const renderOption = ({ value, label }: { value: any, label: any }) => <option value={value} key={value}>{label}</option>;
     return (
         <label className={`form-control w-full ${className}`}>
             <div className="label">
                 <span className="label-text">{label}</span>
             </div>
-            <select className="select select-bordered w-full" defaultValue={defaultValue}>
-                <option disabled>{defaultValue}</option>
+            <select className={`select select-bordered w-full  ${errorSelectClass(isValid)}`}
+                defaultValue={defaultValue}
+                {...inputParams}>
+                <option disabled value="">{noValueLabel}</option>
                 {options.map(renderOption)}
             </select>
         </label>
