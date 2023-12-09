@@ -10,6 +10,7 @@ import MyTextarea from '@/components/common/form/MyTextarea'
 import MyInput from '@/components/common/form/MyInput'
 
 import { useForm } from 'react-hook-form';
+import MyToggle from '@/components/common/form/MyToggle'
 
 function Playground({ params }: { params: { locale: string } }) {
     const {
@@ -17,9 +18,9 @@ function Playground({ params }: { params: { locale: string } }) {
         handleSubmit,
         watch,
         formState
-    } = useForm<LoginForm>({ mode: 'onBlur' });
+    } = useForm<any>({ mode: 'onBlur' });
 
-    const onSubmit = (data: LoginForm, e: any) => {
+    const onSubmit = (data: any, e: any) => {
         e.preventDefault()
         console.log("subm")
         console.log(event)
@@ -58,7 +59,11 @@ function Playground({ params }: { params: { locale: string } }) {
             <MyInput label="Nazwa" placeholder="Podaj nazwę" inputParams="" />
             <form onSubmit={handleSubmit(onSubmit, onErrors)}>
                 <div className='px-24'>
-
+                    <MyToggle
+                        label="test toggle"
+                        inputParams={{ ...register("toggle1", { required: true }) }}
+                        isValid={isValid("toggle1")}
+                    />
                     <MyInput
                         label="Login"
                         placeholder="Podaj login"
