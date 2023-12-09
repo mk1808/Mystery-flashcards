@@ -1,3 +1,4 @@
+import { errorClass } from '@/utils/client/FormUtils'
 import React from 'react'
 
 function MyInput({
@@ -15,7 +16,7 @@ function MyInput({
     type?: string,
     isValid?: boolean
 }) {
-    const errorClass = (isValid:any) => isValid ? "" : "input-error";
+
     return (
         <label className={`form-control w-full mb-3${className}`}>
             <div className="label">
