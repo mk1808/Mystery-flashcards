@@ -18,7 +18,6 @@ function MySelect({
     inputParams: any,
     isValid?: boolean
 }) {
-    console.log(isValid)
     const renderOption = ({ value, label }: { value: any, label: any }) => <option value={value} key={value}>{label}</option>;
     return (
         <label className={`form-control w-full ${className}`}>
