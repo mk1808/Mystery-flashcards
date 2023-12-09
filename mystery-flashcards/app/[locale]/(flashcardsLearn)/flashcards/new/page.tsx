@@ -33,7 +33,7 @@ export default function NewFlashcards({ params }: { params: { id: String } }) {
   function renderActionButtons() {
     return (
       <div className="mb-12 flex justify-end">
-        <button className="btn btn-secondary mr-10">Anuluj</button>
+        <button className="btn btn-secondary btn-outline bg-base-100 mr-10">Anuluj</button>
         <button className="btn btn-primary">Zapisz</button>
       </div>
     )
