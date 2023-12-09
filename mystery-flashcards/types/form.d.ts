@@ -19,3 +19,10 @@ interface NewFlashcardSetForm {
     lang1: string,
     lang2: string
 }
+
+interface FlashcardsForm {
+    wordLang1: string,
+    wordLang2: string,
+    description1: string,
+    description2: string
+}
