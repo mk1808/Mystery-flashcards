@@ -6,11 +6,14 @@ import MyInput from '../common/form/MyInput';
 import { useForm } from 'react-hook-form';
 import MySelect from '../common/form/MySelect';
 import MyToggle from '../common/form/MyToggle';
+import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
 
 function NewFlashcardForm({ dictionary }: { dictionary: any }) {
     const langOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
     const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }]
     const levelOptions = [{ value: "A1", label: "A1" }, { value: "A2", label: "A2" }]
+  //  const firstName = useNewFlashcardSetStore((state) => state.firstName)
+  //  const updateFirstName = useNewFlashcardSetStore((state) => state.updateFirstName)
 
     const router = useRouter();
     const {
@@ -70,11 +73,15 @@ function NewFlashcardForm({ dictionary }: { dictionary: any }) {
                 />
 
 
-            </div>
+           </div>
             <button type="submit" className="btn btn-primary my-6 btn-wide">Zatwierdź</button>
 
         </form>
     )
 }
+
+//{firstName}
+   //   <button className="btn btn-secondary btn-outline bg-base-100 mr-10" onClick={() => updateFirstName("from sidebar")}>zmien</button>
+       
 
 export default NewFlashcardForm

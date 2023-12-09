@@ -16,7 +16,7 @@ async function NewFlashcards({ params }: { params: { id: String, locale: string 
 
   return (
     <>
-      <div className="w-[1000px]">
+      <div className="w-[1000px] h-full">
         {renderActionButtons()}
         <NewFlashcardListForm dictionary={dictionary} flashcards={flashcards}/>
       </div>
