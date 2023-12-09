@@ -1,8 +1,6 @@
-import { getDictionary } from '@/dictionaries/dictionaries';
 import React from 'react'
 
-async function Footer({ locale }:  { locale: string }) {
-    const dictionary = await getDictionary(locale);
+async function Footer({ dictionary }:  { dictionary: any }) {
     return (
         <footer className="footer p-10 mt-4 bg-base-200 text-base-content">
             <aside>

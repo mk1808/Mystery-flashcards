@@ -3,7 +3,7 @@ import SetCard from './FlashcardSetCard'
 
 import FlashcardSetsFilters from './FlashcardSetsFilters';
 
-function FlashcardSetsSearch({ dictionary }: { dictionary: any }) {
+function FlashcardSetsSearch({ dictionary }: { dictionary?: any }) {
     return (
         <div id='flashcardSetsSearch' className="mt-16">
             <FlashcardSetsFilters dictionary={dictionary} />

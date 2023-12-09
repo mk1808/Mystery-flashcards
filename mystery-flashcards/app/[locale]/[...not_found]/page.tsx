@@ -1,7 +1,7 @@
-import { getDictionary } from "@/dictionaries/dictionaries";
+import { fetchDictionary } from "@/dictionaries/dictionaries";
 
-async function NotFound({ locale }:  { locale: string }) {
-    const dictionary = await getDictionary(locale);
+async function NotFound({ params }: { params: { locale: string } }) {
+    const dictionary = await fetchDictionary(params.locale);
     return <div>{dictionary.common.notFound}</div>
 }
 
