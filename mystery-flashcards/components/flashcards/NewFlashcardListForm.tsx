@@ -5,6 +5,7 @@ import FlashcardContainer from '../common/FlashcardContainer'
 import { useRouter } from 'next/navigation';
 import { isFieldValid } from '@/utils/client/FormUtils';
 import MyInput from '../common/form/MyInput';
+import MyTextarea from '../common/form/MyTextarea';
 
 function NewFlashcardListForm({ dictionary, flashcards }: { dictionary: any, flashcards: any }) {
     const router = useRouter();
@@ -51,7 +52,7 @@ function NewFlashcardListForm({ dictionary, flashcards }: { dictionary: any, fla
 
     function renderTextarea() {
         return (
-            <MyInput
+            <MyTextarea
                 label={dictionary.common.name}
                 placeholder={dictionary.common.fillName}
                 inputParams={{ ...register("name", { required: true }) }}

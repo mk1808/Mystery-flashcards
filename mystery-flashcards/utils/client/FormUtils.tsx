@@ -9,4 +9,6 @@ export const errorClass = (isValid: any) => isValid ? "" : "input-error";
 
 export const errorSelectClass = (isValid: any) => isValid ? "" : "select-error";
 
+export const errorTextareaClass = (isValid: any) => isValid ? "" : "textarea-error";
+
 export const errorToggleClass = (isValid: any) => isValid ? "" : "text-red-500";
