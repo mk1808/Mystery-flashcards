@@ -1,10 +1,10 @@
-'use client'
-import FlashcardContainer from '@/components/common/FlashcardContainer';
+import NewFlashcardListForm from '@/components/flashcards/NewFlashcardListForm';
+import { fetchDictionary } from '@/dictionaries/dictionaries';
 import { FlashcardT } from '@/models/Flashcard';
-import { HeartIcon } from '@heroicons/react/24/outline';
 import React from 'react'
 
-export default function NewFlashcards({ params }: { params: { id: String } }) {
+async function NewFlashcards({ params }: { params: { id: String, locale: string } }) {
+  const dictionary = await fetchDictionary(params.locale);
   const singleFlashcard: FlashcardT = {
     wordLang1: "słowo",
     wordLang2: "word",
@@ -14,19 +14,12 @@ export default function NewFlashcards({ params }: { params: { id: String } }) {
 
   const flashcards: FlashcardT[] = Array(20).fill(singleFlashcard);
 
-  function onDelete() {
-    console.log("onDelete")
-  }
-
   return (
     <>
       <div className="w-[1000px]">
         {renderActionButtons()}
-        {flashcards.map(card => <FlashcardContainer key={card.wordLang1} card={card} renderInput={renderInput}
-          renderTextarea={renderTextarea} onDelete={onDelete}
-        />)}
+        <NewFlashcardListForm dictionary={dictionary} flashcards={flashcards}/>
       </div>
-      <div>FlashcardsDetails {params.id}</div>
     </>
   )
 
@@ -38,26 +31,6 @@ export default function NewFlashcards({ params }: { params: { id: String } }) {
       </div>
     )
   }
-
-  function renderInput(label: any = "What is your name?") {
-    return (
-      <label className="form-control w-full ">
-        <div className="label">
-          <span className="label-text">{label}</span>
-        </div>
-        <input type="text" placeholder="Type here" className="input input-bordered w-full" />
-      </label>
-    )
-  }
-
-  function renderTextarea() {
-    return (
-      <label className="form-control">
-        <div className="label">
-          <span className="label-text">Your bio</span>
-        </div>
-        <textarea className="textarea textarea-bordered h-24" placeholder="Bio"></textarea>
-      </label>
-    )
-  }
 }
+
+export default NewFlashcards;
