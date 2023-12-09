@@ -23,6 +23,11 @@
         "userAvatarAlt": "Zdjęcie użytkownika",
         "learnTitle": "Nauka",
         "testTitle": "Test",
-        "answersResultsTitle": "Wyniki i odpowiedzi"
+        "answersResultsTitle": "Wyniki i odpowiedzi",
+        "name":"Login",
+        "password":"Hasło",
+        "fillName":"Podaj login",
+        "fillPassword":"Podaj hasło"
+
     }
 }
