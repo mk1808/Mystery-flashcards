@@ -9,16 +9,17 @@ import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
 
 function FlashcardContainer({
   card,
-  onDelete,
+  isForm,
   dictionary
 }: {
   card: FlashcardT,
-  onDelete?: () => any,
+  isForm?: boolean,
   dictionary: any
 }) {
 
   const updateFlashcard = useNewFlashcardSetStore((state) => state.updateFlashcard);
-  const addFlashcard = useNewFlashcardSetStore((state) => state.addFlashcard)
+  const addFlashcard = useNewFlashcardSetStore((state) => state.addFlashcard);
+  const deleteFlashcard = useNewFlashcardSetStore((state) => state.deleteFlashcard);
   const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList)
   const allFlashCards = useRef(flashcardsList)
 
@@ -50,6 +51,7 @@ function FlashcardContainer({
   const onSubmit = (data: FlashcardsForm) => console.log(data);
   const onErrors = (errors: any) => console.error(errors);
   const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
+  const showDelete = () => flashcardsList.length > 1;
 
   return (
     <form onSubmit={handleSubmit(onSubmit, onErrors)}>
@@ -71,10 +73,10 @@ function FlashcardContainer({
   )
 
   function renderLeftSide() {
-    if (renderInput != undefined) {
+    if (isForm) {
       return (
         <div>
-          {renderInput("wordLang1")}
+          {renderInput("wordLang1", "wordBasicLanguage")}
           {renderTextarea("description1")}
         </div>
       );
@@ -88,10 +90,10 @@ function FlashcardContainer({
   }
 
   function renderRightSide() {
-    if (renderInput != undefined) {
+    if (isForm) {
       return (
         <div>
-          {renderInput("wordLang2")}
+          {renderInput("wordLang2", "wordForeignLanguage")}
           {renderTextarea("description2")}
         </div>
       );
@@ -105,31 +107,35 @@ function FlashcardContainer({
   }
 
   function renderDeleteIcon() {
-    return onDelete && (
+    return isForm && showDelete() && (
       <div className='absolute top-5 right-8 cursor-pointer'>
         <TrashIcon className="h-6 w-6 text-red-500" onClick={onDelete} />
       </div>
     )
   }
 
-  function renderInput(name: any) {
+  function renderInput(name: any, label: any, desc: any = "fillWord") {
     return (
       <MyInput
-        label={dictionary.common.name}
-        placeholder={dictionary.common.fillName}
+        label={dictionary.common[label]}
+        placeholder={dictionary.common[desc]}
         inputParams={{ ...register(name, { required: true }) }}
         isValid={isValid(name)} />
     )
   }
 
-  function renderTextarea(name: any) {
+  function renderTextarea(name: any, label: any = "description", desc: any = "fillDesc") {
     return (
       <MyTextarea
-        label={dictionary.common.name}
-        placeholder={dictionary.common.fillName}
+        label={dictionary.common[label]}
+        placeholder={dictionary.common[desc]}
         inputParams={{ ...register(name, { required: true }) }}
         isValid={isValid(name)} />
     )
+  }
+
+  function onDelete() {
+    deleteFlashcard(card);
   }
 }
 

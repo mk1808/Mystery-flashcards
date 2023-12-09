@@ -29,9 +29,9 @@ export const shouldArrayContain = () => {
     return !Math.round(Math.random());
 }
 
-export const updateElement = (array:any[],element:any) => {
-    const index = array.findIndex(ae => ae._id === element._id)
-    if(index >= 0){
+export const updateElement = (array: any[], element: any) => {
+    const index = array.findIndex(arrayElement => arrayElement._id === element._id)
+    if (index >= 0) {
         array[index] = element
     }
     return array;
