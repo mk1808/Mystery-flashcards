@@ -11,11 +11,11 @@ export async function POST(request: NextRequest) {
 
     const existingUser = await User.findOne({ name: registerForm.name });
     if (existingUser) {
-        return new NextResponse('User already exists!', { status: 409 });
+        return new NextResponse(JSON.stringify({ message: 'User already exists!' }), { status: 409 });
     }
 
     if (registerForm.password !== registerForm.confirmPassword) {
-        return new NextResponse('Password do not match!', { status: 400 });
+        return new NextResponse(JSON.stringify({ message: 'Password do not match!' }), { status: 400 });
     }
 
     const newUser = {
@@ -28,5 +28,5 @@ export async function POST(request: NextRequest) {
 
     const user = await User.create(newUser);
 
-    return new NextResponse('User created!', { status: 201 });
+    return new NextResponse(JSON.stringify({ message: 'User created!' }), { status: 201 });
 }
