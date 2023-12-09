@@ -11,6 +11,8 @@ import MyInput from '@/components/common/form/MyInput'
 
 import { useForm } from 'react-hook-form';
 import MyToggle from '@/components/common/form/MyToggle'
+import useAlertStore from '@/stores/useAlertStore'
+import { AlertType } from '@/enums/AlertType'
 
 function Playground({ params }: { params: { locale: string } }) {
     const {
@@ -19,6 +21,7 @@ function Playground({ params }: { params: { locale: string } }) {
         watch,
         formState
     } = useForm<any>({ mode: 'onBlur' });
+    const addAlert = useAlertStore((state) => state.add)
 
     const onSubmit = (data: any, e: any) => {
         e.preventDefault()
@@ -31,6 +34,16 @@ function Playground({ params }: { params: { locale: string } }) {
         return true;
     };
     const selectOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
+
+    function addRandomAlert() {
+        switch (Math.floor(Math.random() * 4)) {
+            case 0: addAlert({ title: "Random success alert!", type: AlertType.success }); break;
+            case 0: addAlert({ title: "Random error alert!", type: AlertType.error }); break;
+            case 0: addAlert({ title: "Random info alert!", type: AlertType.info }); break;
+            default: addAlert({ title: "Random warning alert!", type: AlertType.warning });
+        }
+    }
+
     return (
         <div>
             <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
@@ -40,7 +53,7 @@ function Playground({ params }: { params: { locale: string } }) {
                 <RoundActionButton content={getButtonContent()} styles="border-[3px]" />
                 <div className="h-96" id="search-sets">
                     second
-                    <button className="btn">Button</button>
+                    <button className="btn" onClick={addRandomAlert}>Button</button>
                     <button className="btn btn-neutral">Neutral</button>
                     <button className="btn btn-primary">Primary</button>
                     <button className="btn btn-secondary">Secondary</button>
