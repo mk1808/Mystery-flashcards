@@ -9,13 +9,25 @@ export default function AlertComponent({
     alert: Alert
 }) {
     const [scale, setScale] = useState("scale-0")
+    const [progress, setProgress] = useState(100)
     const close = useAlertStore((state) => state.close)
 
     useEffect(() => {
         setTimeout(() => {
             setScale("scale-100");
         }, 100);
+        const interval = setInterval(calcProgressToClose, 25)
+        return () => { clearInterval(interval) }
     }, []);
+
+    function calcProgressToClose() {
+        setProgress(progress => {
+            if (progress <= 0) {
+                onClose();
+            }
+            return progress - 0.5
+        });
+    }
 
     function onClose() {
         setScale("scale-0");
@@ -41,7 +53,7 @@ export default function AlertComponent({
         <div role="alert" className={`alert my-4 w-[400px] transition duration-150 ${scale} ${getColor()}`} key={alert.key}>
             {renderIcon()}
             <span>{alert.title}</span>
-            <XMarkIcon className="h-6 w-6 text-black cursor-pointer" onClick={onClose} />
+            {renderProgress()}
         </div>
     );
 
@@ -56,5 +68,13 @@ export default function AlertComponent({
             case AlertType.warning:
                 return <ExclamationTriangleIcon className="h-6 w-6 text-black" />
         }
+    }
+
+    function renderProgress() {
+        return (
+            <div className="radial-progress" style={{ "--value": progress, "--size": "2rem", "--thickness": "3px" }} role="progressbar" onClick={onClose}>
+                <XMarkIcon className="h-6 w-6 text-black cursor-pointer" />
+            </div>
+        );
     }
 }

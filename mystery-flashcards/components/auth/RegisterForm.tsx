@@ -4,10 +4,14 @@ import MyInput from '../common/form/MyInput';
 import { isFieldValid } from '@/utils/client/FormUtils';
 import useRest from '@/hooks/useRest';
 import { useRouter } from 'next/navigation';
+import useAlertStore from '@/stores/useAlertStore';
+import { AlertType } from '@/enums/AlertType';
+import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 
 export default function RegisterForm({ dictionary }: { dictionary: any }) {
     const { registerRequest } = useRest();
     const router = useRouter();
+    const addAlert = useAlertStore((state) => state.add)
     const {
         register,
         handleSubmit,
@@ -25,9 +29,10 @@ export default function RegisterForm({ dictionary }: { dictionary: any }) {
     async function onSubmit(data: RegisterForm, e: any) {
         try {
             const response = await registerRequest(data);
+            addAlert({ type: AlertType.success, title: getNestedFieldByPath(dictionary, response.message) })
             goToLogin();
-        } catch (error) {
-            console.log(error);
+        } catch (errorResponse: any) {
+            addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
         }
     };
 

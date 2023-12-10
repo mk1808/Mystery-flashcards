@@ -3,6 +3,8 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import { fetchDictionary } from '@/dictionaries/dictionaries';
 import NewFlashcardForm from '@/components/flashcards/NewFlashcardForm';
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
+import SingleSidebarInfo from '@/components/common/SingleSidebarInfo';
+import NewFlashcardNumber from '@/components/flashcards/NewFlashcardNumber';
 
 export default async function NewFlashcardsSidebar({ params }: { params: { id: string, locale: string } }) {
   const dictionary = await fetchDictionary(params.locale);
@@ -12,22 +14,8 @@ export default async function NewFlashcardsSidebar({ params }: { params: { id: s
     <div>
       <h1 className="text-4xl text-center mt-3 mb-8">Nowa kolekcja</h1>
       <div className="divider"></div>
-      {renderSingleInfo("Liczba kart", "20")}
+      <NewFlashcardNumber dictionary={dictionary}/>
       <NewFlashcardForm dictionary={dictionary} />
-
     </div>
   )
-
-  function renderSingleInfo(title: string, value: string) {
-    return (
-      <div className="my-3 flex items-center">
-        <ChevronDoubleRightIcon className="h-5 w-5 mr-2 text-gray-500" />
-
-        <span className="text-xl">{title}</span>
-        <span className="text-xl">: &nbsp;</span>
-
-        <span className="text-xl">{value}</span>
-      </div>
-    )
-  }
 }
