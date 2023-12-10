@@ -21,7 +21,10 @@ function FlashcardContainer({
   const addFlashcard = useNewFlashcardSetStore((state) => state.addFlashcard);
   const deleteFlashcard = useNewFlashcardSetStore((state) => state.deleteFlashcard);
   const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList)
+  const flashcardListInvalidCountInc = useNewFlashcardSetStore((state) => state.flashcardListInvalidCountInc);
+  const flashcardListInvalidCountDec = useNewFlashcardSetStore((state) => state.flashcardListInvalidCountDec);
   const allFlashCards = useRef(flashcardsList)
+  const lastValidationState = useRef(true)
 
   useEffect(() => {
     allFlashCards.current = flashcardsList
@@ -48,10 +51,23 @@ function FlashcardContainer({
     return () => subscription.unsubscribe()
   }, [watch])
 
+  useEffect(()=>{
+    const isDirty = Object.keys(formState.dirtyFields).length > 0
+    if(isDirty && lastValidationState.current != formState.isValid){
+      if(formState.isValid){
+        flashcardListInvalidCountDec()
+      } else {
+        flashcardListInvalidCountInc()
+      }
+      lastValidationState.current = formState.isValid
+    }
+  },[formState])
+
   const onSubmit = (data: FlashcardsForm) => console.log(data);
   const onErrors = (errors: any) => console.error(errors);
   const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
-  const showDelete = () => flashcardsList.length > 1;
+  const isDirty = () =>  Object.keys(formState.dirtyFields).length > 0
+  const showDelete = () => isDirty() && flashcardsList.length > 1;
 
   return (
     <form onSubmit={handleSubmit(onSubmit, onErrors)}>
@@ -129,12 +145,15 @@ function FlashcardContainer({
       <MyTextarea
         label={dictionary.common[label]}
         placeholder={dictionary.common[desc]}
-        inputParams={{ ...register(name, { required: true }) }}
+        inputParams={{ ...register(name, { required: false }) }}
         isValid={isValid(name)} />
     )
   }
 
   function onDelete() {
+    if(!formState.isValid){
+      flashcardListInvalidCountDec()
+    }
     deleteFlashcard(card);
   }
 }
