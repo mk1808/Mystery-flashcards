@@ -2,10 +2,10 @@ import { UserT } from "@/models/User"
 import MyInput from "../common/form/MyInput"
 import { useForm } from 'react-hook-form';
 import { isFieldValid } from "@/utils/client/FormUtils";
-import useRest from "@/hooks/useRest";
 import useAlertStore from "@/stores/useAlertStore";
 import { AlertType } from "@/enums/AlertType";
 import { getNestedFieldByPath } from "@/utils/server/objectUtils";
+import { updateUser } from "@/utils/client/ApiUtils";
 
 export default function UserEditForm({
     dictionary,
@@ -14,7 +14,6 @@ export default function UserEditForm({
     dictionary: any,
     user: UserT
 }) {
-    const updateUser = useRest().updateUser;
     const addAlert = useAlertStore((state) => state.add)
 
     const {

@@ -1,11 +1,10 @@
 "use client"
 
-import useRest from "@/hooks/useRest";
+import { getUserStatistics } from "@/utils/client/ApiUtils";
 import { useState, useEffect } from "react";
 
 export default function UserStatistics({ dictionary }: { dictionary: any }) {
     const [userStatistics, setUserStatistics] = useState<UserStatisticsDto>();
-    const getUserStatistics = useRest().getUserStatistics;
 
     useEffect(() => {
         getUserStatistics().then(statistics => setUserStatistics(statistics));

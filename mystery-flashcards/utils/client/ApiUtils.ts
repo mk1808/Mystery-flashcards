@@ -1,7 +1,7 @@
 import { UserT } from "@/models/User";
 import { get, post, put } from "./RestUtils";
 
-const PREFIX = "http://localhost:3000/api/";
+const PREFIX = "http://localhost:3000/api";
 
 export const loginRequest = (loginForm: LoginForm) => {
     console.log(loginForm)
@@ -28,5 +28,5 @@ export const getWhoAmi = () => {
 }
 
 export const updateUser = (user: UserT) => {
-    return put(user, `${PREFIX}/users/statistics`);
+    return put(user, `${PREFIX}/users`);
 }

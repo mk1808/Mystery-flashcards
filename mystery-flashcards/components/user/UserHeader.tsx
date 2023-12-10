@@ -3,13 +3,12 @@
 import { useState, useEffect } from "react";
 import Title from "../common/Title";
 import UserRangesModal from "./UserRangesModal";
-import useRest from "@/hooks/useRest";
 import { UserT } from "@/models/User";
 import { getRang } from "@/utils/server/userRangUtils";
+import { getWhoAmi } from "@/utils/client/ApiUtils";
 
 export default function UserHeader({ dictionary }: { dictionary: any }) {
     const [currentUser, setCurrentUser] = useState<UserT>();
-    const getWhoAmi = useRest().getWhoAmi;
 
     useEffect(() => {
         getWhoAmi().then(user => setCurrentUser(user));

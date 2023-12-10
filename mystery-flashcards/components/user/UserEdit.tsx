@@ -3,13 +3,12 @@
 import { useState, useEffect } from "react";
 import Image from 'next/image'
 import Title from "../common/Title";
-import useRest from "@/hooks/useRest";
 import { UserT } from "@/models/User";
 import UserEditForm from "./UserEditForm";
+import { getWhoAmi } from "@/utils/client/ApiUtils";
 
 export default function UserEdit({ dictionary }: { dictionary: any }) {
     const [currentUser, setCurrentUser] = useState<UserT>();
-    const getWhoAmi = useRest().getWhoAmi;
     const [imageSrcError, setImageSrcError] = useState(false);
 
     useEffect(() => {
