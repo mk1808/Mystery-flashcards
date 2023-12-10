@@ -11,12 +11,12 @@ export async function POST(request: NextRequest) {
     const existingUser = await User.findOne({ name: loginForm.name });
 
     if (!existingUser || ! await checkPasswordMatch(loginForm.password, existingUser.password)) {
-        return new NextResponse('Invalid credentials!', { status: 401 });
+        return new NextResponse(JSON.stringify({ message: 'common.invalidCredentials' }), { status: 401 });
     }
 
     const token = await signToken({ name: existingUser.name, id: existingUser.id });
-    
-    return new NextResponse(JSON.stringify({ message: 'Successful login!' }), {
+
+    return new NextResponse(JSON.stringify({ message: 'common.successfulLogin' }), {
         status: 200,
         headers: { 'Set-Cookie': `token=Bearer ${token}; Path=/` },
     });
