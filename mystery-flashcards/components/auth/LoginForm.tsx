@@ -6,7 +6,7 @@ import useRest from '@/hooks/useRest';
 import { useRouter } from 'next/navigation';
 import useAlertStore from '@/stores/useAlertStore';
 import { AlertType } from '@/enums/AlertType';
-import { getValueByPath } from '@/utils/server/objectUtils';
+import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 
 export default function LoginForm({ dictionary }: { dictionary: any }) {
     const { login } = useRest();
@@ -24,10 +24,10 @@ export default function LoginForm({ dictionary }: { dictionary: any }) {
     const onSubmit = async (data: LoginForm, e: any) => {
         try {
             const response = await login(data);
-            addAlert({ type: AlertType.success, title: getValueByPath(dictionary, response.message) })
+            addAlert({ type: AlertType.success, title: getNestedFieldByPath(dictionary, response.message) })
             router.push('/user')
         } catch (errorResponse: any) {
-            addAlert({ type: AlertType.error, title: getValueByPath(dictionary, errorResponse.body.message) })
+            addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
         }
     };
     const onErrors = (errors: any) => console.error(errors);
