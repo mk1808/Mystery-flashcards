@@ -33,7 +33,12 @@ function useRest() {
         method: 'GET'
     }).then(onResponse);
 
-    return { login, registerRequest, createFlashcardSet, getUserStatistics };
+    const getWhoAmi = () => fetch(`http://localhost:3000/api/auth/whoAmI`, {
+        cache: 'no-store',
+        method: 'GET'
+    }).then(onResponse);
+
+    return { login, registerRequest, createFlashcardSet, getUserStatistics, getWhoAmi };
 }
 
 export default useRest
