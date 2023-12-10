@@ -2,14 +2,13 @@
 import { useForm } from 'react-hook-form';
 import MyInput from '../common/form/MyInput';
 import { isFieldValid } from '@/utils/client/FormUtils';
-import useRest from '@/hooks/useRest';
 import { useRouter } from 'next/navigation';
 import useAlertStore from '@/stores/useAlertStore';
 import { AlertType } from '@/enums/AlertType';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
+import { loginRequest } from '@/utils/client/ApiUtils';
 
 export default function LoginForm({ dictionary }: { dictionary: any }) {
-    const { login } = useRest();
     const router = useRouter();
     const addAlert = useAlertStore((state) => state.add)
     const {
@@ -23,11 +22,11 @@ export default function LoginForm({ dictionary }: { dictionary: any }) {
 
     const onSubmit = async (data: LoginForm, e: any) => {
         try {
-            const response = await login(data);
+            const response = await loginRequest(data);
             addAlert({ type: AlertType.success, title: getNestedFieldByPath(dictionary, response.message) })
             router.push('/user')
         } catch (errorResponse: any) {
-            addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
+            addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse?.body?.message) })
         }
     };
     const onErrors = (errors: any) => console.error(errors);

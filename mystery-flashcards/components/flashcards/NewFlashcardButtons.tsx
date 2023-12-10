@@ -1,10 +1,9 @@
 "use client"
-import useRest from '@/hooks/useRest';
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
+import { createFlashcardSetRequest } from '@/utils/client/ApiUtils';
 import React from 'react'
 
 function NewFlashcardButtons() {
-    const { createFlashcardSet } = useRest();
     const sidebarForm = useNewFlashcardSetStore((state) => state.sidebarForm);
     const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList);
 
@@ -14,7 +13,7 @@ function NewFlashcardButtons() {
         updatedFlashcardsList.forEach((card: any) => delete card._id)
         const formToSave = { ...sidebarForm, flashcards: updatedFlashcardsList };
         console.log(formToSave)
-        const response = await createFlashcardSet(formToSave);
+        const response = await createFlashcardSetRequest(formToSave);
 
         console.log(response);
     };
