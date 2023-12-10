@@ -22,7 +22,13 @@ function useRest() {
         body: JSON.stringify(registerForm)
     }).then(onResponse);
 
-    return { login, registerRequest };
+    const createFlashcardSet = (form: any) => fetch(`http://localhost:3000/api/flashcards`, {
+        cache: 'no-store',
+        method: 'POST',
+        body: JSON.stringify(form)
+    }).then(onResponse);
+
+    return { login, registerRequest, createFlashcardSet };
 }
 
 export default useRest

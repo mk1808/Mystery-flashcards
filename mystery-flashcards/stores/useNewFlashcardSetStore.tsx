@@ -7,7 +7,7 @@ type State = {
 }
 
 type Action = {
-    updateSidebarForm: (firstName: State['sidebarForm']) => void,
+    updateSidebarForm: (sidebar: any) => void,
     updateFlashcard: (flashcard: any) => void,
     addFlashcard: () => void,
     deleteFlashcard: (flashcard: any) => void
