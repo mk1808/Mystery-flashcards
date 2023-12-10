@@ -1,4 +1,4 @@
-import { updateElement } from "@/utils/server/arrayUtils";
+import { excludeFromArray, updateElement } from "@/utils/server/arrayUtils";
 import { create } from "zustand";
 
 type State = {
@@ -7,9 +7,10 @@ type State = {
 }
 
 type Action = {
-    updateSidebarForm: (firstName: State['sidebarForm']) => void,
+    updateSidebarForm: (sidebar: any) => void,
     updateFlashcard: (flashcard: any) => void,
-    addFlashcard:() => void,
+    addFlashcard: () => void,
+    deleteFlashcard: (flashcard: any) => void
 }
 
 const getInitailFlashcard = () => ({ _id: Math.floor(Math.random() * 1000_000), wordLang1: "", wordLang2: "", description1: "", description2: "" })
@@ -26,9 +27,9 @@ const useNewFlashcardSetStore = create<State & Action>((set) => ({
     },
     flashcardsList: [getInitailFlashcard()],
     updateSidebarForm: (sidebarForm) => set(() => ({ sidebarForm: sidebarForm })),
-    updateFlashcard:(flashCard)=>set((state) => ({ flashcardsList: [...updateElement(state.flashcardsList, flashCard)] })),
-    addFlashcard:()=>set((state) => ({ flashcardsList: [...state.flashcardsList, getInitailFlashcard() ] })),
-
+    updateFlashcard: (flashcard) => set((state) => ({ flashcardsList: [...updateElement(state.flashcardsList, flashcard)] })),
+    addFlashcard: () => set((state) => ({ flashcardsList: [...state.flashcardsList, getInitailFlashcard()] })),
+    deleteFlashcard: (flashcard) => set((state) => ({ flashcardsList: [...excludeFromArray(state.flashcardsList, flashcard)] }))
 }))
 
 export default useNewFlashcardSetStore;

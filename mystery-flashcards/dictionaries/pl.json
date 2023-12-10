@@ -24,16 +24,20 @@
         "learnTitle": "Nauka",
         "testTitle": "Test",
         "answersResultsTitle": "Wyniki i odpowiedzi",
-        "name":"Login",
-        "password":"Hasło",
-        "fillName":"Podaj login",
-        "fillPassword":"Podaj hasło",
+        "name": "Login",
+        "password": "Hasło",
+        "fillName": "Podaj login",
+        "fillPassword": "Podaj hasło",
         "email": "Email",
         "fillEmail": "Podaj email",
         "confirmPassword": "Powtórz hasło",
         "fillConfirmPassword": "Podaj hasło ponownie",
-        "basicName":"Nazwa",
-        "fillBasicName":"Podaj nazwę kolekcji"
-
+        "basicName": "Nazwa",
+        "fillBasicName": "Podaj nazwę kolekcji",
+        "wordBasicLanguage": "Słowo w podstawowym języku",
+        "wordForeignLanguage": "Słowo w obcym języku",
+        "fillWord": "Podaj słowo lub frazę",
+        "description": "Opis",
+        "fillDesc":"Podaj dodatkowy opis"
     }
 }

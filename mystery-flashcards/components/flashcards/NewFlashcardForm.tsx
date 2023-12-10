@@ -1,16 +1,18 @@
 "use client"
 import { isFieldValid } from '@/utils/client/FormUtils';
 import { useRouter } from 'next/navigation';
-import React from 'react'
+import React, { useEffect } from 'react'
 import MyInput from '../common/form/MyInput';
 import { useForm } from 'react-hook-form';
 import MySelect from '../common/form/MySelect';
 import MyToggle from '../common/form/MyToggle';
+import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
 
 function NewFlashcardForm({ dictionary }: { dictionary: any }) {
     const langOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
     const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }]
     const levelOptions = [{ value: "A1", label: "A1" }, { value: "A2", label: "A2" }]
+    const updateSidebarForm = useNewFlashcardSetStore((state) => state.updateSidebarForm);
     const router = useRouter();
     const {
         register,
@@ -20,6 +22,15 @@ function NewFlashcardForm({ dictionary }: { dictionary: any }) {
         formState,
         reset
     } = useForm<NewFlashcardSetForm>({ mode: 'onBlur' });
+
+    useEffect(() => {
+        const subscription = watch((value, { name, type }) => {
+          console.log(value, name, type)
+          updateSidebarForm({ ...value })
+
+        })
+        return () => subscription.unsubscribe()
+      }, [watch])
 
     const onSubmit = async (data: NewFlashcardSetForm, e: any) => {
         // const response = await login(data);

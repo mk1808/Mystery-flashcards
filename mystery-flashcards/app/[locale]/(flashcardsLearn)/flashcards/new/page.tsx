@@ -1,3 +1,4 @@
+import NewFlashcardButtons from '@/components/flashcards/NewFlashcardButtons';
 import NewFlashcardListForm from '@/components/flashcards/NewFlashcardListForm';
 import { fetchDictionary } from '@/dictionaries/dictionaries';
 import { FlashcardT } from '@/models/Flashcard';
@@ -15,22 +16,11 @@ async function NewFlashcards({ params }: { params: { id: String, locale: string 
   const flashcards: FlashcardT[] = Array(20).fill(singleFlashcard);
 
   return (
-    <>
       <div className="w-[1000px] h-full">
-        {renderActionButtons()}
+        <NewFlashcardButtons/>
         <NewFlashcardListForm dictionary={dictionary} flashcards={flashcards}/>
       </div>
-    </>
   )
-
-  function renderActionButtons() {
-    return (
-      <div className="mb-12 flex justify-end">
-        <button className="btn btn-secondary btn-outline bg-base-100 mr-10">Anuluj</button>
-        <button className="btn btn-primary">Zapisz</button>
-      </div>
-    )
-  }
 }
 
 export default NewFlashcards;
