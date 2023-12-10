@@ -30,6 +30,8 @@
         "fillPassword": "Podaj hasło",
         "email": "Email",
         "fillEmail": "Podaj email",
+        "avatar": "Zdjęcie profilowe",
+        "fillAvatar": "Podaj zdjęcie profilowe",
         "confirmPassword": "Powtórz hasło",
         "fillConfirmPassword": "Podaj hasło ponownie",
         "basicName": "Nazwa",
@@ -38,6 +40,6 @@
         "wordForeignLanguage": "Słowo w obcym języku",
         "fillWord": "Podaj słowo lub frazę",
         "description": "Opis",
-        "fillDesc":"Podaj dodatkowy opis"
+        "fillDesc": "Podaj dodatkowy opis"
     }
 }
