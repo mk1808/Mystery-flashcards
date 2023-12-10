@@ -13,6 +13,7 @@ function NewFlashcardForm({ dictionary }: { dictionary: any }) {
     const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }]
     const levelOptions = [{ value: "A1", label: "A1" }, { value: "A2", label: "A2" }]
     const updateSidebarForm = useNewFlashcardSetStore((state) => state.updateSidebarForm);
+    const setSidebarFormValid = useNewFlashcardSetStore((state) => state.setSidebarFormValid);
     const router = useRouter();
     const {
         register,
@@ -31,6 +32,10 @@ function NewFlashcardForm({ dictionary }: { dictionary: any }) {
         })
         return () => subscription.unsubscribe()
       }, [watch])
+
+      useEffect(()=>{
+        setSidebarFormValid(formState.isValid)
+      },[formState])
 
     const onSubmit = async (data: NewFlashcardSetForm, e: any) => {
         // const response = await login(data);
