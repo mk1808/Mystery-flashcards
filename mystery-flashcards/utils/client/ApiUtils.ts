@@ -1,6 +1,7 @@
-import { post } from "./RestUtils";
+import { UserT } from "@/models/User";
+import { get, post, put } from "./RestUtils";
 
-const PREFIX = "http://localhost:3000/api/";
+const PREFIX = "http://localhost:3000/api";
 
 export const loginRequest = (loginForm: LoginForm) => {
     console.log(loginForm)
@@ -15,4 +16,17 @@ export const registerRequest = (registerForm: RegisterForm) => {
 export const createFlashcardSetRequest = (form: any) => {
     console.log(form)
     return post(form, `${PREFIX}/flashcards`);
+}
+
+
+export const getUserStatistics = () => {
+    return get(`${PREFIX}/users/statistics`);
+}
+
+export const getWhoAmi = () => {
+    return get(`${PREFIX}/auth/whoAmI`);
+}
+
+export const updateUser = (user: UserT) => {
+    return put(user, `${PREFIX}/users`);
 }

@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
         name: registerForm.name,
         password: await hashPassword(registerForm.password),
         points: 0,
+        avatar:"",
         rang: UserRanges[0].id
     }
 
