@@ -5,8 +5,16 @@ import { AlertType } from '@/enums/AlertType';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { loginRequest } from '@/utils/client/ApiUtils';
 import MyInput from '@/components/common/form/MyInput';
+import useTrainingStore from '@/stores/useTrainingStore';
+import { updateAnswer, updateResult } from '@/utils/client/TrainingUtils';
 
 function AnswerForm({ dictionary }: { dictionary: any }) {
+    const onAnswerSave = useTrainingStore((state) => state.onAnswerSave);
+    const roundFlashcards = useTrainingStore((state) => state.roundFlashcards);
+    const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
+    const result = useTrainingStore((state) => state.result);
+
+
     const {
         register,
         handleSubmit,
@@ -14,11 +22,15 @@ function AnswerForm({ dictionary }: { dictionary: any }) {
         getFieldState,
         formState,
         reset
-    } = useForm<LoginForm>({ mode: 'onBlur' });
+    } = useForm<AnswerForm>({ mode: 'onBlur' });
 
-    const onSubmit = async (data: LoginForm, e: any) => {
+    const onSubmit = async (answer: AnswerForm, e: any) => {
         try {
-            const response = await loginRequest(data);
+            console.log(answer)
+            const currentFlashcard = roundFlashcards[currentIndex],
+                updatedAnswer = updateAnswer(answer, currentFlashcard),
+                updatedResult = updateResult(answer, result);
+            onAnswerSave(updatedAnswer, currentFlashcard, updatedResult);
 
         } catch (errorResponse: any) {
 
@@ -28,16 +40,12 @@ function AnswerForm({ dictionary }: { dictionary: any }) {
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
     return (
         <form onSubmit={handleSubmit(onSubmit, onErrors)}>
-
-
             <MyInput
                 label={dictionary.common.answer}
                 placeholder={dictionary.common.fillAnswer}
-                inputParams={{ ...register("name", { required: true }) }}
-                isValid={isValid("name")} />
-
-
-
+                inputParams={{ ...register("givenAnswer", { required: true }) }}
+                isValid={isValid("givenAnswer")} />
+            <button type="submit" className="btn btn-primary mb-3 btn-wide">{dictionary.common.login}</button>
         </form>
     )
 }

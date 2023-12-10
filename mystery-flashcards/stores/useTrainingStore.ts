@@ -9,7 +9,7 @@ type State = {
     result: any,
     allFlashcards: FlashcardT[],
     roundFlashcards: FlashcardT[],
-    currentFlashcardIndexInRound: number
+    currentFlashcardIndexInRound: number,
 }
 
 type Action = {
@@ -22,6 +22,7 @@ type Action = {
     setRoundFlashcards: (flashcards: []) => void,
     incrementCurrentFlashcardIndexInRound: () => void,
     resetCurrentFlashcardIndexInRound: () => void,
+    onAnswerSave: (answer: any, flashcard: any, result: any) => void
 }
 
 const useTrainingStore = create<State & Action>((set) => ({
@@ -41,6 +42,13 @@ const useTrainingStore = create<State & Action>((set) => ({
     setRoundFlashcards: (flashcards) => set(() => ({ roundFlashcards: flashcards })),
     incrementCurrentFlashcardIndexInRound: () => set((state) => ({ currentFlashcardIndexInRound: state.currentFlashcardIndexInRound + 1 })),
     resetCurrentFlashcardIndexInRound: () => set(() => ({ currentFlashcardIndexInRound: 0 })),
+    onAnswerSave: (answer, flashcard, result) => set((state) => {
+        state.addToAllAnswers(answer);
+        state.addToRoundAnswers(answer);
+        state.updateResult(result);
+        state.addToAllFlashcards(flashcard);
+        return state;
+    }),
 }))
 
 export default useTrainingStore;

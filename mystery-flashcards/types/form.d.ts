@@ -25,5 +25,11 @@ interface FlashcardsForm {
     wordLang2: string,
     description1: string,
     description2: string,
-    _id:any
+    _id: any
+}
+
+interface AnswerForm {
+    givenAnswer: string,
+    isCorrect: boolean,
+    flashcardId: any
 }
