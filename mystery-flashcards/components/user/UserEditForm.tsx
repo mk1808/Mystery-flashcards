@@ -2,6 +2,10 @@ import { UserT } from "@/models/User"
 import MyInput from "../common/form/MyInput"
 import { useForm } from 'react-hook-form';
 import { isFieldValid } from "@/utils/client/FormUtils";
+import useRest from "@/hooks/useRest";
+import useAlertStore from "@/stores/useAlertStore";
+import { AlertType } from "@/enums/AlertType";
+import { getNestedFieldByPath } from "@/utils/server/objectUtils";
 
 export default function UserEditForm({
     dictionary,
@@ -10,6 +14,8 @@ export default function UserEditForm({
     dictionary: any,
     user: UserT
 }) {
+    const updateUser = useRest().updateUser;
+    const addAlert = useAlertStore((state) => state.add)
 
     const {
         register,
@@ -27,7 +33,15 @@ export default function UserEditForm({
     });
 
     const onSubmit = async (data: UserT, e: any) => {
-        console.log(data);
+        try {
+            updateUser(data);
+            addAlert({ title: dictionary.common.userUpdated, type: AlertType.success })
+            setTimeout(() => {
+                location.reload()
+            }, 2000)
+        } catch (errorResponse: any) {
+            addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
+        }
     };
     const onErrors = (errors: any) => console.error(errors);
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
@@ -68,7 +82,7 @@ export default function UserEditForm({
             </div>
 
             <div className="mt-6 flex items-center justify-end gap-x-6">
-                <button className="btn btn-active btn-primary">Primary</button>
+                <button className="btn btn-active btn-primary" disabled={!formState.isValid}>{dictionary.common.save}</button>
             </div>
         </form >
     )

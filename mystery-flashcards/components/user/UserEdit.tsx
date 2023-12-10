@@ -10,6 +10,7 @@ import UserEditForm from "./UserEditForm";
 export default function UserEdit({ dictionary }: { dictionary: any }) {
     const [currentUser, setCurrentUser] = useState<UserT>();
     const getWhoAmi = useRest().getWhoAmi;
+    const [imageSrcError, setImageSrcError] = useState(false);
 
     useEffect(() => {
         getWhoAmi().then(user => setCurrentUser(user));
@@ -26,12 +27,15 @@ export default function UserEdit({ dictionary }: { dictionary: any }) {
     )
 
     function renderUserAvatar() {
+        const defaultAvatar = "/images/defaultAvatar.jpg"
+        const avatarSrc = imageSrcError ? defaultAvatar : currentUser?.avatar || defaultAvatar;
         return (
             <div className="grid justify-items-center items-center ">
-                <Image
-                    src="/images/defaultAvatar.jpg"
+                <img
+                    src={avatarSrc}
                     width={300}
                     height={200}
+                    onError={() => setImageSrcError(true)}
                     alt={dictionary.common.userAvatarAlt}
                 />
             </div>

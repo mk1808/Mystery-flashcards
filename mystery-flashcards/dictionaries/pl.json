@@ -31,6 +31,8 @@
         "successfulLogin": "Zalogowano!",
         "invalidCredentials": "Błędne dane logowania!",
         "email": "Email",
+        "save": "Zapisz",
+        "userUpdated": "Użytkownik został zaktualizowany",
         "fillEmail": "Podaj email",
         "avatar": "Zdjęcie profilowe",
         "fillAvatar": "Podaj zdjęcie profilowe",

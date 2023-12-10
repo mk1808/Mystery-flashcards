@@ -14,7 +14,7 @@ export async function PUT(request: NextRequest) {
     const userForm = await request.json();
     const logged = await getUser(request);
     if (userForm.password && userForm.password !== userForm.confirmPassword) {
-        return new NextResponse(JSON.stringify({ message: 'Password do not match!' }), { status: 400 });
+        return new NextResponse(JSON.stringify({ message: 'common.passwordDoNotMatch' }), { status: 400 });
     }
 
     const newPassword = userForm.password ? await hashPassword(userForm.password) : logged.password;

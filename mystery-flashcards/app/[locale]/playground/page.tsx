@@ -51,6 +51,7 @@ function Playground({ params }: { params: { locale: string } }) {
                     first
                 </div>
                 <RoundActionButton content={getButtonContent()} styles="border-[3px]" />
+                <input type="text" placeholder="Type here" className="input input-bordered input-error w-full max-w-xs" />
                 <div className="h-96" id="search-sets">
                     second
                     <button className="btn" onClick={addRandomAlert}>Button</button>

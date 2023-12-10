@@ -1,3 +1,4 @@
+import { UserT } from '@/models/User';
 import React from 'react'
 
 function useRest() {
@@ -38,7 +39,13 @@ function useRest() {
         method: 'GET'
     }).then(onResponse);
 
-    return { login, registerRequest, createFlashcardSet, getUserStatistics, getWhoAmi };
+    const updateUser = (userEditForm: UserT) => fetch(`http://localhost:3000/api/users`, {
+        cache: 'no-store',
+        method: 'PUT',
+        body: JSON.stringify(userEditForm)
+    }).then(onResponse);
+
+    return { login, registerRequest, createFlashcardSet, getUserStatistics, getWhoAmi, updateUser };
 }
 
 export default useRest
