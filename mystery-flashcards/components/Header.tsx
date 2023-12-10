@@ -1,32 +1,57 @@
 import Link from 'next/link'
 import React from 'react'
 
-async function Header({
-    locale, 
-    dictionary 
+function Header({
+    locale,
+    dictionary
 }: {
-    locale:string, 
-    dictionary: any 
+    locale: string,
+    dictionary: any
 }) {
+    const isLogged = true;
     const mainMenuElements = [
         {
             name: dictionary.common.mainPage,
-            link: `/${locale}`
+            link: `/${locale}`,
+            forAll: true
         },
         {
             name: dictionary.common.searchSets,
-            link: `/${locale}#search-sets`
+            link: `/${locale}#search-sets`,
+            forAll: true
+        },
+        {
+            name: dictionary.common.addNewSet,
+            link: `/${locale}/flashcards/new`,
+            forLogged: true
+        },
+        {
+            name: dictionary.common.mySets,
+            link: `/${locale}#search-sets`,
+            forLogged: true
         },
     ]
 
     const nestedMenuElements = [
         {
             name: dictionary.common.login,
-            link: `/${locale}/login`
+            link: `/${locale}/login`,
+            forNotLogged: true
         },
         {
             name: dictionary.common.register,
-            link: `/${locale}/register`
+            link: `/${locale}/register`,
+            forNotLogged: true
+        },
+        {
+            name: dictionary.common.accountDetails,
+            link: `/${locale}/user`,
+            forLogged: true
+        },
+        {
+            name: dictionary.common.logout,
+            link: `/${locale}/user`,
+            forLogged: true
         },
     ]
     return (
@@ -37,14 +62,14 @@ async function Header({
                 </div>
                 <div className="flex-none">
                     <ul className="menu menu-horizontal px-1">
-                        {mainMenuElements.map(renderMenuElement)}
+                        {mainMenuElements.map(renderMenuElementIfNeeded)}
                         <li>
                             <details>
                                 <summary>
                                     {dictionary.common.account}
                                 </summary>
-                                <ul className="p-2 bg-base-100 rounded-t-none z-20 right-0">
-                                    {nestedMenuElements.map(renderMenuElement)}
+                                <ul className="p-1 w-40 bg-base-100 rounded-t-none z-20 right-0 border-t">
+                                    {nestedMenuElements.map(renderMenuElementIfNeeded)}
                                 </ul>
                             </details>
                         </li>
@@ -60,6 +85,13 @@ async function Header({
                 <Link href={element.link}>{element.name}</Link>
             </li>
         )
+    }
+
+    function renderMenuElementIfNeeded(element: any) {
+        if (element.forAll ||
+            isLogged && element.forLogged ||
+            !isLogged && element.forNotLogged)
+            return renderMenuElement(element);
     }
 }
 
