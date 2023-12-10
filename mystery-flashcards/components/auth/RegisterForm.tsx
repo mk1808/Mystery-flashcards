@@ -2,14 +2,13 @@
 import { useForm } from 'react-hook-form';
 import MyInput from '../common/form/MyInput';
 import { isFieldValid } from '@/utils/client/FormUtils';
-import useRest from '@/hooks/useRest';
 import { useRouter } from 'next/navigation';
 import useAlertStore from '@/stores/useAlertStore';
 import { AlertType } from '@/enums/AlertType';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
+import { registerRequest } from '@/utils/client/ApiUtils';
 
 export default function RegisterForm({ dictionary }: { dictionary: any }) {
-    const { registerRequest } = useRest();
     const router = useRouter();
     const addAlert = useAlertStore((state) => state.add)
     const {
