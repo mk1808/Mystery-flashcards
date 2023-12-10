@@ -20,7 +20,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
     const newResults = checkAnswers(flashcardSet, testAnswers);
 
-    let testResult: TestResultT = (await TestResult.findOne({ userId: currentUser._id, flashcardSetId: flashcardSetId })).toObject();
+    let testResult: TestResultT = (await TestResult.findOne({ userId: currentUser._id, flashcardSetId: flashcardSetId }))?.toObject();
     if (testResult) {
         testResult.allCount = newResults.allCount;
         testResult.answers = newResults.answers;
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         testResult = await TestResult.create(testResult);
     }
 
-    const existingUserFlashcard: UserFlashcardT = (await UserFlashcard.findOne({ flashcardSetId: flashcardSetId, userId: currentUser._id })).toObject()
+    const existingUserFlashcard: UserFlashcardT = (await UserFlashcard.findOne({ flashcardSetId: flashcardSetId, userId: currentUser._id }))?.toObject()
     if (existingUserFlashcard) {
         existingUserFlashcard.type = "TESTING";
         await UserFlashcard.findOneAndReplace({ _id: existingUserFlashcard._id }, existingUserFlashcard, { new: true });

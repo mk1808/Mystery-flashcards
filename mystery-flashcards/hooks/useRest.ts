@@ -28,7 +28,12 @@ function useRest() {
         body: JSON.stringify(form)
     }).then(onResponse);
 
-    return { login, registerRequest, createFlashcardSet };
+    const getUserStatistics = () => fetch(`http://localhost:3000/api/users/statistics`, {
+        cache: 'no-store',
+        method: 'GET'
+    }).then(onResponse);
+
+    return { login, registerRequest, createFlashcardSet, getUserStatistics };
 }
 
 export default useRest
