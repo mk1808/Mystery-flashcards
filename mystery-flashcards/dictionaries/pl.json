@@ -33,6 +33,8 @@
         "fillName": "Podaj login",
         "fillPassword": "Podaj hasło",
         "successfulLogin": "Zalogowano!",
+        "userLoggedOut": "Wylogowano!",
+        "accessDenied": "Brak dostępu!",
         "invalidCredentials": "Błędne dane logowania!",
         "email": "Email",
         "save": "Zapisz",

@@ -1,5 +1,10 @@
+"use client"
+
+import useAuthStore from '@/stores/useAuthStore';
+import { logout } from '@/utils/client/ApiUtils';
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation';
 
 function Header({
     locale,
@@ -8,7 +13,17 @@ function Header({
     locale: string,
     dictionary: any
 }) {
-    const isLogged = true;
+    const currentUser = useAuthStore(state => state.currentUser);
+    const checkWhoAmi = useAuthStore(state => state.checkWhoAmi);
+    const router = useRouter();
+    const detailsElement = useRef<any>(null);
+
+    useEffect(() => {
+        checkWhoAmi();
+        const interval = setInterval(checkWhoAmi, 60 * 1000);
+        return () => clearInterval(interval);
+    }, [])
+
     const mainMenuElements = [
         {
             name: dictionary.common.mainPage,
@@ -50,10 +65,22 @@ function Header({
         },
         {
             name: dictionary.common.logout,
-            link: `/${locale}/user`,
+            onClick: onLogout,
             forLogged: true
         },
     ]
+
+    function onLogout() {
+        logout().then(checkWhoAmi)
+        router.push('/')
+    }
+
+    function closeDropdown() {
+        if (detailsElement?.current?.open) {
+            detailsElement.current.open = false
+        }
+    }
+
     return (
         <div className="m-4">
             <div className="navbar bg-base-100 rounded-lg ">
@@ -64,7 +91,7 @@ function Header({
                     <ul className="menu menu-horizontal px-1">
                         {mainMenuElements.map(renderMenuElementIfNeeded)}
                         <li>
-                            <details>
+                            <details ref={detailsElement}>
                                 <summary>
                                     {dictionary.common.account}
                                 </summary>
@@ -81,13 +108,21 @@ function Header({
 
     function renderMenuElement(element: any) {
         return (
-            <li key={element.name}>
-                <Link href={element.link}>{element.name}</Link>
+            <li key={element.name} onClick={closeDropdown}>
+                {renderNavElement(element)}
             </li>
         )
     }
 
+    function renderNavElement(element: any) {
+        if (element.onClick) {
+            return <span onClick={element.onClick}>{element.name}</span>;
+        }
+        return <Link href={element.link}>{element.name}</Link>;
+    }
+
     function renderMenuElementIfNeeded(element: any) {
+        const isLogged = !!currentUser;
         if (element.forAll ||
             isLogged && element.forLogged ||
             !isLogged && element.forNotLogged)
