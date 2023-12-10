@@ -43,6 +43,8 @@
         "wordForeignLanguage": "Słowo w obcym języku",
         "fillWord": "Podaj słowo lub frazę",
         "description": "Opis",
-        "fillDesc": "Podaj dodatkowy opis"
+        "fillDesc": "Podaj dodatkowy opis",
+        "answer":"Odpowiedź",
+        "fillAnswer":"Podaj odpowiedź"
     }
 }
