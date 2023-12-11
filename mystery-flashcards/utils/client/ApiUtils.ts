@@ -1,4 +1,4 @@
-import { post } from "./RestUtils";
+import { post, get } from "./RestUtils";
 
 const PREFIX = "http://localhost:3000/api/";
 
@@ -15,4 +15,9 @@ export const registerRequest = (registerForm: RegisterForm) => {
 export const createFlashcardSetRequest = (form: any) => {
     console.log(form)
     return post(form, `${PREFIX}/flashcards`);
+}
+
+export const getFlashcardSetRequest = (id: any) => {
+    console.log(id)
+    return get(`${PREFIX}flashcards/${id}`);
 }

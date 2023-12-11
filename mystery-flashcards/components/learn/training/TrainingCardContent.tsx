@@ -1,14 +1,18 @@
-
+"use client"
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import AnswerForm from './AnswerForm';
+import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
+import useTrainingStore from '@/stores/useTrainingStore';
 
-function TrainingCardContent({ dictionary }: { dictionary: any }) {
+function TrainingCardContent({ dictionary, flashcardSet }: { dictionary: any, flashcardSet:any }) {
     const isValid: Boolean = true;
+    const setFlashcardSet = useTrainingStore((state) => state.setFlashcardSet);
+    useEffect(()=>{setFlashcardSet(flashcardSet)}, [flashcardSet])
     function renderAnswerValidity() {
         return (
             <div className="my-4 grid grid-col items-center">
-                {isValid ? renderValid() : renderInvalid()}
+                {isValid ? renderValid() : renderInvalid()}{JSON.stringify(flashcardSet)}
             </div>
         );
     }
