@@ -1,5 +1,5 @@
 import { UserT } from "@/models/User";
-import { get, post, put } from "./RestUtils";
+import { createPathParams, get, post, put } from "./RestUtils";
 
 const PREFIX = "http://localhost:3000/api";
 
@@ -18,6 +18,9 @@ export const createFlashcardSetRequest = (form: any) => {
     return post(form, `${PREFIX}/flashcards`);
 }
 
+export const searchFlashcardSets = (data: any) => {
+    return get(`${PREFIX}/flashcards/search?${createPathParams(data)}`);
+}
 
 export const getUserStatistics = () => {
     return get(`${PREFIX}/users/statistics`);

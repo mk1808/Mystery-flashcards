@@ -8,7 +8,7 @@ const onResponse = async (response: any) => {
 
 export const post = (body: any, url: string, cache: RequestCache | undefined = 'no-store') => fetch(url, {
     method: 'POST',
-    cache:cache,
+    cache: cache,
     body: JSON.stringify(body)
 }).then(onResponse);
 
@@ -25,3 +25,16 @@ export const put = (body: any, url: string) => fetch(url, {
 export const deleteR = (url: string) => fetch(url, {
     method: 'DELETE'
 }).then(onResponse);
+
+export function createPathParams(params: any) {
+    var pathParams = "";
+    for (const param in params) {
+        if (params[param]) {
+            if (pathParams.length > 0) {
+                pathParams += '&';
+            }
+            pathParams += `${param}=${params[param]}`
+        }
+    }
+    return pathParams;
+}

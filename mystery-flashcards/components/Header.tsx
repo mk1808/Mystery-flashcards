@@ -2,11 +2,11 @@ import Link from 'next/link'
 import React from 'react'
 
 async function Header({
-    locale, 
-    dictionary 
+    locale,
+    dictionary
 }: {
-    locale:string, 
-    dictionary: any 
+    locale: string,
+    dictionary: any
 }) {
     const mainMenuElements = [
         {
@@ -15,7 +15,7 @@ async function Header({
         },
         {
             name: dictionary.common.searchSets,
-            link: `/${locale}#search-sets`
+            link: `/${locale}#flashcardSetsSearch`
         },
     ]
 
