@@ -17,7 +17,12 @@ export const createFlashcardSetRequest = (form: any) => {
     return post(form, `${PREFIX}/flashcards`);
 }
 
-export const getFlashcardSetRequest = (id: any) => {
+export const getFlashcardSetRequest = (id: any, headers:any) => {
     console.log(id)
-    return get(`${PREFIX}flashcards/${id}`);
+    return get(`${PREFIX}flashcards/${id}`, "no-store", headers);
+}
+
+export const postAnswersAndReturnCards = (id: any, body:any, headers:any) => {
+    console.log(id)
+    return post( body, `${PREFIX}flashcards/${id}/learn/training`,"no-store", headers);
 }

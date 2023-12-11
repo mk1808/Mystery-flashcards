@@ -5,14 +5,18 @@ import AnswerForm from './AnswerForm';
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 
-function TrainingCardContent({ dictionary, flashcardSet }: { dictionary: any, flashcardSet:any }) {
+function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { dictionary: any, flashcardSet: any, roundFlashcards: any }) {
     const isValid: Boolean = true;
     const setFlashcardSet = useTrainingStore((state) => state.setFlashcardSet);
-    useEffect(()=>{setFlashcardSet(flashcardSet)}, [flashcardSet])
+    const setRoundFlashcards = useTrainingStore((state) => state.setRoundFlashcards);
+    useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
+    useEffect(() => { setRoundFlashcards(roundFlashcards) }, [roundFlashcards])
+
     function renderAnswerValidity() {
         return (
             <div className="my-4 grid grid-col items-center">
-                {isValid ? renderValid() : renderInvalid()}{JSON.stringify(flashcardSet)}
+                {isValid ? renderValid() : renderInvalid()}
+                {JSON.stringify(roundFlashcards)}
             </div>
         );
     }
@@ -55,7 +59,7 @@ function TrainingCardContent({ dictionary, flashcardSet }: { dictionary: any, fl
                 <div className="w-full h-full grid grid-rows-2">
 
                     <div className="self-end">
-                        <AnswerForm dictionary={dictionary}/>
+                        <AnswerForm dictionary={dictionary} />
                     </div>
                     <div>{renderAnswerValidity()}</div>
                 </div>
