@@ -26,6 +26,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     const { flashcards } = flashcardSet;
     const finalArray: any = randomize(randStrategy, flashcards, learningHistoryTab, prevAnswers);
     updateUserPoints(currentUser, learningHistoryTab);
+    console.log("in req")
     return NextResponse.json(finalArray);
 }
 
@@ -45,7 +46,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 }
 
 function updateAttemptNo(currentTab: any) {
-    currentTab.forEach((element: any) => {
+    currentTab?.forEach((element: any) => {
         element.attempt = "LAST";
     });
 }

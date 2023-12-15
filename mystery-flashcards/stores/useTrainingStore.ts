@@ -1,5 +1,7 @@
 import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
+import { FlashcardSetT } from "@/models/FlashcardSet";
+import { TestResultT } from "@/models/TestResult";
 import { create } from "zustand";
 
 type State = {
@@ -9,7 +11,8 @@ type State = {
     result: any,
     allFlashcards: FlashcardT[],
     roundFlashcards: FlashcardT[],
-    currentFlashcardIndexInRound: number
+    currentFlashcardIndexInRound: number,
+    wasChecked: boolean
 }
 
 type Action = {
@@ -22,16 +25,31 @@ type Action = {
     setRoundFlashcards: (flashcards: []) => void,
     incrementCurrentFlashcardIndexInRound: () => void,
     resetCurrentFlashcardIndexInRound: () => void,
+    onAnswerSave: (answer: any, flashcard: any, result: any) => void,
+    setWasChecked: (checked: boolean) => void
+}
+
+const initResult =  {
+        _id: "",
+        userId: "",
+        flashcardSetId: "",
+        resultPercent: 0,
+        validCount: 0,
+        allCount: 0,
+        answers: [],
+        direction: ""
+    
 }
 
 const useTrainingStore = create<State & Action>((set) => ({
     flashcardSet: {},
     allAnswers: [],
     roundAnswers: [],
-    result: null,
+    result: initResult,
     allFlashcards: [],
     roundFlashcards: [],
     currentFlashcardIndexInRound: 0,
+    wasChecked: false,
     setFlashcardSet: (flashcardSet) => set(() => ({ flashcardSet: flashcardSet })),
     addToAllAnswers: (answer) => set((state) => ({ allAnswers: [...state.allAnswers, answer] })),
     addToRoundAnswers: (answer) => set((state) => ({ roundAnswers: [...state.roundAnswers, answer] })),
@@ -41,6 +59,15 @@ const useTrainingStore = create<State & Action>((set) => ({
     setRoundFlashcards: (flashcards) => set(() => ({ roundFlashcards: flashcards })),
     incrementCurrentFlashcardIndexInRound: () => set((state) => ({ currentFlashcardIndexInRound: state.currentFlashcardIndexInRound + 1 })),
     resetCurrentFlashcardIndexInRound: () => set(() => ({ currentFlashcardIndexInRound: 0 })),
+    onAnswerSave: (answer, flashcard, result) => set((state) => {
+        state.addToAllAnswers(answer);
+        state.addToRoundAnswers(answer);
+        state.updateResult(result);
+        state.addToAllFlashcards(flashcard);
+        return state;
+    }),
+    setWasChecked: (checked) => set(() => ({ wasChecked: checked }))
+
 }))
 
 export default useTrainingStore;

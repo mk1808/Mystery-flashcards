@@ -1,4 +1,5 @@
 const onResponse = async (response: any) => {
+    console.log("onresp")
     if (response.status >= 200 && response.status < 300) {
         return response.json();
     }
@@ -6,15 +7,17 @@ const onResponse = async (response: any) => {
     return Promise.reject({ status: response.status, body });
 }
 
-export const post = (body: any, url: string, cache: RequestCache | undefined = 'no-store') => fetch(url, {
+export const post = (body: any, url: string, cache: RequestCache | undefined = 'no-store', headers?:any) => fetch(url, {
     method: 'POST',
     cache:cache,
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
+    headers:headers
 }).then(onResponse);
 
-export const get = (url: string, cache: RequestCache | undefined = 'no-store') => fetch(url, {
+export const get = (url: string, cache: RequestCache | undefined = 'no-store', headers?:any) => fetch(url, {
     cache: cache,
     method: 'GET',
+    headers:headers
 }).then(onResponse);
 
 export const put = (body: any, url: string) => fetch(url, {
