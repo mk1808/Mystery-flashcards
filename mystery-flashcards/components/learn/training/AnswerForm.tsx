@@ -6,9 +6,10 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { loginRequest } from '@/utils/client/ApiUtils';
 import MyInput from '@/components/common/form/MyInput';
 import useTrainingStore from '@/stores/useTrainingStore';
-import { updateAnswer, updateResult } from '@/utils/client/TrainingUtils';
+import { checkValidity, updateAnswer, updateResult } from '@/utils/client/TrainingUtils';
+import { FlashcardT } from '@/models/Flashcard';
 
-function AnswerForm({ dictionary }: { dictionary: any }) {
+function AnswerForm({ dictionary,currentFlashcard, setIsValid, setWasChecked }: { dictionary: any, currentFlashcard:FlashcardT, setIsValid:any,setWasChecked:any  }) {
     const onAnswerSave = useTrainingStore((state) => state.onAnswerSave);
     const roundFlashcards = useTrainingStore((state) => state.roundFlashcards);
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
@@ -31,6 +32,8 @@ function AnswerForm({ dictionary }: { dictionary: any }) {
                 updatedAnswer = updateAnswer(answer, currentFlashcard),
                 updatedResult = updateResult(answer, result);
             onAnswerSave(updatedAnswer, currentFlashcard, updatedResult);
+            setWasChecked(true);
+            setIsValid(checkValidity(currentFlashcard, answer))
 
         } catch (errorResponse: any) {
 
