@@ -1,5 +1,6 @@
 import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
+import { TestResultT } from "@/models/TestResult";
 import { create } from "zustand";
 
 type State = {
@@ -25,11 +26,23 @@ type Action = {
     onAnswerSave: (answer: any, flashcard: any, result: any) => void
 }
 
+const initResult=()=>{
+    return {
+    _id: "",
+    userId:  "",
+    flashcardSetId:  "",
+    resultPercent: 0,
+    validCount: 0,
+    allCount: 0,
+    answers: [],
+    direction: ""
+}}
+
 const useTrainingStore = create<State & Action>((set) => ({
     flashcardSet: {},
     allAnswers: [],
     roundAnswers: [],
-    result: null,
+    result: initResult(),
     allFlashcards: [],
     roundFlashcards: [],
     currentFlashcardIndexInRound: 0,

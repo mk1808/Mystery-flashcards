@@ -29,11 +29,12 @@ function AnswerForm({ dictionary,currentFlashcard, setIsValid, setWasChecked }: 
         try {
             console.log(answer)
             const currentFlashcard = roundFlashcards[currentIndex],
-                updatedAnswer = updateAnswer(answer, currentFlashcard),
-                updatedResult = updateResult(answer, result);
+                isValid = checkValidity(currentFlashcard, answer),
+                updatedAnswer = updateAnswer(answer, currentFlashcard, isValid),
+                updatedResult = updateResult(updatedAnswer, result);
             onAnswerSave(updatedAnswer, currentFlashcard, updatedResult);
             setWasChecked(true);
-            setIsValid(checkValidity(currentFlashcard, answer))
+            setIsValid(isValid);
 
         } catch (errorResponse: any) {
 
