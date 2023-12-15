@@ -1,5 +1,6 @@
 import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
+import { FlashcardSetT } from "@/models/FlashcardSet";
 import { TestResultT } from "@/models/TestResult";
 import { create } from "zustand";
 
@@ -28,8 +29,7 @@ type Action = {
     setWasChecked: (checked: boolean) => void
 }
 
-const initResult = () => {
-    return {
+const initResult =  {
         _id: "",
         userId: "",
         flashcardSetId: "",
@@ -38,14 +38,14 @@ const initResult = () => {
         allCount: 0,
         answers: [],
         direction: ""
-    }
+    
 }
 
 const useTrainingStore = create<State & Action>((set) => ({
     flashcardSet: {},
     allAnswers: [],
     roundAnswers: [],
-    result: initResult(),
+    result: initResult,
     allFlashcards: [],
     roundFlashcards: [],
     currentFlashcardIndexInRound: 0,
