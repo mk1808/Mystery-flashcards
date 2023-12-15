@@ -1,9 +1,20 @@
+"use client"
 
-import { use } from "react";
+import { useState, useEffect } from "react";
 import Image from 'next/image'
 import Title from "../common/Title";
+import { UserT } from "@/models/User";
+import UserEditForm from "./UserEditForm";
+import { getWhoAmi } from "@/utils/client/ApiUtils";
 
 export default function UserEdit({ dictionary }: { dictionary: any }) {
+    const [currentUser, setCurrentUser] = useState<UserT>();
+    const [imageSrcError, setImageSrcError] = useState(false);
+
+    useEffect(() => {
+        getWhoAmi().then(user => setCurrentUser(user));
+    }, [])
+
     return (
         <div>
             <Title text={dictionary.common.userAccountEdit} />
@@ -15,12 +26,15 @@ export default function UserEdit({ dictionary }: { dictionary: any }) {
     )
 
     function renderUserAvatar() {
+        const defaultAvatar = "/images/defaultAvatar.jpg"
+        const avatarSrc = imageSrcError ? defaultAvatar : currentUser?.avatar || defaultAvatar;
         return (
             <div className="grid justify-items-center items-center ">
-                <Image
-                    src="/images/defaultAvatar.jpg"
+                <img
+                    src={avatarSrc}
                     width={300}
                     height={200}
+                    onError={() => setImageSrcError(true)}
                     alt={dictionary.common.userAvatarAlt}
                 />
             </div>
@@ -28,31 +42,9 @@ export default function UserEdit({ dictionary }: { dictionary: any }) {
     }
 
     function renderUserEditForm() {
-        return (
-            <form className="mt-12">
-                <div>
-                    {renderInput()}
-                    {renderInput()}
-                    {renderInput()}
-                </div>
-
-                <div className="mt-6 flex items-center justify-end gap-x-6">
-                    <button className="btn btn-active btn-primary">Primary</button>
-                </div>
-            </form >
-        )
-    }
-
-    function renderInput() {
-        return (
-            <div className="mt-6">
-                <label className="form-control w-full ">
-                    <div className="label">
-                        <span className="label-text">What is your name?</span>
-                    </div>
-                    <input type="text" placeholder="Type here" className="input input-bordered w-full " />
-                </label>
-            </div>
-        )
+        if (currentUser) {
+            return <UserEditForm dictionary={dictionary} user={currentUser} />
+        }
+        return <span className="loading loading-ball loading-lx"></span>
     }
 }

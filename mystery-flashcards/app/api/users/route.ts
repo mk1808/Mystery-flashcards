@@ -1,4 +1,4 @@
-import User from "@/models/User";
+import User, { UserT } from "@/models/User";
 import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
 import { hashPassword } from "@/utils/server/encryptionUtils";
@@ -14,17 +14,20 @@ export async function PUT(request: NextRequest) {
     const userForm = await request.json();
     const logged = await getUser(request);
     if (userForm.password && userForm.password !== userForm.confirmPassword) {
-        return new NextResponse('Password do not match!', { status: 400 });
+        return new NextResponse(JSON.stringify({ message: 'common.passwordDoNotMatch' }), { status: 400 });
     }
 
-    const updatedUser = {
+    const newPassword = userForm.password ? await hashPassword(userForm.password) : logged.password;
+
+    const updatedUser: UserT = {
         _id: logged._id,
         points: logged.points,
         rang: logged.rang,
         statistics: logged.statistics,
         mail: userForm.mail,
         name: userForm.name,
-        password: await hashPassword(userForm.password)
+        avatar: userForm.avatar,
+        password: newPassword
     }
     const result = await User.findOneAndReplace({ _id: logged._id }, updatedUser, { new: true });
 

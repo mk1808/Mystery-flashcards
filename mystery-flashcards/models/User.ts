@@ -13,6 +13,9 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'name is required.'],
   },
+  avatar: {
+    type: String
+  },
   points: {
     type: Number,
     default: 0,
@@ -35,6 +38,7 @@ export type UserT = {
   mail?: string,
   password?: string,
   name?: string,
+  avatar?: string,
   points: number,
   rang?: number,
   statistics?: {
