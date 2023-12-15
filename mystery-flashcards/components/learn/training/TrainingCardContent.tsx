@@ -7,11 +7,13 @@ import { FlashcardT } from '@/models/Flashcard';
 
 function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { dictionary: any, flashcardSet: any, roundFlashcards: any }) {
     const [isValid, setIsValid] = useState<Boolean>(true);
-    const [wasChecked, setWasChecked] = useState<Boolean>(false);
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({wordLang1:"a", description1:"a"});
     const setFlashcardSet = useTrainingStore((state) => state.setFlashcardSet);
     const setRoundFlashcards = useTrainingStore((state) => state.setRoundFlashcards);
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound); 
+    const wasChecked = useTrainingStore((state) => state.wasChecked); 
+    const setWasChecked = useTrainingStore((state) => state.setWasChecked); 
+    
     useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
     useEffect(() => { setRoundFlashcards(roundFlashcards), setCurrentFlashcard(roundFlashcards[currentIndex]) }, [roundFlashcards])
 

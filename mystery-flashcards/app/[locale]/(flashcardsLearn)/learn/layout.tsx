@@ -12,7 +12,7 @@ async function LearnLayout({ children, params }: { children: any, params: any })
                 {children}
             </Card>
             <div className='grid justify-center'>
-                <LearnSubmitButtons />
+                <LearnSubmitButtons dictionary={dictionary}/>
             </div >
         </div>
     )

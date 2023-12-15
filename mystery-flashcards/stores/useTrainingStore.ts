@@ -11,6 +11,7 @@ type State = {
     allFlashcards: FlashcardT[],
     roundFlashcards: FlashcardT[],
     currentFlashcardIndexInRound: number,
+    wasChecked: boolean
 }
 
 type Action = {
@@ -23,20 +24,22 @@ type Action = {
     setRoundFlashcards: (flashcards: []) => void,
     incrementCurrentFlashcardIndexInRound: () => void,
     resetCurrentFlashcardIndexInRound: () => void,
-    onAnswerSave: (answer: any, flashcard: any, result: any) => void
+    onAnswerSave: (answer: any, flashcard: any, result: any) => void,
+    setWasChecked: (checked: boolean) => void
 }
 
-const initResult=()=>{
+const initResult = () => {
     return {
-    _id: "",
-    userId:  "",
-    flashcardSetId:  "",
-    resultPercent: 0,
-    validCount: 0,
-    allCount: 0,
-    answers: [],
-    direction: ""
-}}
+        _id: "",
+        userId: "",
+        flashcardSetId: "",
+        resultPercent: 0,
+        validCount: 0,
+        allCount: 0,
+        answers: [],
+        direction: ""
+    }
+}
 
 const useTrainingStore = create<State & Action>((set) => ({
     flashcardSet: {},
@@ -46,6 +49,7 @@ const useTrainingStore = create<State & Action>((set) => ({
     allFlashcards: [],
     roundFlashcards: [],
     currentFlashcardIndexInRound: 0,
+    wasChecked: false,
     setFlashcardSet: (flashcardSet) => set(() => ({ flashcardSet: flashcardSet })),
     addToAllAnswers: (answer) => set((state) => ({ allAnswers: [...state.allAnswers, answer] })),
     addToRoundAnswers: (answer) => set((state) => ({ roundAnswers: [...state.roundAnswers, answer] })),
@@ -62,6 +66,8 @@ const useTrainingStore = create<State & Action>((set) => ({
         state.addToAllFlashcards(flashcard);
         return state;
     }),
+    setWasChecked: (checked) => set(() => ({ wasChecked: checked }))
+
 }))
 
 export default useTrainingStore;

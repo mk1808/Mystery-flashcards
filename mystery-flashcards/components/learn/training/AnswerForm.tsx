@@ -9,11 +9,12 @@ import useTrainingStore from '@/stores/useTrainingStore';
 import { checkValidity, updateAnswer, updateResult } from '@/utils/client/TrainingUtils';
 import { FlashcardT } from '@/models/Flashcard';
 
-function AnswerForm({ dictionary,currentFlashcard, setIsValid, setWasChecked }: { dictionary: any, currentFlashcard:FlashcardT, setIsValid:any,setWasChecked:any  }) {
+function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }: { dictionary: any, currentFlashcard: FlashcardT, setIsValid: any, setWasChecked: any }) {
     const onAnswerSave = useTrainingStore((state) => state.onAnswerSave);
     const roundFlashcards = useTrainingStore((state) => state.roundFlashcards);
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
     const result = useTrainingStore((state) => state.result);
+    const incrementCurrentFlashcardIndexInRound = useTrainingStore((state) => state.incrementCurrentFlashcardIndexInRound);
 
 
     const {
@@ -35,6 +36,8 @@ function AnswerForm({ dictionary,currentFlashcard, setIsValid, setWasChecked }: 
             onAnswerSave(updatedAnswer, currentFlashcard, updatedResult);
             setWasChecked(true);
             setIsValid(isValid);
+            incrementCurrentFlashcardIndexInRound();
+
 
         } catch (errorResponse: any) {
 
@@ -43,13 +46,12 @@ function AnswerForm({ dictionary,currentFlashcard, setIsValid, setWasChecked }: 
     const onErrors = (errors: any) => console.error(errors);
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
     return (
-        <form onSubmit={handleSubmit(onSubmit, onErrors)}>
+        <form onSubmit={handleSubmit(onSubmit, onErrors)} id="answerForm">
             <MyInput
                 label={dictionary.common.answer}
                 placeholder={dictionary.common.fillAnswer}
                 inputParams={{ ...register("givenAnswer", { required: true }) }}
                 isValid={isValid("givenAnswer")} />
-            <button type="submit" className="btn btn-primary mb-3 btn-wide">{dictionary.common.login}</button>
         </form>
     )
 }
