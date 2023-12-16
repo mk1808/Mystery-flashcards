@@ -8,6 +8,7 @@ import React from 'react'
 export default function LearnTrainingResultsSidebar({ params }: { params: { id: String } }) {
   const { flashcardSet } = useTrainingStore((state) => state.flashcardSet);
   const { result } = useTrainingStore((state) => state);
+  const { finalResult } = useTrainingStore((state) => state);
   const { roundFlashcards } = useTrainingStore((state) => state);
   const statsValues = [
     {
@@ -27,7 +28,7 @@ export default function LearnTrainingResultsSidebar({ params }: { params: { id: 
     <div>
       {renderTitle()}
       <div className="divider"></div> 
-      <h1 className="text-3xl text-center mt-3 mb-8">Wyniki nauki <br /> Kolekcja: Zwierzęta</h1>
+      <h1 className="text-3xl text-center mt-3 mb-8">Wyniki nauki <br /> Kolekcja: {flashcardSet?.name}</h1>
      
       <LearnStats stats = {statsValues}/>
       <br />
@@ -37,7 +38,7 @@ export default function LearnTrainingResultsSidebar({ params }: { params: { id: 
   function renderTitle() {
     return (
       <>
-        <h1 className="text-4xl text-center mt-3 mb-8">Gratulacje! Zdobyłeś 20 pkt!</h1>
+        <h1 className="text-4xl text-center mt-3 mb-8">Gratulacje! Zdobyłeś {finalResult?.newPoints} pkt!</h1>
         <h1 className="text-2xl text-center mt-3 mb-8">Twój obecny poziom to Wilk. <br /> Do kolejnego poziomu brakuje 100pkt</h1>
       </>
     )
