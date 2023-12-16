@@ -7,10 +7,13 @@ import useAlertStore from '@/stores/useAlertStore';
 import { AlertType } from '@/enums/AlertType';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { loginRequest } from '@/utils/client/ApiUtils';
+import useAuthStore from '@/stores/useAuthStore';
 
 export default function LoginForm({ dictionary }: { dictionary: any }) {
     const router = useRouter();
     const addAlert = useAlertStore((state) => state.add)
+    const checkWhoAmi = useAuthStore(state => state.checkWhoAmi);
+
     const {
         register,
         handleSubmit,
@@ -23,6 +26,7 @@ export default function LoginForm({ dictionary }: { dictionary: any }) {
     const onSubmit = async (data: LoginForm, e: any) => {
         try {
             const response = await loginRequest(data);
+            checkWhoAmi()
             addAlert({ type: AlertType.success, title: getNestedFieldByPath(dictionary, response.message) })
             router.push('/user')
         } catch (errorResponse: any) {

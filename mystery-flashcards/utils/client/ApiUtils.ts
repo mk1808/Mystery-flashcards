@@ -39,3 +39,8 @@ export const getWhoAmi = () => {
 export const updateUser = (user: UserT) => {
     return put(user, `${PREFIX}/users`);
 }
+
+export const logout = () => {
+    return post({}, `${PREFIX}/auth/logout`);
+}
+
