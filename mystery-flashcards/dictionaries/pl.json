@@ -64,10 +64,12 @@
         "fillDesc": "Podaj dodatkowy opis",
         "answer": "Odpowiedź",
         "fillAnswer": "Podaj odpowiedź",
-        "flashcardsCount":"Liczba kart",
+        "flashcardsCount": "Liczba kart",
         "languages": "Języki",
         "author": "Twórca",
         "creationDate": "Data dodania",
-        "popularity": "Popularność"
+        "popularity": "Popularność",
+        "learnThisFlashcardSet": "Ucz się tej kolekcji",
+        "addToFavorites": "Dodaj do ulubionych"
     }
 }
