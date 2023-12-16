@@ -63,6 +63,11 @@
         "description": "Opis",
         "fillDesc": "Podaj dodatkowy opis",
         "answer": "Odpowiedź",
-        "fillAnswer": "Podaj odpowiedź"
+        "fillAnswer": "Podaj odpowiedź",
+        "flashcardsCount":"Liczba kart",
+        "languages": "Języki",
+        "author": "Twórca",
+        "creationDate": "Data dodania",
+        "popularity": "Popularność"
     }
 }
