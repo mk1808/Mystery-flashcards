@@ -2,7 +2,6 @@ import { UserRanges } from "@/enums/UserRang";
 import Modal from "../common/Modal"
 import Steps, { Step } from "../common/Steps"
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
-import { use } from "react";
 
 export default function UserRangesModal({ dictionary }: { dictionary: any }) {
 
