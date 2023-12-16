@@ -68,8 +68,8 @@ function Playground({ params }: { params: { locale: string } }) {
             <div className='my-5'>
                 {renderCard()}
             </div>
-            
-            <input className={`input input-bordered w-full input-error`}  />
+
+            <input className={`input input-bordered w-full w-1/3 input-error`} />
             <MySelect label="Język" options={selectOptions} />
             <MyTextarea label="Opis" placeholder="Wpisz opis" />
             <MyInput label="Nazwa" placeholder="Podaj nazwę" inputParams="" />

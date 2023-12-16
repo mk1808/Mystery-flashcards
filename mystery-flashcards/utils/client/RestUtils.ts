@@ -34,3 +34,16 @@ export const patch = (body: any, url: string, cache: RequestCache | undefined = 
     body: JSON.stringify(body),
     headers:headers
 }).then(onResponse);
+
+export function createPathParams(params: any) {
+    var pathParams = "";
+    for (const param in params) {
+        if (params[param]) {
+            if (pathParams.length > 0) {
+                pathParams += '&';
+            }
+            pathParams += `${param}=${params[param]}`
+        }
+    }
+    return pathParams;
+}

@@ -1,5 +1,5 @@
 import { UserT } from "@/models/User";
-import { get, patch, post, put } from "./RestUtils";
+import { createPathParams, get, patch, post, put } from "./RestUtils";
 
 const PREFIX = "http://localhost:3000/api";
 
@@ -16,6 +16,10 @@ export const registerRequest = (registerForm: RegisterForm) => {
 export const createFlashcardSetRequest = (form: any) => {
     console.log(form)
     return post(form, `${PREFIX}/flashcards`);
+}
+
+export const searchFlashcardSets = (data: any) => {
+    return get(`${PREFIX}/flashcards/search?${createPathParams(data)}`);
 }
 
 export const getFlashcardSetRequest = (id: any, headers:any) => {
@@ -44,3 +48,8 @@ export const patchAnswersAndReturnResults = (id: any, body:any, headers?:any) =>
     console.log(id)
     return patch(body, `${PREFIX}/flashcards/${id}/learn/training`,"no-store", headers);
 }
+
+export const logout = () => {
+    return post({}, `${PREFIX}/auth/logout`);
+}
+

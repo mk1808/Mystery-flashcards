@@ -18,7 +18,7 @@ function MyInput({
 }) {
 
     return (
-        <label className={`form-control w-full mb-3${className}`}>
+        <label className={`form-control w-full mb-3 ${className}`}>
             <div className="label">
                 <span className="label-text">{label}</span>
             </div>

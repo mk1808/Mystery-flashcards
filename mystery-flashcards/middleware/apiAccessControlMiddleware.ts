@@ -22,7 +22,7 @@ async function runMiddleware(request: NextRequest) {
         const unsecuredMethodRoutes = unsecuredRoutes[request.method as keyof UnsecuredRoutesTypes];
         const matchAnyRoute = unsecuredMethodRoutes?.find(unsecuredRoute => request.nextUrl.pathname.match(unsecuredRoute))
         if (!matchAnyRoute) {
-            return new Response("No access!", { status: 401 });
+            return new Response(JSON.stringify({ message: 'common.accessDenied' }), { status: 401 });
         }
     }
     return NextResponse.next();
