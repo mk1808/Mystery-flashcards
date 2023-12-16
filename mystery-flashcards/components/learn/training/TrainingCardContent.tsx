@@ -15,7 +15,7 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { di
     const setWasChecked = useTrainingStore((state) => state.setWasChecked); 
     
     useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
-    useEffect(() => { setRoundFlashcards(roundFlashcards), setCurrentFlashcard(roundFlashcards[currentIndex]) }, [roundFlashcards])
+    useEffect(() => { setRoundFlashcards(roundFlashcards), setCurrentFlashcard(roundFlashcards[currentIndex]) }, [currentIndex])
 
     function renderAnswerValidity() {
         return (

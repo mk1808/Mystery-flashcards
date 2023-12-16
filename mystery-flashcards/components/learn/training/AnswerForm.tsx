@@ -1,13 +1,11 @@
 "use client"
 import { useForm } from 'react-hook-form';
 import { isFieldValid } from '@/utils/client/FormUtils';
-import { AlertType } from '@/enums/AlertType';
-import { getNestedFieldByPath } from '@/utils/server/objectUtils';
-import { loginRequest } from '@/utils/client/ApiUtils';
 import MyInput from '@/components/common/form/MyInput';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { checkValidity, updateAnswer, updateResult } from '@/utils/client/TrainingUtils';
 import { FlashcardT } from '@/models/Flashcard';
+import { useRef } from 'react';
 
 function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }: { dictionary: any, currentFlashcard: FlashcardT, setIsValid: any, setWasChecked: any }) {
     const onAnswerSave = useTrainingStore((state) => state.onAnswerSave);
@@ -15,7 +13,8 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
     const result = useTrainingStore((state) => state.result);
     const incrementCurrentFlashcardIndexInRound = useTrainingStore((state) => state.incrementCurrentFlashcardIndexInRound);
-
+    const resultRef = useRef<any>(null);
+    resultRef.current = result;
 
     const {
         register,
@@ -32,7 +31,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
             const currentFlashcard = roundFlashcards[currentIndex],
                 isValid = checkValidity(currentFlashcard, answer),
                 updatedAnswer = updateAnswer(answer, currentFlashcard, isValid),
-                updatedResult = updateResult(updatedAnswer, result);
+                updatedResult = updateResult(updatedAnswer, resultRef.current);
             onAnswerSave(updatedAnswer, currentFlashcard, updatedResult);
             setWasChecked(true);
             setIsValid(isValid);

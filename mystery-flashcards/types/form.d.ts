@@ -33,3 +33,10 @@ interface AnswerForm {
     isCorrect: boolean,
     flashcardId: any
 }
+
+interface ButtonAttrs {
+    title: string, 
+    type: "submit" | "reset" | "button" | undefined, 
+    form: string, 
+    onClick?: any
+}

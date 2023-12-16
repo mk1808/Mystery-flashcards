@@ -4,12 +4,12 @@ import SingleSidebarStat from '@/components/common/SingleSidebarStat';
 import StatisticsIcon from '@/components/common/StatisticsIcon';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { ChartBarIcon } from "@heroicons/react/24/outline";
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 
 export default function LearnTrainingSidebar({ params }: { params: { id: String } }) {
   const {flashcardSet} = useTrainingStore((state) => state.flashcardSet);
-  const {result} = useTrainingStore((state) => state.result);
-  console.log("result:", flashcardSet)
+  const {result} = useTrainingStore((state) => state);
+  console.log("result:", result)
   return (
     <div>
       {renderTitleAndTags()}

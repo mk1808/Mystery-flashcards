@@ -27,3 +27,11 @@ export const updateResult = (answer: AnswerT, result: TestResultT) => {
 export const checkValidity = (flashcard: FlashcardT, answer: AnswerForm) => {
     return flashcard.wordLang2?.toLowerCase() == answer.givenAnswer.toLowerCase();
 }
+
+export const getMainButtonAttrs = (wasChecked: Boolean, onClick: any): ButtonAttrs => {
+    const commonAttrs = { form: "answerForm" }
+    if (wasChecked) {
+        return { ...commonAttrs, title: "Kontynuuj", type: "button", onClick: onClick }
+    }
+    return { ...commonAttrs, title: "Zatwierdź odpowiedź", type: "submit" }
+}
