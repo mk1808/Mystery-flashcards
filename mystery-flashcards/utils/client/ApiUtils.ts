@@ -22,6 +22,16 @@ export const searchFlashcardSets = (data: any) => {
     return get(`${PREFIX}/flashcards/search?${createPathParams(data)}`);
 }
 
+export const getFlashcardSetRequest = (id: any, headers:any) => {
+    console.log(id)
+    return get(`${PREFIX}flashcards/${id}`, "no-store", headers);
+}
+
+export const postAnswersAndReturnCards = (id: any, body:any, headers:any) => {
+    console.log(id)
+    return post( body, `${PREFIX}flashcards/${id}/learn/training`,"no-store", headers);
+}
+
 export const getUserStatistics = () => {
     return get(`${PREFIX}/users/statistics`);
 }
@@ -33,3 +43,8 @@ export const getWhoAmi = () => {
 export const updateUser = (user: UserT) => {
     return put(user, `${PREFIX}/users`);
 }
+
+export const logout = () => {
+    return post({}, `${PREFIX}/auth/logout`);
+}
+
