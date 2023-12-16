@@ -1,6 +1,6 @@
 "use client"
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState, useRef } from 'react'
 import AnswerForm from './AnswerForm';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { FlashcardT } from '@/models/Flashcard';
@@ -13,9 +13,16 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { di
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound); 
     const wasChecked = useTrainingStore((state) => state.wasChecked); 
     const setWasChecked = useTrainingStore((state) => state.setWasChecked); 
+    const currentIndexRef = useRef<any>(null);
+    currentIndexRef.current = currentIndex;
+    const wasCheckedRef = useRef<any>(null);
+    wasCheckedRef.current = wasChecked;
     
     useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
-    useEffect(() => { setRoundFlashcards(roundFlashcards), setCurrentFlashcard(roundFlashcards[currentIndex]) }, [currentIndex])
+    useEffect(() => { 
+        setRoundFlashcards(roundFlashcards);
+        setCurrentFlashcard(roundFlashcards[currentIndexRef.current]);
+    }, [wasChecked])
 
     function renderAnswerValidity() {
         return (

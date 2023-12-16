@@ -9,7 +9,9 @@ import React, {useState, useEffect} from 'react'
 export default function LearnTrainingSidebar({ params }: { params: { id: String } }) {
   const {flashcardSet} = useTrainingStore((state) => state.flashcardSet);
   const {result} = useTrainingStore((state) => state);
-  console.log("result:", result)
+  const {roundFlashcards} = useTrainingStore((state) => state);
+  
+  
   return (
     <div>
       {renderTitleAndTags()}
@@ -19,9 +21,12 @@ export default function LearnTrainingSidebar({ params }: { params: { id: String 
       <SingleSidebarInfo title="Poziom" value={flashcardSet?.level}/>
       <div className="divider"></div>
       <StatisticsIcon/>
-      <SingleSidebarStat title="Liczba odpowiedzi" value={result?.validCount}/>
-      <SingleSidebarStat title="Liczba poprawnych odpowiedzi" value={result?.allCount}/>
+      <SingleSidebarStat title="Liczba odpowiedzi" value={result?.allCount}/>
+      <SingleSidebarStat title="Liczba poprawnych odpowiedzi" value={result?.validCount}/>
       <SingleSidebarStat title="% poprawnych odpowiedzi" value={result?.resultPercent}/>
+      <SingleSidebarStat title="Liczba kart w rundzie" value={roundFlashcards?.length??0}/>
+      
+      
       <br />
     </div>
   )

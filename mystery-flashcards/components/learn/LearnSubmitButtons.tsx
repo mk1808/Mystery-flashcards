@@ -2,12 +2,22 @@
 import useTrainingStore from '@/stores/useTrainingStore';
 import { getMainButtonAttrs } from '@/utils/client/TrainingUtils';
 import { usePathname } from 'next/navigation';
-import React from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 
 function LearnSubmitButtons({ dictionary }: { dictionary: any }) {
     const wasChecked = useTrainingStore((state) => state.wasChecked);
-    const onClick = () => { console.log("a") }
-    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(wasChecked, onClick);
+    const [kwasChecked, setKwasChecked] = useState<Boolean>(false);
+    const setWasChecked = useTrainingStore((state) => state.setWasChecked);
+    const incrementCurrentFlashcardIndexInRound = useTrainingStore((state) => state.incrementCurrentFlashcardIndexInRound);
+
+    const setWasRef = useRef<any>(null)
+    setWasRef.current = wasChecked;
+
+    useEffect(()=>{
+        setKwasChecked(wasChecked)
+    },[wasChecked])
+
+    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(setWasRef.current);
     const pathname = usePathname();
     const title = pathname.includes("result") ? dictionary.common.answersResultsTitle :
         pathname.includes("training") ? dictionary.common.learnTitle : dictionary.common.testTitle;
