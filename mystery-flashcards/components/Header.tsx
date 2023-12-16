@@ -6,7 +6,7 @@ import Link from 'next/link'
 import React, { useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation';
 
-function Header({
+async function Header({
     locale,
     dictionary
 }: {
