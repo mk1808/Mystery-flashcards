@@ -1,5 +1,5 @@
 import { UserT } from "@/models/User";
-import { createPathParams, get, post, put } from "./RestUtils";
+import { createPathParams, get, patch, post, put } from "./RestUtils";
 
 const PREFIX = "http://localhost:3000/api";
 
@@ -42,6 +42,11 @@ export const getWhoAmi = () => {
 
 export const updateUser = (user: UserT) => {
     return put(user, `${PREFIX}/users`);
+}
+
+export const patchAnswersAndReturnResults = (id: any, body:any, headers?:any) => {
+    console.log(id)
+    return patch(body, `${PREFIX}/flashcards/${id}/learn/training`,"no-store", headers);
 }
 
 export const logout = () => {

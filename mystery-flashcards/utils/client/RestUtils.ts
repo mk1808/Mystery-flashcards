@@ -28,6 +28,13 @@ export const deleteR = (url: string) => fetch(url, {
     method: 'DELETE'
 }).then(onResponse);
 
+export const patch = (body: any, url: string, cache: RequestCache | undefined = 'no-store', headers?:any) => fetch(url, {
+    method: 'PATCH',
+    cache:cache,
+    body: JSON.stringify(body),
+    headers:headers
+}).then(onResponse);
+
 export function createPathParams(params: any) {
     var pathParams = "";
     for (const param in params) {
