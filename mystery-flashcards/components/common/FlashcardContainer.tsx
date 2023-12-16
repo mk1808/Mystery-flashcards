@@ -1,3 +1,4 @@
+"use client"
 import { FlashcardT } from '@/models/Flashcard'
 import React, { useEffect, useRef } from 'react'
 import { TrashIcon } from "@heroicons/react/24/outline";

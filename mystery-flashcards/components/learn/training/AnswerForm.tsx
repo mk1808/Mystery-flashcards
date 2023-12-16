@@ -12,6 +12,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
     const roundFlashcards = useTrainingStore((state) => state.roundFlashcards);
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
     const result = useTrainingStore((state) => state.result);
+    const wasChecked = useTrainingStore((state) => state.wasChecked);
     const incrementCurrentFlashcardIndexInRound = useTrainingStore((state) => state.incrementCurrentFlashcardIndexInRound);
     const resultRef = useRef<any>(null);
     resultRef.current = result;
@@ -27,15 +28,25 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
 
     const onSubmit = async (answer: AnswerForm, e: any) => {
         try {
-            console.log(answer)
-            const currentFlashcard = roundFlashcards[currentIndex],
-                isValid = checkValidity(currentFlashcard, answer),
-                updatedAnswer = updateAnswer(answer, currentFlashcard, isValid),
-                updatedResult = updateResult(updatedAnswer, resultRef.current);
-            onAnswerSave(updatedAnswer, currentFlashcard, updatedResult);
-            setWasChecked(true);
-            setIsValid(isValid);
-            incrementCurrentFlashcardIndexInRound();
+            console.log("answer", answer)
+            console.log("TEST ANSWER")
+            if (!wasChecked) {
+                const currentFlashcard = roundFlashcards[currentIndex],
+                    isValid = checkValidity(currentFlashcard, answer),
+                    updatedAnswer = updateAnswer(answer, currentFlashcard, isValid),
+                    updatedResult = updateResult(updatedAnswer, resultRef.current);
+                onAnswerSave(updatedAnswer, currentFlashcard, updatedResult);
+                setWasChecked(true);
+                setIsValid(isValid);
+            }
+
+            else {
+                incrementCurrentFlashcardIndexInRound();
+                setWasChecked(false);
+                reset({ givenAnswer: "" })
+            }
+
+
 
 
         } catch (errorResponse: any) {

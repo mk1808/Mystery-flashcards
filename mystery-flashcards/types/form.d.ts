@@ -37,6 +37,6 @@ interface AnswerForm {
 interface ButtonAttrs {
     title: string, 
     type: "submit" | "reset" | "button" | undefined, 
-    form: string, 
+    form?: string, 
     onClick?: any
 }

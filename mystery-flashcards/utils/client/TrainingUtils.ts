@@ -30,8 +30,6 @@ export const checkValidity = (flashcard: FlashcardT, answer: AnswerForm) => {
 
 export const getMainButtonAttrs = (wasChecked: Boolean, onClick: any): ButtonAttrs => {
     const commonAttrs = { form: "answerForm" }
-    if (wasChecked) {
-        return { ...commonAttrs, title: "Kontynuuj", type: "button", onClick: onClick }
-    }
-    return { ...commonAttrs, title: "Zatwierdź odpowiedź", type: "submit" }
+    const title = wasChecked?"Kontynuuj":"Zatwierdź odpowiedź";
+    return { ...commonAttrs, title: title, type: "submit" }
 }

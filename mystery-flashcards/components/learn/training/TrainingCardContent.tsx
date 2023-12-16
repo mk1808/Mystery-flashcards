@@ -1,21 +1,32 @@
 "use client"
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState, useRef } from 'react'
 import AnswerForm from './AnswerForm';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { FlashcardT } from '@/models/Flashcard';
 
 function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { dictionary: any, flashcardSet: any, roundFlashcards: any }) {
     const [isValid, setIsValid] = useState<Boolean>(true);
+    const [kwasChecked, setKwasChecked] = useState<Boolean>(false);
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({wordLang1:"a", description1:"a"});
     const setFlashcardSet = useTrainingStore((state) => state.setFlashcardSet);
     const setRoundFlashcards = useTrainingStore((state) => state.setRoundFlashcards);
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound); 
     const wasChecked = useTrainingStore((state) => state.wasChecked); 
     const setWasChecked = useTrainingStore((state) => state.setWasChecked); 
+    const currentIndexRef = useRef<any>(null);
+    currentIndexRef.current = currentIndex;
+    const wasCheckedRef = useRef<any>(null);
+    wasCheckedRef.current = wasChecked;
     
     useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
-    useEffect(() => { setRoundFlashcards(roundFlashcards), setCurrentFlashcard(roundFlashcards[currentIndex]) }, [currentIndex])
+    useEffect(() => { 
+        setRoundFlashcards(roundFlashcards);
+        setCurrentFlashcard(roundFlashcards[currentIndexRef.current]);
+        console.log("cc")
+        console.log(JSON.stringify(wasChecked))
+        setKwasChecked(wasChecked)
+    }, [wasChecked])
 
     function renderAnswerValidity() {
         return (
@@ -26,7 +37,7 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { di
     }
 
     function renderValidity() {
-        if (wasChecked) {
+        if (kwasChecked) {
             return <> {isValid ? renderValid() : renderInvalid()} </>
         }
         return <></>
@@ -71,6 +82,7 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { di
                     <div className="self-end">
                         <AnswerForm dictionary={dictionary} currentFlashcard={currentFlashcard} setIsValid={setIsValid} setWasChecked={setWasChecked}/>
                     </div>
+                    {kwasChecked ? "DUPA":"dupa"}
                     <div>{renderAnswerValidity()}</div>
                 </div>
             </div>
