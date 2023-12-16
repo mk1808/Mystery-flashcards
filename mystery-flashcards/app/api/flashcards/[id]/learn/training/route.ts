@@ -19,7 +19,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         newUserFlashcard = { userId: currentUser._id, flashcardSetId: id, learningHistory: [] },
         existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser })).toObject(),
         userFlashcard = existingUserFlashcard || newUserFlashcard;
-    const { randStrategy, prevAnswers } = addOrUpdateUserFlashcard(userFlashcard, learningHistoryTab, existingUserFlashcard);
+    const { randStrategy, prevAnswers } = await addOrUpdateUserFlashcard(userFlashcard, learningHistoryTab, existingUserFlashcard);
     if (!flashcardSet) {
         return new NextResponse('Flash card set not found!', { status: 404 });
     }
@@ -40,15 +40,18 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         newUserFlashcard = { userId: currentUser._id, flashcardSetId: id, learningHistory: [] },
         existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser })).toObject(),
         userFlashcard = existingUserFlashcard || newUserFlashcard;
-    const { udpatedUserFlashcard } = addOrUpdateUserFlashcard(userFlashcard, learningHistoryTab, existingUserFlashcard);
+    const { udpatedUserFlashcard } = await addOrUpdateUserFlashcard(userFlashcard, learningHistoryTab, existingUserFlashcard);
     updateUserPoints(currentUser, learningHistoryTab);
     return NextResponse.json(udpatedUserFlashcard);
 }
 
 function updateAttemptNo(currentTab: any) {
-    currentTab?.forEach((element: any) => {
-        element.attempt = "LAST";
-    });
+    if (currentTab) {
+        currentTab.forEach((element: any) => {
+            element.attempt = "LAST";
+        });
+    }
+
 }
 function filterLastAndUpdateAttemptNo(previousTab: any) {
     const filtered = getOnlyLastAnswers(previousTab);
@@ -97,7 +100,7 @@ function getForNo2(flashcards: any, learningHistoryTab: any): any[] {
 }
 
 function getForNo3AndNext(flashcards: FlashcardT[], learningHistoryTab: any, prevAnswers: AnswerT[]): any[] {
-    const prevAnswersCardsIds = prevAnswers.map((element: AnswerT) => element.flashcardId.valueOf());
+    const prevAnswersCardsIds = prevAnswers.map((element: AnswerT) => element.flashcardId?.valueOf());
     const allCardsIds = flashcards.map((element: FlashcardT) => element._id?.valueOf());
 
     const idsWithNumOfCorrectAns: any = {
@@ -158,7 +161,7 @@ function randomize(randStrategy: number, flashcards: any, learningHistoryTab: an
     }
 }
 
-function addOrUpdateUserFlashcard(userFlashcard: any, learningHistoryTab: any, existingUserFlashcard: any) {
+async function addOrUpdateUserFlashcard(userFlashcard: any, learningHistoryTab: any, existingUserFlashcard: any) {
     userFlashcard.learningHistory.forEach((card: any) => {
         card._id = card._id.valueOf();
         card.flashcardId = card.flashcardId.valueOf();
@@ -169,7 +172,7 @@ function addOrUpdateUserFlashcard(userFlashcard: any, learningHistoryTab: any, e
     userFlashcard.learningHistory = prevAnswers;
     userFlashcard.learningHistory.push(...learningHistoryTab);
     userFlashcard.type = "LEARNING";
-    const udpatedUserFlashcard = updateOrCreate(existingUserFlashcard, userFlashcard);
+    const udpatedUserFlashcard = await updateOrCreate(existingUserFlashcard, userFlashcard);
 
     return { randStrategy, prevAnswers, udpatedUserFlashcard };
 }
@@ -178,11 +181,11 @@ async function updateOrCreate(existingUserFlashcard: any, userFlashcard: any) {
     let udpatedUserFlashcard;
     if (existingUserFlashcard) {
         udpatedUserFlashcard =
-            await UserFlashcard.findOneAndReplace({ _id: userFlashcard._id }, userFlashcard, { new: true });
+           ( await UserFlashcard.findOneAndReplace({ _id: userFlashcard._id }, userFlashcard, { new: true })).toObject();
     }
     else {
         udpatedUserFlashcard =
-            await UserFlashcard.create(userFlashcard);
+            (await UserFlashcard.create(userFlashcard)).toObject();
     }
     return udpatedUserFlashcard;
 }
