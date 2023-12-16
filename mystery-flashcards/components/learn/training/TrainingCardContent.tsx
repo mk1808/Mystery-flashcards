@@ -7,7 +7,6 @@ import { FlashcardT } from '@/models/Flashcard';
 
 function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { dictionary: any, flashcardSet: any, roundFlashcards: any }) {
     const [isValid, setIsValid] = useState<Boolean>(true);
-    const [kwasChecked, setKwasChecked] = useState<Boolean>(false);
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({wordLang1:"a", description1:"a"});
     const setFlashcardSet = useTrainingStore((state) => state.setFlashcardSet);
     const setRoundFlashcards = useTrainingStore((state) => state.setRoundFlashcards);
@@ -23,9 +22,6 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { di
     useEffect(() => { 
         setRoundFlashcards(roundFlashcards);
         setCurrentFlashcard(roundFlashcards[currentIndexRef.current]);
-        console.log("cc")
-        console.log(JSON.stringify(wasChecked))
-        setKwasChecked(wasChecked)
     }, [wasChecked])
 
     function renderAnswerValidity() {
@@ -37,7 +33,7 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { di
     }
 
     function renderValidity() {
-        if (kwasChecked) {
+        if (wasChecked) {
             return <> {isValid ? renderValid() : renderInvalid()} </>
         }
         return <></>
@@ -82,7 +78,6 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { di
                     <div className="self-end">
                         <AnswerForm dictionary={dictionary} currentFlashcard={currentFlashcard} setIsValid={setIsValid} setWasChecked={setWasChecked}/>
                     </div>
-                    {kwasChecked ? "DUPA":"dupa"}
                     <div>{renderAnswerValidity()}</div>
                 </div>
             </div>

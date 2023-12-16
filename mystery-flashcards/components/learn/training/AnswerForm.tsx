@@ -6,16 +6,22 @@ import useTrainingStore from '@/stores/useTrainingStore';
 import { checkValidity, updateAnswer, updateResult } from '@/utils/client/TrainingUtils';
 import { FlashcardT } from '@/models/Flashcard';
 import { useRef } from 'react';
+import { getFlashcardSetRequest, postAnswersAndReturnCards } from '@/utils/client/ApiUtils';
 
 function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }: { dictionary: any, currentFlashcard: FlashcardT, setIsValid: any, setWasChecked: any }) {
     const onAnswerSave = useTrainingStore((state) => state.onAnswerSave);
+    const onNewRound = useTrainingStore((state) => state.onNewRound);
+    
     const roundFlashcards = useTrainingStore((state) => state.roundFlashcards);
+    const roundAnswers = useTrainingStore((state) => state.roundAnswers);
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
     const result = useTrainingStore((state) => state.result);
     const wasChecked = useTrainingStore((state) => state.wasChecked);
     const incrementCurrentFlashcardIndexInRound = useTrainingStore((state) => state.incrementCurrentFlashcardIndexInRound);
     const resultRef = useRef<any>(null);
     resultRef.current = result;
+    const tempId = "656a2c5d573e1d09a12fd05a";
+
 
     const {
         register,
@@ -41,14 +47,19 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
             }
 
             else {
-                incrementCurrentFlashcardIndexInRound();
                 setWasChecked(false);
                 reset({ givenAnswer: "" })
+                const hasNextFlashcard = currentIndex + 1 < roundFlashcards.length;
+                if (hasNextFlashcard) {
+                    incrementCurrentFlashcardIndexInRound();
+                }
+                else {
+                    const roundFlashcards = await postAnswersAndReturnCards(tempId, roundAnswers);
+                    onNewRound(roundFlashcards);
+                    console.log("ROUND: ", roundFlashcards)
+                }
+
             }
-
-
-
-
         } catch (errorResponse: any) {
 
         }

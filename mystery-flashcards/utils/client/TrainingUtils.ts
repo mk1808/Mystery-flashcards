@@ -8,7 +8,7 @@ export const updateAnswer = (answerForm: AnswerForm, flashcard: any, isValid: bo
         isCorrect: isValid,
         givenAnswer: answerForm.givenAnswer
     }
-    console.log(answer)
+ //   console.log(answer)
     return answer;
 }
 
@@ -20,7 +20,7 @@ export const updateResult = (answer: AnswerT, result: TestResultT) => {
         result.resultPercent = Number((result.validCount! / result.allCount!).toFixed(2));
     }
 
-    console.log(result)
+  //  console.log(result)
     return result;
 }
 
@@ -28,7 +28,7 @@ export const checkValidity = (flashcard: FlashcardT, answer: AnswerForm) => {
     return flashcard.wordLang2?.toLowerCase() == answer.givenAnswer.toLowerCase();
 }
 
-export const getMainButtonAttrs = (wasChecked: Boolean, onClick: any): ButtonAttrs => {
+export const getMainButtonAttrs = (wasChecked: Boolean): ButtonAttrs => {
     const commonAttrs = { form: "answerForm" }
     const title = wasChecked?"Kontynuuj":"Zatwierdź odpowiedź";
     return { ...commonAttrs, title: title, type: "submit" }

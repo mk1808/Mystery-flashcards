@@ -17,14 +17,7 @@ function LearnSubmitButtons({ dictionary }: { dictionary: any }) {
         setKwasChecked(wasChecked)
     },[wasChecked])
 
-    const onClick = () => {      
-      //  console.log("TEST DUPY")
-      // setWasRef.current(false);
-      //  incrementCurrentFlashcardIndexInRound(); 
-   
-    }
-    console.log("test 123", wasChecked, kwasChecked)
-    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(setWasRef.current, onClick);
+    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(setWasRef.current);
     const pathname = usePathname();
     const title = pathname.includes("result") ? dictionary.common.answersResultsTitle :
         pathname.includes("training") ? dictionary.common.learnTitle : dictionary.common.testTitle;
