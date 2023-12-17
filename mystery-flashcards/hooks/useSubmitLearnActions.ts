@@ -4,6 +4,7 @@ import useSubmitTrainingResultAction from "./submitLearnActions/useSubmitTrainin
 import useSubmitTrainingAction from "./submitLearnActions/useSubmitTrainingAction";
 import useSubmitTestAction from "./submitTrainingActions/useSubmitTestAction";
 import useTestStore from "@/stores/useTestStore";
+import useSubmitTestResultAction from "./submitTrainingActions/useSubmitTestResultAction";
 
 function useSubmitLearnActions({ dictionary }: { dictionary: any }): { mainButtonAttrs: any, otherButtonAttrs: any } {
     const view = useTrainingStore((state) => state.view);
@@ -11,6 +12,7 @@ function useSubmitLearnActions({ dictionary }: { dictionary: any }): { mainButto
     const training = useSubmitTrainingAction({ dictionary });
     const trainingResult = useSubmitTrainingResultAction({ dictionary });
     const test = useSubmitTestAction({ dictionary });
+    const testResult = useSubmitTestResultAction({ dictionary });
     const [currentAction, setCurrentAction] = useState<{ mainButtonAttrs: ButtonAttrs, otherButtonAttrs: any }>({
         mainButtonAttrs: {
             title: "",
@@ -28,6 +30,9 @@ function useSubmitLearnActions({ dictionary }: { dictionary: any }): { mainButto
                 break;
             case "TEST":
                 setCurrentAction(test)
+                break;
+            case "TEST_RESULT":
+                setCurrentAction(testResult)
                 break;
         }
     }, [view, currentFlashcardIndex])

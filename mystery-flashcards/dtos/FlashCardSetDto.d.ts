@@ -1,6 +1,9 @@
+import { FlashcardSetT } from "@/models/FlashcardSet";
+import { TestResultT } from "@/models/TestResult";
+import { UserFlashcardT } from "@/models/UserFlashcard";
 
 interface FlashCardSetDto {
-    flashcardSet?: FlashcardSet,
-    userFlashcard?: UserFlashcard,
-    testResult?: TestResult
+    flashcardSet?: FlashcardSetT,
+    userFlashcard?: UserFlashcardT,
+    testResult?: TestResultT
 }

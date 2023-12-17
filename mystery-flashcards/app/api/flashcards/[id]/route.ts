@@ -1,3 +1,4 @@
+import { FlashCardSetDto } from "@/dtos/FlashCardSetDto";
 import FlashcardSet from "@/models/FlashcardSet";
 import TestResult from "@/models/TestResult";
 import UserFlashcard from "@/models/UserFlashcard";
@@ -9,14 +10,14 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     const id = params.id;
     await connectToDB();
     const flashCardSetDto: FlashCardSetDto = {};
-    flashCardSetDto.flashcardSet = await FlashcardSet.findById(id);
+    flashCardSetDto.flashcardSet = (await FlashcardSet.findById(id))!;
     const currentUser = await getUser(request);
     if (!flashCardSetDto.flashcardSet) {
-        return new NextResponse(JSON.stringify({message:'Flash card set not found!'}), { status: 404 });
+        return new NextResponse(JSON.stringify({ message: 'Flash card set not found!' }), { status: 404 });
     } else if (currentUser) {
-        flashCardSetDto.userFlashcard = await UserFlashcard.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id });
+        flashCardSetDto.userFlashcard = (await UserFlashcard.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id }))!;
         if (flashCardSetDto.userFlashcard) {
-            flashCardSetDto.testResult = await TestResult.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id });
+            flashCardSetDto.testResult = (await TestResult.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id }))!;
         }
     }
     return new NextResponse(JSON.stringify(flashCardSetDto));

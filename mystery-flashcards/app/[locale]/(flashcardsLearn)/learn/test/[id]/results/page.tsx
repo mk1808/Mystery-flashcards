@@ -1,43 +1,19 @@
+import TestResultTable from '@/components/learn/test/TestResultTable'
+import { fetchDictionary } from '@/dictionaries/dictionaries';
+import { getFlashcardSetRequest, getTestFlashcardsRequest } from '@/utils/client/ApiUtils';
+import { cookies } from 'next/headers';
 import React from 'react'
 
-export default function LearnTestResults({ params }: { params: { id: String } }) {
-  return (
-    <div className="overflow-x-auto">
-      <table className="table">
-        {/* head */}
-        <thead>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* row 1 */}
-          <tr>
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>Quality Control Specialist</td>
-            <td>Blue</td>
-          </tr>
-          {/* row 2 */}
-          <tr>
-            <th>2</th>
-            <td>Hart Hagerty</td>
-            <td>Desktop Support Technician</td>
-            <td>Purple</td>
-          </tr>
-          {/* row 3 */}
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>Tax Accountant</td>
-            <td>Red</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+export default async function LearnTestResults({ params }: { params: { id: string, locale: string } }) {
+  const tempId = "656b7e961c783fdd82116774";
+  const dictionary = await fetchDictionary(params.locale);
+  const headers = {
+    cookie: 'token=' + cookies().get('token')?.value
+  }
 
+  const flashcardSetDto = await getFlashcardSetRequest(tempId/*params.id*/, headers);
+
+  return (
+    <TestResultTable flashcardSetDto={flashcardSetDto} />
   )
 }
