@@ -12,8 +12,9 @@ export default async function LearnTraining({ params }: { params: { id: string, 
 
   const flashcardSet = await getFlashcardSetRequest(tempId/*params.id*/, headers);
   const roundFlashcards = await postAnswersAndReturnCards(tempId, []/*params.id*/, headers);
+  const view = "TRAINING";
   console.log("roundFlashcards", roundFlashcards)
   return (
-    <TrainingCardContent dictionary={dictionary} flashcardSet={flashcardSet} roundFlashcards={roundFlashcards} />
+    <TrainingCardContent dictionary={dictionary} flashcardSet={flashcardSet} roundFlashcards={roundFlashcards} view={view} />
   )
 }

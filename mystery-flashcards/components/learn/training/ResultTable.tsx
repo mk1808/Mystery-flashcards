@@ -2,13 +2,15 @@
 import Table from '@/components/common/Table';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { createAnswersList, createTestResult } from '@/utils/client/TrainingUtils';
-import React from 'react'
+import React, { useEffect } from 'react'
 
-function ResultTable() {
+function ResultTable({view}:{view:any}) {
     const allAnswers = useTrainingStore((state) => state.allAnswers);
     const allFlashcards = useTrainingStore((state) => state.allFlashcards);
     const allInfoObjects = createTestResult(allAnswers, allFlashcards);
+    const setView = useTrainingStore((state) => state.setView);
     const columns = ["Nr", "Pytanie", "Odpowiedzi", "Poprawna odpowiedź", "% poprawnych"]
+    useEffect(() => { setView(view) }, [])
     return (<Table columns={columns} renderRows={renderRows}/>)
 
     function renderRows() {

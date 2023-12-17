@@ -5,9 +5,11 @@ import AnswerForm from './AnswerForm';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { FlashcardT } from '@/models/Flashcard';
 
-function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { dictionary: any, flashcardSet: any, roundFlashcards: any }) {
+function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }:
+     { dictionary: any, flashcardSet: any, roundFlashcards: any, view:any }) {
     const [isValid, setIsValid] = useState<Boolean>(true);
-    const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({wordLang1:"a", description1:"a"});
+    const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({wordLang1:"", description1:""});
+    const setView = useTrainingStore((state) => state.setView);
     const setFlashcardSet = useTrainingStore((state) => state.setFlashcardSet);
     const setRoundFlashcards = useTrainingStore((state) => state.setRoundFlashcards);
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound); 
@@ -17,8 +19,8 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards }: { di
     currentIndexRef.current = currentIndex;
     const wasCheckedRef = useRef<any>(null);
     wasCheckedRef.current = wasChecked;
-    
-    useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
+    useEffect(() => { setView(view) }, [view])
+    useEffect(() => { console.log("FS:",flashcardSet); setFlashcardSet(flashcardSet);  }, [flashcardSet])
     useEffect(() => { 
         setRoundFlashcards(roundFlashcards);
         setCurrentFlashcard(roundFlashcards[currentIndexRef.current]);
