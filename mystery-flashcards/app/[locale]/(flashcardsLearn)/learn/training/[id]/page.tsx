@@ -6,7 +6,7 @@ import { cookies } from 'next/headers'
 import { createCookieHeader } from '@/utils/client/RestUtils';
 
 export default async function LearnTraining({ params }: { params: { id: string, locale: string } }) {
-  const tempId = "656a2c5d573e1d09a12fd05a";
+  const tempId = "656b7e961c783fdd82116774";
   const dictionary = await fetchDictionary(params.locale);
   const headers = createCookieHeader(cookies());
 
