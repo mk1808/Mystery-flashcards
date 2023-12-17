@@ -41,8 +41,8 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser })).toObject(),
         userFlashcard = existingUserFlashcard || newUserFlashcard;
     const { udpatedUserFlashcard } = await addOrUpdateUserFlashcard(userFlashcard, learningHistoryTab, existingUserFlashcard);
-    updateUserPoints(currentUser, learningHistoryTab);
-    return NextResponse.json(udpatedUserFlashcard);
+    const { user, newPoints } = await updateUserPoints(currentUser, learningHistoryTab);
+    return NextResponse.json({ userWithPoints: user, udpatedUserFlashcard: udpatedUserFlashcard, newPoints: newPoints });
 }
 
 function updateAttemptNo(currentTab: any) {
@@ -181,7 +181,7 @@ async function updateOrCreate(existingUserFlashcard: any, userFlashcard: any) {
     let udpatedUserFlashcard;
     if (existingUserFlashcard) {
         udpatedUserFlashcard =
-           ( await UserFlashcard.findOneAndReplace({ _id: userFlashcard._id }, userFlashcard, { new: true })).toObject();
+            (await UserFlashcard.findOneAndReplace({ _id: userFlashcard._id }, userFlashcard, { new: true })).toObject();
     }
     else {
         udpatedUserFlashcard =
@@ -204,6 +204,7 @@ async function updateUserPoints(user: UserT, learningHistoryTab: any) {
     const correctCardsIds: any[] = getCorrectCardIds(learningHistoryTab);
     user.points += correctCardsIds.length;
     user.rang = findRangByPoints(user.points).id;
-    await User.findOneAndReplace({ _id: user._id }, user, { new: true });
+    const savedUser = await User.findOneAndReplace({ _id: user._id }, user, { new: true });
+    return { user: savedUser.toObject(), newPoints: correctCardsIds.length };
 }
 

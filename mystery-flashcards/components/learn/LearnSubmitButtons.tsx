@@ -12,6 +12,7 @@ import React, { useState, useEffect, useRef } from 'react'
 function LearnSubmitButtons({ dictionary }: { dictionary: any }) {
     const wasChecked = useTrainingStore((state) => state.wasChecked);
     const roundAnswers = useTrainingStore((state) => state.roundAnswers);
+    const setFinalResult = useTrainingStore((state) => state.setFinalResult);
     const addAlert = useAlertStore((state) => state.add)
     const router = useRouter();
     const [kwasChecked, setKwasChecked] = useState<Boolean>(false);
@@ -32,6 +33,7 @@ function LearnSubmitButtons({ dictionary }: { dictionary: any }) {
 
         try {
             const result = await patchAnswersAndReturnResults(tempId, roundAnswers);
+            setFinalResult(result);
             console.log("finalResult: ", result)
             goToResults();
         } catch (errorResponse: any) {
