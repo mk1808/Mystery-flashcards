@@ -53,3 +53,8 @@ export const logout = () => {
     return post({}, `${PREFIX}/auth/logout`);
 }
 
+export const postUserFlashcardSet = (body: any) => {
+    console.log(body)
+    return post(body, `${PREFIX}/userFlashcards`);
+}
+

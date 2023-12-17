@@ -1,12 +1,15 @@
 import Modal from '@/components/common/Modal'
 import React from 'react'
 import { HeartIcon } from "@heroicons/react/24/outline"
+import AddToFavActions from './AddToFavActions'
+import AddToFavContent from './AddToFavContent'
 
 function AddToFavModal({ dictionary, flashcardSet }: { dictionary: any, flashcardSet: any }) {
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
-        dialogActions={renderModalActions()}
+        dialogActions={<AddToFavActions dictionary={dictionary} flashcardSet={flashcardSet} />}
+        width="w-6/12"
     />
 
     function renderDialogTrigger() {
@@ -21,18 +24,9 @@ function AddToFavModal({ dictionary, flashcardSet }: { dictionary: any, flashcar
         return <h2 className="font-bold text-3xl">{dictionary.common.addToFavoritesTitle}</h2>
     }
 
-    function renderModalActions() {
-        return (
-            <>
-                <button className="btn ml-3">Close</button>
-                <button className="btn btn-primary ml-3"> Confirm</button>
-            </>
-        )
-    }
-
     function renderDialogContent() {
 
-        return <>content</>
+        return <AddToFavContent dictionary={dictionary} flashcardSet={flashcardSet} />
     }
 }
 
