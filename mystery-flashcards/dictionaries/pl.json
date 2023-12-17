@@ -70,6 +70,9 @@
         "creationDate": "Data dodania",
         "popularity": "Popularność",
         "learnThisFlashcardSet": "Ucz się tej kolekcji",
-        "addToFavorites": "Dodaj do ulubionych"
+        "addToFavorites": "Dodaj do ulubionych",
+        "learnSetTitle": "Ucz się kolekcji",
+        "addToFavoritesTitle": "Dodaj do ulubionych"
+        
     }
 }

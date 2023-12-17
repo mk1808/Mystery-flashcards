@@ -23,8 +23,8 @@ export default async function FlashcardsDetails({ params }: { params: { locale: 
   function renderActionButtons() {
     return (
       <div className="mb-12 flex justify-end">
-        <StartLearningModal dictionary={dictionary} />
-        <AddToFavModal dictionary={dictionary} />
+        <StartLearningModal dictionary={dictionary} flashcardSet={flashcardSet} />
+        <AddToFavModal dictionary={dictionary} flashcardSet={flashcardSet}/>
       </div>
     )
   }
