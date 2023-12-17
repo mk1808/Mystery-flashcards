@@ -1,23 +1,20 @@
+import TestCardContent from '@/components/learn/test/TestCardContent';
+import { fetchDictionary } from '@/dictionaries/dictionaries';
+import { getFlashcardSetRequest, getTestFlashcardsRequest } from '@/utils/client/ApiUtils';
+import { cookies } from 'next/headers';
 import React from 'react'
 
-export default function LearnTest({ params }: { params: { id: String } }) {
-  return (
-    <div className="grid grid-cols-2 h-full">
-      <div className='grid grid-rows-2'>
-        <div className='self-end'>
-          <h1 className="text-3xl my-3 ">{"card.wordLang1"}</h1>
-        </div>
-        <div><p>{"card.description1"}</p></div>
-      </div>
-      <div className='flex items-center'>
-        <div className="divider divider-horizontal ml-0"></div>
-        <div className="w-full h-full grid grid-rows-2">
+export default async function LearnTest({ params }: { params: { id: string, locale: string } }) {
+  const tempId = "656b7e961c783fdd82116774";
+  const dictionary = await fetchDictionary(params.locale);
+  const headers = {
+    cookie: 'token=' + cookies().get('token')?.value
+  }
 
-          <div className="self-end">
-            <input type="text" placeholder="Podaj odpowiedź" className="input input-bordered w-full" />
-          </div>
-        </div>
-      </div>
-    </div>
+  const flashcardSet = await getFlashcardSetRequest(tempId/*params.id*/, headers);
+  const { flashcards } = await getTestFlashcardsRequest(tempId/*params.id*/, headers);
+
+  return (
+    <TestCardContent dictionary={dictionary} flashcardSet={flashcardSet} testFlashcards={flashcards} />
   )
 }

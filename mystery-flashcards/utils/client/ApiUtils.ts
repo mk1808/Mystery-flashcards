@@ -22,14 +22,22 @@ export const searchFlashcardSets = (data: any) => {
     return get(`${PREFIX}/flashcards/search?${createPathParams(data)}`);
 }
 
-export const getFlashcardSetRequest = (id: any, headers:any) => {
+export const getFlashcardSetRequest = (id: any, headers: any) => {
     console.log(id)
     return get(`${PREFIX}/flashcards/${id}`, "no-store", headers);
 }
 
-export const postAnswersAndReturnCards = (id: any, body:any, headers?:any) => {
+export const postAnswersAndReturnCards = (id: any, body: any, headers?: any) => {
     console.log(id)
-    return post( body, `${PREFIX}/flashcards/${id}/learn/training`,"no-store", headers);
+    return post(body, `${PREFIX}/flashcards/${id}/learn/training`, "no-store", headers);
+}
+
+export const getTestFlashcardsRequest = (id: any, headers: any) => {
+    return get(`${PREFIX}/flashcards/${id}/learn/test`, "no-store", headers);
+}
+
+export const sendTestAnswersRequest = (id: any, body: any) => {
+    return post(body, `${PREFIX}/flashcards/${id}/learn/test`, "no-store");
 }
 
 export const getUserStatistics = () => {
@@ -44,9 +52,9 @@ export const updateUser = (user: UserT) => {
     return put(user, `${PREFIX}/users`);
 }
 
-export const patchAnswersAndReturnResults = (id: any, body:any, headers?:any) => {
+export const patchAnswersAndReturnResults = (id: any, body: any, headers?: any) => {
     console.log(id)
-    return patch(body, `${PREFIX}/flashcards/${id}/learn/training`,"no-store", headers);
+    return patch(body, `${PREFIX}/flashcards/${id}/learn/training`, "no-store", headers);
 }
 
 export const logout = () => {
