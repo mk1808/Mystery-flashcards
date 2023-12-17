@@ -44,3 +44,12 @@ export const excludeFromArray = (array: any[], element: any) => {
     }
     return array;
 }
+
+export const getAllIndexes = (array: any[], value: any) => {
+    var indexes = [], i;
+    for (i = 0; i < array.length; i++)
+        if (array[i] === value)
+            indexes.push(i);
+    return indexes;
+}
+
