@@ -10,10 +10,10 @@ function ResultTable() {
     console.log("f", distinctFlashcardsIds);
     const flashcardsIds = allFlashcards.map((card: any) => card._id);
     const uniqueIds = [...new Set(flashcardsIds)]; const myMap = new Map<string, any>([]);
-    const allInfoObjects:any=[];
-    function getAllIndexes(arr:any, val:any) {
+    const allInfoObjects: any = [];
+    function getAllIndexes(arr: any, val: any) {
         var indexes = [], i;
-        for(i = 0; i < arr.length; i++)
+        for (i = 0; i < arr.length; i++)
             if (arr[i] === val)
                 indexes.push(i);
         return indexes;
@@ -27,9 +27,9 @@ function ResultTable() {
         const indexes = myMap.get(id);
         const firstId = indexes[0];
         const flashcard = allFlashcards[firstId];
-        const answers:any=[];
-        const userAnswers:any=[];
-        const userAnswersValidity:any=[];
+        const answers: any = [];
+        const userAnswers: any = [];
+        const userAnswersValidity: any = [];
         indexes.forEach((id: any) => {
             const currentAnswer = allAnswers[id]
             answers.push(currentAnswer);
@@ -39,24 +39,11 @@ function ResultTable() {
 
         })
         const allAnswersNumber = userAnswers.length,
-        correctAnswersNumber = userAnswersValidity.filter((ans:any)=>ans==true).length,
-        percent = (correctAnswersNumber * 100.0 / allAnswersNumber).toFixed(2);
-        allInfoObjects.push({id:firstId, flashcard, answers, userAnswers, allAnswersNumber, correctAnswersNumber, percent})
+            correctAnswersNumber = userAnswersValidity.filter((ans: any) => ans == true).length,
+            percent = (correctAnswersNumber * 100.0 / allAnswersNumber).toFixed(2);
+        allInfoObjects.push({ id: firstId, flashcard, answers, userAnswers, allAnswersNumber, correctAnswersNumber, percent })
     })
-console.log(allInfoObjects);
-    /*   flashcardsIds.forEach((id:any)=>)
-       const fillMap = ()=>{
-           distinctFlashcardsIds.forEach((id:any)=>{
-               myMap.set(id, {flashcard:allFlashcards.filter(f=>f._id===id), answers:allFlashcards.filter(a=>a. ===id)})
-           })
-           
-       }
-       //dla kazdego wziac id i pozycje
-   
-       myMap.set()
-           ["key1", "value1"],
-           ["key2", "value2"]
-       ]);*/
+    console.log(allInfoObjects);
     return (
 
         <div className="overflow-x-auto">
@@ -87,7 +74,7 @@ console.log(allInfoObjects);
         return (
 
             <tr>
-                <th>{index+1}</th>
+                <th>{index + 1}</th>
                 <td>{flashcard.flashcard.wordLang1}</td>
                 <td>{createAnsDisplay(flashcard.answers)}</td>
                 <td>{flashcard.flashcard.wordLang2}</td>
@@ -96,9 +83,9 @@ console.log(allInfoObjects);
         )
     }
 
-    function createAnsDisplay(answers:any){
+    function createAnsDisplay(answers: any) {
         let ansDisplay = ""
-        answers.forEach((ans:any)=>ansDisplay+=(ans.givenAnswer+","));
+        answers.forEach((ans: any) => ansDisplay += (ans.givenAnswer + ","));
         return ansDisplay.slice(0, -1);
     }
 }
