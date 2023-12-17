@@ -13,7 +13,8 @@ type State = {
     roundFlashcards: FlashcardT[],
     currentFlashcardIndexInRound: number,
     wasChecked: boolean,
-    finalResult: any
+    finalResult: any,
+    view: "TRAINING" | "TEST" | "TRAINING_RESULT" | "TEST_RESULT"
 }
 
 type Action = {
@@ -29,20 +30,21 @@ type Action = {
     onAnswerSave: (answer: any, flashcard: any, result: any) => void,
     onNewRound: (flashcards: []) => void,
     setWasChecked: (checked: boolean) => void,
-    setFinalResult: (finalResult: any) => void
+    setFinalResult: (finalResult: any) => void,
+    setView: (view: any) => void
 
 }
 
-const initResult =  {
-        _id: "",
-        userId: "",
-        flashcardSetId: "",
-        resultPercent: 0,
-        validCount: 0,
-        allCount: 0,
-        answers: [],
-        direction: ""
-    
+const initResult = {
+    _id: "",
+    userId: "",
+    flashcardSetId: "",
+    resultPercent: 0,
+    validCount: 0,
+    allCount: 0,
+    answers: [],
+    direction: ""
+
 }
 
 const useTrainingStore = create<State & Action>((set) => ({
@@ -54,7 +56,8 @@ const useTrainingStore = create<State & Action>((set) => ({
     roundFlashcards: [],
     currentFlashcardIndexInRound: 0,
     wasChecked: false,
-    finalResult:{},
+    finalResult: {},
+    view: "TRAINING",
     setFlashcardSet: (flashcardSet) => set(() => ({ flashcardSet: flashcardSet })),
     addToAllAnswers: (answer) => set((state) => ({ allAnswers: [...state.allAnswers, answer] })),
     addToRoundAnswers: (answer) => set((state) => ({ roundAnswers: [...state.roundAnswers, answer] })),
@@ -65,7 +68,6 @@ const useTrainingStore = create<State & Action>((set) => ({
     incrementCurrentFlashcardIndexInRound: () => set((state) => ({ currentFlashcardIndexInRound: state.currentFlashcardIndexInRound + 1 })),
     resetCurrentFlashcardIndexInRound: () => set(() => ({ currentFlashcardIndexInRound: 0 })),
     onAnswerSave: (answer, flashcard, result) => set((state) => {
-        console.log("state.roundAnswers", state.roundAnswers)
         return {
             allAnswers: [...state.allAnswers, answer],
             roundAnswers: [...state.roundAnswers, answer],
@@ -82,7 +84,7 @@ const useTrainingStore = create<State & Action>((set) => ({
     }),
     setWasChecked: (checked) => set(() => ({ wasChecked: checked })),
     setFinalResult: (finalResult) => set(() => ({ finalResult: finalResult })),
-
+    setView: (view) => set(() => ({ view: view })),
 }))
 
 export default useTrainingStore;

@@ -1,13 +1,13 @@
-import { AlertType } from "@/enums/AlertType";
-import useAlertStore from "@/stores/useAlertStore";
-import useTrainingStore from "@/stores/useTrainingStore";
-import { patchAnswersAndReturnResults } from "@/utils/client/ApiUtils";
-import { getMainButtonAttrs } from "@/utils/client/TrainingUtils";
-import { getNestedFieldByPath } from "@/utils/server/objectUtils";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { AlertType } from '@/enums/AlertType';
+import useAlertStore from '@/stores/useAlertStore';
+import useTrainingStore from '@/stores/useTrainingStore';
+import { patchAnswersAndReturnResults } from '@/utils/client/ApiUtils';
+import { getMainButtonAttrs } from '@/utils/client/TrainingUtils';
+import { getNestedFieldByPath } from '@/utils/server/objectUtils';
+import { useRouter } from 'next/navigation';
+import React, { useRef } from 'react'
 
-function useSubmitLearnAction({ dictionary }: { dictionary: any }) {
+function useSubmitTrainingAction({ dictionary }: { dictionary: any }) {
     const wasChecked = useTrainingStore((state) => state.wasChecked);
     const roundAnswers = useTrainingStore((state) => state.roundAnswers);
     const setFinalResult = useTrainingStore((state) => state.setFinalResult);
@@ -33,4 +33,4 @@ function useSubmitLearnAction({ dictionary }: { dictionary: any }) {
     return { mainButtonAttrs, otherButtonAttrs };
 }
 
-export default useSubmitLearnAction;
+export default useSubmitTrainingAction

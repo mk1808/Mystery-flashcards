@@ -3,9 +3,9 @@ import useTrainingStore from '@/stores/useTrainingStore';
 import React from 'react'
 
 export default function LearnTrainingResults({ params }: { params: { id: String } }) {
-  
+  const view = "TRAINING_RESULT"
   return (
-    <ResultTable/>
-    
+    <ResultTable view={view} />
+
   )
 }
