@@ -1,29 +1,43 @@
-import { errorSelectClass } from "@/utils/client/FormUtils";
-import { useState, useRef } from 'react';
+import { errorClass } from "@/utils/client/FormUtils";
+import { useState, useRef, useEffect } from 'react';
 import { PlusCircleIcon } from "@heroicons/react/24/outline"
 import { excludeFromArray } from "@/utils/server/arrayUtils";
+import { Control,  useController } from "react-hook-form";
 
 
 export default function MyMultiSelect({
     label,
-    defaultValue = "",
     noValueLabel = "",
     options,
     className = "",
-    isValid = true
+    isValid = true,
+    control,
+    name,
+    required
 }: {
     label: string,
-    defaultValue?: string,
     noValueLabel?: string,
     options: any[],
     className?: string,
-    isValid?: boolean
+    isValid?: boolean,
+    control: Control,
+    name: string,
+    required: boolean
 }) {
-    const [selected, setSelected] = useState<any[]>([])
+    const {
+        field
+    } = useController({
+        name,
+        control,
+        rules: { required },
+    });
+
+    const [selected, setSelected] = useState<any[]>(field.value || [])
     const [searchTextValue, setSearchTextValue] = useState<string>("")
 
     const optionDropdown = useRef<any>(null);
     const optionSearchInput = useRef<any>(null);
+    const inputContainer = useRef<any>(null);
 
     const stopPropagation = (event: any) => event.stopPropagation()
     const onSelect = (option: any) => setSelected(selected => [...selected, option]);
@@ -32,6 +46,10 @@ export default function MyMultiSelect({
     const showOption = (optionLabel: any) => optionLabel.toLowerCase().includes(searchTextValue.trim().toLowerCase());
     const getVisibleClass = (show: boolean) => show ? "visible" : "hidden";
     const focusSearchInput = () => optionSearchInput.current.focus();
+
+    useEffect(() => {
+        field.onChange(selected);
+    }, [selected])
 
     function toggleDropdownOpen(event: any) {
         stopPropagation(event);
@@ -51,13 +69,14 @@ export default function MyMultiSelect({
     }
 
     function onCheckboxChange(event: any) {
-        const option = options.find(option => option.value === event.target.value)
+        const option = options.find(option => option.value === event.target.value);
         if (event.target.checked) {
-            onSelect(option)
+            onSelect(option);
         } else {
-            onDeselect(option)
+            onDeselect(option);
         }
-        focusSearchInput()
+        focusSearchInput();
+        field.onBlur();
     }
 
     function onBadgeClick(event: any, option: any) {
@@ -80,7 +99,7 @@ export default function MyMultiSelect({
     }
 
     return (
-        <label className={`form-control w-full ${className}`}>
+        <label className={`form-control w-full ${className}`} ref={inputContainer}>
             {renderLabel()}
             {renderInput()}
             {renderDropdown()}
@@ -97,7 +116,8 @@ export default function MyMultiSelect({
 
     function renderInput() {
         return (
-            <div className={`input input-bordered w-full select h-fit p-2`} onClick={toggleDropdownOpen} >
+            <div className={`input input-bordered w-full select h-fit p-2 ${errorClass(isValid)}`} onClick={toggleDropdownOpen} >
+                {renderNoValuePlaceholder()}
                 {renderSelectedBadges()}
             </div>
         )
@@ -113,6 +133,10 @@ export default function MyMultiSelect({
 
     function renderBadge(option: any) {
         return <div className="badge badge-secondary badge-outline mr-2" key={option.value} onClick={(event) => onBadgeClick(event, option)}>{option.label}</div>
+    }
+
+    function renderNoValuePlaceholder() {
+        return selected.length === 0 && <span className="text-gray-400">{noValueLabel}</span>
     }
 
     function renderDropdown() {
