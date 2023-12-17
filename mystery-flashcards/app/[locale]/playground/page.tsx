@@ -49,7 +49,7 @@ function Playground({ params }: { params: { locale: string } }) {
     }
 
     return (
-        <div>
+        <div className='w-[1000px]'>
             <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
                 <div className="h-96">
                     first

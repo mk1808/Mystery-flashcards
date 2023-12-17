@@ -7,9 +7,8 @@ import { excludeFromArray } from "@/utils/server/arrayUtils";
 export default function MyMultiSelect({
     label,
     defaultValue = "",
-    noValueLabel = "Pick",
+    noValueLabel = "",
     options,
-    inputParams = {},
     className = "",
     isValid = true
 }: {
@@ -18,10 +17,10 @@ export default function MyMultiSelect({
     noValueLabel?: string,
     options: any[],
     className?: string,
-    inputParams?: any,
     isValid?: boolean
 }) {
     const [selected, setSelected] = useState<any[]>([])
+    const [searchTextValue, setSearchTextValue] = useState<string>("")
 
     const optionDropdown = useRef<any>(null);
     const optionSearchInput = useRef<any>(null);
@@ -29,13 +28,17 @@ export default function MyMultiSelect({
     const stopPropagation = (event: any) => event.stopPropagation()
     const onSelect = (option: any) => setSelected(selected => [...selected, option]);
     const onDeselect = (option: any) => setSelected(selected => excludeFromArray([...selected], option));
+    const onSearchTextChange = (event: any) => setSearchTextValue(event.target.value);
+    const showOption = (optionLabel: any) => optionLabel.toLowerCase().includes(searchTextValue.trim().toLowerCase());
+    const getVisibleClass = (show: boolean) => show ? "visible" : "hidden";
+    const focusSearchInput = () => optionSearchInput.current.focus();
 
     function toggleDropdownOpen(event: any) {
         stopPropagation(event);
         if (optionDropdown.current) {
             optionDropdown.current.open = !optionDropdown.current.open
         }
-        optionSearchInput.current.focus()
+        focusSearchInput()
         setTimeout(toggleCloseDropdownEventListener)
     }
 
@@ -54,13 +57,26 @@ export default function MyMultiSelect({
         } else {
             onDeselect(option)
         }
+        focusSearchInput()
     }
 
     function onBadgeClick(event: any, option: any) {
-        stopPropagation(event)
-        onDeselect(option)
-        const indexOfOption = options.findIndex(optionElement => optionElement.value === option.value)
-        optionDropdown.current.querySelectorAll(".select-option input")[indexOfOption].checked = false
+        stopPropagation(event);
+        onDeselect(option);
+        const indexOfOption = options.findIndex(optionElement => optionElement.value === option.value);
+        if (indexOfOption >= 0) {
+            optionDropdown.current.querySelectorAll(".select-option input")[indexOfOption].checked = false;
+        }
+    }
+
+    function onAddNew() {
+        const newOption = {
+            label: searchTextValue,
+            value: searchTextValue
+        }
+        onSelect(newOption);
+        setSearchTextValue("");
+        optionSearchInput.current.value = "";
     }
 
     return (
@@ -81,7 +97,7 @@ export default function MyMultiSelect({
 
     function renderInput() {
         return (
-            <div className={`input input-bordered w-full select`} onClick={toggleDropdownOpen} >
+            <div className={`input input-bordered w-full select h-fit p-2`} onClick={toggleDropdownOpen} >
                 {renderSelectedBadges()}
             </div>
         )
@@ -89,7 +105,7 @@ export default function MyMultiSelect({
 
     function renderSelectedBadges() {
         return (
-            <div className="flex items-center">
+            <div className="flex items-center flex-wrap">
                 {selected.map(renderBadge)}
             </div>
         )
@@ -122,15 +138,16 @@ export default function MyMultiSelect({
     function renderSearchInput() {
         return (
             <div className="flex">
-                <input className={`input input-bordered w-[100%] input-sm `} ref={optionSearchInput} />
-                <button className="btn btn-secondary btn-outline ms-2 btn-sm"><PlusCircleIcon className="h-6 w-6 " /></button>
+                <input className={`input input-bordered w-[100%] input-sm `} ref={optionSearchInput} onChange={onSearchTextChange} />
+                <button className="btn btn-secondary btn-outline ms-2 btn-sm"><PlusCircleIcon className="h-6 w-6 " onClick={onAddNew} /></button>
             </div>
         )
     }
 
     function renderOption({ value, label }: any) {
+        const visibleClass = getVisibleClass(showOption(label));
         return (
-            <label className="label cursor-pointer justify-start hover:bg-gray-100 duration-150 select-option" key={value}>
+            <label className={`label cursor-pointer justify-start hover:bg-gray-100 duration-150 select-option ${visibleClass}`} key={value}>
                 <input type="checkbox" value={value} className="checkbox checkbox-primary" onChange={onCheckboxChange} />
                 <span className="ms-2 label-text">{label}</span>
             </label>
