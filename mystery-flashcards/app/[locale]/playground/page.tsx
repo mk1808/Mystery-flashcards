@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form';
 import MyToggle from '@/components/common/form/MyToggle'
 import useAlertStore from '@/stores/useAlertStore'
 import { AlertType } from '@/enums/AlertType'
+import MySearchSelect from '@/components/common/form/MySearchSelect'
 
 function Playground({ params }: { params: { locale: string } }) {
     const {
@@ -34,6 +35,9 @@ function Playground({ params }: { params: { locale: string } }) {
         return true;
     };
     const selectOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
+    const searchSelectOptions = [{ value: "v1", label: "Lorem ipsum" }, { value: "v2", label: "dolor sit amet" }, { value: "v3", label: "consectetur adipiscing" },
+    { value: "v4", label: "elit.Morbi" }, { value: "v5", label: "ultricies semper massa" }, { value: "v6", label: "non malesuada purus" }, { value: "v7", label: "scelerisque sit amet" }]
+
 
     function addRandomAlert() {
         switch (Math.floor(Math.random() * 4)) {
@@ -70,6 +74,7 @@ function Playground({ params }: { params: { locale: string } }) {
             </div>
 
             <input className={`input input-bordered w-full w-1/3 input-error`} />
+            <MySearchSelect label="test" options={searchSelectOptions} />
             <MySelect label="Język" options={selectOptions} />
             <MyTextarea label="Opis" placeholder="Wpisz opis" />
             <MyInput label="Nazwa" placeholder="Podaj nazwę" inputParams="" />
