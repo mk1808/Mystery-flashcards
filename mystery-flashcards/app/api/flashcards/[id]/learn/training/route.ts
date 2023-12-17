@@ -204,6 +204,7 @@ async function updateUserPoints(user: UserT, learningHistoryTab: any) {
     const correctCardsIds: any[] = getCorrectCardIds(learningHistoryTab);
     user.points += correctCardsIds.length;
     user.rang = findRangByPoints(user.points).id;
-    return { user: await User.findOneAndReplace({ _id: user._id }, user, { new: true }), newPoints: correctCardsIds.length };
+    const savedUser = await User.findOneAndReplace({ _id: user._id }, user, { new: true });
+    return { user: savedUser.toObject(), newPoints: correctCardsIds.length };
 }
 
