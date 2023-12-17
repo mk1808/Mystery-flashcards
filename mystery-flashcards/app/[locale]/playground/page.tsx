@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form';
 import MyToggle from '@/components/common/form/MyToggle'
 import useAlertStore from '@/stores/useAlertStore'
 import { AlertType } from '@/enums/AlertType'
-import MySearchSelect from '@/components/common/form/MySearchSelect'
+import MyMultiSelect from '@/components/common/form/MyMultiSelect'
 
 function Playground({ params }: { params: { locale: string } }) {
     const {
@@ -74,7 +74,7 @@ function Playground({ params }: { params: { locale: string } }) {
             </div>
 
             <input className={`input input-bordered w-full w-1/3 input-error`} />
-            <MySearchSelect label="test" options={searchSelectOptions} />
+            <MyMultiSelect label="test" options={searchSelectOptions} />
             <MySelect label="Język" options={selectOptions} />
             <MyTextarea label="Opis" placeholder="Wpisz opis" />
             <MyInput label="Nazwa" placeholder="Podaj nazwę" inputParams="" />

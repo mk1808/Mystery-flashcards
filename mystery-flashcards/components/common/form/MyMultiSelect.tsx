@@ -1,7 +1,7 @@
 import { errorSelectClass } from "@/utils/client/FormUtils";
 import { useState, useRef } from 'react';
 
-export default function MySearchSelect({
+export default function MyMultiSelect({
     label,
     defaultValue = "",
     noValueLabel = "Pick",
