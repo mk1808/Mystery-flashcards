@@ -13,27 +13,38 @@ import { useForm } from 'react-hook-form';
 import MyToggle from '@/components/common/form/MyToggle'
 import useAlertStore from '@/stores/useAlertStore'
 import { AlertType } from '@/enums/AlertType'
+import MyMultiSelect from '@/components/common/form/MyMultiSelect'
+import { isFieldValid } from '@/utils/client/FormUtils'
 
 function Playground({ params }: { params: { locale: string } }) {
     const {
         register,
         handleSubmit,
         watch,
-        formState
-    } = useForm<any>({ mode: 'onBlur' });
+        formState,
+        control
+    } = useForm<any>({
+        mode: 'onBlur', defaultValues: {
+            testMultiSelect: [{ value: "v1", label: "test1" }, { value: "v2", label: "test2" }],
+            testSelect: [{ value: "v1", label: "test1" }],
+            toggle: true,
+            name: "test name"
+        }
+    });
     const addAlert = useAlertStore((state) => state.add)
 
     const onSubmit = (data: any, e: any) => {
         e.preventDefault()
         console.log("subm")
-        console.log(event)
+        console.log(data)
     };
     const onErrors = (errors: any) => console.error(errors);
-    const isValid = (name: string) => {
-        console.log(formState.errors.root)
-        return true;
-    };
+    const isValid = (name: string) => isFieldValid(name, formState, null);
+
     const selectOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
+    const searchSelectOptions = [{ value: "v1", label: "Lorem ipsum" }, { value: "v2", label: "dolor sit amet" }, { value: "v3", label: "consectetur adipiscing" },
+    { value: "v4", label: "elit.Morbi" }, { value: "v5", label: "ultricies semper massa" }, { value: "v6", label: "non malesuada purus" }, { value: "v7", label: "scelerisque sit amet" }]
+
 
     function addRandomAlert() {
         switch (Math.floor(Math.random() * 4)) {
@@ -45,7 +56,7 @@ function Playground({ params }: { params: { locale: string } }) {
     }
 
     return (
-        <div>
+        <div className='w-[1000px]'>
             <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
                 <div className="h-96">
                     first
@@ -75,6 +86,8 @@ function Playground({ params }: { params: { locale: string } }) {
             <MyInput label="Nazwa" placeholder="Podaj nazwę" inputParams="" />
             <form onSubmit={handleSubmit(onSubmit, onErrors)}>
                 <div className='px-24'>
+                    <MyMultiSelect multiple={true} label="test" options={searchSelectOptions} control={control} name='testMultiSelect' required={true} isValid={isValid("testMultiSelect")} noValueLabel='Select options' />
+                    <MyMultiSelect multiple={false} label="Język" options={searchSelectOptions} control={control} name='testSelect' required={true} isValid={isValid("testSelect")} noValueLabel='Select option' />
                     <MyToggle
                         label="test toggle"
                         inputParams={{ ...register("toggle1", { required: true }) }}
