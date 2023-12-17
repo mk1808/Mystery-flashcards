@@ -26,7 +26,7 @@ function Playground({ params }: { params: { locale: string } }) {
     } = useForm<any>({
         mode: 'onBlur', defaultValues: {
             testMultiSelect: [{ value: "v1", label: "test1" }, { value: "v2", label: "test2" }],
-            testSelect: { value: "v1", label: "test1" },
+            testSelect: [{ value: "v1", label: "test1" }],
             toggle: true,
             name: "test name"
         }
@@ -86,8 +86,8 @@ function Playground({ params }: { params: { locale: string } }) {
             <MyInput label="Nazwa" placeholder="Podaj nazwę" inputParams="" />
             <form onSubmit={handleSubmit(onSubmit, onErrors)}>
                 <div className='px-24'>
-                    <MyMultiSelect label="test" options={searchSelectOptions} control={control} name='testMultiSelect' required={true} isValid={isValid("testMultiSelect")} noValueLabel='Select options' />
-                    <MySelect label="Język" options={searchSelectOptions} inputParams={{ ...register("testSelect", { required: true }) }} isValid={isValid("testSelect")} />
+                    <MyMultiSelect multiple={true} label="test" options={searchSelectOptions} control={control} name='testMultiSelect' required={true} isValid={isValid("testMultiSelect")} noValueLabel='Select options' />
+                    <MyMultiSelect multiple={false} label="Język" options={searchSelectOptions} control={control} name='testSelect' required={true} isValid={isValid("testSelect")} noValueLabel='Select option' />
                     <MyToggle
                         label="test toggle"
                         inputParams={{ ...register("toggle1", { required: true }) }}

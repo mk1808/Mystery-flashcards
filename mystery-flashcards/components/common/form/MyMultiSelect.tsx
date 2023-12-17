@@ -2,7 +2,7 @@ import { errorClass } from "@/utils/client/FormUtils";
 import { useState, useRef, useEffect } from 'react';
 import { PlusCircleIcon } from "@heroicons/react/24/outline"
 import { excludeFromArray } from "@/utils/server/arrayUtils";
-import { Control,  useController } from "react-hook-form";
+import { Control, useController } from "react-hook-form";
 
 
 export default function MyMultiSelect({
@@ -13,7 +13,10 @@ export default function MyMultiSelect({
     isValid = true,
     control,
     name,
-    required
+    required = false,
+    disabled = false,
+    multiple = false,
+    allowNew = false
 }: {
     label: string,
     noValueLabel?: string,
@@ -22,7 +25,10 @@ export default function MyMultiSelect({
     isValid?: boolean,
     control: Control,
     name: string,
-    required: boolean
+    required?: boolean,
+    disabled?: boolean,
+    multiple?: boolean,
+    allowNew?: boolean
 }) {
     const {
         field
@@ -46,18 +52,24 @@ export default function MyMultiSelect({
     const showOption = (optionLabel: any) => optionLabel.toLowerCase().includes(searchTextValue.trim().toLowerCase());
     const getVisibleClass = (show: boolean) => show ? "visible" : "hidden";
     const focusSearchInput = () => optionSearchInput.current.focus();
+    const getDisabled = () => ({ disabled });
+    const resetSelection = () => setSelected([]);
 
     useEffect(() => {
         field.onChange(selected);
     }, [selected])
 
     function toggleDropdownOpen(event: any) {
+        if (disabled) {
+            return;
+        }
         stopPropagation(event);
         if (optionDropdown.current) {
-            optionDropdown.current.open = !optionDropdown.current.open
+            optionDropdown.current.open = !optionDropdown.current.open;
         }
-        focusSearchInput()
-        setTimeout(toggleCloseDropdownEventListener)
+        focusSearchInput();
+        setTimeout(toggleCloseDropdownEventListener);
+        resetSearchText();
     }
 
     function toggleCloseDropdownEventListener() {
@@ -79,7 +91,17 @@ export default function MyMultiSelect({
         field.onBlur();
     }
 
+    function onClickOption(option: any) {
+        if (multiple) {
+            return;
+        }
+        setSelected([option]);
+    }
+
     function onBadgeClick(event: any, option: any) {
+        if (disabled) {
+            return;
+        }
         stopPropagation(event);
         onDeselect(option);
         const indexOfOption = options.findIndex(optionElement => optionElement.value === option.value);
@@ -93,7 +115,15 @@ export default function MyMultiSelect({
             label: searchTextValue,
             value: searchTextValue
         }
-        onSelect(newOption);
+        if (multiple) {
+            onSelect(newOption);
+        } else {
+            setSelected([newOption]);
+        }
+        resetSearchText();
+    }
+
+    function resetSearchText() {
         setSearchTextValue("");
         optionSearchInput.current.value = "";
     }
@@ -116,11 +146,15 @@ export default function MyMultiSelect({
 
     function renderInput() {
         return (
-            <div className={`input input-bordered w-full select h-fit p-2 ${errorClass(isValid)}`} onClick={toggleDropdownOpen} >
+            <div className={`input input-bordered w-full select h-fit p-2 ${errorClass(isValid)}`} onClick={toggleDropdownOpen} {...getDisabled()}>
                 {renderNoValuePlaceholder()}
-                {renderSelectedBadges()}
+                {renderSelected()}
             </div>
         )
+    }
+
+    function renderSelected() {
+        return multiple ? renderSelectedBadges() : renderSingleSelected()
     }
 
     function renderSelectedBadges() {
@@ -128,6 +162,12 @@ export default function MyMultiSelect({
             <div className="flex items-center flex-wrap">
                 {selected.map(renderBadge)}
             </div>
+        )
+    }
+
+    function renderSingleSelected() {
+        return selected.length > 0 && (
+            <span>{selected[0].label}</span>
         )
     }
 
@@ -154,6 +194,7 @@ export default function MyMultiSelect({
         return (
             <>
                 {renderSearchInput()}
+                {renderEmptyOption()}
                 {options.map(renderOption)}
             </>
         )
@@ -163,19 +204,35 @@ export default function MyMultiSelect({
         return (
             <div className="flex">
                 <input className={`input input-bordered w-[100%] input-sm `} ref={optionSearchInput} onChange={onSearchTextChange} />
-                <button className="btn btn-secondary btn-outline ms-2 btn-sm"><PlusCircleIcon className="h-6 w-6 " onClick={onAddNew} /></button>
+                {renderAddNewButton()}
             </div>
         )
     }
 
-    function renderOption({ value, label }: any) {
-        const visibleClass = getVisibleClass(showOption(label));
+    function renderAddNewButton() {
+        return allowNew && (
+            <button type="button" className="btn btn-secondary btn-outline ms-2 btn-sm"><PlusCircleIcon className="h-6 w-6 " onClick={onAddNew} /></button>
+        )
+    }
+
+    function renderEmptyOption() {
+        return !multiple && (
+            <span className="text-gray-500 p-2 cursor-pointer hover:bg-gray-100 duration-150" onClick={resetSelection}>{noValueLabel}</span>
+        )
+    }
+
+    function renderOption(option: { value: any, label: string }) {
+        const visibleClass = getVisibleClass(showOption(option.label));
         return (
-            <label className={`label cursor-pointer justify-start hover:bg-gray-100 duration-150 select-option ${visibleClass}`} key={value}>
-                <input type="checkbox" value={value} className="checkbox checkbox-primary" onChange={onCheckboxChange} />
-                <span className="ms-2 label-text">{label}</span>
+            <label className={`label cursor-pointer justify-start hover:bg-gray-100 duration-150 select-option ${visibleClass}`} key={option.value} onClick={() => onClickOption(option)}>
+                {renderCheckbox(option.value)}
+                <span className="ms-2 label-text">{option.label}</span>
             </label>
         )
+    }
+
+    function renderCheckbox(value: any) {
+        return multiple && <input type="checkbox" value={value} className="checkbox checkbox-primary" onChange={onCheckboxChange} />
     }
 
 }
