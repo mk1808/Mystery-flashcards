@@ -6,17 +6,17 @@ const onResponse = async (response: any) => {
     return Promise.reject({ status: response.status, body });
 }
 
-export const post = (body: any, url: string, cache: RequestCache | undefined = 'no-store', headers?:any) => fetch(url, {
+export const post = (body: any, url: string, cache: RequestCache | undefined = 'no-store', headers?: any) => fetch(url, {
     method: 'POST',
-    cache:cache,
+    cache: cache,
     body: JSON.stringify(body),
-    headers:headers
+    headers: headers
 }).then(onResponse);
 
-export const get = (url: string, cache: RequestCache | undefined = 'no-store', headers?:any) => fetch(url, {
+export const get = (url: string, cache: RequestCache | undefined = 'no-store', headers?: any) => fetch(url, {
     cache: cache,
     method: 'GET',
-    headers:headers
+    headers: headers
 }).then(onResponse);
 
 export const put = (body: any, url: string) => fetch(url, {
@@ -28,11 +28,11 @@ export const deleteR = (url: string) => fetch(url, {
     method: 'DELETE'
 }).then(onResponse);
 
-export const patch = (body: any, url: string, cache: RequestCache | undefined = 'no-store', headers?:any) => fetch(url, {
+export const patch = (body: any, url: string, cache: RequestCache | undefined = 'no-store', headers?: any) => fetch(url, {
     method: 'PATCH',
-    cache:cache,
+    cache: cache,
     body: JSON.stringify(body),
-    headers:headers
+    headers: headers
 }).then(onResponse);
 
 export function createPathParams(params: any) {
@@ -46,4 +46,10 @@ export function createPathParams(params: any) {
         }
     }
     return pathParams;
+}
+
+export function createCookieHeader(cookies: any) {
+    return {
+        cookie: 'token=' + cookies.get('token')?.value
+    }
 }
