@@ -9,7 +9,7 @@ function AddToFavModal({ dictionary, flashcardSet }: { dictionary: any, flashcar
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
         dialogActions={<AddToFavActions dictionary={dictionary} flashcardSet={flashcardSet} />}
-        width="w-6/12"
+        width="w-5/12"
     />
 
     function renderDialogTrigger() {
@@ -25,7 +25,6 @@ function AddToFavModal({ dictionary, flashcardSet }: { dictionary: any, flashcar
     }
 
     function renderDialogContent() {
-
         return <AddToFavContent dictionary={dictionary} flashcardSet={flashcardSet} />
     }
 }

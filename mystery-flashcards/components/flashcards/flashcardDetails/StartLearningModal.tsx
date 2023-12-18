@@ -1,11 +1,14 @@
 import Modal from '@/components/common/Modal'
 import React from 'react'
+import StartLearningActions from './StartLearningActions'
+import StartLearningContent from './StartLearningContent'
 
 function StartLearningModal({ dictionary, flashcardSet }: { dictionary: any, flashcardSet:any }) {
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
-        dialogActions={renderModalActions()}
+        dialogActions={<StartLearningActions dictionary={dictionary} flashcardSet={flashcardSet} />}
+        width="w-5/12"
     />
 
     function renderDialogTrigger() {
@@ -18,18 +21,8 @@ function StartLearningModal({ dictionary, flashcardSet }: { dictionary: any, fla
         return <h2 className="font-bold text-3xl">{dictionary.common.learnSetTitle}</h2>
     }
 
-    function renderModalActions() {
-        return (
-            <>
-                <button className="btn ml-3">Close</button>
-                <button className="btn btn-primary ml-3"> Confirm</button>
-            </>
-        )
-    }
-
     function renderDialogContent() {
-
-        return <>content</>
+        return <StartLearningContent dictionary={dictionary} flashcardSet={flashcardSet} />
     }
 }
 
