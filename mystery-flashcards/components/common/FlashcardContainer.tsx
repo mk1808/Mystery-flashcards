@@ -19,7 +19,7 @@ function FlashcardContainer({
 }) {
 
   const updateFlashcard = useNewFlashcardSetStore((state) => state.updateFlashcard);
-  const addFlashcard = useNewFlashcardSetStore((state) => state.addFlashcard);
+  const addNewFlashcard = useNewFlashcardSetStore((state) => state.addNewFlashcard);
   const deleteFlashcard = useNewFlashcardSetStore((state) => state.deleteFlashcard);
   const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList)
   const flashcardListInvalidCountInc = useNewFlashcardSetStore((state) => state.flashcardListInvalidCountInc);
@@ -37,7 +37,7 @@ function FlashcardContainer({
     watch,
     getFieldState,
     formState,
-  } = useForm<FlashcardsForm>({ mode: 'onBlur' });
+  } = useForm<FlashcardsForm>({ mode: 'onBlur', defaultValues: getDefaultValues() });
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
@@ -46,29 +46,33 @@ function FlashcardContainer({
       const lastFlashcard = allFlashCards.current[allFlashCards.current.length - 1],
         isLast = lastFlashcard._id === card._id;
       if (isLast) {
-        addFlashcard();
+        addNewFlashcard();
       }
     })
     return () => subscription.unsubscribe()
   }, [watch])
 
-  useEffect(()=>{
+  useEffect(() => {
     const isDirty = Object.keys(formState.dirtyFields).length > 0
-    if(isDirty && lastValidationState.current != formState.isValid){
-      if(formState.isValid){
+    if (isDirty && lastValidationState.current != formState.isValid) {
+      if (formState.isValid) {
         flashcardListInvalidCountDec()
       } else {
         flashcardListInvalidCountInc()
       }
       lastValidationState.current = formState.isValid
     }
-  },[formState])
+  }, [formState])
 
   const onSubmit = (data: FlashcardsForm) => console.log(data);
   const onErrors = (errors: any) => console.error(errors);
   const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
-  const isDirty = () =>  Object.keys(formState.dirtyFields).length > 0
-  const showDelete = () => isDirty() && flashcardsList.length > 1;
+  const isDirty = () => Object.keys(formState.dirtyFields).length > 0
+  const showDelete = () => (isDirty() || formState.defaultValues?.wordLang1) && flashcardsList.length > 1;
+
+  function getDefaultValues(): any {
+    return card || {};
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit, onErrors)}>
@@ -152,7 +156,7 @@ function FlashcardContainer({
   }
 
   function onDelete() {
-    if(!formState.isValid){
+    if (!formState.isValid) {
       flashcardListInvalidCountDec()
     }
     deleteFlashcard(card);

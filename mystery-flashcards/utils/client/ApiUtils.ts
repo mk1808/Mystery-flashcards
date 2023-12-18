@@ -18,6 +18,10 @@ export const createFlashcardSetRequest = (form: any) => {
     return post(form, `${PREFIX}/flashcards`);
 }
 
+export const updateFlashcardSetRequest = (id: string, form: any) => {
+    return put(form, `${PREFIX}/flashcards/${id}`);
+}
+
 export const searchFlashcardSets = (data: any) => {
     return get(`${PREFIX}/flashcards/search?${createPathParams(data)}`);
 }

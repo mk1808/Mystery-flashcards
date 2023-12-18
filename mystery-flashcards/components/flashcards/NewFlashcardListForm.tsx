@@ -1,13 +1,25 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import FlashcardContainer from '../common/FlashcardContainer'
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
 
-function NewFlashcardListForm({ dictionary, flashcards }: { dictionary: any, flashcards: any }) {
-
+function NewFlashcardListForm({ dictionary, flashcards }: { dictionary: any, flashcards?: any }) {
     const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList)
-    const addFlashcard = useNewFlashcardSetStore((state) => state.addFlashcard)
-    console.log(JSON.stringify(flashcardsList[0]))
+    const addNewFlashcard = useNewFlashcardSetStore((state) => state.addNewFlashcard)
+    const addEditedFlashcard = useNewFlashcardSetStore((state) => state.addEditedFlashcard)
+    const deleteFlashcard = useNewFlashcardSetStore((state) => state.deleteFlashcard)
+
+    const initOnceRef = useRef(false)
+
+    useEffect(() => {
+        if (flashcards && !initOnceRef.current) {
+            initOnceRef.current = true;
+            deleteFlashcard(flashcardsList[0])
+            flashcards.forEach(addEditedFlashcard)
+            addNewFlashcard();
+        }
+    }, [flashcards])
+
     return (
         <>
             {flashcardsList.map((card: any) =>
@@ -17,7 +29,7 @@ function NewFlashcardListForm({ dictionary, flashcards }: { dictionary: any, fla
                     dictionary={dictionary}
                     isForm={true} />
             )}
-            <button type="button" className="btn btn-secondary btn-outline bg-base-100 mr-10" onClick={addFlashcard}>zmien</button>
+            <button type="button" className="btn btn-secondary btn-outline bg-base-100 mr-10" onClick={addNewFlashcard}>zmien</button>
         </>
     )
 }

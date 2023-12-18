@@ -40,8 +40,14 @@ function NewFlashcardForm({
     }, [watch])
 
     useEffect(() => {
-        setSidebarFormValid(formState.isValid)
+        setSidebarFormValid(formState.isValid || !!flashcardSet)
     }, [formState])
+
+    useEffect(() => {
+        if (flashcardSet) {
+            updateSidebarForm({ ...getDefaultValues() })
+        }
+    }, [flashcardSet])
 
     const onSubmit = async (data: NewFlashcardSetForm, e: any) => {
         // const response = await login(data);
