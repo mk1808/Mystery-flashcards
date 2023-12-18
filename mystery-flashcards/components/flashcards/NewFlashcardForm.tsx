@@ -7,8 +7,15 @@ import { useForm } from 'react-hook-form';
 import MySelect from '../common/form/MySelect';
 import MyToggle from '../common/form/MyToggle';
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
+import { FlashcardSetT } from '@/models/FlashcardSet';
 
-function NewFlashcardForm({ dictionary }: { dictionary: any }) {
+function NewFlashcardForm({
+    dictionary,
+    flashcardSet
+}: {
+    dictionary: any,
+    flashcardSet?: FlashcardSetT
+}) {
     const langOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
     const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }]
     const levelOptions = [{ value: "A1", label: "A1" }, { value: "A2", label: "A2" }]
@@ -22,20 +29,19 @@ function NewFlashcardForm({ dictionary }: { dictionary: any }) {
         getFieldState,
         formState,
         reset
-    } = useForm<NewFlashcardSetForm>({ mode: 'onBlur' });
+    } = useForm<NewFlashcardSetForm>({ mode: 'onBlur', defaultValues: getDefaultValues() });
 
     useEffect(() => {
         const subscription = watch((value, { name, type }) => {
-          console.log(value, name, type)
-          updateSidebarForm({ ...value })
+            updateSidebarForm({ ...value })
 
         })
         return () => subscription.unsubscribe()
-      }, [watch])
+    }, [watch])
 
-      useEffect(()=>{
+    useEffect(() => {
         setSidebarFormValid(formState.isValid)
-      },[formState])
+    }, [formState])
 
     const onSubmit = async (data: NewFlashcardSetForm, e: any) => {
         // const response = await login(data);
@@ -45,6 +51,20 @@ function NewFlashcardForm({ dictionary }: { dictionary: any }) {
     };
     const onErrors = (errors: any) => console.error(errors);
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
+
+    function getDefaultValues(): any {
+        if (flashcardSet) {
+            return {
+                name: flashcardSet.name,
+                lang1: flashcardSet.lang1,
+                lang2: flashcardSet.lang2,
+                level: flashcardSet.level,
+                hashtags: flashcardSet.hashtags,
+                isPublic: flashcardSet.isPublic,
+            }
+        }
+        return {}
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit, onErrors)}>
@@ -83,7 +103,7 @@ function NewFlashcardForm({ dictionary }: { dictionary: any }) {
                     inputParams={{ ...register("isPublic") }}
                     isValid={isValid("isPublic")}
                 />
-           </div>
+            </div>
             <button type="submit" className="btn btn-primary my-6 btn-wide">Zatwierdź</button>
         </form>
     )
