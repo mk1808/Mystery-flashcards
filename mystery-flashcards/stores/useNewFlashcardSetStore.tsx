@@ -4,14 +4,15 @@ import { create } from "zustand";
 type State = {
     sidebarForm: NewFlashcardSetForm,
     flashcardsList: FlashcardsForm[],
-    sidebarFormValid:boolean,
-    flashcardListInvalidCount:number
+    sidebarFormValid: boolean,
+    flashcardListInvalidCount: number
 }
 
 type Action = {
     updateSidebarForm: (sidebar: any) => void,
     updateFlashcard: (flashcard: any) => void,
-    addFlashcard: () => void,
+    addNewFlashcard: () => void,
+    addEditedFlashcard: (flashcard: any) => void,
     deleteFlashcard: (flashcard: any) => void,
     setSidebarFormValid: (value: boolean) => void,
     flashcardListInvalidCountInc: () => void,
@@ -31,13 +32,14 @@ const useNewFlashcardSetStore = create<State & Action>((set) => ({
         lang2: ""
     },
     flashcardsList: [getInitailFlashcard()],
-    sidebarFormValid:false,
+    sidebarFormValid: false,
     flashcardListInvalidCount: 0,
     updateSidebarForm: (sidebarForm) => set(() => ({ sidebarForm: sidebarForm })),
     updateFlashcard: (flashcard) => set((state) => ({ flashcardsList: [...updateElement(state.flashcardsList, flashcard)] })),
-    addFlashcard: () => set((state) => ({ flashcardsList: [...state.flashcardsList, getInitailFlashcard()] })),
+    addNewFlashcard: () => set((state) => ({ flashcardsList: [...state.flashcardsList, getInitailFlashcard()] })),
+    addEditedFlashcard: (flashcard) => set((state) => ({ flashcardsList: [...state.flashcardsList, flashcard] })),
     deleteFlashcard: (flashcard) => set((state) => ({ flashcardsList: [...excludeFromArray(state.flashcardsList, flashcard)] })),
-    setSidebarFormValid: (value) => set(()=>({sidebarFormValid: value})),
+    setSidebarFormValid: (value) => set(() => ({ sidebarFormValid: value })),
     flashcardListInvalidCountInc: () => set((state) => ({ flashcardListInvalidCount: state.flashcardListInvalidCount + 1 })),
     flashcardListInvalidCountDec: () => set((state) => ({ flashcardListInvalidCount: state.flashcardListInvalidCount - 1 })),
 }))

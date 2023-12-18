@@ -1,24 +1,35 @@
 "use client"
+import { FlashcardSetT } from '@/models/FlashcardSet';
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
-import { createFlashcardSetRequest } from '@/utils/client/ApiUtils';
+import { createFlashcardSetRequest, updateFlashcardSetRequest } from '@/utils/client/ApiUtils';
 import React from 'react'
 
-function NewFlashcardButtons() {
+function NewFlashcardButtons({
+    editedFlashCardSet
+}: {
+    editedFlashCardSet?: FlashcardSetT,
+
+}) {
     const sidebarForm = useNewFlashcardSetStore((state) => state.sidebarForm);
     const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList);
     const sidebarFormValid = useNewFlashcardSetStore((state) => state.sidebarFormValid);
     const flashcardListInvalidCount = useNewFlashcardSetStore((state) => state.flashcardListInvalidCount);
 
-    const isFormValid = ()=>sidebarFormValid && flashcardListInvalidCount === 0;
+    const isFormValid = () => sidebarFormValid && flashcardListInvalidCount === 0;
 
     const onSubmit = async () => {
         const updatedFlashcardsList = flashcardsList.slice(0, flashcardsList.length - 1);
         updatedFlashcardsList.forEach((card: any) => delete card._id)
         const formToSave = { ...sidebarForm, flashcards: updatedFlashcardsList };
-        console.log(formToSave)
-        const response = await createFlashcardSetRequest(formToSave);
 
-        console.log(response);
+        if (editedFlashCardSet) {
+            const response = await updateFlashcardSetRequest(editedFlashCardSet._id!, formToSave);
+            console.log(response);
+        } else {
+            const response = await createFlashcardSetRequest(formToSave);
+            console.log(response);
+        }
+
     };
 
     return (
