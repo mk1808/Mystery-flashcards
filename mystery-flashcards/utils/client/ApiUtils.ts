@@ -44,8 +44,8 @@ export const getUserStatistics = () => {
     return get(`${PREFIX}/users/statistics`);
 }
 
-export const getWhoAmi = () => {
-    return get(`${PREFIX}/auth/whoAmI`);
+export const getWhoAmi = (headers?: any) => {
+    return get(`${PREFIX}/auth/whoAmI`, "no-store", headers);
 }
 
 export const updateUser = (user: UserT) => {
