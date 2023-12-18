@@ -49,9 +49,4 @@ function MyRadioInputButton({
 }
 
 export default MyRadioInputButton
-/*
-       <input type={type} placeholder={placeholder} className={`input input-bordered w-full ${errorClass(isValid)}`} {...inputParams} />
-     
-<input className="join-item btn" type="radio" name="options" aria-label="Radio 1" />
-*/
 
