@@ -25,7 +25,7 @@ function StartLearningActions({ dictionary, flashcardSet }: { dictionary: any, f
   return (
     <>
       <button className="btn ml-3">Close</button>
-      <button className="btn btn-primary ml-3" onClick={onSubmit}> Confirm</button>
+      <button className="btn btn-primary ml-3" form="chooseLearnTypeForm" type="submit"> Confirm</button>
     </>
   )
 }

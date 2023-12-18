@@ -73,6 +73,8 @@
         "addToFavorites": "Dodaj do ulubionych",
         "learnSetTitle": "Ucz się kolekcji",
         "addToFavoritesTitle": "Dodaj do ulubionych",
-        "addToFavSuccess": "Kolekcja została dodana do ulubionych"
+        "addToFavSuccess": "Kolekcja została dodana do ulubionych",
+        "learnTypeTraining": "Nauka",
+        "learnTypeTest": "Test"
     }
 }
