@@ -34,9 +34,14 @@ interface AnswerForm {
     flashcardId: any
 }
 
+interface ChooseLearnTypeForm {
+    type: "TRAINING" | "TEST",
+    direction: string
+}
+
 interface ButtonAttrs {
-    title: string, 
-    type: "submit" | "reset" | "button" | undefined, 
-    form?: string, 
+    title: string,
+    type: "submit" | "reset" | "button" | undefined,
+    form?: string,
     onClick?: any
 }
