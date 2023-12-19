@@ -30,7 +30,7 @@ function TestAnswerForm({ dictionary }: { dictionary: any }) {
             incrementCurrentFlashcardIndex();
             reset({ givenAnswer: "" });
         } else {
-            otherButtonAttrs.onFinishClick();
+            setTimeout(otherButtonAttrs.onFinishClick);
         }
     };
     const onErrors = (errors: any) => console.error(errors);

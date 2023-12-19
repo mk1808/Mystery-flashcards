@@ -6,12 +6,11 @@ import { cookies } from 'next/headers'
 import { createCookieHeader } from '@/utils/client/RestUtils';
 
 export default async function LearnTraining({ params }: { params: { id: string, locale: string } }) {
-  const tempId = "656b7e961c783fdd82116774";
   const dictionary = await fetchDictionary(params.locale);
   const headers = createCookieHeader(cookies());
 
-  const flashcardSet = await getFlashcardSetRequest(tempId/*params.id*/, headers);
-  const roundFlashcards = await postAnswersAndReturnCards(tempId, []/*params.id*/, headers);
+  const flashcardSet = await getFlashcardSetRequest(params.id, headers);
+  const roundFlashcards = await postAnswersAndReturnCards(params.id, [], headers);
   const view = "TRAINING";
   console.log("roundFlashcards", roundFlashcards)
   return (

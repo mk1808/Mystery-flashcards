@@ -8,13 +8,12 @@ import { cookies } from 'next/headers';
 import React, { use } from 'react'
 
 export default async function LearnTestResultsSidebar({ params }: { params: { id: string, locale: string } }) {
-  const tempId = "656b7e961c783fdd82116774";
   const dictionary = await fetchDictionary(params.locale);
   const headers = {
     cookie: 'token=' + cookies().get('token')?.value
   }
 
-  const flashcardSetDto: FlashCardSetDto = await getFlashcardSetRequest(tempId/*params.id*/, headers);
+  const flashcardSetDto: FlashCardSetDto = await getFlashcardSetRequest(params.id, headers);
   const user: UserT = await getWhoAmi(headers);
 
   return <TestResultsSidebar dictionary={dictionary} flashcardSetDto={flashcardSetDto} user={user} />

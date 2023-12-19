@@ -10,17 +10,20 @@ import React, { useRef } from 'react'
 function useSubmitTrainingAction({ dictionary }: { dictionary: any }) {
     const wasChecked = useTrainingStore((state) => state.wasChecked);
     const roundAnswers = useTrainingStore((state) => state.roundAnswers);
+    const { flashcardSet } = useTrainingStore((state) => state.flashcardSet);
     const setFinalResult = useTrainingStore((state) => state.setFinalResult);
     const addAlert = useAlertStore((state) => state.add)
     const router = useRouter();
     const wasCheckedRef = useRef<any>(null)
     wasCheckedRef.current = wasChecked;
-    const tempId = "656a2c5d573e1d09a12fd05a";
     const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(wasCheckedRef.current);
-    const goToResults = () => router.push(`/learn/training/${tempId}/results`)
+    const flashcardSetRef = useRef<any>(null)
+    flashcardSetRef.current = flashcardSet;
+
+    const goToResults = () => router.push(`/learn/training/${flashcardSetRef.current._id}/results`)
     const onFinishClick = async () => {
         try {
-            const result = await patchAnswersAndReturnResults(tempId, roundAnswers);
+            const result = await patchAnswersAndReturnResults(flashcardSetRef.current._id, roundAnswers);
             setFinalResult(result);
             goToResults();
         } catch (errorResponse: any) {
