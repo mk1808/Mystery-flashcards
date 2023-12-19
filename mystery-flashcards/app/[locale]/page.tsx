@@ -14,9 +14,9 @@ export default async function Page({ params }: { params: { locale: string } }) {
         <>
             <FirstPanel />
             <FirstSecondDivider />
-            <SecondPanel />
+            <SecondPanel dictionary={dictionary} />
             <SecondThirdDivider />
-           
+
             <FlashcardSetsSearch dictionary={dictionary} />
         </>
     )

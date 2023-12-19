@@ -5,10 +5,11 @@ import { createFlashcardSetRequest, updateFlashcardSetRequest } from '@/utils/cl
 import React from 'react'
 
 function NewFlashcardButtons({
-    editedFlashCardSet
+    editedFlashCardSet,
+    dictionary
 }: {
     editedFlashCardSet?: FlashcardSetT,
-
+    dictionary: any
 }) {
     const sidebarForm = useNewFlashcardSetStore((state) => state.sidebarForm);
     const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList);
@@ -34,8 +35,8 @@ function NewFlashcardButtons({
 
     return (
         <div className="mb-12 flex justify-end">
-            <button className="btn btn-secondary btn-outline bg-base-100 mr-10">Anuluj</button>
-            <button className="btn btn-primary" onClick={onSubmit} disabled={!isFormValid()}>Zapisz</button>
+            <button className="btn btn-secondary btn-outline bg-base-100 mr-10">{dictionary.common.cancel}</button>
+            <button className="btn btn-primary" onClick={onSubmit} disabled={!isFormValid()}>{dictionary.common.save}</button>
         </div>
     )
 

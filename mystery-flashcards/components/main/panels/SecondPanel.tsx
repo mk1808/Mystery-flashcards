@@ -5,15 +5,20 @@ type StepType = {
     text: string
 }
 
-const steps: StepType[] = [
-    { number: "1", text: "Tworzysz kolekcję słówek" },
-    { number: "2", text: "Dodajesz do niej słówka" },
-    { number: "3", text: "Uruchamiasz tryb nauki i poznajesz nowe słownictwo" },
-    { number: "4", text: "Wykonujesz test sprawdzający wiedzę" },
-    { number: "5", text: "Twój poziom języka rośnie!" }
-]
 
-export default function SecondPanel() {
+export default function SecondPanel({
+    dictionary
+}: {
+    dictionary: any
+}) {
+
+    const steps: StepType[] = [
+        { number: "1", text: dictionary.common.mainInstructionStep1 },
+        { number: "2", text: dictionary.common.mainInstructionStep2 },
+        { number: "3", text: dictionary.common.mainInstructionStep3 },
+        { number: "4", text: dictionary.common.mainInstructionStep4 },
+        { number: "5", text: dictionary.common.mainInstructionStep5! }
+    ]
 
     return (
         <div className="w-full p-12 h-screen" id='secondPanel'>

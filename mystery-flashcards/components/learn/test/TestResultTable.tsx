@@ -6,12 +6,14 @@ import useTrainingStore from '@/stores/useTrainingStore';
 import React, { useEffect } from 'react'
 
 function TestResultTable({
-    flashcardSetDto
+    flashcardSetDto,
+    dictionary
 }: {
-    flashcardSetDto: FlashCardSetDto
+    flashcardSetDto: FlashCardSetDto,
+    dictionary: any
 }) {
     const setView = useTrainingStore((state) => state.setView);
-    const columns = ["Nr", "Pytanie", "Odpowiedź", "Poprawna odpowiedź", "Status"]
+    const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.status]
     useEffect(() => { setView("TEST_RESULTS") }, [])
 
     function getFlashcard(flashcardId: string) {
@@ -34,7 +36,7 @@ function TestResultTable({
                 <td>{flashcard?.wordLang1}</td>
                 <td>{answer.givenAnswer}</td>
                 <td>{flashcard?.wordLang2}</td>
-                <td>{answer.isCorrect ? "Poprawne" : "Niepoprawne"} </td>
+                <td>{answer.isCorrect ? dictionary.common.correct : dictionary.common.incorrect} </td>
             </tr>
         )
     }

@@ -12,9 +12,9 @@ export default async function NewFlashcardsSidebar({ params }: { params: { id: s
 
   return (
     <div>
-      <h1 className="text-4xl text-center mt-3 mb-8">Nowa kolekcja</h1>
+      <h1 className="text-4xl text-center mt-3 mb-8">{dictionary.common.newCollection}</h1>
       <div className="divider"></div>
-      <NewFlashcardNumber dictionary={dictionary}/>
+      <NewFlashcardNumber dictionary={dictionary} />
       <NewFlashcardForm dictionary={dictionary} />
     </div>
   )

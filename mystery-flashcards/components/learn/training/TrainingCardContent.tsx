@@ -45,7 +45,7 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }
         return (
             <div className='grid-row flex items-center'>
                 <CheckCircleIcon className="h-8 w-8 mr-2 text-gray-500" />
-                <span className="text-xl">Poprawna odpowiedź!</span>
+                <span className="text-xl">{dictionary.common.correctAnswer}!</span>
             </div>
         );
     }
@@ -55,10 +55,10 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }
             <div className="grid-row items-center">
                 <div className='flex items-center'>
                     <XCircleIcon className="h-8 w-8 mr-2 text-gray-500" />
-                    <span className="text-xl">Błędna odpowiedź</span>
+                    <span className="text-xl">{dictionary.common.incorrectAnswer}</span>
                 </div>
                 <div className="flex flex-col my-2">
-                    <span className="text-xl">Poprawna odpowiedź to:&nbsp;
+                    <span className="text-xl">{dictionary.common.correctAnswerIs}:&nbsp;
                         <span className="text-primary">{currentFlashcard.wordLang2}</span>
                     </span>
                 </div>
