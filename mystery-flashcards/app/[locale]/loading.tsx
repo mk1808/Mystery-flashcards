@@ -1,7 +1,10 @@
+import Loader from '@/components/Loader'
 import React from 'react'
 
 export default function Loading() {
   return (
-    <div>Loading</div>
+    <div className="flex items-center justify-center h-[100px] mt-48">
+      <Loader />
+    </div>
   )
 }
