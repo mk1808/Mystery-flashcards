@@ -11,16 +11,16 @@ import { getFlashcardSetRequest, postAnswersAndReturnCards } from '@/utils/clien
 function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }: { dictionary: any, currentFlashcard: FlashcardT, setIsValid: any, setWasChecked: any }) {
     const onAnswerSave = useTrainingStore((state) => state.onAnswerSave);
     const onNewRound = useTrainingStore((state) => state.onNewRound);
-    
+
     const roundFlashcards = useTrainingStore((state) => state.roundFlashcards);
     const roundAnswers = useTrainingStore((state) => state.roundAnswers);
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
     const result = useTrainingStore((state) => state.result);
     const wasChecked = useTrainingStore((state) => state.wasChecked);
+    const { flashcardSet } = useTrainingStore((state) => state.flashcardSet);
     const incrementCurrentFlashcardIndexInRound = useTrainingStore((state) => state.incrementCurrentFlashcardIndexInRound);
     const resultRef = useRef<any>(null);
     resultRef.current = result;
-    const tempId = "656a2c5d573e1d09a12fd05a";
 
 
     const {
@@ -54,7 +54,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
                     incrementCurrentFlashcardIndexInRound();
                 }
                 else {
-                    const roundFlashcards = await postAnswersAndReturnCards(tempId, roundAnswers);
+                    const roundFlashcards = await postAnswersAndReturnCards(flashcardSet._id, roundAnswers);
                     onNewRound(roundFlashcards);
                     console.log("ROUND: ", roundFlashcards)
                 }
