@@ -11,6 +11,10 @@ function FlashcardSetsSearch({ dictionary }: { dictionary?: any }) {
 
     useEffect(() => {
         search({});
+        const target = document.location.hash;
+        if (target) {
+            document.querySelector(target)?.scrollIntoView();
+        }
     }, [])
 
     function search(data: FlashcardSearchDto) {

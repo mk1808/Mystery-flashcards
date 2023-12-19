@@ -32,7 +32,7 @@ function Header({
         },
         {
             name: dictionary.common.searchSets,
-            link: `/${locale}#search-sets`,
+            link: `/${locale}#flashcardSetsSearch`,
             forAll: true
         },
         {
@@ -42,7 +42,7 @@ function Header({
         },
         {
             name: dictionary.common.mySets,
-            link: `/${locale}#search-sets`,
+            link: `/${locale}#flashcardSetsSearch`,
             forLogged: true
         },
     ]
@@ -85,7 +85,7 @@ function Header({
         <div className="m-4">
             <div className="navbar bg-base-100 rounded-lg ">
                 <div className="flex-1">
-                    <a className="btn btn-ghost text-xl">mystery flashcards</a>
+                    {renderLogo()}
                 </div>
                 <div className="flex-none">
                     <ul className="menu menu-horizontal px-1">
@@ -105,6 +105,14 @@ function Header({
             </div>
         </div>
     )
+
+    function renderLogo() {
+        return (
+            <Link href="/">
+                <img src='/images/logo2.png' className='h-[50px]' />
+            </Link>
+        )
+    }
 
     function renderMenuElement(element: any) {
         return (
