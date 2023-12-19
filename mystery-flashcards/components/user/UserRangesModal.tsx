@@ -29,7 +29,7 @@ export default function UserRangesModal({ dictionary }: { dictionary: any }) {
     function renderModalActions() {
         return (
             <>
-                <button className="btn">Close</button>
+                <button className="btn">{dictionary.common.close}</button>
             </>
         )
     }

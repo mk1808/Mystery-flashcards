@@ -81,36 +81,36 @@ function NewFlashcardForm({
                     inputParams={{ ...register("name", { required: true }) }}
                     isValid={isValid("name")} />
                 <MySelect
-                    label="Język bazowy"
+                    label={dictionary.common.lang1}
                     options={langOptions}
-                    noValueLabel="Wybierz język"
+                    noValueLabel={dictionary.common.fillLang1}
                     inputParams={{ ...register("lang1", { required: true }) }}
                     isValid={isValid("lang1")} />
                 <MySelect
-                    label="Język obcy"
+                    label={dictionary.common.lang2}
                     options={langOptions}
-                    noValueLabel="Wybierz język"
+                    noValueLabel={dictionary.common.fillLang2}
                     inputParams={{ ...register("lang2", { required: true }) }}
                     isValid={isValid("lang2")} />
                 <MySelect
-                    label="Poziom"
+                    label={dictionary.common.level}
                     options={levelOptions}
-                    noValueLabel="Wybierz poziom języka"
+                    noValueLabel={dictionary.common.fillLevel}
                     inputParams={{ ...register("level", { required: true }) }}
                     isValid={isValid("level")} />
                 <MySelect
-                    label="Hashtagi"
+                    label={dictionary.common.hashtags}
                     options={hashtagsOptions}
-                    noValueLabel="Wybierz hashtagi"
+                    noValueLabel={dictionary.common.fillHashtags}
                     inputParams={{ ...register("hashtags") }}
                     isValid={isValid("hashtags")} />
                 <MyToggle
-                    label="Publiczna"
+                    label={dictionary.common.public}
                     inputParams={{ ...register("isPublic") }}
                     isValid={isValid("isPublic")}
                 />
             </div>
-            <button type="submit" className="btn btn-primary my-6 btn-wide">Zatwierdź</button>
+            <button type="submit" className="btn btn-primary my-6 btn-wide">{dictionary.common.confirm}</button>
         </form>
     )
 }

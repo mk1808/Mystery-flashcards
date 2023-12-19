@@ -4,14 +4,20 @@ import useTrainingStore from '@/stores/useTrainingStore';
 import { createAnswersList, createTestResult } from '@/utils/client/TrainingUtils';
 import React, { useEffect } from 'react'
 
-function ResultTable({view}:{view:any}) {
+function ResultTable({
+    view,
+    dictionary
+}: {
+    view: any,
+    dictionary: any
+}) {
     const allAnswers = useTrainingStore((state) => state.allAnswers);
     const allFlashcards = useTrainingStore((state) => state.allFlashcards);
     const allInfoObjects = createTestResult(allAnswers, allFlashcards);
     const setView = useTrainingStore((state) => state.setView);
-    const columns = ["Nr", "Pytanie", "Odpowiedzi", "Poprawna odpowiedź", "% poprawnych"]
+    const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.correctAnswersPercent]
     useEffect(() => { setView(view) }, [])
-    return (<Table columns={columns} renderRows={renderRows}/>)
+    return (<Table columns={columns} renderRows={renderRows} />)
 
     function renderRows() {
         return allInfoObjects.map((flashcard: any, index: number) => (

@@ -23,7 +23,7 @@ export default function RegisterForm({ dictionary }: { dictionary: any }) {
     const goToLogin = () => router.push('/login')
     const onErrors = (errors: any) => console.error(errors);
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
-    const validatePassword = (confirmPassword: string) => watch("password") === confirmPassword || "Password do not match";
+    const validatePassword = (confirmPassword: string) => watch("password") === confirmPassword || dictionary.common.passwordDoNotMatch;
 
     async function onSubmit(data: RegisterForm, e: any) {
         try {

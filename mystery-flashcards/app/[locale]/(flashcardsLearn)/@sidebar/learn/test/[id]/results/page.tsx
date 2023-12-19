@@ -1,4 +1,4 @@
-import LearnStats from '@/components/learn/LearnStats';
+import TestResultsSidebar from '@/components/learn/test/TestResultsSidebar';
 import { fetchDictionary } from '@/dictionaries/dictionaries';
 import { FlashCardSetDto } from '@/dtos/FlashCardSetDto';
 import { UserT } from '@/models/User';
@@ -17,39 +17,5 @@ export default async function LearnTestResultsSidebar({ params }: { params: { id
   const flashcardSetDto: FlashCardSetDto = await getFlashcardSetRequest(tempId/*params.id*/, headers);
   const user: UserT = await getWhoAmi(headers);
 
-  const statsValues = [
-    {
-      text: "Liczba odpowiedzi",
-      value: flashcardSetDto.testResult?.allCount
-    }, {
-      text: "Liczba poprawnych odpowiedzi",
-      value: flashcardSetDto.testResult?.validCount
-    }, {
-      text: "Poprawnych odpowiedzi",
-      value: flashcardSetDto.testResult?.resultPercent + "%"
-    }
-  ]
-
-  return (
-    <div>
-      {renderTitle()}
-      <div className="divider"></div>
-      <h1 className="text-3xl text-center mt-3 mb-8">Wyniki nauki <br /> Kolekcja: {flashcardSetDto.flashcardSet?.name}</h1>
-
-      <LearnStats stats={statsValues} />
-      <br />
-    </div>
-  )
-
-  function renderTitle() {
-    const gainPoints = flashcardSetDto.testResult?.validCount! * 10;
-    const range = getRang(user.rang!)
-    const toNextLevel = findNextRang(user.rang!).pointsFrom - user.points;
-    return (
-      <>
-        <h1 className="text-4xl text-center mt-3 mb-8">Gratulacje! Zdobyłeś {gainPoints} pkt!</h1>
-        <h1 className="text-2xl text-center mt-3 mb-8">Twój obecny poziom to {range?.name}. <br /> Do kolejnego poziomu brakuje {toNextLevel} pkt</h1>
-      </>
-    )
-  }
+  return <TestResultsSidebar dictionary={dictionary} flashcardSetDto={flashcardSetDto} user={user} />
 }

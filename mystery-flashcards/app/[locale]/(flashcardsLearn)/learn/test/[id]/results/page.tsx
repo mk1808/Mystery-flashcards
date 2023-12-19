@@ -14,6 +14,6 @@ export default async function LearnTestResults({ params }: { params: { id: strin
   const flashcardSetDto = await getFlashcardSetRequest(tempId/*params.id*/, headers);
 
   return (
-    <TestResultTable flashcardSetDto={flashcardSetDto} />
+    <TestResultTable flashcardSetDto={flashcardSetDto} dictionary={dictionary} />
   )
 }

@@ -22,8 +22,8 @@ function AddToFavActions({ dictionary, flashcardSet }: { dictionary: any, flashc
   }
   return (
     <>
-      <button className="btn ml-3">Close</button>
-      <button className="btn btn-primary ml-3" onClick={onSubmit}> Confirm</button>
+      <button className="btn ml-3">{dictionary.common.close}</button>
+      <button className="btn btn-primary ml-3" onClick={onSubmit}> {dictionary.common.confirm}</button>
     </>
   )
 }
