@@ -110,7 +110,6 @@ function NewFlashcardForm({
                     isValid={isValid("isPublic")}
                 />
             </div>
-            <button type="submit" className="btn btn-primary my-6 btn-wide">{dictionary.common.confirm}</button>
         </form>
     )
 }
