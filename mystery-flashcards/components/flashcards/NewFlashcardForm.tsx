@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 import MyInput from '../common/form/MyInput';
 import { useForm } from 'react-hook-form';
-import MySelect from '../common/form/MySelect';
 import MyToggle from '../common/form/MyToggle';
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
 import { FlashcardSetT } from '@/models/FlashcardSet';
+import MyMultiSelect from '../common/form/MyMultiSelect';
 
 function NewFlashcardForm({
     dictionary,
@@ -28,7 +28,8 @@ function NewFlashcardForm({
         watch,
         getFieldState,
         formState,
-        reset
+        reset,
+        control
     } = useForm<NewFlashcardSetForm>({ mode: 'onBlur', defaultValues: getDefaultValues() });
 
     useEffect(() => {
@@ -80,29 +81,38 @@ function NewFlashcardForm({
                     placeholder={dictionary.common.fillBasicName}
                     inputParams={{ ...register("name", { required: true }) }}
                     isValid={isValid("name")} />
-                <MySelect
+                <MyMultiSelect
                     label={dictionary.common.lang1}
+                    control={control}
+                    required={true}
+                    name='lang1'
                     options={langOptions}
                     noValueLabel={dictionary.common.fillLang1}
-                    inputParams={{ ...register("lang1", { required: true }) }}
                     isValid={isValid("lang1")} />
-                <MySelect
+                <MyMultiSelect
                     label={dictionary.common.lang2}
+                    control={control}
+                    required={true}
+                    name='lang2'
                     options={langOptions}
                     noValueLabel={dictionary.common.fillLang2}
-                    inputParams={{ ...register("lang2", { required: true }) }}
                     isValid={isValid("lang2")} />
-                <MySelect
+                <MyMultiSelect
                     label={dictionary.common.level}
+                    control={control}
+                    required={true}
+                    name='level'
                     options={levelOptions}
                     noValueLabel={dictionary.common.fillLevel}
-                    inputParams={{ ...register("level", { required: true }) }}
                     isValid={isValid("level")} />
-                <MySelect
+                <MyMultiSelect
                     label={dictionary.common.hashtags}
+                    control={control}
+                    required={true}
+                    multiple={true}
+                    name='hashtags'
                     options={hashtagsOptions}
                     noValueLabel={dictionary.common.fillHashtags}
-                    inputParams={{ ...register("hashtags") }}
                     isValid={isValid("hashtags")} />
                 <MyToggle
                     label={dictionary.common.public}
