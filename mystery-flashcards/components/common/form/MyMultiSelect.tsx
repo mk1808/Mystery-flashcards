@@ -23,7 +23,7 @@ export default function MyMultiSelect({
     options: any[],
     className?: string,
     isValid?: boolean,
-    control: Control,
+    control: any,
     name: string,
     required?: boolean,
     disabled?: boolean,
@@ -38,12 +38,14 @@ export default function MyMultiSelect({
         rules: { required },
     });
 
-    const [selected, setSelected] = useState<any[]>(field.value || [])
+    const [selected, setSelected] = useState<any[]>([])
     const [searchTextValue, setSearchTextValue] = useState<string>("")
 
     const optionDropdown = useRef<any>(null);
     const optionSearchInput = useRef<any>(null);
     const inputContainer = useRef<any>(null);
+    const inputInitRef = useRef(false);
+    const toggleDropdownOpenRef = useRef(toggleDropdownOpen);
 
     const stopPropagation = (event: any) => event.stopPropagation()
     const onSelect = (option: any) => setSelected(selected => [...selected, option]);
@@ -55,8 +57,21 @@ export default function MyMultiSelect({
     const getDisabled = () => ({ disabled });
 
     useEffect(() => {
-        field.onChange(selected.map(option => option.value));
+        if (multiple) {
+            field.onChange(selected.map(option => option.value));
+        } else {
+            field.onChange(selected.length > 0 ? selected[0].value : null);
+        }
     }, [selected])
+
+    useEffect(() => {
+        if (!inputInitRef.current) {
+            inputInitRef.current = true;
+            const selectedOptions = options.filter(option => option.value === field?.value || field?.value?.indexOf(option.value) >= 0);
+            setSelected(selectedOptions);
+            setTimeout(() => selectedOptions.forEach(option => changeOptionCheckboxState(option.value, true)));
+        }
+    }, [field.value])
 
     function toggleDropdownOpen(event: any) {
         if (disabled) {
@@ -71,14 +86,16 @@ export default function MyMultiSelect({
         focusSearchInput();
         setTimeout(toggleCloseDropdownEventListener);
         resetSearchText();
+        field.onBlur();
     }
 
     function toggleCloseDropdownEventListener() {
         if (optionDropdown.current.open) {
-            window.addEventListener('click', toggleDropdownOpen)
+            window.addEventListener('click', toggleDropdownOpenRef.current)
         } else {
-            window.removeEventListener('click', toggleDropdownOpen)
+            window.removeEventListener('click', toggleDropdownOpenRef.current)
         }
+        field.onBlur();
     }
 
     function onCheckboxChange(event: any) {
@@ -98,11 +115,13 @@ export default function MyMultiSelect({
         }
         setSelected([option]);
         toggleDropdownOpen(null);
+        field.onBlur();
     }
 
     function resetSelection() {
         setSelected([]);
         toggleDropdownOpen(null);
+        field.onBlur();
     };
 
     function onBadgeClick(event: any, option: any) {
@@ -111,9 +130,17 @@ export default function MyMultiSelect({
         }
         stopPropagation(event);
         onDeselect(option);
-        const indexOfOption = options.findIndex(optionElement => optionElement.value === option.value);
+        changeOptionCheckboxState(option.value, false);
+        field.onBlur();
+    }
+
+    function changeOptionCheckboxState(value: any, state: boolean) {
+        const indexOfOption = options.findIndex(option => option.value === value);
         if (indexOfOption >= 0) {
-            optionDropdown.current.querySelectorAll(".select-option input")[indexOfOption].checked = false;
+            const checkboxes = optionDropdown.current.querySelectorAll(".select-option input");
+            if (checkboxes.length > 0) {
+                checkboxes[indexOfOption].checked = state;
+            }
         }
     }
 
