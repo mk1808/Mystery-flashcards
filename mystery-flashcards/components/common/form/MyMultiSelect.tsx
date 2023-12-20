@@ -47,23 +47,24 @@ export default function MyMultiSelect({
 
     const stopPropagation = (event: any) => event.stopPropagation()
     const onSelect = (option: any) => setSelected(selected => [...selected, option]);
-    const onDeselect = (option: any) => setSelected(selected => excludeFromArray([...selected], option));
+    const onDeselect = (option: any) => setSelected(selected => excludeFromArray([...selected], option, "value"));
     const onSearchTextChange = (event: any) => setSearchTextValue(event.target.value);
     const showOption = (optionLabel: any) => optionLabel.toLowerCase().includes(searchTextValue.trim().toLowerCase());
     const getVisibleClass = (show: boolean) => show ? "visible" : "hidden";
     const focusSearchInput = () => optionSearchInput.current.focus();
     const getDisabled = () => ({ disabled });
-    const resetSelection = () => setSelected([]);
 
     useEffect(() => {
-        field.onChange(selected);
+        field.onChange(selected.map(option => option.value));
     }, [selected])
 
     function toggleDropdownOpen(event: any) {
         if (disabled) {
             return;
         }
-        stopPropagation(event);
+        if (event) {
+            stopPropagation(event);
+        }
         if (optionDropdown.current) {
             optionDropdown.current.open = !optionDropdown.current.open;
         }
@@ -96,7 +97,13 @@ export default function MyMultiSelect({
             return;
         }
         setSelected([option]);
+        toggleDropdownOpen(null);
     }
+
+    function resetSelection() {
+        setSelected([]);
+        toggleDropdownOpen(null);
+    };
 
     function onBadgeClick(event: any, option: any) {
         if (disabled) {

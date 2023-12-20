@@ -53,13 +53,13 @@ export default function UserEditForm({
                 <MyInput
                     label={dictionary.common.name}
                     placeholder={dictionary.common.fillName}
-                    inputParams={{ ...register("name", { required: true, minLength: 3 }) }}
+                    inputParams={{ ...register("name", { required: true, minLength: 3, disabled: true }) }}
                     isValid={isValid("name")} />
                 <MyInput
                     label={dictionary.common.email}
                     placeholder={dictionary.common.fillEmail}
                     type="email"
-                    inputParams={{ ...register("mail", { required: true, pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g }) }}
+                    inputParams={{ ...register("mail", { required: true, pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g, disabled: true }) }}
                     isValid={isValid("mail")} />
                 <MyInput
                     label={dictionary.common.avatar}

@@ -111,6 +111,7 @@
         "language": "Język",
         "contact": "Kontakt",
         "languagePL": "polski",
-        "languageENG": "angielski"
+        "languageENG": "angielski",
+        "noSearchResult": "Brak wyników spełniających kryteria!"
     }
 }
