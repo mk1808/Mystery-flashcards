@@ -107,6 +107,7 @@
         "mainInstructionStep2": "Dodajesz do niej słówka",
         "mainInstructionStep3": "Uruchamiasz tryb nauki i poznajesz nowe słownictwo",
         "mainInstructionStep4": "Wykonujesz test sprawdzający wiedzę",
-        "mainInstructionStep5": "Twój poziom języka rośnie!"
+        "mainInstructionStep5": "Twój poziom języka rośnie!",
+        "noSearchResult": "Brak wyników spełniających kryteria!"
     }
 }

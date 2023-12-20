@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { isFieldValid } from "@/utils/client/FormUtils";
 import useAlertStore from '@/stores/useAlertStore';
 import MyInput from '@/components/common/form/MyInput';
-import MySelect from '@/components/common/form/MySelect';
+import MyMultiSelect from '@/components/common/form/MyMultiSelect';
 
 function FlashcardSetsFilters({
     dictionary,
@@ -25,7 +25,8 @@ function FlashcardSetsFilters({
         watch,
         getFieldState,
         formState,
-        reset
+        reset,
+        control
     } = useForm<FlashcardSearchDto>({ mode: 'onBlur' });
 
     const onSubmit = async (data: FlashcardSearchDto, e: any) => {
@@ -57,7 +58,7 @@ function FlashcardSetsFilters({
                     </div>
                     <div className="flex justify-between ">
                         {renderSelect("level", dictionary.common.level, dictionary.common.fillLevel, levelOptions)}
-                        {renderSelect("hashtags", dictionary.common.hashtags, dictionary.common.fillHashtags, hashtagsOptions)}
+                        {renderSelect("hashtags", dictionary.common.hashtags, dictionary.common.fillHashtags, hashtagsOptions, true)}
                         <div className="w-1/3 mx-2 flex justify-center items-center">
                             <button type="submit" className="btn btn-primary">{dictionary.common.search}
                                 <MagnifyingGlassIcon className="h-6 w-6" />
@@ -69,15 +70,17 @@ function FlashcardSetsFilters({
         )
     }
 
-    function renderSelect(name: any, label: string, noValueLabel: string, options: any[]) {
+    function renderSelect(name: any, label: string, noValueLabel: string, options: any[], multiple = false) {
         return (
             <div className=' w-1/3 mx-2'>
-                <MySelect
+                <MyMultiSelect
+                    multiple={multiple}
                     label={label}
                     options={options}
                     noValueLabel={noValueLabel}
-                    inputParams={{ ...register(name) }}
-                    isValid={isValid(name)} />
+                    control={control}
+                    isValid={isValid(name)}
+                    name={name} />
             </div>
         )
     }
