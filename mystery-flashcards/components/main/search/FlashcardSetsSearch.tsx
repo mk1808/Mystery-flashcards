@@ -7,7 +7,7 @@ import { searchFlashcardSets } from '@/utils/client/ApiUtils';
 import { FlashcardSetT } from '@/models/FlashcardSet';
 
 function FlashcardSetsSearch({ dictionary }: { dictionary?: any }) {
-    const [searchResults, setSearchResults] = useState<FlashcardSetT[]>([])
+    const [searchResults, setSearchResults] = useState<FlashcardSetT[] | null>(null)
 
     useEffect(() => {
         search({});
@@ -18,6 +18,7 @@ function FlashcardSetsSearch({ dictionary }: { dictionary?: any }) {
     }, [])
 
     function search(data: FlashcardSearchDto) {
+        setSearchResults(null);
         searchFlashcardSets(data).then(setSearchResults)
     }
 
@@ -29,15 +30,40 @@ function FlashcardSetsSearch({ dictionary }: { dictionary?: any }) {
     )
 
     function renderResults() {
+        if (searchResults === null) {
+            return renderLoader();
+        } else if (searchResults.length === 0) {
+            return renderNoData();
+        }
+        return renderCards();
+    }
+
+    function renderLoader() {
+        return (
+            <div className="mt-20 mb-52 flex justify-center text-4xl font-bold text-secondary">
+                <span className="loading loading-ball loading-lg"></span>
+            </div>
+        )
+    }
+
+    function renderNoData() {
+        return (
+            <div className="mt-20 mb-52 flex justify-center text-4xl font-bold text-secondary ">
+                {dictionary.common.noSearchResult}
+            </div>
+        )
+    }
+
+    function renderCards() {
         return (
             <div className="mt-12 my-10 w-[1100px] grid grid-cols-3 gap-4 gap-y-14">
-                {searchResults.map(renderCard)}
+                {searchResults?.map(renderCard)}
             </div>
         )
     }
 
     function renderCard(flashcardSet: FlashcardSetT) {
-        return <SetCard flashcardSet={flashcardSet} />
+        return <SetCard flashcardSet={flashcardSet} key={flashcardSet._id} />
     }
 }
 

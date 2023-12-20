@@ -9,9 +9,9 @@ export const getSearchParam: any = (searchParams: any, paramsValues: any) => {
 
 export const getArrParam: any = (searchParams: any, paramsValues: any) => {
     return (possibleParamName: any) => {
-        const value = searchParams.getAll(possibleParamName);
+        const value = searchParams.getAll(possibleParamName).filter((param: any) => !!param);
         if (value?.length > 0) {
-            paramsValues[possibleParamName] = value;
+            paramsValues[possibleParamName] = { "$in": value };
         }
     };
 }
@@ -37,8 +37,8 @@ export const updateElement = (array: any[], element: any) => {
     return array;
 }
 
-export const excludeFromArray = (array: any[], element: any) => {
-    const index = array.indexOf(element)
+export const excludeFromArray = (array: any[], element: any, field?: any) => {
+    const index = !field ? array.indexOf(element) : array.findIndex(arrayElement => arrayElement[field] === element[field])
     if (index >= 0) {
         array.splice(index, 1)
     }

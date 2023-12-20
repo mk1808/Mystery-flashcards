@@ -35,7 +35,7 @@ function FlashcardSetCard({
     )
 
     function renderHashtag(hashtag: string) {
-        return <div className="badge badge-secondary badge-outline">{hashtag}</div>
+        return <div className="badge badge-secondary badge-outline" key={hashtag}>{hashtag}</div>
     }
 }
 

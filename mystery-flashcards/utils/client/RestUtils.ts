@@ -36,16 +36,17 @@ export const patch = (body: any, url: string, cache: RequestCache | undefined = 
 }).then(onResponse);
 
 export function createPathParams(params: any) {
-    var pathParams = "";
+    var pathParams: string[] = [];
     for (const param in params) {
         if (params[param]) {
-            if (pathParams.length > 0) {
-                pathParams += '&';
+            if (Array.isArray(params[param])) {
+                params[param].forEach((paramValue: string) => pathParams.push(`${param}=${paramValue}`))
+            } else {
+                pathParams.push(`${param}=${params[param]}`);
             }
-            pathParams += `${param}=${params[param]}`
         }
     }
-    return pathParams;
+    return pathParams.join("&");
 }
 
 export function createCookieHeader(cookies: any) {
