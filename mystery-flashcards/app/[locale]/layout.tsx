@@ -12,7 +12,7 @@ export default async function LocaleLayout({ children, params }: any) {
         <main className="flex min-h-screen flex-col items-center justify-between">
             {children}
         </main>
-        <Footer dictionary={dictionary} />
+        <Footer locale={params.locale} dictionary={dictionary} />
         <AlertManager />
     </>
     )

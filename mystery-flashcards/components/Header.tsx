@@ -1,10 +1,8 @@
 "use client"
 
-import useAuthStore from '@/stores/useAuthStore';
-import { logout } from '@/utils/client/ApiUtils';
 import Link from 'next/link'
-import React, { useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation';
+import React, { useRef } from 'react'
+import useLoggedUserForLayout from '@/hooks/useLoggedUserForLayout';
 
 function Header({
     locale,
@@ -13,16 +11,8 @@ function Header({
     locale: string,
     dictionary: any
 }) {
-    const currentUser = useAuthStore(state => state.currentUser);
-    const checkWhoAmi = useAuthStore(state => state.checkWhoAmi);
-    const router = useRouter();
     const detailsElement = useRef<any>(null);
-
-    useEffect(() => {
-        checkWhoAmi();
-        const interval = setInterval(checkWhoAmi, 60 * 1000);
-        return () => clearInterval(interval);
-    }, [])
+    const {renderMenuElementIfNeeded, onLogout} = useLoggedUserForLayout({renderMenuElement});
 
     const mainMenuElements = [
         {
@@ -69,11 +59,6 @@ function Header({
             forLogged: true
         },
     ]
-
-    function onLogout() {
-        logout().then(checkWhoAmi)
-        router.push('/')
-    }
 
     function closeDropdown() {
         if (detailsElement?.current?.open) {
@@ -129,13 +114,6 @@ function Header({
         return <Link href={element.link}>{element.name}</Link>;
     }
 
-    function renderMenuElementIfNeeded(element: any) {
-        const isLogged = !!currentUser;
-        if (element.forAll ||
-            isLogged && element.forLogged ||
-            !isLogged && element.forNotLogged)
-            return renderMenuElement(element);
-    }
 }
 
 export default Header
