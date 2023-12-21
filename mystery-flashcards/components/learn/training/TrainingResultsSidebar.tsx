@@ -2,6 +2,7 @@
 import LearnStats from '@/components/learn/LearnStats'
 import useAuthStore from '@/stores/useAuthStore'
 import useTrainingStore from '@/stores/useTrainingStore'
+import { getNestedFieldByPath } from '@/utils/server/objectUtils'
 import { findNextRang, getRang } from '@/utils/server/userRangUtils'
 import React from 'react'
 
@@ -45,12 +46,12 @@ export default function TrainingResultsSidebar({
     )
 
     function renderTitle() {
-        const range = getRang(currentUser?.rang!)
+        const range = getNestedFieldByPath(dictionary, getRang(currentUser!.rang!)?.name!);
         const toNextLevel = findNextRang(currentUser?.rang!).pointsFrom - currentUser?.points!;
         return (
             <>
                 <h1 className="text-4xl text-center mt-3 mb-8">{dictionary.common.gainedPointsAre} {finalResult?.newPoints} {dictionary.common.pointsShortcut}!</h1>
-                <h1 className="text-2xl text-center mt-3 mb-8">{dictionary.common.currentLevelIs} {range?.name}. <br /> {dictionary.common.toNextLevel} {toNextLevel} {dictionary.common.pointsShortcut}</h1>
+                <h1 className="text-2xl text-center mt-3 mb-8">{dictionary.common.currentLevelIs} {range}. <br /> {dictionary.common.toNextLevel} {toNextLevel} {dictionary.common.pointsShortcut}</h1>
             </>
         )
     }

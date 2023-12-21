@@ -120,5 +120,19 @@
         "successfulSetSave": "Utworzono nową kolekcję",
         "successfulSetUpdate": "Wprowadzono zmiany w kolekcji",
         "edit": "Edytuj"
+    },
+    "userRanges": {
+        "preschooler": "Przedszkolak",
+        "student": "Uczeń",
+        "juniorHighSchoolStudent": "Gimnazista",
+        "highSchoolStudent": "Licealista",
+        "undergraduate": "Student",
+        "engineer": "Inżynier",
+        "master": "Magister",
+        "phdStudent": "Doktorant",
+        "phdHolder": "Doktor",
+        "associateProfessor": "Docent",
+        "professor": "Profesor",
+        "rector": "Rektor"
     }
 }

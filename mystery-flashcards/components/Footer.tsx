@@ -1,12 +1,15 @@
 "use client"
 import useLoggedUserForLayout from '@/hooks/useLoggedUserForLayout';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react'
 
 function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
     const newTabAttrs = { rel: "noopener noreferrer", target: "_blank" }
     const year = new Date().getFullYear();
-    const { renderMenuElementIfNeeded } = useLoggedUserForLayout({ renderMenuElement });
+    const { renderMenuElementIfNeeded } = useLoggedUserForLayout({ renderMenuElement, locale });
+    const pathname = usePathname();
+    const router = useRouter();
 
     const mainMenuElements = [
         {
@@ -49,7 +52,7 @@ function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
         },
         {
             name: dictionary.common.languageENG,
-            onClick: () => changeLanguage("eng"),
+            onClick: () => changeLanguage("en"),
             forAll: true
         },
     ]
@@ -70,7 +73,7 @@ function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
     ]
 
     const changeLanguage = (lang: any) => {
-        console.log(lang)
+        router.push(pathname.replace(locale, lang));
     }
 
     return (
