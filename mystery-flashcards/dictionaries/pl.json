@@ -115,6 +115,8 @@
         "noSearchResult": "Brak wyników spełniających kryteria!",
         "languagesShouldDiffer": "Należy wybrać różne języki",
         "errorsOnCardsList": "Błędy na liście słówek",
-        "errorsInSidebar": "Niepoprawnie wypełnione podstawowe informacje"
+        "errorsInSidebar": "Niepoprawnie wypełnione podstawowe informacje",
+        "successfulSetSave": "Utworzono nową kolekcję",
+        "successfulSetUpdate": "Wprowadzono zmiany w kolekcji"
     }
 }

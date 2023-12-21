@@ -19,6 +19,7 @@ function NewFlashcardButtons({
     const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList);
     const sidebarFormValid = useNewFlashcardSetStore((state) => state.sidebarFormValid);
     const flashcardListInvalidCount = useNewFlashcardSetStore((state) => state.flashcardListInvalidCount);
+    const deleteAllFlashcards = useNewFlashcardSetStore((state) => state.deleteAllFlashcards);
     const sidebarSubmitBtnRef = useRef<any>(null);
     const addAlert = useAlertStore((state) => state.add)
     const router = useRouter();
@@ -41,6 +42,11 @@ function NewFlashcardButtons({
             }
             const id = response?._id;
             router.push(`/flashcards/${id}`);
+            setTimeout(() => {
+                deleteAllFlashcards();
+                addAlert({ type: AlertType.success, title: editedFlashCardSet ? dictionary.common.successfulSetUpdate : dictionary.common.successfulSetSave })
+            }, 1000);
+
         } catch (errorResponse: any) {
             addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse?.body?.message) })
         }
