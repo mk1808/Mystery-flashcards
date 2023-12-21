@@ -13,6 +13,12 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      keyframes: {
+        'wiggle': {
+          '0%': { transform: 'scale(1)', color: "#9300a3" },
+          '100%': { transform: 'scale(1)', color: "black" },
+        },
+      },
     },
   },
   daisyui: {
