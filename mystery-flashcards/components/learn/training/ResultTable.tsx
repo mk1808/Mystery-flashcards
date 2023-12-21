@@ -1,7 +1,7 @@
 "use client"
 import Table from '@/components/common/Table';
 import useTrainingStore from '@/stores/useTrainingStore';
-import { createAnswersList, createTestResult } from '@/utils/client/TrainingUtils';
+import { createTestResult } from '@/utils/client/TrainingUtils';
 import React, { useEffect } from 'react'
 
 function ResultTable({
@@ -17,6 +17,17 @@ function ResultTable({
     const setView = useTrainingStore((state) => state.setView);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.correctAnswersPercent]
     useEffect(() => { setView(view) }, [])
+
+    const createAnswersList = (answers: any) => {
+        const tabToDisplay: any = [],
+            length = answers.length;
+        answers.forEach((ans: any, index: number) => {
+            let isLast = length == index + 1;
+            tabToDisplay.push(renderSingleAnswer(ans, isLast));
+        });
+        return tabToDisplay;
+    }
+
     return (<Table columns={columns} renderRows={renderRows} />)
 
     function renderRows() {
@@ -30,10 +41,18 @@ function ResultTable({
             <tr>
                 <th>{index + 1}</th>
                 <td>{flashcard.flashcard.wordLang1}</td>
-                <td>{createAnswersList(flashcard.answers)}</td>
+                <td className='max-w-[250px]'>{createAnswersList(flashcard.answers)}</td>
                 <td>{flashcard.flashcard.wordLang2}</td>
                 <td>{flashcard.percent} %</td>
             </tr>
+        )
+    }
+
+    function renderSingleAnswer(ans: any, isLast: boolean) {
+        return (
+            <span className={ans.isCorrect ? "" : "text-red-400"}>
+                {`${ans.givenAnswer}${isLast ? "" : ", "}`}
+            </span>
         )
     }
 }
