@@ -111,11 +111,10 @@ function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
     }
 
     function renderMenuElement(element: any) {
-        console.log(element)
         if (element.onClick) {
             return <a className="link link-hover min-h-[1.25rem]" key={element.name} onClick={element.onClick}>{element.name}</a>
         }
-        return <Link href={element.link} {...(element.newTab ? newTabAttrs : {})}>{element.name}</Link>;
+        return <Link href={element.link} {...(element.newTab ? newTabAttrs : {})} key={element.name}>{element.name}</Link>;
     }
 }
 
