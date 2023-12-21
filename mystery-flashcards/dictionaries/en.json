@@ -34,7 +34,7 @@
         "fillName": "Enter username",
         "fillPassword": "Enter password",
         "successfulLogin": "Logged in!",
-        "userLoggedOut": "Logged out!",
+        "userLoggedOut": "User logged out!",
         "accessDenied": "Access denied!",
         "invalidCredentials": "Invalid login credentials!",
         "email": "Email",
@@ -119,7 +119,8 @@
         "errorsInSidebar": "Basic information incorrectly filled",
         "successfulSetSave": "New collection created",
         "successfulSetUpdate": "Changes made to the collection",
-        "edit": "Edit"
+        "edit": "Edit",
+        "sessionExpired": "Session expired!"
     },
     "userRanges": {
         "preschooler": "Preschooler",
