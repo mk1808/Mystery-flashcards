@@ -16,7 +16,8 @@ export default function MyMultiSelect({
     required = false,
     disabled = false,
     multiple = false,
-    allowNew = false
+    allowNew = false,
+    validate
 }: {
     label: string,
     noValueLabel?: string,
@@ -28,14 +29,15 @@ export default function MyMultiSelect({
     required?: boolean,
     disabled?: boolean,
     multiple?: boolean,
-    allowNew?: boolean
+    allowNew?: boolean,
+    validate?: any
 }) {
     const {
         field
     } = useController({
         name,
         control,
-        rules: { required },
+        rules: { required, validate: validate },
     });
 
     const [selected, setSelected] = useState<any[]>([])

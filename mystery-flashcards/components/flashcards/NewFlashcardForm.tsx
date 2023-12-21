@@ -22,6 +22,7 @@ function NewFlashcardForm({
     const updateSidebarForm = useNewFlashcardSetStore((state) => state.updateSidebarForm);
     const setSidebarFormValid = useNewFlashcardSetStore((state) => state.setSidebarFormValid);
     const router = useRouter();
+    const validateLang2 = (lang2: string) => watch("lang1") !== lang2 || dictionary.common.languagesShouldDiffer;
     const {
         register,
         handleSubmit,
@@ -59,6 +60,7 @@ function NewFlashcardForm({
     const onErrors = (errors: any) => console.error(errors);
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
 
+
     function getDefaultValues(): any {
         if (flashcardSet) {
             return {
@@ -74,7 +76,7 @@ function NewFlashcardForm({
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit, onErrors)}>
+        <form onSubmit={handleSubmit(onSubmit, onErrors)} id='sidebarForm'>
             <div>
                 <MyInput
                     label={dictionary.common.basicName}
@@ -96,7 +98,9 @@ function NewFlashcardForm({
                     name='lang2'
                     options={langOptions}
                     noValueLabel={dictionary.common.fillLang2}
-                    isValid={isValid("lang2")} />
+                    isValid={isValid("lang2")}
+                    validate={validateLang2}
+                />
                 <MyMultiSelect
                     label={dictionary.common.level}
                     control={control}
@@ -119,8 +123,7 @@ function NewFlashcardForm({
                     inputParams={{ ...register("isPublic") }}
                     isValid={isValid("isPublic")}
                 />
-            </div>
-            <button type="submit" className="btn btn-primary my-6 btn-wide">{dictionary.common.confirm}</button>
+            </div>  
         </form>
     )
 }
