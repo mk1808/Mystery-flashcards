@@ -29,7 +29,8 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
         watch,
         getFieldState,
         formState,
-        reset
+        reset,
+        setFocus
     } = useForm<AnswerForm>({ mode: 'onBlur' });
 
     const onSubmit = async (answer: AnswerForm, e: any) => {
@@ -44,9 +45,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
                 onAnswerSave(updatedAnswer, currentFlashcard, updatedResult);
                 setWasChecked(true);
                 setIsValid(isValid);
-            }
-
-            else {
+            } else {
                 setWasChecked(false);
                 reset({ givenAnswer: "" })
                 const hasNextFlashcard = currentIndex + 1 < roundFlashcards.length;
@@ -58,7 +57,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
                     onNewRound(roundFlashcards);
                     console.log("ROUND: ", roundFlashcards)
                 }
-
+                setTimeout(() => setFocus("givenAnswer"), 10)
             }
         } catch (errorResponse: any) {
 
@@ -71,7 +70,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
             <MyInput
                 label={dictionary.common.answer}
                 placeholder={dictionary.common.fillAnswer}
-                inputParams={{ ...register("givenAnswer", { required: true }) }}
+                inputParams={{ ...register("givenAnswer", { required: true, disabled: wasChecked }) }}
                 isValid={isValid("givenAnswer")} />
         </form>
     )

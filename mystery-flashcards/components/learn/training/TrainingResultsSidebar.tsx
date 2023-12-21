@@ -12,7 +12,7 @@ export default function TrainingResultsSidebar({
 }) {
     const { flashcardSet } = useTrainingStore((state) => state.flashcardSet);
     const { result } = useTrainingStore((state) => state);
-    const { finalResult } = useTrainingStore((state) => state);
+    const { finalResult, roundCount } = useTrainingStore((state) => state);
     const { roundFlashcards } = useTrainingStore((state) => state);
     const currentUser = useAuthStore(state => state.currentUser);
     const statsValues = [
@@ -26,7 +26,11 @@ export default function TrainingResultsSidebar({
         },
         {
             text: dictionary.common.correctAnswersPercent,
-            value: result?.resultPercent + "%"
+            value: (result?.resultPercent) * 100 + "%"
+        },
+        {
+            text: dictionary.common.roundCount,
+            value: roundCount
         }
     ]
     return (

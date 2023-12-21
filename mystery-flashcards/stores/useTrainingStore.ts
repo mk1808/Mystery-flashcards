@@ -1,3 +1,4 @@
+import { FlashCardSetDto } from "@/dtos/FlashCardSetDto";
 import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
 import { FlashcardSetT } from "@/models/FlashcardSet";
@@ -14,6 +15,7 @@ type State = {
     currentFlashcardIndexInRound: number,
     wasChecked: boolean,
     finalResult: any,
+    roundCount: number,
     view: "TRAINING" | "TEST" | "TRAINING_RESULT" | "TEST_RESULT"
 }
 
@@ -57,6 +59,7 @@ const useTrainingStore = create<State & Action>((set) => ({
     currentFlashcardIndexInRound: 0,
     wasChecked: false,
     finalResult: {},
+    roundCount: 1,
     view: "TRAINING",
     setFlashcardSet: (flashcardSet) => set(() => ({ flashcardSet: flashcardSet })),
     addToAllAnswers: (answer) => set((state) => ({ allAnswers: [...state.allAnswers, answer] })),
@@ -79,7 +82,8 @@ const useTrainingStore = create<State & Action>((set) => ({
         return {
             roundAnswers: [],
             currentFlashcardIndexInRound: 0,
-            roundFlashcards: flashcards
+            roundFlashcards: flashcards,
+            roundCount: state.roundCount + 1
         }
     }),
     setWasChecked: (checked) => set(() => ({ wasChecked: checked })),
