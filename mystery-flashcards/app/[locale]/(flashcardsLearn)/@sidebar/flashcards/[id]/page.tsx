@@ -1,4 +1,5 @@
 import UserAvatar from "@/components/common/UserAvatar";
+import EditButton from "@/components/flashcards/flashcardDetails/EditButton";
 import { fetchDictionary } from "@/dictionaries/dictionaries";
 import { FlashcardSetT } from "@/models/FlashcardSet";
 import { getFlashcardSetRequest } from "@/utils/client/ApiUtils";
@@ -25,6 +26,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
       <div className="divider" />
       {renderCreationInfo()}
       <br />
+      {renderEditButton()}
     </div>
   )
 
@@ -64,7 +66,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
         <span className="text-xl">{title}</span>
         <span className="text-xl">: &nbsp;</span>
         <span className="text-xl">{value}</span>
-        
+
         {withPhoto &&
           <div className="h-[39px]">
             <UserAvatar
@@ -75,6 +77,14 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
               imgClassName="rounded-lg border-secondary" />
           </div>
         }
+      </div>
+    )
+  }
+
+  function renderEditButton() {
+    return (
+      <div className="flex justify-center mt-6">
+        <EditButton dictionary={dictionary} author={flashcardSet.user} />
       </div>
     )
   }
