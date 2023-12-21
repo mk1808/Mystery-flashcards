@@ -2,11 +2,12 @@ import { UserRanges } from "@/enums/UserRang";
 import Modal from "../common/Modal"
 import Steps, { Step } from "../common/Steps"
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
+import { getNestedFieldByPath } from "@/utils/server/objectUtils";
 
 export default function UserRangesModal({ dictionary }: { dictionary: any }) {
 
     function getRanges(): Step[] {
-        return UserRanges.map(rang => ({ title: rang.name, description: rang.pointsFrom }));
+        return UserRanges.map(rang => ({ title: getNestedFieldByPath(dictionary, rang.name), description: rang.pointsFrom }));
     }
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}

@@ -8,7 +8,7 @@ import { AlertType } from '@/enums/AlertType';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { registerRequest } from '@/utils/client/ApiUtils';
 
-export default function RegisterForm({ dictionary }: { dictionary: any }) {
+export default function RegisterForm({ dictionary, locale }: { dictionary: any, locale: string }) {
     const router = useRouter();
     const addAlert = useAlertStore((state) => state.add)
     const {
@@ -20,7 +20,7 @@ export default function RegisterForm({ dictionary }: { dictionary: any }) {
         reset
     } = useForm<RegisterForm>({ mode: 'onBlur' });
 
-    const goToLogin = () => router.push('/login')
+    const goToLogin = () => router.push(`/${locale}/login`)
     const onErrors = (errors: any) => console.error(errors);
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
     const validatePassword = (confirmPassword: string) => watch("password") === confirmPassword || dictionary.common.passwordDoNotMatch;

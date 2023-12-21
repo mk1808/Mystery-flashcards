@@ -9,7 +9,7 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { loginRequest } from '@/utils/client/ApiUtils';
 import useAuthStore from '@/stores/useAuthStore';
 
-export default function LoginForm({ dictionary }: { dictionary: any }) {
+export default function LoginForm({ dictionary, locale }: { dictionary: any, locale: string }) {
     const router = useRouter();
     const addAlert = useAlertStore((state) => state.add)
     const checkWhoAmi = useAuthStore(state => state.checkWhoAmi);
@@ -28,14 +28,14 @@ export default function LoginForm({ dictionary }: { dictionary: any }) {
             const response = await loginRequest(data);
             checkWhoAmi()
             addAlert({ type: AlertType.success, title: getNestedFieldByPath(dictionary, response.message) })
-            router.push('/user')
+            router.push(`/${locale}/user`)
         } catch (errorResponse: any) {
             addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse?.body?.message) })
         }
     };
     const onErrors = (errors: any) => console.error(errors);
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
-    const goToRegister = () => router.push('/register')
+    const goToRegister = () => router.push(`/${locale}/register`)
 
     return (
         <form onSubmit={handleSubmit(onSubmit, onErrors)}>

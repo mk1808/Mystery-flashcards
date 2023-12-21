@@ -12,7 +12,7 @@ function Header({
     dictionary: any
 }) {
     const detailsElement = useRef<any>(null);
-    const {renderMenuElementIfNeeded, onLogout} = useLoggedUserForLayout({renderMenuElement});
+    const { renderMenuElementIfNeeded, onLogout } = useLoggedUserForLayout({ renderMenuElement, locale });
 
     const mainMenuElements = [
         {
@@ -93,7 +93,7 @@ function Header({
 
     function renderLogo() {
         return (
-            <Link href="/">
+            <Link href={`/${locale}`}>
                 <img src='/images/logo2.png' className='h-[50px]' />
             </Link>
         )

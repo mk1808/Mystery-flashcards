@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 
-function StartLearningForm({ dictionary, flashcardSet }: { dictionary: any, flashcardSet: any }) {
+function StartLearningForm({ dictionary, flashcardSet, locale }: { dictionary: any, flashcardSet: any, locale: string }) {
     const label1 = `${flashcardSet.lang1} -> ${flashcardSet.lang2}`;
     const label2 = `${flashcardSet.lang2} -> ${flashcardSet.lang1}`;
     const router = useRouter();
@@ -19,7 +19,7 @@ function StartLearningForm({ dictionary, flashcardSet }: { dictionary: any, flas
     } = useForm<ChooseLearnTypeForm>({ mode: 'onBlur' });
 
     const onSubmit = async (data: ChooseLearnTypeForm, e: any) => {
-        const path = data.type === "TEST" ? `/learn/test/${flashcardSet._id}` : `/learn/training/${flashcardSet._id}`;
+        const path = data.type === "TEST" ? `/${locale}/learn/test/${flashcardSet._id}` : `/${locale}/learn/training/${flashcardSet._id}`;
         router.push(path)
         console.log(data);
     };

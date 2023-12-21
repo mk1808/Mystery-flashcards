@@ -6,6 +6,7 @@ import UserRangesModal from "./UserRangesModal";
 import { UserT } from "@/models/User";
 import { getRang } from "@/utils/server/userRangUtils";
 import { getWhoAmi } from "@/utils/client/ApiUtils";
+import { getNestedFieldByPath } from "@/utils/server/objectUtils";
 
 export default function UserHeader({ dictionary }: { dictionary: any }) {
     const [currentUser, setCurrentUser] = useState<UserT>();
@@ -45,10 +46,11 @@ export default function UserHeader({ dictionary }: { dictionary: any }) {
     }
 
     function renderRange() {
+        const rang = getNestedFieldByPath(dictionary, getRang(currentUser!.rang!)?.name!)
         return (
             <div className="text-2xl flex items-center place-content-center ">
                 <span className="font-bold me-2">{`${dictionary.common.userRange}: `}</span>
-                <span>{getRang(currentUser!.rang!)?.name}</span>
+                <span>{rang}</span>
             </div>
         )
     }
