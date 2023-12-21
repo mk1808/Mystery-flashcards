@@ -17,7 +17,8 @@ function NewFlashcardForm({
     flashcardSet?: FlashcardSetT
 }) {
     const langOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
-    const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }]
+    const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }, { value: "plants", label: "rośliny" },
+    { value: "new", label: "nowe" }, { value: "exam", label: "egzamin" }, { value: "school", label: "szkoła podstawowa" },]
     const levelOptions = [{ value: "A1", label: "A1" }, { value: "A2", label: "A2" }]
     const updateSidebarForm = useNewFlashcardSetStore((state) => state.updateSidebarForm);
     const setSidebarFormValid = useNewFlashcardSetStore((state) => state.setSidebarFormValid);

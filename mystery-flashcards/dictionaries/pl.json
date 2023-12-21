@@ -121,5 +121,19 @@
         "successfulSetUpdate": "Wprowadzono zmiany w kolekcji",
         "edit": "Edytuj",
         "sessionExpired": "Sesja wygasła!"
+    },
+    "userRanges": {
+        "preschooler": "Przedszkolak",
+        "student": "Uczeń",
+        "juniorHighSchoolStudent": "Gimnazista",
+        "highSchoolStudent": "Licealista",
+        "undergraduate": "Student",
+        "engineer": "Inżynier",
+        "master": "Magister",
+        "phdStudent": "Doktorant",
+        "phdHolder": "Doktor",
+        "associateProfessor": "Docent",
+        "professor": "Profesor",
+        "rector": "Rektor"
     }
 }

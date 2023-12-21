@@ -3,7 +3,7 @@ import React from 'react'
 import StartLearningActions from './StartLearningActions'
 import StartLearningContent from './StartLearningContent'
 
-function StartLearningModal({ dictionary, flashcardSet }: { dictionary: any, flashcardSet:any }) {
+function StartLearningModal({ dictionary, flashcardSet, locale }: { dictionary: any, flashcardSet: any, locale: string }) {
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
@@ -22,7 +22,7 @@ function StartLearningModal({ dictionary, flashcardSet }: { dictionary: any, fla
     }
 
     function renderDialogContent() {
-        return <StartLearningContent dictionary={dictionary} flashcardSet={flashcardSet} />
+        return <StartLearningContent dictionary={dictionary} flashcardSet={flashcardSet} locale={locale} />
     }
 }
 

@@ -18,7 +18,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   return (
     <div>
       <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet.name}</h1>
-      <div className="flex">
+      <div className="flex flex-wrap">
         {renderHashtags()}
       </div>
       <div className="divider" />
@@ -35,7 +35,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   }
 
   function renderHashtag(hashtag: string) {
-    return <div key={hashtag} className="badge badge-secondary badge-outline mr-2">{hashtag}</div>
+    return <div key={hashtag} className="badge badge-secondary badge-outline mr-3 mt-2">{hashtag}</div>
   }
 
   function renderMainInfo() {

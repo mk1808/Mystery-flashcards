@@ -1,6 +1,7 @@
 import LearnStats from '@/components/learn/LearnStats';
 import { FlashCardSetDto } from '@/dtos/FlashCardSetDto';
 import { UserT } from '@/models/User';
+import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { findNextRang, getRang } from '@/utils/server/userRangUtils';
 import React from 'react'
 
@@ -40,12 +41,12 @@ export default async function TestResultsSidebar({
 
     function renderTitle() {
         const gainPoints = flashcardSetDto.testResult?.validCount! * 10;
-        const range = getRang(user.rang!)
+        const range = getNestedFieldByPath(dictionary, getRang(user!.rang!)?.name!);
         const toNextLevel = findNextRang(user.rang!).pointsFrom - user.points;
         return (
             <>
                 <h1 className="text-4xl text-center mt-3 mb-8">{dictionary.common.gainedPointsAre} {gainPoints} {dictionary.common.pointsShortcut}!</h1>
-                <h1 className="text-2xl text-center mt-3 mb-8">{dictionary.common.currentLevelIs} {range?.name}. <br /> {dictionary.common.toNextLevel} {toNextLevel}  {dictionary.common.pointsShortcut}</h1>
+                <h1 className="text-2xl text-center mt-3 mb-8">{dictionary.common.currentLevelIs} {range}. <br /> {dictionary.common.toNextLevel} {toNextLevel}  {dictionary.common.pointsShortcut}</h1>
             </>
         )
     }

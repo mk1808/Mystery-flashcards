@@ -3,12 +3,12 @@ import { logout } from '@/utils/client/ApiUtils';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
-function useLoggedUserForLayout({ renderMenuElement }: { renderMenuElement: any }) {
+function useLoggedUserForLayout({ renderMenuElement, locale }: { renderMenuElement: any, locale: string }) {
 
     const currentUser = useAuthStore(state => state.currentUser);
     const checkWhoAmi = useAuthStore(state => state.checkWhoAmi);
     const router = useRouter();
-    
+
     function renderMenuElementIfNeeded(element: any) {
         const isLogged = !!currentUser;
         if (element.forAll ||
@@ -19,7 +19,7 @@ function useLoggedUserForLayout({ renderMenuElement }: { renderMenuElement: any 
 
     function onLogout() {
         logout().then(checkWhoAmi)
-        router.push('/')
+        router.push(`/${locale}`)
     }
 
     useEffect(() => {
