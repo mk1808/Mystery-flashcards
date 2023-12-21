@@ -50,7 +50,7 @@ export default function TrainingResultsSidebar({
         const toNextLevel = findNextRang(currentUser?.rang!).pointsFrom - currentUser?.points!;
         return (
             <>
-                <h1 className="text-4xl text-center mt-3 mb-8">{dictionary.common.gainedPointsAre} {finalResult?.newPoints} {dictionary.common.pointsShortcut}!</h1>
+                <h1 className="text-4xl text-center mt-3 mb-8">{dictionary.common.gainedPointsAre} {result?.validCount} {dictionary.common.pointsShortcut}!</h1>
                 <h1 className="text-2xl text-center mt-3 mb-8">{dictionary.common.currentLevelIs} {range}. <br /> {dictionary.common.toNextLevel} {toNextLevel} {dictionary.common.pointsShortcut}</h1>
             </>
         )

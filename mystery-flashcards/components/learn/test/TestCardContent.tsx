@@ -17,10 +17,11 @@ function TestCardContent({
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
     const setFlashcardSet = useTestStore((state) => state.setFlashcardSet);
     const setTestFlashcards = useTestStore((state) => state.setTestFlashcards);
+    const initStore = useTestStore((state) => state.initStore);
     const currentIndex = useTestStore((state) => state.currentFlashcardIndex);
     const setView = useTrainingStore((state) => state.setView);
 
-    useEffect(() => { setView("TEST") }, [])
+    useEffect(() => { setView("TEST"); initStore(); }, [])
     useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
     useEffect(() => { setTestFlashcards(testFlashcards) }, [testFlashcards])
     useEffect(() => { setCurrentFlashcard(testFlashcards[currentIndex]) }, [currentIndex])

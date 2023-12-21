@@ -19,11 +19,13 @@ function useSubmitTrainingAction({ dictionary }: { dictionary: any }) {
     const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(wasCheckedRef.current);
     const flashcardSetRef = useRef<any>(null)
     flashcardSetRef.current = flashcardSet;
+    const roundAnswersRef = useRef<any>(null)
+    roundAnswersRef.current = roundAnswers;
 
     const goToResults = () => router.push(`/learn/training/${flashcardSetRef.current._id}/results`)
     const onFinishClick = async () => {
         try {
-            const result = await patchAnswersAndReturnResults(flashcardSetRef.current._id, roundAnswers);
+            const result = await patchAnswersAndReturnResults(flashcardSetRef.current._id, roundAnswersRef.current);
             setFinalResult(result);
             goToResults();
         } catch (errorResponse: any) {

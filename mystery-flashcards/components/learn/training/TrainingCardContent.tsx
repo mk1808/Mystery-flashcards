@@ -11,6 +11,7 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
     const setView = useTrainingStore((state) => state.setView);
     const setFlashcardSet = useTrainingStore((state) => state.setFlashcardSet);
+    const initStore = useTrainingStore((state) => state.initStore);
     const setRoundFlashcards = useTrainingStore((state) => state.setRoundFlashcards);
     const storedRoundFlashcards = useTrainingStore((state) => state.roundFlashcards);
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
@@ -18,7 +19,7 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }
     const setWasChecked = useTrainingStore((state) => state.setWasChecked);
 
     useEffect(() => { setView(view) }, [view])
-    useEffect(() => { setRoundFlashcards(roundFlashcards); }, [])
+    useEffect(() => { setRoundFlashcards(roundFlashcards); initStore() }, [])
     useEffect(() => { setFlashcardSet(flashcardSet); }, [flashcardSet])
     useEffect(() => { setCurrentFlashcard(storedRoundFlashcards[currentIndex]); }, [currentIndex, storedRoundFlashcards])
 

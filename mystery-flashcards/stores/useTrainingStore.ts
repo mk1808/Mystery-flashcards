@@ -33,11 +33,11 @@ type Action = {
     onNewRound: (flashcards: []) => void,
     setWasChecked: (checked: boolean) => void,
     setFinalResult: (finalResult: any) => void,
-    setView: (view: any) => void
-
+    setView: (view: any) => void,
+    initStore: () => void
 }
 
-const initResult = {
+const initResult = () => ({
     _id: "",
     userId: "",
     flashcardSetId: "",
@@ -46,20 +46,23 @@ const initResult = {
     allCount: 0,
     answers: [],
     direction: ""
+})
 
-}
-
-const useTrainingStore = create<State & Action>((set) => ({
-    flashcardSet: {},
+const initStore = () => ({
     allAnswers: [],
     roundAnswers: [],
-    result: initResult,
+    result: initResult(),
     allFlashcards: [],
-    roundFlashcards: [],
     currentFlashcardIndexInRound: 0,
     wasChecked: false,
     finalResult: {},
     roundCount: 1,
+})
+
+const useTrainingStore = create<State & Action>((set) => ({
+    ...initStore(),
+    flashcardSet: {},
+    roundFlashcards: [],
     view: "TRAINING",
     setFlashcardSet: (flashcardSet) => set(() => ({ flashcardSet: flashcardSet })),
     addToAllAnswers: (answer) => set((state) => ({ allAnswers: [...state.allAnswers, answer] })),
@@ -89,6 +92,7 @@ const useTrainingStore = create<State & Action>((set) => ({
     setWasChecked: (checked) => set(() => ({ wasChecked: checked })),
     setFinalResult: (finalResult) => set(() => ({ finalResult: finalResult })),
     setView: (view) => set(() => ({ view: view })),
+    initStore: () => set(initStore)
 }))
 
 export default useTrainingStore;

@@ -1,4 +1,5 @@
 "use client"
+import Badges from '@/components/common/Badges';
 import SingleSidebarInfo from '@/components/common/SingleSidebarInfo';
 import LearnStats from '@/components/learn/LearnStats';
 import useTrainingStore from '@/stores/useTrainingStore';
@@ -23,7 +24,7 @@ export default function TrainingSidebar({
         },
         {
             text: dictionary.common.correctAnswersPercent,
-            value: result?.resultPercent * 100 + "%"
+            value: Math.round(result?.resultPercent * 100) + "%"
         },
         {
             text: dictionary.common.roundCount,
@@ -54,9 +55,7 @@ export default function TrainingSidebar({
         return (
             <>
                 <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet?.name}</h1>
-                <div className="flex">
-                    {flashcardSet?.hashtags.map((tag: any) => <div key={tag} className="badge badge-secondary badge-outline mr-2">{tag}</div>)}
-                </div>
+                <Badges badges={flashcardSet?.hashtags || []} />
             </>
         )
     }

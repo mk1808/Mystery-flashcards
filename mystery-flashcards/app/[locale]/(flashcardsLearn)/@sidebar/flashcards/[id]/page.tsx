@@ -1,3 +1,4 @@
+import Badges from "@/components/common/Badges";
 import UserAvatar from "@/components/common/UserAvatar";
 import EditButton from "@/components/flashcards/flashcardDetails/EditButton";
 import { fetchDictionary } from "@/dictionaries/dictionaries";
@@ -18,9 +19,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   return (
     <div>
       <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet.name}</h1>
-      <div className="flex flex-wrap">
-        {renderHashtags()}
-      </div>
+      <Badges badges={flashcardSet.hashtags!} />
       <div className="divider" />
       {renderMainInfo()}
       <div className="divider" />
@@ -29,14 +28,6 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
       {renderEditButton()}
     </div>
   )
-
-  function renderHashtags() {
-    return flashcardSet.hashtags?.map(renderHashtag)
-  }
-
-  function renderHashtag(hashtag: string) {
-    return <div key={hashtag} className="badge badge-secondary badge-outline mr-3 mt-2">{hashtag}</div>
-  }
 
   function renderMainInfo() {
     return (
@@ -84,7 +75,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   function renderEditButton() {
     return (
       <div className="flex justify-center mt-6">
-        <EditButton dictionary={dictionary} author={flashcardSet.user} flashcardSetId={flashcardSet._id}/>
+        <EditButton dictionary={dictionary} author={flashcardSet.user} flashcardSetId={flashcardSet._id} />
       </div>
     )
   }
