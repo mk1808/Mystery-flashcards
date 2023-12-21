@@ -23,7 +23,7 @@ export default async function TestResultsSidebar({
             value: flashcardSetDto.testResult?.validCount
         }, {
             text: dictionary.common.correctAnswersPercent,
-            value: flashcardSetDto.testResult?.resultPercent + "%"
+            value: flashcardSetDto.testResult?.resultPercent?.toFixed(0) + "%"
         }
     ]
 

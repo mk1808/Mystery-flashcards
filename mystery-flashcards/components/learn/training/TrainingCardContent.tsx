@@ -6,25 +6,21 @@ import useTrainingStore from '@/stores/useTrainingStore';
 import { FlashcardT } from '@/models/Flashcard';
 
 function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }:
-     { dictionary: any, flashcardSet: any, roundFlashcards: any, view:any }) {
+    { dictionary: any, flashcardSet: any, roundFlashcards: any, view: any }) {
     const [isValid, setIsValid] = useState<Boolean>(true);
-    const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({wordLang1:"", description1:""});
+    const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
     const setView = useTrainingStore((state) => state.setView);
     const setFlashcardSet = useTrainingStore((state) => state.setFlashcardSet);
     const setRoundFlashcards = useTrainingStore((state) => state.setRoundFlashcards);
-    const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound); 
-    const wasChecked = useTrainingStore((state) => state.wasChecked); 
-    const setWasChecked = useTrainingStore((state) => state.setWasChecked); 
-    const currentIndexRef = useRef<any>(null);
-    currentIndexRef.current = currentIndex;
-    const wasCheckedRef = useRef<any>(null);
-    wasCheckedRef.current = wasChecked;
+    const storedRoundFlashcards = useTrainingStore((state) => state.roundFlashcards);
+    const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
+    const wasChecked = useTrainingStore((state) => state.wasChecked);
+    const setWasChecked = useTrainingStore((state) => state.setWasChecked);
+
     useEffect(() => { setView(view) }, [view])
-    useEffect(() => { console.log("FS:",flashcardSet); setFlashcardSet(flashcardSet);  }, [flashcardSet])
-    useEffect(() => { 
-        setRoundFlashcards(roundFlashcards);
-        setCurrentFlashcard(roundFlashcards[currentIndexRef.current]);
-    }, [wasChecked])
+    useEffect(() => { setRoundFlashcards(roundFlashcards); }, [])
+    useEffect(() => { setFlashcardSet(flashcardSet); }, [flashcardSet])
+    useEffect(() => { setCurrentFlashcard(storedRoundFlashcards[currentIndex]); }, [currentIndex, storedRoundFlashcards])
 
     function renderAnswerValidity() {
         return (
@@ -66,7 +62,7 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }
         )
     }
 
-    return (
+    return currentFlashcard && (
         <div className="grid grid-cols-2 h-full">
             <div className='grid grid-rows-2'>
                 <div className='self-end'>
@@ -78,7 +74,7 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }
                 <div className="divider divider-horizontal ml-0"></div>
                 <div className="w-full h-full grid grid-rows-2">
                     <div className="self-end">
-                        <AnswerForm dictionary={dictionary} currentFlashcard={currentFlashcard} setIsValid={setIsValid} setWasChecked={setWasChecked}/>
+                        <AnswerForm dictionary={dictionary} currentFlashcard={currentFlashcard} setIsValid={setIsValid} setWasChecked={setWasChecked} />
                     </div>
                     <div>{renderAnswerValidity()}</div>
                 </div>

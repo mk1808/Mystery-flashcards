@@ -13,7 +13,7 @@ export default function TestSidebar({
     const { testAnswers } = useTestStore((state) => state);
     const { testFlashcards } = useTestStore((state) => state);
 
-    const progress = (testAnswers.length * 100.0 / testFlashcards?.length).toFixed(1) + "%";
+    const progress = (testAnswers.length * 100 / testFlashcards?.length).toFixed(0) + "%";
 
     const statsValues = [
         {

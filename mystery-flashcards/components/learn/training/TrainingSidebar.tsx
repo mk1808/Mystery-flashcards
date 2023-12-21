@@ -11,7 +11,7 @@ export default function TrainingSidebar({
 }) {
     const { flashcardSet } = useTrainingStore((state) => state.flashcardSet);
     const { result } = useTrainingStore((state) => state);
-    const { roundFlashcards } = useTrainingStore((state) => state);
+    const { roundFlashcards, roundCount } = useTrainingStore((state) => state);
     const statsValues = [
         {
             text: dictionary.common.answersCount,
@@ -23,7 +23,11 @@ export default function TrainingSidebar({
         },
         {
             text: dictionary.common.correctAnswersPercent,
-            value: result?.resultPercent + "%"
+            value: result?.resultPercent * 100 + "%"
+        },
+        {
+            text: dictionary.common.roundCount,
+            value: roundCount
         },
         {
             text: dictionary.common.cardsInRoundCount,
