@@ -5,7 +5,8 @@ type State = {
     sidebarForm: NewFlashcardSetForm,
     flashcardsList: FlashcardsForm[],
     sidebarFormValid: boolean,
-    flashcardListInvalidCount: number
+    flashcardListInvalidCount: number,
+    invalidCardsIndexes: any[]
 }
 
 type Action = {
@@ -16,7 +17,8 @@ type Action = {
     deleteFlashcard: (flashcard: any) => void,
     setSidebarFormValid: (value: boolean) => void,
     flashcardListInvalidCountInc: () => void,
-    flashcardListInvalidCountDec: () => void
+    flashcardListInvalidCountDec: () => void,
+    addToInvalidCardsIndexes: (index: number) => void
 }
 
 const getInitailFlashcard = () => ({ _id: Math.floor(Math.random() * 1000_000), wordLang1: "", wordLang2: "", description1: "", description2: "" })
@@ -31,6 +33,7 @@ const useNewFlashcardSetStore = create<State & Action>((set) => ({
         lang1: "",
         lang2: ""
     },
+    invalidCardsIndexes: [],
     flashcardsList: [getInitailFlashcard()],
     sidebarFormValid: false,
     flashcardListInvalidCount: 0,
@@ -42,6 +45,7 @@ const useNewFlashcardSetStore = create<State & Action>((set) => ({
     setSidebarFormValid: (value) => set(() => ({ sidebarFormValid: value })),
     flashcardListInvalidCountInc: () => set((state) => ({ flashcardListInvalidCount: state.flashcardListInvalidCount + 1 })),
     flashcardListInvalidCountDec: () => set((state) => ({ flashcardListInvalidCount: state.flashcardListInvalidCount - 1 })),
+    addToInvalidCardsIndexes: (index) => set((state) => ({ invalidCardsIndexes: [...state.invalidCardsIndexes, index] }))
 }))
 
 export default useNewFlashcardSetStore;
