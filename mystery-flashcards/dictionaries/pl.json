@@ -118,6 +118,7 @@
         "errorsOnCardsList": "Błędy na liście słówek",
         "errorsInSidebar": "Niepoprawnie wypełnione podstawowe informacje",
         "successfulSetSave": "Utworzono nową kolekcję",
-        "successfulSetUpdate": "Wprowadzono zmiany w kolekcji"
+        "successfulSetUpdate": "Wprowadzono zmiany w kolekcji",
+        "edit": "Edytuj"
     }
 }
