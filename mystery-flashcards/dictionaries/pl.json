@@ -34,7 +34,7 @@
         "fillName": "Podaj login",
         "fillPassword": "Podaj hasło",
         "successfulLogin": "Zalogowano!",
-        "userLoggedOut": "Wylogowano!",
+        "userLoggedOut": "Użytkownik został wylogowany!",
         "accessDenied": "Brak dostępu!",
         "invalidCredentials": "Błędne dane logowania!",
         "email": "Email",
@@ -119,6 +119,7 @@
         "errorsInSidebar": "Niepoprawnie wypełnione podstawowe informacje",
         "successfulSetSave": "Utworzono nową kolekcję",
         "successfulSetUpdate": "Wprowadzono zmiany w kolekcji",
-        "edit": "Edytuj"
+        "edit": "Edytuj",
+        "sessionExpired": "Sesja wygasła!"
     }
 }

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import React, { useRef } from 'react'
 import useLoggedUserForLayout from '@/hooks/useLoggedUserForLayout';
+import useWatchUserAuthentication from '@/hooks/useWatchUserAuthentication';
 
 function Header({
     locale,
@@ -12,7 +13,8 @@ function Header({
     dictionary: any
 }) {
     const detailsElement = useRef<any>(null);
-    const {renderMenuElementIfNeeded, onLogout} = useLoggedUserForLayout({renderMenuElement});
+    const { renderMenuElementIfNeeded, onLogout } = useLoggedUserForLayout({ renderMenuElement });
+    useWatchUserAuthentication(locale);
 
     const mainMenuElements = [
         {
