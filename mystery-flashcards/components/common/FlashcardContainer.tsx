@@ -78,7 +78,7 @@ function FlashcardContainer({
     <form onSubmit={handleSubmit(onSubmit, onErrors)}>
       <div className="card w-[1000px] bg-base-100 shadow-xl mb-10">
         <div className="card-body">
-          <div className="flex justify-around">
+          <div className="flex justify-around min-h-[107px] items-center">
             <div className="w-full justify-end">
               {renderLeftSide()}
             </div>

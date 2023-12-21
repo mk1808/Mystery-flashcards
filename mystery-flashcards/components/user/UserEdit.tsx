@@ -6,6 +6,7 @@ import Title from "../common/Title";
 import { UserT } from "@/models/User";
 import UserEditForm from "./UserEditForm";
 import { getWhoAmi } from "@/utils/client/ApiUtils";
+import UserAvatar from "../common/UserAvatar";
 
 export default function UserEdit({ dictionary }: { dictionary: any }) {
     const [currentUser, setCurrentUser] = useState<UserT>();
@@ -26,19 +27,7 @@ export default function UserEdit({ dictionary }: { dictionary: any }) {
     )
 
     function renderUserAvatar() {
-        const defaultAvatar = "/images/defaultAvatar.jpg"
-        const avatarSrc = imageSrcError ? defaultAvatar : currentUser?.avatar || defaultAvatar;
-        return (
-            <div className="grid justify-items-center items-center ">
-                <img
-                    src={avatarSrc}
-                    width={300}
-                    height={200}
-                    onError={() => setImageSrcError(true)}
-                    alt={dictionary.common.userAvatarAlt}
-                />
-            </div>
-        );
+        return <UserAvatar alt={dictionary.common.userAvatarAlt} currentUser={currentUser} />
     }
 
     function renderUserEditForm() {

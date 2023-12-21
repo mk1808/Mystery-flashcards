@@ -1,6 +1,8 @@
+import UserAvatar from "@/components/common/UserAvatar";
 import { fetchDictionary } from "@/dictionaries/dictionaries";
 import { FlashcardSetT } from "@/models/FlashcardSet";
 import { getFlashcardSetRequest } from "@/utils/client/ApiUtils";
+import { formatDate } from "@/utils/client/MathUtils";
 import { createCookieHeader } from "@/utils/client/RestUtils";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import { cookies } from "next/headers";
@@ -10,6 +12,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   const dictionary = await fetchDictionary(params.locale);
   const flashcardSetId = params.id;
   const { flashcardSet }: { flashcardSet: FlashcardSetT } = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
+  const date = new Date(flashcardSet.creationDate || "");
 
   return (
     <div>
@@ -46,22 +49,32 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   function renderCreationInfo() {
     return (
       <>
-        {renderSingleInfo(dictionary.common.author, flashcardSet.user?.name!)}
-        {renderSingleInfo(dictionary.common.creationDate, new Date(flashcardSet.creationDate!).toLocaleString())}
+        {renderSingleInfo(dictionary.common.author, flashcardSet.user?.name!, true)}
+        {renderSingleInfo(dictionary.common.creationDate, formatDate(date))}
         {renderSingleInfo(dictionary.common.popularity, "100")}
       </>
     )
   }
 
-  function renderSingleInfo(title: string, value: string) {
+  function renderSingleInfo(title: string, value: string, withPhoto?: boolean) {
     return (
       <div className="my-3 flex items-center">
         <ChevronDoubleRightIcon className="h-5 w-5 mr-2 text-gray-500" />
 
         <span className="text-xl">{title}</span>
         <span className="text-xl">: &nbsp;</span>
-
         <span className="text-xl">{value}</span>
+        
+        {withPhoto &&
+          <div className="h-[39px]">
+            <UserAvatar
+              alt={dictionary.common.userAvatarAlt}
+              currentUser={flashcardSet.user}
+              className="ml-3 border-2 rounded-lg border-secondary"
+              width={50}
+              imgClassName="rounded-lg border-secondary" />
+          </div>
+        }
       </div>
     )
   }
