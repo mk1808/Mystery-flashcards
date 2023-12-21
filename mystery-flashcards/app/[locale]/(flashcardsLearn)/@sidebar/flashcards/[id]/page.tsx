@@ -84,7 +84,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   function renderEditButton() {
     return (
       <div className="flex justify-center mt-6">
-        <EditButton dictionary={dictionary} author={flashcardSet.user} />
+        <EditButton dictionary={dictionary} author={flashcardSet.user} flashcardSetId={flashcardSet._id}/>
       </div>
     )
   }
