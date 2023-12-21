@@ -117,7 +117,8 @@ function NewFlashcardForm({
                     name='hashtags'
                     options={hashtagsOptions}
                     noValueLabel={dictionary.common.fillHashtags}
-                    isValid={isValid("hashtags")} />
+                    isValid={isValid("hashtags")} 
+                    className='mb-3'/>
                 <MyToggle
                     label={dictionary.common.public}
                     inputParams={{ ...register("isPublic") }}
