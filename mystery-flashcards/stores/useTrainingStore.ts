@@ -16,7 +16,8 @@ type State = {
     wasChecked: boolean,
     finalResult: any,
     roundCount: number,
-    view: "TRAINING" | "TEST" | "TRAINING_RESULT" | "TEST_RESULT"
+    view: "TRAINING" | "TEST" | "TRAINING_RESULT" | "TEST_RESULT",
+    direction: string
 }
 
 type Action = {
@@ -33,11 +34,12 @@ type Action = {
     onNewRound: (flashcards: []) => void,
     setWasChecked: (checked: boolean) => void,
     setFinalResult: (finalResult: any) => void,
-    setView: (view: any) => void
-
+    setView: (view: any) => void,
+    initStore: () => void,
+    setDirection: (direction: string) => void
 }
 
-const initResult = {
+const initResult = () => ({
     _id: "",
     userId: "",
     flashcardSetId: "",
@@ -46,21 +48,25 @@ const initResult = {
     allCount: 0,
     answers: [],
     direction: ""
+})
 
-}
-
-const useTrainingStore = create<State & Action>((set) => ({
-    flashcardSet: {},
+const initStore = () => ({
     allAnswers: [],
     roundAnswers: [],
-    result: initResult,
+    result: initResult(),
     allFlashcards: [],
-    roundFlashcards: [],
     currentFlashcardIndexInRound: 0,
     wasChecked: false,
     finalResult: {},
     roundCount: 1,
+})
+
+const useTrainingStore = create<State & Action>((set) => ({
+    ...initStore(),
+    flashcardSet: {},
+    roundFlashcards: [],
     view: "TRAINING",
+    direction: "main",
     setFlashcardSet: (flashcardSet) => set(() => ({ flashcardSet: flashcardSet })),
     addToAllAnswers: (answer) => set((state) => ({ allAnswers: [...state.allAnswers, answer] })),
     addToRoundAnswers: (answer) => set((state) => ({ roundAnswers: [...state.roundAnswers, answer] })),
@@ -89,6 +95,8 @@ const useTrainingStore = create<State & Action>((set) => ({
     setWasChecked: (checked) => set(() => ({ wasChecked: checked })),
     setFinalResult: (finalResult) => set(() => ({ finalResult: finalResult })),
     setView: (view) => set(() => ({ view: view })),
+    initStore: () => set(initStore),
+    setDirection: (direction) => set(() => ({ direction }))
 }))
 
 export default useTrainingStore;

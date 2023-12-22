@@ -1,4 +1,5 @@
 "use client"
+import Badges from '@/components/common/Badges';
 import SingleSidebarInfo from '@/components/common/SingleSidebarInfo';
 import LearnStats from '@/components/learn/LearnStats';
 import useTrainingStore from '@/stores/useTrainingStore';
@@ -10,8 +11,7 @@ export default function TrainingSidebar({
     dictionary: any
 }) {
     const { flashcardSet } = useTrainingStore((state) => state.flashcardSet);
-    const { result } = useTrainingStore((state) => state);
-    const { roundFlashcards, roundCount } = useTrainingStore((state) => state);
+    const { result, roundFlashcards, roundCount, direction } = useTrainingStore((state) => state);
     const statsValues = [
         {
             text: dictionary.common.answersCount,
@@ -23,7 +23,7 @@ export default function TrainingSidebar({
         },
         {
             text: dictionary.common.correctAnswersPercent,
-            value: result?.resultPercent * 100 + "%"
+            value: Math.round(result?.resultPercent * 100) + "%"
         },
         {
             text: dictionary.common.roundCount,
@@ -35,13 +35,15 @@ export default function TrainingSidebar({
         }
     ]
 
+    const { lang1, lang2 } = flashcardSet || {};
+    const languages = direction === "main" ? `${lang1} -> ${lang2}` : `${lang2} -> ${lang1}`
 
     return (
         <div>
             {renderTitleAndTags()}
             <div className="divider"></div>
             <SingleSidebarInfo title={dictionary.common.flashcardsCount} value={flashcardSet?.flashcards?.length} />
-            <SingleSidebarInfo title={dictionary.common.languages} value={`${flashcardSet?.lang1} -> ${flashcardSet?.lang2}`} />
+            <SingleSidebarInfo title={dictionary.common.languages} value={languages} />
             <SingleSidebarInfo title={dictionary.common.level} value={flashcardSet?.level} />
             <div className="divider"></div>
             <LearnStats stats={statsValues} />
@@ -54,9 +56,7 @@ export default function TrainingSidebar({
         return (
             <>
                 <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet?.name}</h1>
-                <div className="flex">
-                    {flashcardSet?.hashtags.map((tag: any) => <div key={tag} className="badge badge-secondary badge-outline mr-2">{tag}</div>)}
-                </div>
+                <Badges badges={flashcardSet?.hashtags || []} />
             </>
         )
     }

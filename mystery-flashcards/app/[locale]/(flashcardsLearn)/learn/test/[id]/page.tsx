@@ -4,7 +4,13 @@ import { getFlashcardSetRequest, getTestFlashcardsRequest } from '@/utils/client
 import { cookies } from 'next/headers';
 import React from 'react'
 
-export default async function LearnTest({ params }: { params: { id: string, locale: string } }) {
+export default async function LearnTest({
+  params,
+  searchParams,
+}: {
+  params: { id: string, locale: string },
+  searchParams: { direction: string },
+}) {
   const dictionary = await fetchDictionary(params.locale);
   const headers = {
     cookie: 'token=' + cookies().get('token')?.value
@@ -15,6 +21,6 @@ export default async function LearnTest({ params }: { params: { id: string, loca
   const view = "TEST";
 
   return (
-    <TestCardContent dictionary={dictionary} flashcardSet={flashcardSet} testFlashcards={flashcards} view={view} />
+    <TestCardContent dictionary={dictionary} flashcardSet={flashcardSet} testFlashcards={flashcards} view={view} direction={searchParams.direction} />
   )
 }

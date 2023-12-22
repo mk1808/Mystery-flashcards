@@ -14,6 +14,9 @@ const userFlashcardSchema = new Schema({
     type: [answerSchema],
     default: []
   },
+  isFavorite: {
+    type: Boolean
+  },
   type: {
     type: String,
     required: [true, 'type is required.'],
@@ -27,6 +30,7 @@ export type UserFlashcardT = {
   userId?: string,
   flashcardSetId?: string,
   learningHistory?: AnswerT[],
+  isFavorite: boolean,
   type?: string
 };
 

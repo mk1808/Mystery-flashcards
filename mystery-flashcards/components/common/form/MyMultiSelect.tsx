@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { PlusCircleIcon } from "@heroicons/react/24/outline"
 import { excludeFromArray } from "@/utils/server/arrayUtils";
 import { Control, useController } from "react-hook-form";
+import Badges from "../Badges";
 
 
 export default function MyMultiSelect({
@@ -126,11 +127,12 @@ export default function MyMultiSelect({
         field.onBlur();
     };
 
-    function onBadgeClick(event: any, option: any) {
+    function onBadgeClick(event: any, optionIndex: number) {
         if (disabled) {
             return;
         }
         stopPropagation(event);
+        const option = selected[optionIndex];
         onDeselect(option);
         changeOptionCheckboxState(option.value, false);
         field.onBlur();
@@ -194,21 +196,13 @@ export default function MyMultiSelect({
     }
 
     function renderSelectedBadges() {
-        return (
-            <div className="flex items-center flex-wrap">
-                {selected.map(renderBadge)}
-            </div>
-        )
+        return <Badges badges={selected.map(option => option.label)} onClick={onBadgeClick}/>
     }
 
     function renderSingleSelected() {
         return selected.length > 0 && (
             <span>{selected[0].label}</span>
         )
-    }
-
-    function renderBadge(option: any) {
-        return <div className="badge badge-secondary badge-outline mr-2" key={option.value} onClick={(event) => onBadgeClick(event, option)}>{option.label}</div>
     }
 
     function renderNoValuePlaceholder() {

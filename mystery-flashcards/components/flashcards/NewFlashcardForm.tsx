@@ -1,7 +1,7 @@
 "use client"
 import { isFieldValid } from '@/utils/client/FormUtils';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import MyInput from '../common/form/MyInput';
 import { useForm } from 'react-hook-form';
 import MyToggle from '../common/form/MyToggle';
@@ -22,6 +22,9 @@ function NewFlashcardForm({
     const levelOptions = [{ value: "A1", label: "A1" }, { value: "A2", label: "A2" }]
     const updateSidebarForm = useNewFlashcardSetStore((state) => state.updateSidebarForm);
     const setSidebarFormValid = useNewFlashcardSetStore((state) => state.setSidebarFormValid);
+    const initState = useNewFlashcardSetStore((state) => state.initState);
+    const resetState = useNewFlashcardSetStore((state) => state.resetState);
+    const initOnceRef = useRef(false)
     const router = useRouter();
     const validateLang2 = (lang2: string) => watch("lang1") !== lang2 || dictionary.common.languagesShouldDiffer;
     const {
@@ -35,10 +38,7 @@ function NewFlashcardForm({
     } = useForm<NewFlashcardSetForm>({ mode: 'onBlur', defaultValues: getDefaultValues() });
 
     useEffect(() => {
-        const subscription = watch((value, { name, type }) => {
-            updateSidebarForm({ ...value })
-
-        })
+        const subscription = watch((value) => { updateSidebarForm({ ...value }) })
         return () => subscription.unsubscribe()
     }, [watch])
 
@@ -47,8 +47,15 @@ function NewFlashcardForm({
     }, [formState])
 
     useEffect(() => {
-        if (flashcardSet) {
-            updateSidebarForm({ ...getDefaultValues() })
+        if (!flashcardSet) {
+            resetState();
+        }
+    }, [])
+
+    useEffect(() => {
+        if (flashcardSet && !initOnceRef.current) {
+            initState(flashcardSet);
+            initOnceRef.current = true;
         }
     }, [flashcardSet])
 
@@ -115,17 +122,18 @@ function NewFlashcardForm({
                     control={control}
                     required={true}
                     multiple={true}
+                    allowNew={true}
                     name='hashtags'
                     options={hashtagsOptions}
                     noValueLabel={dictionary.common.fillHashtags}
-                    isValid={isValid("hashtags")} 
-                    className='mb-3'/>
+                    isValid={isValid("hashtags")}
+                    className='mb-3' />
                 <MyToggle
                     label={dictionary.common.public}
                     inputParams={{ ...register("isPublic") }}
                     isValid={isValid("isPublic")}
                 />
-            </div>  
+            </div>
         </form>
     )
 }
