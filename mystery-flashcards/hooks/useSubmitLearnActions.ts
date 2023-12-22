@@ -8,11 +8,12 @@ import useSubmitTestResultAction from "./submitTrainingActions/useSubmitTestResu
 
 function useSubmitLearnActions({ dictionary }: { dictionary: any }): { mainButtonAttrs: any, otherButtonAttrs: any } {
     const view = useTrainingStore((state) => state.view);
+    const flashcardSet = useTrainingStore((state) => state.flashcardSet);
     const currentFlashcardIndex = useTestStore((state) => state.currentFlashcardIndex);
     const training = useSubmitTrainingAction({ dictionary });
-    const trainingResult = useSubmitTrainingResultAction({ dictionary });
+    const trainingResult = useSubmitTrainingResultAction({ dictionary, flashcardSet });
     const test = useSubmitTestAction({ dictionary });
-    const testResult = useSubmitTestResultAction({ dictionary });
+    const testResult = useSubmitTestResultAction({ dictionary, flashcardSet });
     const [currentAction, setCurrentAction] = useState<{ mainButtonAttrs: ButtonAttrs, otherButtonAttrs: any }>({
         mainButtonAttrs: {
             title: "",

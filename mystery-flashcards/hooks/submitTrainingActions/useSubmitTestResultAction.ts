@@ -1,13 +1,15 @@
+import { useRouter } from 'next/navigation';
 import React from 'react'
 
-function useSubmitTestResultAction({ dictionary }: { dictionary: any }) {
+function useSubmitTestResultAction({ dictionary, flashcardSet }: { dictionary: any, flashcardSet: any }) {
+    const router = useRouter();
     const mainButtonAttrs: ButtonAttrs = {
-        title: "Rozpocznij ponownie",
+        title: dictionary.common.tryAgain,
         type: undefined,
         onClick: () => { }
     }
-    const onFinishClick = () => { console.log("finish") }
-    const otherButtonAttrs = { onFinishClick, title: "Powrót" }
+    const onFinishClick = () => { router.push(`/flashcards/${flashcardSet?.flashcardSet?._id}`) }
+    const otherButtonAttrs = { onFinishClick, title: dictionary.common.goBack }
 
     return { mainButtonAttrs, otherButtonAttrs };
 }
