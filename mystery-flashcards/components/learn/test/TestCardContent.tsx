@@ -8,14 +8,17 @@ import useTrainingStore from '@/stores/useTrainingStore';
 function TestCardContent({
     dictionary,
     flashcardSet,
-    testFlashcards
+    testFlashcards,
+    direction
 }: {
     dictionary: any,
     flashcardSet: any,
-    testFlashcards: any
+    testFlashcards: any,
+    direction: string
 }) {
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
     const setFlashcardSet = useTestStore((state) => state.setFlashcardSet);
+    const setDirection = useTestStore((state) => state.setDirection);
     const setTestFlashcards = useTestStore((state) => state.setTestFlashcards);
     const initStore = useTestStore((state) => state.initStore);
     const currentIndex = useTestStore((state) => state.currentFlashcardIndex);
@@ -24,15 +27,19 @@ function TestCardContent({
     useEffect(() => { setView("TEST"); initStore(); }, [])
     useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
     useEffect(() => { setTestFlashcards(testFlashcards) }, [testFlashcards])
+    useEffect(() => { setDirection(direction) }, [direction])
     useEffect(() => { setCurrentFlashcard(testFlashcards[currentIndex]) }, [currentIndex])
+
+    const getWord = () => direction === "main" ? currentFlashcard?.wordLang1 : currentFlashcard?.wordLang2;
+    const getDescription = () => direction === "main" ? currentFlashcard?.description1 : currentFlashcard?.description2;
 
     return (
         <div className="grid grid-cols-2 h-full">
             <div className='grid grid-rows-2'>
                 <div className='self-end'>
-                    <h1 className="text-3xl my-3 ">{currentFlashcard?.wordLang1}</h1>
+                    <h1 className="text-3xl my-3 ">{getWord()}</h1>
                 </div>
-                <div><p>{currentFlashcard?.description1}</p></div>
+                <div><p>{getDescription()}</p></div>
             </div>
             <div className='flex items-center'>
                 <div className="divider divider-horizontal ml-0"></div>

@@ -27,7 +27,7 @@ export default function TrainingResultsSidebar({
         },
         {
             text: dictionary.common.correctAnswersPercent,
-            value: (result?.resultPercent) * 100 + "%"
+            value: Math.round((result?.resultPercent) * 100) + "%"
         },
         {
             text: dictionary.common.roundCount,

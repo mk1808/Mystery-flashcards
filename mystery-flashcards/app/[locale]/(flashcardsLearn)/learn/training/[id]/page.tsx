@@ -5,7 +5,13 @@ import React from 'react'
 import { cookies } from 'next/headers'
 import { createCookieHeader } from '@/utils/client/RestUtils';
 
-export default async function LearnTraining({ params }: { params: { id: string, locale: string } }) {
+export default async function LearnTraining({
+  params,
+  searchParams
+}: {
+  params: { id: string, locale: string },
+  searchParams: { direction: string }
+}) {
   const dictionary = await fetchDictionary(params.locale);
   const headers = createCookieHeader(cookies());
 
@@ -14,6 +20,6 @@ export default async function LearnTraining({ params }: { params: { id: string, 
   const view = "TRAINING";
   console.log("roundFlashcards", roundFlashcards)
   return (
-    <TrainingCardContent dictionary={dictionary} flashcardSet={flashcardSet} roundFlashcards={roundFlashcards} view={view} />
+    <TrainingCardContent dictionary={dictionary} flashcardSet={flashcardSet} roundFlashcards={roundFlashcards} view={view} direction={searchParams.direction} />
   )
 }

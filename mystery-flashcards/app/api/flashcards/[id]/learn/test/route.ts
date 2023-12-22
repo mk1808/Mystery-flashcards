@@ -13,12 +13,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
     const flashcardSetId = params.id;
-    const testAnswers: AnswerT[] = await request.json();
+    const test: TestResultT = await request.json();
     await connectToDB();
     const currentUser: UserT = await getUser(request);
     const flashcardSet = (await FlashcardSet.findById(flashcardSetId));
 
-    const newResults = checkAnswers(flashcardSet, testAnswers);
+    const newResults = checkAnswers(flashcardSet, test);
 
     let testResult: TestResultT = (await TestResult.findOne({ userId: currentUser._id, flashcardSetId: flashcardSetId }))?.toObject();
     if (testResult) {
@@ -26,12 +26,11 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
         testResult.answers = newResults.answers;
         testResult.resultPercent = newResults.resultPercent;
         testResult.validCount = newResults.validCount;
+        testResult.direction = newResults.direction;
         await TestResult.findOneAndReplace({ _id: testResult._id }, testResult, { new: true });
     } else {
-        testResult = newResults;
-        testResult.userId = currentUser._id;
-        testResult.direction = "?"
-        testResult = await TestResult.create(testResult);
+        newResults.userId = currentUser._id;
+        testResult = await TestResult.create(newResults);
     }
 
     const existingUserFlashcard: UserFlashcardT = (await UserFlashcard.findOne({ flashcardSetId: flashcardSetId, userId: currentUser._id }))?.toObject()
