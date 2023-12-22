@@ -29,7 +29,7 @@ function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
         },
         {
             name: dictionary.common.mySets,
-            link: `/${locale}#flashcardSetsSearch`,
+            link: `/${locale}?mySet=true#flashcardSetsSearch`,
             forLogged: true
         },
         {

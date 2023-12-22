@@ -100,6 +100,7 @@
         "correctAnswerIs": "Poprawna odpowiedź to",
         "incorrectAnswer": "Błędna odpowiedź",
         "status": "Status",
+        "fillStatus": "Wybierz status",
         "correct": "Poprawne",
         "incorrect": "Niepoprawne",
         "cardsInRoundCount": "Liczba kart w rundzie",
