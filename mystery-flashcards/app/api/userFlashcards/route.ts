@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
         flashcardSetId: requestBody.flashcardSetId,
         learningHistory: [],
         type: requestBody.type,
+        isFavorite: false
     }
     const savedUserFlashcard = await UserFlashcard.create(newUserFlashCard);
     return new NextResponse(JSON.stringify(savedUserFlashcard), { status: 200 });
