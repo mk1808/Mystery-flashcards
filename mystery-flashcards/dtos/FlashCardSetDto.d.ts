@@ -5,5 +5,6 @@ import { UserFlashcardT } from "@/models/UserFlashcard";
 interface FlashCardSetDto {
     flashcardSet?: FlashcardSetT,
     userFlashcard?: UserFlashcardT,
-    testResult?: TestResultT
+    testResult?: TestResultT,
+    statistics?: FlashcardStatisticsDto
 }

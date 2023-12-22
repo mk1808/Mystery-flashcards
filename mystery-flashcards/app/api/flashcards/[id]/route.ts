@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
     await connectToDB();
-    const flashCardSetDto: FlashCardSetDto = {};
+    const flashCardSetDto: FlashCardSetDto = { statistics: {} };
     flashCardSetDto.flashcardSet = (await FlashcardSet.findById(id))!;
     const currentUser = await getUser(request);
     if (!flashCardSetDto.flashcardSet) {
@@ -20,6 +20,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             flashCardSetDto.testResult = (await TestResult.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id }))!;
         }
     }
+    flashCardSetDto.statistics!.favorite = await UserFlashcard.countDocuments({ flashcardSetId: flashCardSetDto.flashcardSet._id, isFavorite: true })
+    flashCardSetDto.statistics!.learning = await UserFlashcard.countDocuments({ type: "LEARNING" })
     return new NextResponse(JSON.stringify(flashCardSetDto));
 }
 
