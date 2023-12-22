@@ -18,8 +18,9 @@ export default async function LearnTest({
 
   const flashcardSet = await getFlashcardSetRequest(params.id, headers);
   const { flashcards } = await getTestFlashcardsRequest(params.id, headers);
+  const view = "TEST";
 
   return (
-    <TestCardContent dictionary={dictionary} flashcardSet={flashcardSet} testFlashcards={flashcards} direction={searchParams.direction} />
+    <TestCardContent dictionary={dictionary} flashcardSet={flashcardSet} testFlashcards={flashcards} view={view} direction={searchParams.direction} />
   )
 }

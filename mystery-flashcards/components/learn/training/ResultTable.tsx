@@ -1,23 +1,27 @@
 "use client"
 import Table from '@/components/common/Table';
+import StartLearningModal from '@/components/flashcards/flashcardDetails/StartLearningModal';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { createTestResult } from '@/utils/client/TrainingUtils';
 import React, { useEffect } from 'react'
 
 function ResultTable({
     view,
-    dictionary
+    dictionary,
+    locale
 }: {
     view: any,
-    dictionary: any
+    dictionary: any,
+    locale: string
 }) {
     const allAnswers = useTrainingStore((state) => state.allAnswers);
+    const flashcardSet = useTrainingStore((state) => state.flashcardSet);
     const allFlashcards = useTrainingStore((state) => state.allFlashcards);
     const direction = useTrainingStore((state) => state.direction);
     const allInfoObjects = createTestResult(allAnswers, allFlashcards);
     const setView = useTrainingStore((state) => state.setView);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.correctAnswersPercent]
-    useEffect(() => { setView(view) }, [])
+    useEffect(() => { setView(view) }, [view])
 
     const createAnswersList = (answers: any) => {
         const tabToDisplay: any = [],
@@ -29,7 +33,12 @@ function ResultTable({
         return tabToDisplay;
     }
 
-    return (<Table columns={columns} renderRows={renderRows} />)
+    return (
+        <>
+            <Table columns={columns} renderRows={renderRows} />
+            <StartLearningModal dictionary={dictionary} flashcardSet={flashcardSet?.flashcardSet} locale={locale} dialogTriggerClassName='hidden' />
+        </>
+    )
 
     function renderRows() {
         return allInfoObjects.map((flashcard: any, index: number) => (

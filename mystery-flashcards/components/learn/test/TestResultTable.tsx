@@ -7,14 +7,16 @@ import React, { useEffect } from 'react'
 
 function TestResultTable({
     flashcardSetDto,
-    dictionary
+    dictionary,
+    view
 }: {
     flashcardSetDto: FlashCardSetDto,
-    dictionary: any
+    dictionary: any,
+    view: any
 }) {
     const setView = useTrainingStore((state) => state.setView);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.status]
-    useEffect(() => { setView("TEST_RESULTS") }, [])
+    useEffect(() => { setView(view) }, [view])
 
     function getFlashcard(flashcardId: string) {
         return flashcardSetDto.flashcardSet?.flashcards?.find(flashcard => flashcard._id === flashcardId);

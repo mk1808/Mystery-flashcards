@@ -9,11 +9,13 @@ function TestCardContent({
     dictionary,
     flashcardSet,
     testFlashcards,
+    view,
     direction
 }: {
     dictionary: any,
     flashcardSet: any,
     testFlashcards: any,
+    view: any,
     direction: string
 }) {
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
@@ -24,7 +26,7 @@ function TestCardContent({
     const currentIndex = useTestStore((state) => state.currentFlashcardIndex);
     const setView = useTrainingStore((state) => state.setView);
 
-    useEffect(() => { setView("TEST"); initStore(); }, [])
+    useEffect(() => { setView(view) }, [view])
     useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
     useEffect(() => { setTestFlashcards(testFlashcards) }, [testFlashcards])
     useEffect(() => { setDirection(direction) }, [direction])
