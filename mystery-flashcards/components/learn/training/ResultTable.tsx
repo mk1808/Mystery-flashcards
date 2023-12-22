@@ -20,7 +20,7 @@ function ResultTable({
     const allInfoObjects = createTestResult(allAnswers, allFlashcards);
     const setView = useTrainingStore((state) => state.setView);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.correctAnswersPercent]
-    useEffect(() => { setView(view) }, [])
+    useEffect(() => { setView(view) }, [view])
 
     const createAnswersList = (answers: any) => {
         const tabToDisplay: any = [],

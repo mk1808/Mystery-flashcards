@@ -6,7 +6,10 @@ function useSubmitTestResultAction({ dictionary, flashcardSet, locale }: { dicti
     const mainButtonAttrs: ButtonAttrs = {
         title: dictionary.common.tryAgain,
         type: undefined,
-        onClick: () => { }
+        onClick: () => {
+            const modalButton = document.getElementById("modalButton")
+            modalButton?.click();
+        }
     }
     const onFinishClick = () => { router.push(`/${locale}/flashcards/${flashcardSet?.flashcardSet?._id}`) }
     const otherButtonAttrs = { onFinishClick, title: dictionary.common.goBack }

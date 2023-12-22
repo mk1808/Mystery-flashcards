@@ -8,11 +8,13 @@ import useTrainingStore from '@/stores/useTrainingStore';
 function TestCardContent({
     dictionary,
     flashcardSet,
-    testFlashcards
+    testFlashcards,
+    view
 }: {
     dictionary: any,
     flashcardSet: any,
-    testFlashcards: any
+    testFlashcards: any,
+    view: any
 }) {
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
     const setFlashcardSet = useTestStore((state) => state.setFlashcardSet);
@@ -20,7 +22,7 @@ function TestCardContent({
     const currentIndex = useTestStore((state) => state.currentFlashcardIndex);
     const setView = useTrainingStore((state) => state.setView);
 
-    useEffect(() => { setView("TEST") }, [])
+    useEffect(() => { setView(view) }, [view])
     useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
     useEffect(() => { setTestFlashcards(testFlashcards) }, [testFlashcards])
     useEffect(() => { setCurrentFlashcard(testFlashcards[currentIndex]) }, [currentIndex])
