@@ -41,6 +41,8 @@ function FlashcardSetsFilters({
         if (mySetParam === "true") {
             setValue("status", ["mine"])
             setStatusFieldRefresh(setStatusFieldRefresh => setStatusFieldRefresh + 1)
+
+            setTimeout(() => search({ status: ["mine"] }), 100)
         }
     }, [mySetParam])
 
