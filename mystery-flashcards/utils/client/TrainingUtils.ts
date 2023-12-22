@@ -2,6 +2,7 @@ import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
 import { TestResultT } from "@/models/TestResult";
 import { getAllIndexes } from "../server/arrayUtils";
+import { getPercentDisplay } from "./MathUtils";
 
 export const updateAnswer = (answerForm: AnswerForm, flashcard: any, isValid: boolean) => {
     const answer: AnswerT = {
@@ -56,14 +57,8 @@ export const createTestResult = (allAnswers: any[], allFlashcards: any[]) => {
         })
         const allAnswersNumber = userAnswers.length,
             correctAnswersNumber = userAnswersValidity.filter((ans: any) => ans == true).length,
-            percent = (correctAnswersNumber * 100.0 / allAnswersNumber).toFixed(2);
+            percent = getPercentDisplay(correctAnswersNumber, allAnswersNumber);
         allInfoObjects.push({ id: firstId, flashcard, answers, userAnswers, allAnswersNumber, correctAnswersNumber, percent })
     })
     return allInfoObjects;
-}
-
-export const createAnswersList = (answers: any) => {
-    let ansDisplay = ""
-    answers.forEach((ans: any) => ansDisplay += (ans.givenAnswer + ","));
-    return ansDisplay.slice(0, -1);
 }

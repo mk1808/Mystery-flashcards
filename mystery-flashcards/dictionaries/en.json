@@ -120,7 +120,9 @@
         "successfulSetSave": "New collection created",
         "successfulSetUpdate": "Changes made to the collection",
         "edit": "Edit",
-        "sessionExpired": "Session expired!"
+        "sessionExpired": "Session expired!",
+        "goBack": "Back",
+        "tryAgain": "Start again"
     },
     "userRanges": {
         "preschooler": "Preschooler",

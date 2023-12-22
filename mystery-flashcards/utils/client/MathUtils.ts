@@ -1,5 +1,5 @@
 export const getPercentDisplay = (part: number, all: number) => {
-    return (part * 100.0 / all).toFixed(2)
+    return (part * 100.0 / all).toFixed(0)
 }
 
 export const formatDate = (date?: any) => {
