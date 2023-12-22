@@ -13,6 +13,7 @@ function ResultTable({
 }) {
     const allAnswers = useTrainingStore((state) => state.allAnswers);
     const allFlashcards = useTrainingStore((state) => state.allFlashcards);
+    const direction = useTrainingStore((state) => state.direction);
     const allInfoObjects = createTestResult(allAnswers, allFlashcards);
     const setView = useTrainingStore((state) => state.setView);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.correctAnswersPercent]
@@ -37,12 +38,16 @@ function ResultTable({
     }
 
     function renderRow(flashcard: any, index: number) {
+        const { wordLang1, wordLang2} = flashcard.flashcard
+        const isMainDirection = direction === "main";
+        const mainWord = isMainDirection ? wordLang1 : wordLang2
+        const secondaryWord = isMainDirection ? wordLang2 : wordLang1
         return (
             <tr>
                 <th>{index + 1}</th>
-                <td>{flashcard.flashcard.wordLang1}</td>
+                <td>{mainWord}</td>
                 <td className='max-w-[250px]'>{createAnswersList(flashcard.answers)}</td>
-                <td>{flashcard.flashcard.wordLang2}</td>
+                <td>{secondaryWord}</td>
                 <td>{flashcard.percent} %</td>
             </tr>
         )

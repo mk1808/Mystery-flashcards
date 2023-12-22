@@ -8,7 +8,8 @@ type State = {
     testAnswers: AnswerT[],
     testFlashcards: FlashcardT[],
     currentFlashcardIndex: number,
-    finalResult: any
+    finalResult: any,
+    direction: string
 }
 
 type Action = {
@@ -17,7 +18,8 @@ type Action = {
     setTestFlashcards: (flashcards: FlashcardT[]) => void,
     incrementCurrentFlashcardIndex: () => void,
     setFinalResult: (finalResult: any) => void,
-    initStore: () => void
+    initStore: () => void,
+    setDirection: (direction: string) => void
 }
 
 const initStore = () => ({
@@ -29,13 +31,15 @@ const initStore = () => ({
 const useTestStore = create<State & Action>((set) => ({
     flashcardSet: {},
     testFlashcards: [],
+    direction: "main",
     ...initStore(),
     setFlashcardSet: (flashcardSet) => set(() => ({ flashcardSet: flashcardSet })),
     onAnswerSave: (answer) => set((state) => ({ testAnswers: [...state.testAnswers, answer] })),
     setTestFlashcards: (flashcards: FlashcardT[]) => set(() => ({ testFlashcards: flashcards })),
     incrementCurrentFlashcardIndex: () => set((state) => ({ currentFlashcardIndex: state.currentFlashcardIndex + 1 })),
     setFinalResult: (finalResult) => set(() => ({ finalResult: finalResult })),
-    initStore: () => set(initStore)
+    initStore: () => set(initStore),
+    setDirection: (direction) => set(() => ({ direction }))
 }))
 
 export default useTestStore;
