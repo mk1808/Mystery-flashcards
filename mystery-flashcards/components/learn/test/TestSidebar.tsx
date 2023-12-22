@@ -26,7 +26,7 @@ export default function TestSidebar({
         }
     ]
 
-    const { lang1, lang2 } = flashcardSet!;
+    const { lang1, lang2 } = flashcardSet || {};
     const languages = direction === "main" ? `${lang1} -> ${lang2}` : `${lang2} -> ${lang1}`
 
     return (

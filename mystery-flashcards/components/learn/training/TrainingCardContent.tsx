@@ -37,7 +37,7 @@ function TrainingCardContent({
     useEffect(() => { setCurrentFlashcard(storedRoundFlashcards[currentIndex]); }, [currentIndex, storedRoundFlashcards])
 
     const isMainDirection = direction === "main";
-    const { wordLang1, wordLang2, description1, description2 } = currentFlashcard;
+    const { wordLang1, wordLang2, description1, description2 } = currentFlashcard || {};
     const getMainWord = () => isMainDirection ? wordLang1 : wordLang2;
     const getSecondaryWord = () => isMainDirection ? wordLang2 : wordLang1;
     const getDescription = () => isMainDirection ? description1 : description2;
