@@ -7,7 +7,7 @@ export default async function LearnTrainingResults({ params }: { params: { id: s
   const dictionary = await fetchDictionary(params.locale);
   const view = "TRAINING_RESULT"
   return (
-    <ResultTable view={view} dictionary={dictionary} />
+    <ResultTable view={view} dictionary={dictionary} locale={params.locale}/>
 
   )
 }

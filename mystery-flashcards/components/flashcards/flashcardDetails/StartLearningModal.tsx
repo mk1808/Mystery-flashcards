@@ -3,7 +3,7 @@ import React from 'react'
 import StartLearningActions from './StartLearningActions'
 import StartLearningContent from './StartLearningContent'
 
-function StartLearningModal({ dictionary, flashcardSet, locale }: { dictionary: any, flashcardSet: any, locale: string }) {
+function StartLearningModal({ dictionary, flashcardSet, locale, dialogTriggerClassName = "" }: { dictionary: any, flashcardSet: any, locale: string, dialogTriggerClassName?: string }) {
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
@@ -13,7 +13,7 @@ function StartLearningModal({ dictionary, flashcardSet, locale }: { dictionary: 
 
     function renderDialogTrigger() {
         return (
-            <button className="btn btn-primary mr-10">{dictionary.common.learnThisFlashcardSet}</button>
+            <button className={`btn btn-primary mr-10 ${dialogTriggerClassName}`} id="modalButton">{dictionary.common.learnThisFlashcardSet}</button>
         )
     }
 
