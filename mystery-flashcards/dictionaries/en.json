@@ -77,6 +77,7 @@
         "learnSetTitle": "Learn collection",
         "addToFavoritesTitle": "Add to favorites",
         "addToFavSuccess": "Collection added to favorites",
+        "addWantToLearnSuccess": "Collection added to Want to learn",
         "learnTypeTraining": "Learning",
         "learnTypeTest": "Test",
         "answersCount": "Number of Answers",

@@ -6,19 +6,16 @@ import { FolderPlusIcon } from '@heroicons/react/24/outline';
 import { UserFlashcardT } from '@/models/UserFlashcard';
 
 function AddWantToLearnModal({ dictionary, flashcardSet, userFlashcard }: { dictionary: any, flashcardSet: any, userFlashcard: UserFlashcardT }) {
-    const isFav = userFlashcard?.isFavorite;
-
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
-        dialogActions={<AddWantToLearnActions dictionary={dictionary} flashcardSet={flashcardSet} />}
+        dialogActions={<AddWantToLearnActions dictionary={dictionary} flashcardSet={flashcardSet} userFlashcard={userFlashcard}/>}
         width="w-5/12"
-
     />
 
     function renderDialogTrigger() {
         return (
-            <div className="tooltip tooltip-bottom" id="addWantToLearn" data-tip={dictionary.common.wantToLearn}>
+            <div className="tooltip tooltip-bottom" id="addWantToLearn" data-tip={dictionary.common.wantToLearnTitle}>
                 <button className="btn btn-primary px-10 ml-2">
                     <FolderPlusIcon className="h-6 w-6" />
                 </button>
