@@ -23,7 +23,7 @@ function FlashcardSetsFilters({
     const currentUser = useAuthStore(state => state.currentUser);
     const langOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
     const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }]
-    const statusesOptions = [{ value: "mine", label: "Utworzone przeze mnie" }, { value: "favorite", label: "Ulubione" }, { value: "wanting", label: "Chcę się uczyć" }, { value: "learning", label: "Uczę się" }, { value: "test", label: "Wykonywany test" }]
+    const statusesOptions = [{ value: "mine", label: "Utworzone przeze mnie" }, { value: "favorite", label: "Ulubione" }, { value: "WANT_TO_LEARN", label: "Chcę się uczyć" }, { value: "LEARNING", label: "Uczę się" }, { value: "TESTING", label: "Wykonywany test" }]
     const levelOptions = [{ value: "A1", label: "A1" }, { value: "A2", label: "A2" }]
     const mySetParam = searchParams.get("mySet");
     const {

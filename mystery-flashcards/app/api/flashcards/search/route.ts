@@ -68,22 +68,12 @@ async function getStatusParams(searchParams: any, request: NextRequest) {
 
 async function getFlashcardSetIdsByUserFlashcardStatus(params: string[]) {
     const statusParams = [];
-    const typeParams = [];
     if (params.includes("favorite")) {
         statusParams.push({ "isFavorite": true });
     }
 
-    if (params.includes("wanting")) {
-        typeParams.push("WANT_TO_LEARN")
-    }
-    if (params.includes("learning")) {
-        typeParams.push("LEARNING")
-    }
-    if (params.includes("test")) {
-        typeParams.push("TESTING")
-    }
-    if (typeParams.length > 0) {
-        statusParams.push({ "type": { $in: typeParams } });
+    if (params.includes("WANT_TO_LEARN") || params.includes("LEARNING") || params.includes("TESTING")) {
+        statusParams.push({ "type": { $in: params } });
     }
 
     if (statusParams.length > 0) {
