@@ -94,6 +94,9 @@
         "doAddCollectionTo": "Add collection to",
         "toList": "to the list",
         "favoriteCollection": "Favorites",
+        "wantToLearnTitle": "Save for future",
+        "wantToLearnList": "Want to learn",
+        "wantToLearnInfo": "Thanks to that you can learn it in the future.",
         "selectLearningModeAndDirection": "Select learning mode and direction.",
         "numberShortcut": "No.",
         "question": "Question",
@@ -123,7 +126,8 @@
         "edit": "Edit",
         "sessionExpired": "Session expired!",
         "goBack": "Back",
-        "tryAgain": "Start again"
+        "tryAgain": "Start again",
+        "wantToLearn": "Want to learn"
     },
     "userRanges": {
         "preschooler": "Preschooler",

@@ -94,6 +94,9 @@
         "doAddCollectionTo": "Czy dodać kolekcję",
         "toList": "do listy",
         "favoriteCollection": "Ulubione",
+        "wantToLearnTitle": "Zapisz na przyszłość",
+        "wantToLearnList": "Chcę się uczyć",
+        "wantToLearnInfo": "W ten sposób możesz zaplanować jej naukę na przyszłość.",
         "selectLearningModeAndDirection": "Wybierz tryb oraz kierunek nauki.",
         "numberShortcut": "Nr",
         "question": "Pytanie",
@@ -128,7 +131,8 @@
         "LEARNING": "Nauka",
         "WANT_TO_LEARN": "Planowane",
         "TESTING": "Test",
-        "FINISHED": "Ukończone"
+        "FINISHED": "Ukończone",
+        "wantToLearn": "Chcę się uczyć"
     },
     "userRanges": {
         "preschooler": "Przedszkolak",
@@ -162,7 +166,7 @@
         "c1": "C1 - Bardzo zaawansowany",
         "c2": "C2 - Biegły"
     },
-    "statusOptions":{
+    "statusOptions": {
         "mine": "Utworzone przeze mnie",
         "favorite": "Ulubione",
         "wantToLearn": "Chcę się uczyć",
