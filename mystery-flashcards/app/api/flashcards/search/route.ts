@@ -19,14 +19,20 @@ export async function GET(request: NextRequest) {
         paramValues.name = { $regex: '.*' + paramValues.name + '.*' }
     }
 
-    await filStatusParams(params, paramValues, request);
+    const permissionParams = await getPermissionParams(request)
+    paramValues["$and"] = [permissionParams]
+
+    const statusParams = await getStatusParams(params, request);
+    if (statusParams) {
+        paramValues["$and"].push(statusParams)
+    }
 
     const result = await FlashcardSet.find(paramValues);
 
     return NextResponse.json(result)
 }
 
-async function filStatusParams(searchParams: any, paramValues: any, request: NextRequest) {
+async function getStatusParams(searchParams: any, request: NextRequest) {
     const statusParams = []
     const params: string[] = searchParams.getAll("status");
     if (params.includes("mine")) {
@@ -39,8 +45,9 @@ async function filStatusParams(searchParams: any, paramValues: any, request: Nex
     }
 
     if (statusParams.length > 0) {
-        paramValues["$or"] = statusParams;
+        return { $or: statusParams };
     }
+    return null
 }
 
 
@@ -69,4 +76,14 @@ async function getFlashcardSetIdsByUserFlashcardStatus(params: string[]) {
         return userFlashcards.map(userFlashcard => userFlashcard.flashcardSetId);
     }
     return null;
+}
+
+
+async function getPermissionParams(request: NextRequest) {
+    const permissionParams: any[] = [{ isPublic: true }]
+    try {
+        const currentUser: UserT = await getUser(request);
+        permissionParams.push({ "user._id": currentUser._id });
+    } catch (e) { }
+    return { $or: permissionParams };
 }
