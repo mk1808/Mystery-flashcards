@@ -7,6 +7,7 @@ function useLoggedUserForLayout({ renderMenuElement, locale }: { renderMenuEleme
 
     const currentUser = useAuthStore(state => state.currentUser);
     const checkWhoAmi = useAuthStore(state => state.checkWhoAmi);
+    const setShouldCheckWhoIam = useAuthStore(state => state.setShouldCheckWhoIam);
     const router = useRouter();
 
     function renderMenuElementIfNeeded(element: any) {
@@ -18,6 +19,7 @@ function useLoggedUserForLayout({ renderMenuElement, locale }: { renderMenuEleme
     }
 
     function onLogout() {
+        setShouldCheckWhoIam(false)
         logout().then(checkWhoAmi)
         router.push(`/${locale}`)
     }

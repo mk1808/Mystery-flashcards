@@ -59,7 +59,7 @@ async function getFlashcardSetIdsByUserFlashcardStatus(params: string[]) {
     }
 
     if (params.includes("wanting")) {
-        typeParams.push("wantToLearn")
+        typeParams.push("WANT_TO_LEARN")
     }
     if (params.includes("learning")) {
         typeParams.push("LEARNING")
