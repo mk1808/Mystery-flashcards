@@ -28,22 +28,25 @@ export async function GET(request: NextRequest) {
     }
 
     const result = (await FlashcardSet.find(paramValues)).map((flashcardSet => flashcardSet.toObject()));
-    const filledResult = await getUserFlashcards(result);
+    const filledResult = await getUserFlashcards(result, request);
 
     return NextResponse.json(filledResult)
 }
 
-async function getUserFlashcards(sets: FlashcardSetT[]) {
-    const ids = sets.map((card: FlashcardSetT) => card._id);
-    const userFlashcards = (await UserFlashcard.find({ 'flashcardSetId': { $in: ids } })).map(userFlashcard => userFlashcard.toObject());
+async function getUserFlashcards(sets: FlashcardSetT[], request: NextRequest) {
+    try {
+        const ids = sets.map((card: FlashcardSetT) => card._id);
+        const currentUser: UserT = await getUser(request);
+        const userFlashcards = (await UserFlashcard.find({ 'flashcardSetId': { $in: ids }, 'userId': currentUser._id })).map(userFlashcard => userFlashcard.toObject());
 
-    userFlashcards.forEach((userFlashcard: UserFlashcardT) => {
-        const set: FlashcardSetT = sets.find((set: FlashcardSetT) => set._id?.toString() == userFlashcard.flashcardSetId?.toString())!;
-        if (set) {
-            set.userFlashcard = userFlashcard;
-        }
+        userFlashcards.forEach((userFlashcard: UserFlashcardT) => {
+            const set: FlashcardSetT = sets.find((set: FlashcardSetT) => set._id?.toString() == userFlashcard.flashcardSetId?.toString())!;
+            if (set) {
+                set.userFlashcard = userFlashcard;
+            }
 
-    })
+        })
+    } catch (e) { }
     return sets;
 }
 
