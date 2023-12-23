@@ -7,14 +7,16 @@ import React, { useEffect } from 'react'
 
 function TestResultTable({
     flashcardSetDto,
-    dictionary
+    dictionary,
+    view
 }: {
     flashcardSetDto: FlashCardSetDto,
-    dictionary: any
+    dictionary: any,
+    view: any
 }) {
     const setView = useTrainingStore((state) => state.setView);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.status]
-    useEffect(() => { setView("TEST_RESULTS") }, [])
+    useEffect(() => { setView(view) }, [view])
 
     function getFlashcard(flashcardId: string) {
         return flashcardSetDto.flashcardSet?.flashcards?.find(flashcard => flashcard._id === flashcardId);
@@ -29,13 +31,16 @@ function TestResultTable({
     }
 
     function renderRow(answer: AnswerT, index: number) {
-        const flashcard = getFlashcard(answer.flashcardId!)
+        const { wordLang1, wordLang2 } = getFlashcard(answer.flashcardId!)!
+        const isMainDirection = flashcardSetDto.testResult?.direction === "main";
+        const mainWord = isMainDirection ? wordLang1 : wordLang2;
+        const secondaryWord = isMainDirection ? wordLang2 : wordLang1;
         return (
             <tr>
                 <th>{index + 1}</th>
-                <td>{flashcard?.wordLang1}</td>
+                <td>{mainWord}</td>
                 <td>{answer.givenAnswer}</td>
-                <td>{flashcard?.wordLang2}</td>
+                <td>{secondaryWord}</td>
                 <td>{answer.isCorrect ? dictionary.common.correct : dictionary.common.incorrect} </td>
             </tr>
         )

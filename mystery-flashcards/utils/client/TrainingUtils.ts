@@ -26,8 +26,9 @@ export const updateResult = (answer: AnswerT, result: TestResultT) => {
     return result;
 }
 
-export const checkValidity = (flashcard: FlashcardT, answer: AnswerForm) => {
-    return flashcard.wordLang2?.toLowerCase() == answer.givenAnswer.toLowerCase();
+export const checkValidity = (flashcard: FlashcardT, answer: AnswerForm, direction: string) => {
+    const word = direction === "main" ? flashcard.wordLang2 : flashcard.wordLang1;
+    return word?.toLowerCase() == answer.givenAnswer.toLowerCase();
 }
 
 export const getMainButtonAttrs = (wasChecked: Boolean): ButtonAttrs => {

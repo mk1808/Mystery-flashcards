@@ -11,8 +11,7 @@ export default function TestSidebar({
     dictionary: any
 }) {
     const { flashcardSet } = useTestStore((state) => state.flashcardSet);
-    const { testAnswers } = useTestStore((state) => state);
-    const { testFlashcards } = useTestStore((state) => state);
+    const { testAnswers, testFlashcards, direction } = useTestStore((state) => state);
 
     const progress = (testAnswers.length * 100 / testFlashcards?.length).toFixed(0) + "%";
 
@@ -27,12 +26,15 @@ export default function TestSidebar({
         }
     ]
 
+    const { lang1, lang2 } = flashcardSet || {};
+    const languages = direction === "main" ? `${lang1} -> ${lang2}` : `${lang2} -> ${lang1}`
+
     return (
         <div>
             {renderTitleAndTags()}
             <div className="divider"></div>
             <SingleSidebarInfo title={dictionary.common.flashcardsCount} value={flashcardSet?.flashcards?.length} />
-            <SingleSidebarInfo title={dictionary.common.languages} value={`${flashcardSet?.lang1} -> ${flashcardSet?.lang2}`} />
+            <SingleSidebarInfo title={dictionary.common.languages} value={languages} />
             <SingleSidebarInfo title={dictionary.common.level} value={flashcardSet?.level} />
             <div className="divider"></div>
             <LearnStats stats={statsValues} />

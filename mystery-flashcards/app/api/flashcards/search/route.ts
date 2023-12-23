@@ -1,6 +1,6 @@
-import FlashcardSet from "@/models/FlashcardSet";
 import { UserT } from "@/models/User";
-import UserFlashcard from "@/models/UserFlashcard";
+import FlashcardSet, { FlashcardSetT } from "@/models/FlashcardSet";
+import UserFlashcard, { UserFlashcardT } from "@/models/UserFlashcard";
 import { getArrParam, getSearchParam } from "@/utils/server/arrayUtils";
 import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
@@ -27,9 +27,24 @@ export async function GET(request: NextRequest) {
         paramValues["$and"].push(statusParams)
     }
 
-    const result = await FlashcardSet.find(paramValues);
+    const result = (await FlashcardSet.find(paramValues)).map((flashcardSet => flashcardSet.toObject()));
+    const filledResult = await getUserFlashcards(result);
 
-    return NextResponse.json(result)
+    return NextResponse.json(filledResult)
+}
+
+async function getUserFlashcards(sets: FlashcardSetT[]) {
+    const ids = sets.map((card: FlashcardSetT) => card._id);
+    const userFlashcards = (await UserFlashcard.find({ 'flashcardSetId': { $in: ids } })).map(userFlashcard => userFlashcard.toObject());
+
+    userFlashcards.forEach((userFlashcard: UserFlashcardT) => {
+        const set: FlashcardSetT = sets.find((set: FlashcardSetT) => set._id?.toString() == userFlashcard.flashcardSetId?.toString())!;
+        if (set) {
+            set.userFlashcard = userFlashcard;
+        }
+
+    })
+    return sets;
 }
 
 async function getStatusParams(searchParams: any, request: NextRequest) {

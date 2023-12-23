@@ -1,4 +1,5 @@
 import { AlertType } from '@/enums/AlertType';
+import { TestResultT } from '@/models/TestResult';
 import useAlertStore from '@/stores/useAlertStore';
 import useTestStore from '@/stores/useTestStore';
 import useTrainingStore from '@/stores/useTrainingStore';
@@ -13,6 +14,7 @@ function useSubmitTestAction({ dictionary }: { dictionary: any }) {
     const currentFlashcardIndex = useTestStore((state) => state.currentFlashcardIndex);
     const testFlashcards = useTestStore((state) => state.testFlashcards);
     const { flashcardSet } = useTestStore((state) => state.flashcardSet);
+    const direction = useTestStore((state) => state.direction);
     const setFinalResult = useTrainingStore((state) => state.setFinalResult);
     const addAlert = useAlertStore((state) => state.add)
     const router = useRouter();
@@ -28,7 +30,11 @@ function useSubmitTestAction({ dictionary }: { dictionary: any }) {
     const goToResults = () => router.push(`/learn/test/${flashcardSetRef.current._id}/results`)
     const onFinishClick = async () => {
         try {
-            const result = await sendTestAnswersRequest(flashcardSetRef.current._id, testAnswersRef.current);
+            const testResult: TestResultT = {
+                direction,
+                answers: testAnswersRef.current
+            }
+            const result = await sendTestAnswersRequest(flashcardSetRef.current._id, testResult);
             setFinalResult(result);
             goToResults();
         } catch (errorResponse: any) {

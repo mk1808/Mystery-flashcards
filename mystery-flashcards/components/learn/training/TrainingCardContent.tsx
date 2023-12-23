@@ -5,8 +5,19 @@ import AnswerForm from './AnswerForm';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { FlashcardT } from '@/models/Flashcard';
 
-function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }:
-    { dictionary: any, flashcardSet: any, roundFlashcards: any, view: any }) {
+function TrainingCardContent({
+    dictionary,
+    flashcardSet,
+    roundFlashcards,
+    view,
+    direction
+}: {
+    dictionary: any,
+    flashcardSet: any,
+    roundFlashcards: any,
+    view: any,
+    direction: string
+}) {
     const [isValid, setIsValid] = useState<Boolean>(true);
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
     const setView = useTrainingStore((state) => state.setView);
@@ -17,11 +28,19 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
     const wasChecked = useTrainingStore((state) => state.wasChecked);
     const setWasChecked = useTrainingStore((state) => state.setWasChecked);
+    const setDirection = useTrainingStore((state) => state.setDirection);
 
     useEffect(() => { setView(view) }, [view])
     useEffect(() => { setRoundFlashcards(roundFlashcards); initStore() }, [])
     useEffect(() => { setFlashcardSet(flashcardSet); }, [flashcardSet])
+    useEffect(() => { setDirection(direction) }, [direction])
     useEffect(() => { setCurrentFlashcard(storedRoundFlashcards[currentIndex]); }, [currentIndex, storedRoundFlashcards])
+
+    const isMainDirection = direction === "main";
+    const { wordLang1, wordLang2, description1, description2 } = currentFlashcard || {};
+    const getMainWord = () => isMainDirection ? wordLang1 : wordLang2;
+    const getSecondaryWord = () => isMainDirection ? wordLang2 : wordLang1;
+    const getDescription = () => isMainDirection ? description1 : description2;
 
     function renderAnswerValidity() {
         return (
@@ -56,7 +75,7 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }
                 </div>
                 <div className="flex flex-col my-2">
                     <span className="text-xl">{dictionary.common.correctAnswerIs}:&nbsp;
-                        <span className="text-primary">{currentFlashcard.wordLang2}</span>
+                        <span className="text-primary">{getSecondaryWord()}</span>
                     </span>
                 </div>
             </div>
@@ -67,9 +86,9 @@ function TrainingCardContent({ dictionary, flashcardSet, roundFlashcards, view }
         <div className="grid grid-cols-2 h-full">
             <div className='grid grid-rows-2'>
                 <div className='self-end'>
-                    <h1 className="text-3xl my-3 ">{currentFlashcard.wordLang1}</h1>
+                    <h1 className="text-3xl my-3 ">{getMainWord()}</h1>
                 </div>
-                <div><p>{currentFlashcard.description1}</p></div>
+                <div><p>{getDescription()}</p></div>
             </div>
             <div className='flex items-center'>
                 <div className="divider divider-horizontal ml-0"></div>

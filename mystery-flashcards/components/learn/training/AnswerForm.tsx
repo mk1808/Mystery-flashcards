@@ -14,6 +14,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
 
     const roundFlashcards = useTrainingStore((state) => state.roundFlashcards);
     const roundAnswers = useTrainingStore((state) => state.roundAnswers);
+    const direction = useTrainingStore((state) => state.direction);
     const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
     const result = useTrainingStore((state) => state.result);
     const wasChecked = useTrainingStore((state) => state.wasChecked);
@@ -39,7 +40,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
             console.log("TEST ANSWER")
             if (!wasChecked) {
                 const currentFlashcard = roundFlashcards[currentIndex],
-                    isValid = checkValidity(currentFlashcard, answer),
+                    isValid = checkValidity(currentFlashcard, answer, direction),
                     updatedAnswer = updateAnswer(answer, currentFlashcard, isValid),
                     updatedResult = updateResult(updatedAnswer, resultRef.current);
                 onAnswerSave(updatedAnswer, currentFlashcard, updatedResult);
@@ -53,7 +54,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
                     incrementCurrentFlashcardIndexInRound();
                 }
                 else {
-                    const roundFlashcards = await postAnswersAndReturnCards(flashcardSet._id, roundAnswers);
+                    const roundFlashcards = await postAnswersAndReturnCards(flashcardSet?._id, roundAnswers);
                     onNewRound(roundFlashcards);
                     console.log("ROUND: ", roundFlashcards)
                 }

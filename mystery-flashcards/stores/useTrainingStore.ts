@@ -16,7 +16,8 @@ type State = {
     wasChecked: boolean,
     finalResult: any,
     roundCount: number,
-    view: "TRAINING" | "TEST" | "TRAINING_RESULT" | "TEST_RESULT"
+    view: "TRAINING" | "TEST" | "TRAINING_RESULT" | "TEST_RESULT",
+    direction: string
 }
 
 type Action = {
@@ -34,7 +35,8 @@ type Action = {
     setWasChecked: (checked: boolean) => void,
     setFinalResult: (finalResult: any) => void,
     setView: (view: any) => void,
-    initStore: () => void
+    initStore: () => void,
+    setDirection: (direction: string) => void
 }
 
 const initResult = () => ({
@@ -64,6 +66,7 @@ const useTrainingStore = create<State & Action>((set) => ({
     flashcardSet: {},
     roundFlashcards: [],
     view: "TRAINING",
+    direction: "main",
     setFlashcardSet: (flashcardSet) => set(() => ({ flashcardSet: flashcardSet })),
     addToAllAnswers: (answer) => set((state) => ({ allAnswers: [...state.allAnswers, answer] })),
     addToRoundAnswers: (answer) => set((state) => ({ roundAnswers: [...state.roundAnswers, answer] })),
@@ -92,7 +95,8 @@ const useTrainingStore = create<State & Action>((set) => ({
     setWasChecked: (checked) => set(() => ({ wasChecked: checked })),
     setFinalResult: (finalResult) => set(() => ({ finalResult: finalResult })),
     setView: (view) => set(() => ({ view: view })),
-    initStore: () => set(initStore)
+    initStore: () => set(initStore),
+    setDirection: (direction) => set(() => ({ direction }))
 }))
 
 export default useTrainingStore;
