@@ -12,3 +12,8 @@ interface FlashcardSearchDto {
     lang2?: string,
     hashtags?: string[]
 }
+
+interface Option {
+    value: any,
+    label: string
+}

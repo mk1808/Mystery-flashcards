@@ -137,5 +137,23 @@
         "associateProfessor": "Associate Professor",
         "professor": "Professor",
         "rector": "Rector"
+    },
+    "langOptions": {
+        "pl": "Polish",
+        "en": "English",
+        "ge": "German",
+        "fr": "French",
+        "zh": "Mandarin",
+        "es": "Spanish",
+        "pt": "Portuguese",
+        "ru": "Russian"
+    },
+    "levelOptions": {
+        "a1": "A1 - Beginner ",
+        "a2": "A2 - Elementary",
+        "b1": "B1 - Intermediate",
+        "b2": "B2 - Upper-Intermediate",
+        "c1": "C1 - Advanced",
+        "c2": "C2 - Proficiency/Fluent"
     }
 }

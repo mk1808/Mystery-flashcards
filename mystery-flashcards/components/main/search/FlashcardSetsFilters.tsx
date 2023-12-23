@@ -1,12 +1,15 @@
 "use client"
 import Title from '@/components/common/Title'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useForm } from 'react-hook-form';
 import { isFieldValid } from "@/utils/client/FormUtils";
 import useAlertStore from '@/stores/useAlertStore';
 import MyInput from '@/components/common/form/MyInput';
 import MyMultiSelect from '@/components/common/form/MyMultiSelect';
+import { LangOptions } from '@/enums/LangOptions';
+import { LevelOptions } from '@/enums/LevelOptions';
+import { translateOptions } from '@/utils/client/EnumUtils';
 
 function FlashcardSetsFilters({
     dictionary,
@@ -16,9 +19,9 @@ function FlashcardSetsFilters({
     search: (data: FlashcardSearchDto) => any
 }) {
     const addAlert = useAlertStore((state) => state.add);
-    const langOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
+    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
+    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
     const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }]
-    const levelOptions = [{ value: "A1", label: "A1" }, { value: "A2", label: "A2" }]
     const {
         register,
         handleSubmit,

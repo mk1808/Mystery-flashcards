@@ -22,7 +22,7 @@ export default function MyMultiSelect({
 }: {
     label: string,
     noValueLabel?: string,
-    options: any[],
+    options: Option[],
     className?: string,
     isValid?: boolean,
     control: any,
@@ -196,7 +196,7 @@ export default function MyMultiSelect({
     }
 
     function renderSelectedBadges() {
-        return <Badges badges={selected.map(option => option.label)} onClick={onBadgeClick}/>
+        return <Badges badges={selected.map(option => option.label)} onClick={onBadgeClick} />
     }
 
     function renderSingleSelected() {
