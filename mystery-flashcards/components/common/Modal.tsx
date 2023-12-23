@@ -19,7 +19,7 @@ export default function Modal({
     return (<>
         <div onClick={() => buttonRef.current?.showModal()}>{modalTrigger}</div>
         <dialog ref={buttonRef} className="modal">
-            <div className={`modal-box ${width} max-w-5xl`}>
+            <div className={`modal-box max-w-5xl ${width}`}>
                 {dialogHeader}
                 <div className="max-h-[70vh] overflow-y-auto">{dialogContent}</div>
                 <div className="modal-action">

@@ -76,13 +76,13 @@ function FlashcardContainer({
 
   return (
     <form onSubmit={handleSubmit(onSubmit, onErrors)}>
-      <div className="card w-[1000px] bg-base-100 shadow-xl mb-10">
+      <div className="card w-full bg-base-100 shadow-xl mb-10">
         <div className="card-body">
-          <div className="flex justify-around min-h-[107px] items-center">
+          <div className="flex flex-col sm:flex-row justify-around min-h-[107px] items-center">
             <div className="w-full justify-end">
               {renderLeftSide()}
             </div>
-            <div className="divider divider-horizontal"></div>
+            <div className="divider sm:divider-horizontal"></div>
             <div className="w-full">
               {renderRightSide()}
             </div>

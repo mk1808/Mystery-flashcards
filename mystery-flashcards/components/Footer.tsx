@@ -78,31 +78,32 @@ function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
 
     return (
         <footer className="footer p-10 mt-4 bg-base-200 text-base-content grid-cols-5">
-            <aside>
+            <aside className='col-span-3 md:col-span-2'>
                 <Link href="/" className='mb-2'>
                     <img src='/images/logo2.png' className='h-[100px]' />
                 </Link>
                 <p>Copyright © {year} Monika Kordoń, Marek Czopor</p>
             </aside>
 
-            <nav />
-            <nav className="ps-3 border-s-2 border-slate-600">
-                <header className="footer-title">{dictionary.common.browse}</header>
-                {mainMenuElements.map(renderMenuElementIfNeeded)}
+            <div className="col-span-2 md:col-span-3 md:grid-cols-3 h-full w-full">
+                <nav className="ps-3 border-s-2 border-slate-600 h-full grid" >
+                    <header className="footer-title">{dictionary.common.browse}</header>
+                    {mainMenuElements.map(renderMenuElementIfNeeded)}
 
-            </nav>
-            <nav className="ps-3 border-s-2 border-slate-600">
-                <header className="footer-title">{dictionary.common.language}</header>
-                {languageMenuElements.map(renderMenuElementIfNeeded)}
-                {renderEmpty()}
-                {renderEmpty()}
-            </nav>
-            <nav className="ps-3 border-s-2 border-slate-600">
-                <header className="footer-title">{dictionary.common.contact}</header>
-                {contactMenuElements.map(renderMenuElementIfNeeded)}
-                {renderEmpty()}
-                {renderEmpty()}
-            </nav>
+                </nav>
+                <nav className="ps-3 border-s-2 border-slate-600 h-full grid">
+                    <header className="footer-title">{dictionary.common.language}</header>
+                    {languageMenuElements.map(renderMenuElementIfNeeded)}
+                    {renderEmpty()}
+                    {renderEmpty()}
+                </nav>
+                <nav className="ps-3 border-s-2 border-slate-600 h-full grid">
+                    <header className="footer-title">{dictionary.common.contact}</header>
+                    {contactMenuElements.map(renderMenuElementIfNeeded)}
+                    {renderEmpty()}
+                    {renderEmpty()}
+                </nav>
+            </div>
         </footer>
     )
 

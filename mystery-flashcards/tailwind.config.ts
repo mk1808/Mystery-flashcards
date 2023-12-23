@@ -24,6 +24,7 @@ const config: Config = {
         'lg': '1024px',
         "cards3": "1150px",
         'xl': '1280px',
+        'sidebarOpen': '1380px',
         '2xl': '1536px'
       },
     },

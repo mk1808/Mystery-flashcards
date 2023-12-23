@@ -7,7 +7,7 @@ async function NewFlashcards({ params }: { params: { id: String, locale: string 
   const dictionary = await fetchDictionary(params.locale);
 
   return (
-    <div className="w-[1000px] h-full">
+    <div className="h-full">
       <NewFlashcardButtons dictionary={dictionary} />
       <NewFlashcardListForm dictionary={dictionary} />
     </div>

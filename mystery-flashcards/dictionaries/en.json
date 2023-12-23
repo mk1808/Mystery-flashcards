@@ -122,7 +122,8 @@
         "edit": "Edit",
         "sessionExpired": "Session expired!",
         "goBack": "Back",
-        "tryAgain": "Start again"
+        "tryAgain": "Start again",
+        "openSidebar": "Show details"
     },
     "userRanges": {
         "preschooler": "Preschooler",
