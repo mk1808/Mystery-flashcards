@@ -1,6 +1,7 @@
 import mongoose, { Schema, SchemaTypes, model, models } from 'mongoose';
 import { FlashcardT, flashcardSchema } from './Flashcard';
 import { UserT } from './User';
+import { UserFlashcardT } from './UserFlashcard';
 
 const flashcardSetSchema = new Schema({
     user: {
@@ -51,7 +52,8 @@ export type FlashcardSetT = {
     isPublic?: Boolean,
     creationDate?: Date,
     lang1?: string,
-    lang2?: string
+    lang2?: string,
+    userFlashcard?: UserFlashcardT
 };
 
 export default FlashcardSet;

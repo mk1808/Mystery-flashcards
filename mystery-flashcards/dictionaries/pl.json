@@ -122,7 +122,11 @@
         "edit": "Edytuj",
         "sessionExpired": "Sesja wygasła!",
         "goBack": "Powrót",
-        "tryAgain": "Rozpocznij ponownie"
+        "tryAgain": "Rozpocznij ponownie",
+        "LEARNING": "Nauka",
+        "WANT_TO_LEARN": "Planowane",
+        "TESTING": "Test",
+        "FINISHED": "Ukończone"
     },
     "userRanges": {
         "preschooler": "Przedszkolak",

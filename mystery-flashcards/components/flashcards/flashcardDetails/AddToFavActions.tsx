@@ -10,7 +10,7 @@ function AddToFavActions({ dictionary, flashcardSet }: { dictionary: any, flashc
   const onSubmit = async () => {
     const body = {
       flashcardSetId: flashcardSet._id,
-      type: "wantToLearn"
+      type: "WANT_TO_LEARN"
     }
     try {
       await postUserFlashcardSet(body);
