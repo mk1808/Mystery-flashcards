@@ -73,6 +73,7 @@
         "popularity": "Popularity",
         "learnThisFlashcardSet": "Learn this collection",
         "addToFavorites": "Add to favorites",
+        "alreadyInFavorites": "Set already in favorites!",
         "learnSetTitle": "Learn collection",
         "addToFavoritesTitle": "Add to favorites",
         "addToFavSuccess": "Collection added to favorites",
