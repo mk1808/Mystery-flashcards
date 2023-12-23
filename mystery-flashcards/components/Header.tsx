@@ -34,7 +34,7 @@ function Header({
         },
         {
             name: dictionary.common.mySets,
-            link: `/${locale}#flashcardSetsSearch`,
+            link: `/${locale}?mySet=true#flashcardSetsSearch`,
             forLogged: true
         },
     ]

@@ -18,7 +18,8 @@ export default function MyMultiSelect({
     disabled = false,
     multiple = false,
     allowNew = false,
-    validate
+    validate,
+    refresh
 }: {
     label: string,
     noValueLabel?: string,
@@ -31,7 +32,8 @@ export default function MyMultiSelect({
     disabled?: boolean,
     multiple?: boolean,
     allowNew?: boolean,
-    validate?: any
+    validate?: any,
+    refresh?: number
 }) {
     const {
         field
@@ -47,7 +49,6 @@ export default function MyMultiSelect({
     const optionDropdown = useRef<any>(null);
     const optionSearchInput = useRef<any>(null);
     const inputContainer = useRef<any>(null);
-    const inputInitRef = useRef(false);
     const toggleDropdownOpenRef = useRef(toggleDropdownOpen);
 
     const stopPropagation = (event: any) => event.stopPropagation()
@@ -68,13 +69,14 @@ export default function MyMultiSelect({
     }, [selected])
 
     useEffect(() => {
-        if (!inputInitRef.current) {
-            inputInitRef.current = true;
-            const selectedOptions = options.filter(option => option.value === field?.value || field?.value?.indexOf(option.value) >= 0);
-            setSelected(selectedOptions);
-            setTimeout(() => selectedOptions.forEach(option => changeOptionCheckboxState(option.value, true)));
-        }
-    }, [field.value])
+        setDefaultValue();
+    }, [refresh])
+
+    function setDefaultValue() {
+        const selectedOptions = options.filter(option => option.value === field?.value || field?.value?.indexOf(option.value) >= 0);
+        setSelected(selectedOptions);
+        setTimeout(() => selectedOptions.forEach(option => changeOptionCheckboxState(option.value, true)));
+    }
 
     function toggleDropdownOpen(event: any) {
         if (disabled) {
@@ -196,7 +198,7 @@ export default function MyMultiSelect({
     }
 
     function renderSelectedBadges() {
-        return <Badges badges={selected.map(option => option.label)} onClick={onBadgeClick}/>
+        return <Badges badges={selected.map(option => option.label)} onClick={onBadgeClick} />
     }
 
     function renderSingleSelected() {
