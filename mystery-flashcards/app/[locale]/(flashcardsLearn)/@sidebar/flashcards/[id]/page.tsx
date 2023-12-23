@@ -1,6 +1,7 @@
 import Badges from "@/components/common/Badges";
 import UserAvatar from "@/components/common/UserAvatar";
 import EditButton from "@/components/flashcards/flashcardDetails/EditButton";
+import GoToTestResultsButton from "@/components/flashcards/flashcardDetails/GoToTestResultsButton";
 import { fetchDictionary } from "@/dictionaries/dictionaries";
 import { FlashcardSetT } from "@/models/FlashcardSet";
 import { UserFlashcardT } from "@/models/UserFlashcard";
@@ -17,7 +18,8 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   const { flashcardSet, userFlashcard }: { flashcardSet: FlashcardSetT, userFlashcard: UserFlashcardT } = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
   const date = new Date(flashcardSet.creationDate || "");
   const shouldRenderStatus = () => userFlashcard && userFlashcard?.type != "NONE";
-  const translatedType = userFlashcard?.type?dictionary.common[userFlashcard?.type!]:"";
+  const translatedType = userFlashcard?.type ? dictionary.common[userFlashcard?.type!] : "";
+  const isTest = userFlashcard?.type == "TESTING";
   return (
     <div>
       <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet.name}</h1>
@@ -59,6 +61,13 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
     return (
       <>
         {renderSingleInfo(dictionary.common.status, translatedType)}
+
+        {isTest &&
+          <div className="flex items-center">
+            {renderSingleInfo(dictionary.common.lastTestResult, translatedType)}
+            <GoToTestResultsButton dictionary={dictionary} author={flashcardSet.user} flashcardSetId={flashcardSet._id}/>
+          </div>
+        }
       </>
     )
   }

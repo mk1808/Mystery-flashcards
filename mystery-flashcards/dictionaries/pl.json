@@ -133,7 +133,8 @@
         "WANT_TO_LEARN": "Planowane",
         "TESTING": "Test",
         "FINISHED": "Ukończone",
-        "wantToLearn": "Chcę się uczyć"
+        "wantToLearn": "Chcę się uczyć",
+        "lastTestResult": "Wynik testu"
     },
     "userRanges": {
         "preschooler": "Przedszkolak",

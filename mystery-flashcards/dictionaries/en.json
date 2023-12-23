@@ -128,7 +128,8 @@
         "sessionExpired": "Session expired!",
         "goBack": "Back",
         "tryAgain": "Start again",
-        "wantToLearn": "Want to learn"
+        "wantToLearn": "Want to learn",
+        "lastTestResult": "Test result"
     },
     "userRanges": {
         "preschooler": "Preschooler",
