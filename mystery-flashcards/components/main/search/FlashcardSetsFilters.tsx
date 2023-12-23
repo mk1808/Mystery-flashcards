@@ -10,6 +10,7 @@ import MyMultiSelect from '@/components/common/form/MyMultiSelect';
 import { LangOptions } from '@/enums/LangOptions';
 import { LevelOptions } from '@/enums/LevelOptions';
 import { translateOptions } from '@/utils/client/EnumUtils';
+import useHashtags from '@/hooks/useHashtags';
 
 function FlashcardSetsFilters({
     dictionary,
@@ -21,7 +22,7 @@ function FlashcardSetsFilters({
     const addAlert = useAlertStore((state) => state.add);
     const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
     const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
-    const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }]
+    const hashtagsOptions = useHashtags();
     const {
         register,
         handleSubmit,

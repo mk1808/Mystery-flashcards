@@ -11,6 +11,7 @@ import MyMultiSelect from '../common/form/MyMultiSelect';
 import { LangOptions } from '@/enums/LangOptions';
 import { translateOptions } from '@/utils/client/EnumUtils';
 import { LevelOptions } from '@/enums/LevelOptions';
+import useHashtags from '@/hooks/useHashtags';
 
 function NewFlashcardForm({
     dictionary,
@@ -21,8 +22,7 @@ function NewFlashcardForm({
 }) {
     const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
     const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
-    const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }, { value: "plants", label: "rośliny" },
-    { value: "new", label: "nowe" }, { value: "exam", label: "egzamin" }, { value: "school", label: "szkoła podstawowa" },]
+    const hashtagsOptions = useHashtags();
     const updateSidebarForm = useNewFlashcardSetStore((state) => state.updateSidebarForm);
     const setSidebarFormValid = useNewFlashcardSetStore((state) => state.setSidebarFormValid);
     const initState = useNewFlashcardSetStore((state) => state.initState);
