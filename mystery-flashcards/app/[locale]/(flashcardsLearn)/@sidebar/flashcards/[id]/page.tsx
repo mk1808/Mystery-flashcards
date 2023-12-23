@@ -3,6 +3,7 @@ import UserAvatar from "@/components/common/UserAvatar";
 import EditButton from "@/components/flashcards/flashcardDetails/EditButton";
 import { fetchDictionary } from "@/dictionaries/dictionaries";
 import { FlashcardSetT } from "@/models/FlashcardSet";
+import { UserFlashcardT } from "@/models/UserFlashcard";
 import { getFlashcardSetRequest } from "@/utils/client/ApiUtils";
 import { formatDate } from "@/utils/client/MathUtils";
 import { createCookieHeader } from "@/utils/client/RestUtils";
@@ -13,9 +14,10 @@ import React from 'react'
 export default async function FlashcardsDetailsSidebar({ params }: { params: { locale: string, id: string } }) {
   const dictionary = await fetchDictionary(params.locale);
   const flashcardSetId = params.id;
-  const { flashcardSet }: { flashcardSet: FlashcardSetT } = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
+  const { flashcardSet, userFlashcard }: { flashcardSet: FlashcardSetT, userFlashcard: UserFlashcardT } = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
   const date = new Date(flashcardSet.creationDate || "");
-
+  const shouldRenderStatus = () => userFlashcard && userFlashcard?.type != "NONE";
+  const translatedType = userFlashcard?.type?dictionary.common[userFlashcard?.type!]:"";
   return (
     <div>
       <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet.name}</h1>
@@ -24,6 +26,10 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
       {renderMainInfo()}
       <div className="divider" />
       {renderCreationInfo()}
+      {shouldRenderStatus() && <>
+        <div className="divider" />
+        {renderStatusInfo()}
+      </>}
       <br />
       {renderEditButton()}
     </div>
@@ -45,6 +51,14 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
         {renderSingleInfo(dictionary.common.author, flashcardSet.user?.name!, true)}
         {renderSingleInfo(dictionary.common.creationDate, formatDate(date))}
         {renderSingleInfo(dictionary.common.popularity, "100")}
+      </>
+    )
+  }
+
+  function renderStatusInfo() {
+    return (
+      <>
+        {renderSingleInfo(dictionary.common.status, translatedType)}
       </>
     )
   }
