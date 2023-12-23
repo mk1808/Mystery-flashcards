@@ -14,6 +14,6 @@ export default async function LearnTestResults({ params }: { params: { id: strin
   const view = "TEST_RESULT"
 
   return (
-    <TestResultTable flashcardSetDto={flashcardSetDto} dictionary={dictionary} view={view} />
+    <TestResultTable flashcardSetDto={flashcardSetDto} dictionary={dictionary} view={view} locale={params.locale} />
   )
 }

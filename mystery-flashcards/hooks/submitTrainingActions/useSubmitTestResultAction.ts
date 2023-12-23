@@ -1,7 +1,9 @@
+import useTrainingStore from '@/stores/useTrainingStore';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
-function useSubmitTestResultAction({ dictionary, flashcardSet, locale }: { dictionary: any, flashcardSet: any, locale: any }) {
+function useSubmitTestResultAction({ dictionary, locale }: { dictionary: any, locale: any }) {
+    const flashcardSet = useTrainingStore((state) => state.flashcardSet);
     const router = useRouter();
     const mainButtonAttrs: ButtonAttrs = {
         title: dictionary.common.tryAgain,
