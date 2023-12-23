@@ -1,5 +1,6 @@
 import FlashcardContainer from '@/components/common/FlashcardContainer';
 import AddToFavModal from '@/components/flashcards/flashcardDetails/AddToFavModal';
+import AddWantToLearnModal from '@/components/flashcards/flashcardDetails/AddWantToLearnModal';
 import StartLearningModal from '@/components/flashcards/flashcardDetails/StartLearningModal';
 import { fetchDictionary } from '@/dictionaries/dictionaries';
 import { FlashCardSetDto } from '@/dtos/FlashCardSetDto';
@@ -11,7 +12,8 @@ import React from 'react'
 export default async function FlashcardsDetails({ params }: { params: { locale: string, id: string } }) {
   const dictionary = await fetchDictionary(params.locale);
   const flashcardSetId = params.id;
-  const { flashcardSet, statistics }: FlashCardSetDto = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
+  const { flashcardSet, statistics, userFlashcard }: FlashCardSetDto = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
+  const showWantToLearn = !userFlashcard || userFlashcard.type === "NONE"
 
   return (
     <div>
@@ -24,7 +26,10 @@ export default async function FlashcardsDetails({ params }: { params: { locale: 
     return (
       <div className="mb-12 flex justify-end">
         <StartLearningModal dictionary={dictionary} flashcardSet={flashcardSet} locale={params.locale} />
-        <AddToFavModal dictionary={dictionary} flashcardSet={flashcardSet} />
+        <AddToFavModal dictionary={dictionary} flashcardSet={flashcardSet} userFlashcard={userFlashcard!} />
+        {showWantToLearn &&
+          <AddWantToLearnModal dictionary={dictionary} flashcardSet={flashcardSet} userFlashcard={userFlashcard!} />
+        }
       </div>
     )
   }

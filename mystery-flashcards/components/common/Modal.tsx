@@ -6,18 +6,21 @@ export default function Modal({
     dialogHeader,
     dialogContent,
     dialogActions,
-    width = "w-10/12"
+    width = "w-10/12",
+    disabled = false
 }: {
     modalTrigger: any,
     dialogHeader: any,
     dialogContent: any,
     dialogActions: any,
-    width?: string
+    width?: string,
+    disabled?: boolean
 }) {
     const buttonRef = useRef<any>(null);
+    const onClick = (event: any) => disabled ? "" : buttonRef.current?.showModal();
 
     return (<>
-        <div onClick={() => buttonRef.current?.showModal()}>{modalTrigger}</div>
+        <div onClick={onClick}>{modalTrigger}</div>
         <dialog ref={buttonRef} className="modal">
             <div className={`modal-box max-w-5xl ${width}`}>
                 {dialogHeader}
