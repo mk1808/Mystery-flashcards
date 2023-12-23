@@ -129,7 +129,8 @@
         "goBack": "Back",
         "tryAgain": "Start again",
         "wantToLearn": "Want to learn",
-        "lastTestResult": "Test result"
+        "lastTestResult": "Test result",
+        "openSidebar": "Show details"
     },
     "userRanges": {
         "preschooler": "Preschooler",

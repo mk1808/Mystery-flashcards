@@ -16,7 +16,7 @@ export default async function FlashcardsDetails({ params }: { params: { locale: 
   const showWantToLearn = !userFlashcard || userFlashcard.type === "NONE"
 
   return (
-    <div className="w-[1000px]">
+    <div>
       {renderActionButtons()}
       {flashcardSet?.flashcards?.map(card => <FlashcardContainer dictionary={dictionary} key={card.wordLang1} card={card} />)}
     </div>

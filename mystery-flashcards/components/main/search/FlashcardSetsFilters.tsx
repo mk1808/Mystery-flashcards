@@ -58,12 +58,12 @@ function FlashcardSetsFilters({
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
 
     return (
-        <div className='mt-20'>
+        <div className='mt-20 mx-5 md:mx-0'>
             <div className="my-6">
                 <Title text={dictionary.common.whatLanguage} />
             </div>
 
-            <div className="card w-[1100px] bg-base-100 shadow-xl">
+            <div className="card w-full cards3:w-[1100px] bg-base-100 shadow-xl">
                 {renderCardBody()}
             </div>
         </div>
@@ -72,18 +72,15 @@ function FlashcardSetsFilters({
     function renderCardBody() {
         return (
             <form onSubmit={handleSubmit(onSubmit, onErrors)}>
-                <div className="card-body">
-                    <div className="flex justify-between">
-                        {renderInput("name", dictionary.common.basicName, dictionary.common.fillBasicName)}
-                        {renderSelect("lang1", dictionary.common.lang1, dictionary.common.fillLang1, langOptions)}
-                        {renderSelect("lang2", dictionary.common.lang2, dictionary.common.fillLang2, langOptions)}
-                    </div>
-                    <div className="flex justify-between ">
-                        {renderSelect("level", dictionary.common.level, dictionary.common.fillLevel, levelOptions)}
-                        {renderSelect("hashtags", dictionary.common.hashtags, dictionary.common.fillHashtags, hashtagsOptions, true)}
-                        {renderStatusOrSubmitButton()}
-                    </div>
-                    {renderSubmitButtonRowIfNeeded()}
+                <div className="card-body grid grid-cols-1 md:grid-cols-2 cards3:grid-cols-3">
+                    {renderInput("name", dictionary.common.basicName, dictionary.common.fillBasicName)}
+                    {renderSelect("lang1", dictionary.common.lang1, dictionary.common.fillLang1, langOptions)}
+                    {renderSelect("lang2", dictionary.common.lang2, dictionary.common.fillLang2, langOptions)}
+
+                    {renderSelect("level", dictionary.common.level, dictionary.common.fillLevel, levelOptions)}
+                    {renderSelect("hashtags", dictionary.common.hashtags, dictionary.common.fillHashtags, hashtagsOptions, true)}
+                    {renderStatus()}
+                    {renderSubmitButton()}
                 </div>
             </form>
         )
@@ -91,7 +88,7 @@ function FlashcardSetsFilters({
 
     function renderSelect(name: any, label: string, noValueLabel: string, options: any[], multiple = false, refresh?: number) {
         return (
-            <div className=' w-1/3 mx-2'>
+            <div className='mx-2'>
                 <MyMultiSelect
                     multiple={multiple}
                     label={label}
@@ -107,7 +104,7 @@ function FlashcardSetsFilters({
 
     function renderInput(name: any, label: string, placeholder: string) {
         return (
-            <div className=' w-1/3 mx-2'>
+            <div className=' mx-2'>
                 <MyInput
                     label={label}
                     placeholder={placeholder}
@@ -116,33 +113,20 @@ function FlashcardSetsFilters({
         )
     }
 
-    function renderStatusOrSubmitButton() {
+    function renderStatus() {
         if (currentUser != null) {
             return renderSelect("status", dictionary.common.status, dictionary.common.fillStatus, statusesOptions, true, statusFieldRefresh);
         }
-        return (
-            <div className="w-1/3 mx-2 flex justify-center items-center">
-                {renderSubmitButton()}
-            </div>
-        )
+        return <></>
     }
 
     function renderSubmitButton() {
         return (
-            <button type="submit" className="btn btn-primary">{dictionary.common.search}
-                <MagnifyingGlassIcon className="h-6 w-6" />
-            </button>
-        )
-    }
-
-    function renderSubmitButtonRowIfNeeded() {
-        if (currentUser == null) {
-            return <></>
-        }
-        return (
-            <div className="flex justify-center mt-6">
-                {renderSubmitButton()}
-            </div>
+            <div className="md:col-span-2 cards3:col-span-3 flex justify-center mt-6">
+                <button type="submit" className="btn btn-primary">{dictionary.common.search}
+                    <MagnifyingGlassIcon className="h-6 w-6" />
+                </button>
+            </div >
         )
     }
 }

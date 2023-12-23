@@ -8,11 +8,11 @@ async function LearnLayout({ children, params }: { children: any, params: any })
     const dictionary = await fetchDictionary(params.locale);
     return (
         <div className='grid items-start'>
-            <Card title={<LearnTitle dictionary={dictionary} />} className='min-h-[60vh] h-full w-[1000px] mb-8 '>
+            <Card title={<LearnTitle dictionary={dictionary} />} className='min-h-[60vh] h-full mb-8 '>
                 {children}
             </Card>
             <div className='grid justify-center'>
-                <LearnSubmitButtons dictionary={dictionary} locale={params.locale}/>
+                <LearnSubmitButtons dictionary={dictionary} locale={params.locale} />
             </div >
         </div>
     )
