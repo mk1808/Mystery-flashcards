@@ -13,7 +13,7 @@ function useSubmitLearnActions({ dictionary, locale }: { dictionary: any, locale
     const training = useSubmitTrainingAction({ dictionary });
     const trainingResult = useSubmitTrainingResultAction({ dictionary, flashcardSet, locale });
     const test = useSubmitTestAction({ dictionary });
-    const testResult = useSubmitTestResultAction({ dictionary, flashcardSet, locale });
+    const testResult = useSubmitTestResultAction({ dictionary,  locale });
     const [currentAction, setCurrentAction] = useState<{ mainButtonAttrs: ButtonAttrs, otherButtonAttrs: any }>({
         mainButtonAttrs: {
             title: "",
