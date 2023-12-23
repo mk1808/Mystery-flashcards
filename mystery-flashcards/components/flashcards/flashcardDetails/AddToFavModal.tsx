@@ -4,9 +4,11 @@ import { HeartIcon } from "@heroicons/react/24/outline"
 import { HeartIcon as FullHeartIcon } from "@heroicons/react/24/solid"
 import AddToFavActions from './AddToFavActions'
 import AddToFavContent from './AddToFavContent'
+import { UserFlashcardT } from '@/models/UserFlashcard'
 
-function AddToFavModal({ dictionary, flashcardSet }: { dictionary: any, flashcardSet: any }) {
-    const isFav = flashcardSet?.userFlashcard?.isFavorite;
+function AddToFavModal({ dictionary, flashcardSet, userFlashcard }: { dictionary: any, flashcardSet: any, userFlashcard: UserFlashcardT }) {
+    const isFav = userFlashcard?.isFavorite;
+
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
@@ -17,11 +19,9 @@ function AddToFavModal({ dictionary, flashcardSet }: { dictionary: any, flashcar
 
     function renderDialogTrigger() {
         return (
-            <div className="tooltip tooltip-bottom" data-tip={isFav?dictionary.common.alreadyInFavorites:dictionary.common.addToFavorites}>
-                <button className="btn btn-primary">
-                    &nbsp;
+            <div className="tooltip tooltip-bottom" id="addToFavTooltip" data-tip={isFav ? dictionary.common.alreadyInFavorites : dictionary.common.addToFavorites}>
+                <button className="btn btn-primary px-10" id='addToFavTrigger'>
                     {isFav == true ? <FullHeartIcon className="h-6 w-6" /> : <HeartIcon className="h-6 w-6" />}
-                    &nbsp;
                 </button>
             </div>
         )
