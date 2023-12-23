@@ -1,14 +1,19 @@
 "use client"
 import Title from '@/components/common/Title'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useForm } from 'react-hook-form';
 import { isFieldValid } from "@/utils/client/FormUtils";
 import useAlertStore from '@/stores/useAlertStore';
 import MyInput from '@/components/common/form/MyInput';
 import MyMultiSelect from '@/components/common/form/MyMultiSelect';
+import { LangOptions } from '@/enums/LangOptions';
+import { LevelOptions } from '@/enums/LevelOptions';
+import { translateOptions } from '@/utils/client/EnumUtils';
+import useHashtags from '@/hooks/useHashtags';
 import useAuthStore from '@/stores/useAuthStore';
 import { useSearchParams } from 'next/navigation';
+import { StatusOptions } from '@/enums/StatusOptions';
 
 function FlashcardSetsFilters({
     dictionary,
@@ -20,11 +25,11 @@ function FlashcardSetsFilters({
     const [statusFieldRefresh, setStatusFieldRefresh] = useState(0);
     const searchParams = useSearchParams()
     const addAlert = useAlertStore((state) => state.add);
+    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
+    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
+    const statusesOptions = useMemo(() => translateOptions(StatusOptions, dictionary), [])
+    const hashtagsOptions = useHashtags();
     const currentUser = useAuthStore(state => state.currentUser);
-    const langOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
-    const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }]
-    const statusesOptions = [{ value: "mine", label: "Utworzone przeze mnie" }, { value: "favorite", label: "Ulubione" }, { value: "WANT_TO_LEARN", label: "Chcę się uczyć" }, { value: "LEARNING", label: "Uczę się" }, { value: "TESTING", label: "Wykonywany test" }]
-    const levelOptions = [{ value: "A1", label: "A1" }, { value: "A2", label: "A2" }]
     const mySetParam = searchParams.get("mySet");
     const {
         register,

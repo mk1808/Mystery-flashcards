@@ -1,13 +1,17 @@
 "use client"
 import { isFieldValid } from '@/utils/client/FormUtils';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import MyInput from '../common/form/MyInput';
 import { useForm } from 'react-hook-form';
 import MyToggle from '../common/form/MyToggle';
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
 import { FlashcardSetT } from '@/models/FlashcardSet';
 import MyMultiSelect from '../common/form/MyMultiSelect';
+import { LangOptions } from '@/enums/LangOptions';
+import { translateOptions } from '@/utils/client/EnumUtils';
+import { LevelOptions } from '@/enums/LevelOptions';
+import useHashtags from '@/hooks/useHashtags';
 
 function NewFlashcardForm({
     dictionary,
@@ -16,10 +20,9 @@ function NewFlashcardForm({
     dictionary: any,
     flashcardSet?: FlashcardSetT
 }) {
-    const langOptions = [{ value: "eng", label: "angielski" }, { value: "ge", label: "niemiecki" }]
-    const hashtagsOptions = [{ value: "animals", label: "zwierzęta" }, { value: "basic", label: "podstawy" }, { value: "plants", label: "rośliny" },
-    { value: "new", label: "nowe" }, { value: "exam", label: "egzamin" }, { value: "school", label: "szkoła podstawowa" },]
-    const levelOptions = [{ value: "A1", label: "A1" }, { value: "A2", label: "A2" }]
+    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
+    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
+    const hashtagsOptions = useHashtags();
     const updateSidebarForm = useNewFlashcardSetStore((state) => state.updateSidebarForm);
     const setSidebarFormValid = useNewFlashcardSetStore((state) => state.setSidebarFormValid);
     const initState = useNewFlashcardSetStore((state) => state.initState);

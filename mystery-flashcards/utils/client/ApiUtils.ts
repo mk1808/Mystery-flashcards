@@ -70,3 +70,7 @@ export const postUserFlashcardSet = (body: any) => {
     return post(body, `${PREFIX}/userFlashcards`);
 }
 
+export const getHashtags = (headers?: any) => {
+    return get(`${PREFIX}/cached/hashtags`, "no-store", headers);
+}
+

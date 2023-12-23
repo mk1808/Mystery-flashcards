@@ -13,3 +13,8 @@ interface FlashcardSearchDto {
     hashtags?: string[],
     status?: string[]
 }
+
+interface Option {
+    value: any,
+    label: string
+}

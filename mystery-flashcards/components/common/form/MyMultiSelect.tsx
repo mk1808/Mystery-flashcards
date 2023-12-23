@@ -23,7 +23,7 @@ export default function MyMultiSelect({
 }: {
     label: string,
     noValueLabel?: string,
-    options: any[],
+    options: Option[],
     className?: string,
     isValid?: boolean,
     control: any,

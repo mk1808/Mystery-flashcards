@@ -142,5 +142,30 @@
         "associateProfessor": "Docent",
         "professor": "Profesor",
         "rector": "Rektor"
+    },
+    "langOptions": {
+        "pl": "Polski",
+        "en": "Angielski",
+        "ge": "Niemiecki",
+        "fr": "Francuski",
+        "zh": "Mandaryński",
+        "es": "Hiszpański",
+        "pt": "Portugalski",
+        "ru": "Rosyjski"
+    },
+    "levelOptions": {
+        "a1": "A1 - Podstawowy ",
+        "a2": "A2 - Początkujący",
+        "b1": "B1 - Średnio zaawansowany",
+        "b2": "B2 - Zaawansowany",
+        "c1": "C1 - Bardzo zaawansowany",
+        "c2": "C2 - Biegły"
+    },
+    "statusOptions":{
+        "mine": "Utworzone przeze mnie",
+        "favorite": "Ulubione",
+        "wantToLearn": "Chcę się uczyć",
+        "learning": "Uczę się",
+        "testing": "Wykonywany test"
     }
 }
