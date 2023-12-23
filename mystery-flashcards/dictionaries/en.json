@@ -155,5 +155,12 @@
         "b2": "B2 - Upper-Intermediate",
         "c1": "C1 - Advanced",
         "c2": "C2 - Proficiency/Fluent"
+    },
+    "statusOptions": {
+        "mine": "Created by myself",
+        "favorite": "Favorite",
+        "wantToLearn": "Want to learn",
+        "learning": "Learning",
+        "testing": "Testing"
     }
 }

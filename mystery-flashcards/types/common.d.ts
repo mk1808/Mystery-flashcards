@@ -10,7 +10,8 @@ interface FlashcardSearchDto {
     level?: string,
     lang1?: string,
     lang2?: string,
-    hashtags?: string[]
+    hashtags?: string[],
+    status?: string[]
 }
 
 interface Option {

@@ -1,6 +1,6 @@
 "use client"
 import Title from '@/components/common/Title'
-import React, { useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useForm } from 'react-hook-form';
 import { isFieldValid } from "@/utils/client/FormUtils";
@@ -11,6 +11,9 @@ import { LangOptions } from '@/enums/LangOptions';
 import { LevelOptions } from '@/enums/LevelOptions';
 import { translateOptions } from '@/utils/client/EnumUtils';
 import useHashtags from '@/hooks/useHashtags';
+import useAuthStore from '@/stores/useAuthStore';
+import { useSearchParams } from 'next/navigation';
+import { StatusOptions } from '@/enums/StatusOptions';
 
 function FlashcardSetsFilters({
     dictionary,
@@ -19,10 +22,15 @@ function FlashcardSetsFilters({
     dictionary: any,
     search: (data: FlashcardSearchDto) => any
 }) {
+    const [statusFieldRefresh, setStatusFieldRefresh] = useState(0);
+    const searchParams = useSearchParams()
     const addAlert = useAlertStore((state) => state.add);
     const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
     const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
+    const statusesOptions = useMemo(() => translateOptions(StatusOptions, dictionary), [])
     const hashtagsOptions = useHashtags();
+    const currentUser = useAuthStore(state => state.currentUser);
+    const mySetParam = searchParams.get("mySet");
     const {
         register,
         handleSubmit,
@@ -30,8 +38,18 @@ function FlashcardSetsFilters({
         getFieldState,
         formState,
         reset,
-        control
+        control,
+        setValue
     } = useForm<FlashcardSearchDto>({ mode: 'onBlur' });
+
+    useEffect(() => {
+        if (mySetParam === "true") {
+            setValue("status", ["mine"])
+            setStatusFieldRefresh(setStatusFieldRefresh => setStatusFieldRefresh + 1)
+
+            setTimeout(() => search({ status: ["mine"] }), 100)
+        }
+    }, [mySetParam])
 
     const onSubmit = async (data: FlashcardSearchDto, e: any) => {
         search(data);
@@ -63,18 +81,15 @@ function FlashcardSetsFilters({
                     <div className="flex justify-between ">
                         {renderSelect("level", dictionary.common.level, dictionary.common.fillLevel, levelOptions)}
                         {renderSelect("hashtags", dictionary.common.hashtags, dictionary.common.fillHashtags, hashtagsOptions, true)}
-                        <div className="w-1/3 mx-2 flex justify-center items-center">
-                            <button type="submit" className="btn btn-primary">{dictionary.common.search}
-                                <MagnifyingGlassIcon className="h-6 w-6" />
-                            </button>
-                        </div>
+                        {renderStatusOrSubmitButton()}
                     </div>
+                    {renderSubmitButtonRowIfNeeded()}
                 </div>
             </form>
         )
     }
 
-    function renderSelect(name: any, label: string, noValueLabel: string, options: any[], multiple = false) {
+    function renderSelect(name: any, label: string, noValueLabel: string, options: any[], multiple = false, refresh?: number) {
         return (
             <div className=' w-1/3 mx-2'>
                 <MyMultiSelect
@@ -84,7 +99,8 @@ function FlashcardSetsFilters({
                     noValueLabel={noValueLabel}
                     control={control}
                     isValid={isValid(name)}
-                    name={name} />
+                    name={name}
+                    refresh={refresh} />
             </div>
         )
     }
@@ -97,6 +113,36 @@ function FlashcardSetsFilters({
                     placeholder={placeholder}
                     inputParams={{ ...register(name) }} />
             </div >
+        )
+    }
+
+    function renderStatusOrSubmitButton() {
+        if (currentUser != null) {
+            return renderSelect("status", dictionary.common.status, dictionary.common.fillStatus, statusesOptions, true, statusFieldRefresh);
+        }
+        return (
+            <div className="w-1/3 mx-2 flex justify-center items-center">
+                {renderSubmitButton()}
+            </div>
+        )
+    }
+
+    function renderSubmitButton() {
+        return (
+            <button type="submit" className="btn btn-primary">{dictionary.common.search}
+                <MagnifyingGlassIcon className="h-6 w-6" />
+            </button>
+        )
+    }
+
+    function renderSubmitButtonRowIfNeeded() {
+        if (currentUser == null) {
+            return <></>
+        }
+        return (
+            <div className="flex justify-center mt-6">
+                {renderSubmitButton()}
+            </div>
         )
     }
 }

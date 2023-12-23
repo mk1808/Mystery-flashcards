@@ -100,6 +100,7 @@
         "correctAnswerIs": "Poprawna odpowiedź to",
         "incorrectAnswer": "Błędna odpowiedź",
         "status": "Status",
+        "fillStatus": "Wybierz status",
         "correct": "Poprawne",
         "incorrect": "Niepoprawne",
         "cardsInRoundCount": "Liczba kart w rundzie",
@@ -159,5 +160,12 @@
         "b2": "B2 - Zaawansowany",
         "c1": "C1 - Bardzo zaawansowany",
         "c2": "C2 - Biegły"
+    },
+    "statusOptions":{
+        "mine": "Utworzone przeze mnie",
+        "favorite": "Ulubione",
+        "wantToLearn": "Chcę się uczyć",
+        "learning": "Uczę się",
+        "testing": "Wykonywany test"
     }
 }
