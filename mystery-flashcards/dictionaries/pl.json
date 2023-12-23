@@ -127,7 +127,8 @@
         "LEARNING": "Nauka",
         "WANT_TO_LEARN": "Planowane",
         "TESTING": "Test",
-        "FINISHED": "Ukończone"
+        "FINISHED": "Ukończone",
+        "openSidebar": "Wyświetl szczegóły"
     },
     "userRanges": {
         "preschooler": "Przedszkolak",
@@ -161,7 +162,7 @@
         "c1": "C1 - Bardzo zaawansowany",
         "c2": "C2 - Biegły"
     },
-    "statusOptions":{
+    "statusOptions": {
         "mine": "Utworzone przeze mnie",
         "favorite": "Ulubione",
         "wantToLearn": "Chcę się uczyć",

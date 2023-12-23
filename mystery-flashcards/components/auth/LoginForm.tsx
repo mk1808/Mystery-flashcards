@@ -39,7 +39,7 @@ export default function LoginForm({ dictionary, locale }: { dictionary: any, loc
 
     return (
         <form onSubmit={handleSubmit(onSubmit, onErrors)}>
-            <div className='px-24'>
+            <div className='px-2 sm:px-24'>
 
                 <MyInput
                     label={dictionary.common.name}

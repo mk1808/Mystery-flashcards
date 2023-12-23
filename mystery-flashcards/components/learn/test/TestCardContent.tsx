@@ -36,15 +36,16 @@ function TestCardContent({
     const getDescription = () => direction === "main" ? currentFlashcard?.description1 : currentFlashcard?.description2;
 
     return (
-        <div className="grid grid-cols-2 h-full">
+        <div className="grid sm:grid-cols-2 h-full">
             <div className='grid grid-rows-2'>
                 <div className='self-end'>
                     <h1 className="text-3xl my-3 ">{getWord()}</h1>
                 </div>
                 <div><p>{getDescription()}</p></div>
+                <div className="divider  sm:hidden w-full"></div>
             </div>
             <div className='flex items-center'>
-                <div className="divider divider-horizontal ml-0"></div>
+                <div className="divider hidden sm:flex divider-horizontal ml-0"></div>
                 <div className="w-full h-full grid grid-rows-2">
                     <div className="self-end">
                         <TestAnswerForm dictionary={dictionary} />

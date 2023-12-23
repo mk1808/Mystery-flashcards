@@ -14,7 +14,7 @@ export default async function FlashcardsEdit({ params }: { params: { id: String,
   const { flashcardSet }: { flashcardSet: FlashcardSetT } = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
 
   return (
-    <div className="w-[1000px] h-full">
+    <div className="h-full">
       <NewFlashcardButtons editedFlashCardSet={flashcardSet} dictionary={dictionary} />
       <NewFlashcardListForm dictionary={dictionary} flashcards={flashcardSet.flashcards} />
     </div>

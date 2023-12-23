@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss'
-
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -18,6 +17,15 @@ const config: Config = {
           '0%': { transform: 'scale(1)', color: "#9300a3" },
           '100%': { transform: 'scale(1)', color: "black" },
         },
+      },
+      screens: {
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        "cards3": "1150px",
+        'xl': '1280px',
+        'sidebarOpen': '1380px',
+        '2xl': '1536px'
       },
     },
   },

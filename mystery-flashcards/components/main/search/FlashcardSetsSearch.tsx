@@ -56,7 +56,7 @@ function FlashcardSetsSearch({ dictionary }: { dictionary?: any }) {
 
     function renderCards() {
         return (
-            <div className="mt-12 my-10 w-[1100px] grid grid-cols-3 gap-4 gap-y-14">
+            <div className="mt-12 my-10 grid cards3:w-[1100px] grid-cols-1 md:grid-cols-2 cards3:grid-cols-3 gap-x-4 md:gap-x-3 gap-y-14 justify-items-center">
                 {searchResults?.map(renderCard)}
             </div>
         )
