@@ -33,7 +33,7 @@ function TestAnswerForm({ dictionary, locale }: { dictionary: any, locale: strin
             setTimeout(otherButtonAttrs.onFinishClick);
         }
     };
-    const onErrors = (errors: any) => console.error(errors);
+    const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
     return (
         <form onSubmit={handleSubmit(onSubmit, onErrors)} id="answerForm">

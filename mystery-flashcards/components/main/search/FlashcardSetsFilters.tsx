@@ -54,7 +54,7 @@ function FlashcardSetsFilters({
     const onSubmit = async (data: FlashcardSearchDto, e: any) => {
         search(data);
     };
-    const onErrors = (errors: any) => console.error(errors);
+    const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
 
     return (

@@ -42,7 +42,7 @@ export default function UserEditForm({
             addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
         }
     };
-    const onErrors = (errors: any) => console.error(errors);
+    const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
     const validatePassword = (confirmPassword: string) => watch("password") === confirmPassword || "Password do not match";
 

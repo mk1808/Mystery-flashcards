@@ -33,7 +33,7 @@ export default function LoginForm({ dictionary, locale }: { dictionary: any, loc
             addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse?.body?.message) })
         }
     };
-    const onErrors = (errors: any) => console.error(errors);
+    const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
     const goToRegister = () => router.push(`/${locale}/register`)
 
