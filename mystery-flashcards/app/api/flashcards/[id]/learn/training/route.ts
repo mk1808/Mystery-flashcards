@@ -17,7 +17,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     const currentUser = await getUser(request),
         flashcardSet = (await FlashcardSet.findById(id)).toObject(),
         newUserFlashcard = { userId: currentUser._id, flashcardSetId: id, learningHistory: [] },
-        existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser })).toObject(),
+        existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSetId: flashcardSet._id, userId: currentUser._id })).toObject(),
         userFlashcard = existingUserFlashcard || newUserFlashcard;
     const { randStrategy, prevAnswers } = await addOrUpdateUserFlashcard(userFlashcard, learningHistoryTab, existingUserFlashcard);
     if (!flashcardSet) {

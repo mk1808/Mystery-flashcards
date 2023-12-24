@@ -6,7 +6,7 @@ import FlashcardSetsFilters from './FlashcardSetsFilters';
 import { searchFlashcardSets } from '@/utils/client/ApiUtils';
 import { FlashcardSetT } from '@/models/FlashcardSet';
 
-function FlashcardSetsSearch({ dictionary }: { dictionary?: any }) {
+function FlashcardSetsSearch({ dictionary, locale }: { dictionary?: any, locale:string }) {
     const [searchResults, setSearchResults] = useState<FlashcardSetT[] | null>(null)
 
     useEffect(() => {
@@ -63,7 +63,7 @@ function FlashcardSetsSearch({ dictionary }: { dictionary?: any }) {
     }
 
     function renderCard(flashcardSet: FlashcardSetT) {
-        return <SetCard flashcardSet={flashcardSet} key={flashcardSet._id} dictionary={dictionary} />
+        return <SetCard flashcardSet={flashcardSet} key={flashcardSet._id} dictionary={dictionary} locale={locale}/>
     }
 }
 

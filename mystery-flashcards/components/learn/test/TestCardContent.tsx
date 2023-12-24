@@ -10,13 +10,15 @@ function TestCardContent({
     flashcardSet,
     testFlashcards,
     view,
-    direction
+    direction,
+    locale
 }: {
     dictionary: any,
     flashcardSet: any,
     testFlashcards: any,
     view: any,
-    direction: string
+    direction: string,
+    locale: string
 }) {
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
     const setFlashcardSet = useTestStore((state) => state.setFlashcardSet);
@@ -27,7 +29,7 @@ function TestCardContent({
     const setView = useTrainingStore((state) => state.setView);
 
     useEffect(() => { setView(view) }, [view])
-    useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
+    useEffect(() => { setFlashcardSet(flashcardSet); initStore(); }, [flashcardSet])
     useEffect(() => { setTestFlashcards(testFlashcards) }, [testFlashcards])
     useEffect(() => { setDirection(direction) }, [direction])
     useEffect(() => { setCurrentFlashcard(testFlashcards[currentIndex]) }, [currentIndex])
@@ -48,7 +50,7 @@ function TestCardContent({
                 <div className="divider hidden sm:flex divider-horizontal ml-0"></div>
                 <div className="w-full h-full grid grid-rows-2">
                     <div className="self-end">
-                        <TestAnswerForm dictionary={dictionary} />
+                        <TestAnswerForm dictionary={dictionary} locale={locale} />
                     </div>
                 </div>
             </div>

@@ -8,17 +8,19 @@ import { HeartIcon } from "@heroicons/react/24/solid"
 
 function FlashcardSetCard({
     flashcardSet,
-    dictionary
+    dictionary,
+    locale
 }: {
     flashcardSet: FlashcardSetT,
-    dictionary: any
+    dictionary: any,
+    locale: string
 }) {
     const { userFlashcard } = flashcardSet;
     const isType = userFlashcard && userFlashcard.type != "NONE"
     const isFav = userFlashcard?.isFavorite;
     const translatedType = dictionary.common[userFlashcard?.type!];
     return (
-        <FlashcardSetCardContainer flashcardSet={flashcardSet}>
+        <FlashcardSetCardContainer flashcardSet={flashcardSet} locale={locale}>
             <div className="card w-[350px] bg-base-100 shadow-xl">
                 <div className="absolute left-[120px] -top-6" >
                     <div className="w-[110px] h-[50px] bg-primary flex items-center justify-center text-base-100 rounded-xl shadow-xl">

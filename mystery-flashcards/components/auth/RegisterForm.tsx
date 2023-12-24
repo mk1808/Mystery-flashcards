@@ -21,7 +21,7 @@ export default function RegisterForm({ dictionary, locale }: { dictionary: any, 
     } = useForm<RegisterForm>({ mode: 'onBlur' });
 
     const goToLogin = () => router.push(`/${locale}/login`)
-    const onErrors = (errors: any) => console.error(errors);
+    const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
     const validatePassword = (confirmPassword: string) => watch("password") === confirmPassword || dictionary.common.passwordDoNotMatch;
 

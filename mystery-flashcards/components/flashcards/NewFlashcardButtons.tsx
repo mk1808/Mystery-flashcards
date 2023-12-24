@@ -10,10 +10,12 @@ import React, { useRef } from 'react'
 
 function NewFlashcardButtons({
     editedFlashCardSet,
-    dictionary
+    dictionary,
+    locale
 }: {
     editedFlashCardSet?: FlashcardSetT,
-    dictionary: any
+    dictionary: any,
+    locale: string
 }) {
     const sidebarForm = useNewFlashcardSetStore((state) => state.sidebarForm);
     const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList);
@@ -41,7 +43,7 @@ function NewFlashcardButtons({
                 console.log(response);
             }
             const id = response?._id;
-            router.push(`/flashcards/${id}`);
+            router.push(`/${locale}/flashcards/${id}`);
             setTimeout(() => {
                 deleteAllFlashcards();
                 addAlert({ type: AlertType.success, title: editedFlashCardSet ? dictionary.common.successfulSetUpdate : dictionary.common.successfulSetSave })
@@ -63,7 +65,7 @@ function NewFlashcardButtons({
     };
 
     const onCancel = () => {
-        router.push("/");
+        router.push(`/${locale}`);
     }
 
     return (
