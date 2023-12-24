@@ -5,7 +5,7 @@ function Sidebar({ children, drawerContent, dictionary }: any) {
         <div className='w-full'>
             <div className="drawer lg:drawer-open">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content flex flex-col items-center justify-center ">
+                <div className="drawer-content flex flex-col items-center justify-start pt-10 ">
                     <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden mb-5">{dictionary.common.openSidebar}</label>
                     <div className='w-full px-5 sidebarOpen:w-[1000px]'>
                         {children}
