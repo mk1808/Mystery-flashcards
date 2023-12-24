@@ -78,7 +78,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
         <ChevronDoubleRightIcon className="h-5 w-5 mr-2 text-gray-500" />
 
         <span className="text-xl">{title}</span>
-        <span className="text-xl">: &nbsp;</span>
+        <span className="text-xl me-2">:</span>
         <span className="text-xl">{value}</span>
 
         {withPhoto &&
