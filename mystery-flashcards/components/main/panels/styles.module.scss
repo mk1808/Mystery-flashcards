@@ -16,12 +16,13 @@
     }
 
     .rightSide {
-        background-image: url('/images/books1.jpg');
+        background-image: url('/images/books14.jpg');
         height: 100%;
         width: 55%;
         float: right;
         background-size: cover;
         mask-image: linear-gradient(to right, transparent, black 30%);
+        background-position: 10px;
     }
 
     ::after {

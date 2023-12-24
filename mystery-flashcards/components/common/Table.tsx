@@ -7,7 +7,7 @@ function Table({ renderRows, columns }: { renderRows: any, columns: any }) {
             <table className="table">
                 <thead>
                     <tr>
-                        {columns.map((col: any) => <th key={col}>{col}</th>)}
+                        {columns.map((col: any) => <th key={col} className='text-sm'>{col}</th>)}
                     </tr>
                 </thead>
                 <tbody>

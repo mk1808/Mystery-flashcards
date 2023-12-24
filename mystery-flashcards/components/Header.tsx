@@ -131,7 +131,7 @@ function Header({
     function renderLogo() {
         return (
             <Link href={`/${locale}`}>
-                <img src='/images/logo2.png' className='h-[50px]' />
+                <img src='/images/logo5.png' className='h-[60px]' />
             </Link>
         )
     }

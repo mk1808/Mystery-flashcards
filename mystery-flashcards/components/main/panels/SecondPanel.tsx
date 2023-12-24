@@ -31,13 +31,13 @@ export default function SecondPanel({
             <div className='flex items-center h-1/5' key={step.number}>
                 {renderSpace(step.number, index)}
                 {renderNumberCircle(step.number)}
-                <div className='text-4xl font-bold text-secondary h-min'>{step.text}</div>
+                <div className='text-4xl  text-black h-min p-3 bg-base-100 rounded-md'>{step.text}</div>
             </div>
         );
     }
 
     function renderNumberCircle(number: string) {
-        return <RoundActionButton content={number} styles="bg-neutral m-5 text-4xl font-bold text-primary border-secondary " />
+        return <RoundActionButton content={number} border="border-[5px]" styles="bg-neutral m-5 text-4xl font-bold text-primary border-secondary" />
     }
 
     function renderSpace(id: string, amount: number) {

@@ -18,9 +18,11 @@ export default function UserEdit({ dictionary }: { dictionary: any }) {
 
     return (
         <div>
+            <div className="divider"></div>
             <Title text={dictionary.common.userAccountEdit} />
             <div className="grid grid-cols-2 gap-4">
                 {renderUserAvatar()}
+
                 {renderUserEditForm()}
             </div>
         </div>
