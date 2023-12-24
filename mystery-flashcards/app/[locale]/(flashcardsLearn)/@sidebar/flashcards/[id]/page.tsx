@@ -14,11 +14,12 @@ import React from 'react'
 export default async function FlashcardsDetailsSidebar({ params }: { params: { locale: string, id: string } }) {
   const dictionary = await fetchDictionary(params.locale);
   const flashcardSetId = params.id;
-  const { flashcardSet, userFlashcard, testResult }: FlashCardSetDto = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
+  const { flashcardSet, userFlashcard, testResult, statistics }: FlashCardSetDto = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
   const date = new Date(flashcardSet?.creationDate || "");
   const shouldRenderStatus = () => userFlashcard && userFlashcard?.type != "NONE";
   const translatedType = userFlashcard?.type ? dictionary.common[userFlashcard?.type!] : "";
   const isTest = userFlashcard?.type == "TESTING";
+  const popularity = statistics?.favorite! + statistics?.learning!;
   return (
     <div>
       <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet?.name}</h1>
@@ -51,7 +52,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
       <>
         {renderSingleInfo(dictionary.common.author, flashcardSet?.user?.name!, true)}
         {renderSingleInfo(dictionary.common.creationDate, formatDate(date))}
-        {renderSingleInfo(dictionary.common.popularity, "100")}
+        {renderSingleInfo(dictionary.common.popularity, popularity.toString())}
       </>
     )
   }
