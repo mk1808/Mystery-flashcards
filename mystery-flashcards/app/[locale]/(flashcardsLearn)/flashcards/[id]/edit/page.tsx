@@ -15,7 +15,7 @@ export default async function FlashcardsEdit({ params }: { params: { id: String,
 
   return (
     <div className="h-full">
-      <NewFlashcardButtons editedFlashCardSet={flashcardSet} dictionary={dictionary} />
+      <NewFlashcardButtons editedFlashCardSet={flashcardSet} dictionary={dictionary} locale={params.locale} />
       <NewFlashcardListForm dictionary={dictionary} flashcards={flashcardSet.flashcards} />
     </div>
   )

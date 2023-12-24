@@ -136,7 +136,11 @@
         "FINISHED": "Finished",
         "wantToLearn": "Want to learn",
         "lastTestResult": "Test result",
-        "openSidebar": "Show details"
+        "openSidebar": "Show details",
+        "continue": "Continue",
+        "confirmAnswer": "Confirm answer",
+        "endLearning": "End learning",
+        "endTest": "End test"
     },
     "userRanges": {
         "preschooler": "Preschooler",

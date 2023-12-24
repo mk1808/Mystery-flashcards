@@ -79,7 +79,7 @@ function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
     return (
         <footer className="footer p-10 mt-4 bg-base-200 text-base-content grid-cols-5">
             <aside className='col-span-3 md:col-span-2'>
-                <Link href="/" className='mb-2'>
+                <Link href={`/${locale}`} className='mb-2'>
                     <img src='/images/logo2.png' className='h-[100px]' />
                 </Link>
                 <p>Copyright © {year} Monika Kordoń, Marek Czopor</p>

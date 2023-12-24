@@ -21,6 +21,6 @@ export default async function LearnTest({
   const view = "TEST";
 
   return (
-    <TestCardContent dictionary={dictionary} flashcardSet={flashcardSet} testFlashcards={flashcards} view={view} direction={searchParams.direction} />
+    <TestCardContent dictionary={dictionary} flashcardSet={flashcardSet} testFlashcards={flashcards} view={view} direction={searchParams.direction} locale={params.locale} />
   )
 }
