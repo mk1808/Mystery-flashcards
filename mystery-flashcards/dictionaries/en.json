@@ -106,6 +106,7 @@
         "correctAnswerIs": "The correct answer is",
         "incorrectAnswer": "Incorrect answer",
         "status": "Status",
+        "fillStatus": "Select status",
         "correct": "Correct",
         "incorrect": "Incorrect",
         "cardsInRoundCount": "Cards in round count",
@@ -129,6 +130,10 @@
         "sessionExpired": "Session expired!",
         "goBack": "Back",
         "tryAgain": "Start again",
+        "LEARNING": "Learning",
+        "WANT_TO_LEARN": "Planned",
+        "TESTING": "Test",
+        "FINISHED": "Finished",
         "wantToLearn": "Want to learn",
         "lastTestResult": "Test result",
         "openSidebar": "Show details"

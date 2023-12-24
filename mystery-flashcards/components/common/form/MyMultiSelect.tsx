@@ -94,6 +94,12 @@ export default function MyMultiSelect({
         field.onBlur();
     }
 
+    function closeDropdown() {
+        if (optionDropdown.current) {
+            optionDropdown.current.open = false;
+        }
+    }
+
     function emitMultiselectClickEvent() {
         const event = new CustomEvent("multiselectClick", { detail: { target: optionDropdown.current } });
         window.dispatchEvent(event);
@@ -107,11 +113,11 @@ export default function MyMultiSelect({
 
     function toggleCloseDropdownEventListener() {
         if (optionDropdown.current.open) {
-            window.addEventListener('click', toggleDropdownOpen)
-            window.addEventListener('multiselectClick', onMultiselectClickEvent)
+            window.addEventListener('click', closeDropdown)
+            window.addEventListener('multiselectClick', closeDropdown)
         } else {
-            window.removeEventListener('click', toggleDropdownOpen)
-            window.removeEventListener('multiselectClick', onMultiselectClickEvent)
+            window.removeEventListener('click', closeDropdown)
+            window.removeEventListener('multiselectClick', closeDropdown)
         }
         field.onBlur();
     }
