@@ -19,17 +19,10 @@ export async function PUT(request: NextRequest) {
 
     const newPassword = userForm.password ? await hashPassword(userForm.password) : logged.password;
 
-    const updatedUser: UserT = {
-        _id: logged._id,
-        points: logged.points,
-        rang: logged.rang,
-        statistics: logged.statistics,
-        mail: userForm.mail,
-        name: userForm.name,
-        avatar: userForm.avatar,
-        password: newPassword
-    }
-    const result = await User.findOneAndReplace({ _id: logged._id }, updatedUser, { new: true });
+    logged.avatar = userForm.avatar;
+    logged.password = newPassword;
+
+    const result = await User.findOneAndReplace({ _id: logged._id }, logged, { new: true });
 
     return NextResponse.json(result);
 }
