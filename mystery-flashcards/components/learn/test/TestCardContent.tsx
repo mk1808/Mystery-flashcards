@@ -29,7 +29,7 @@ function TestCardContent({
     const setView = useTrainingStore((state) => state.setView);
 
     useEffect(() => { setView(view) }, [view])
-    useEffect(() => { setFlashcardSet(flashcardSet) }, [flashcardSet])
+    useEffect(() => { setFlashcardSet(flashcardSet); initStore(); }, [flashcardSet])
     useEffect(() => { setTestFlashcards(testFlashcards) }, [testFlashcards])
     useEffect(() => { setDirection(direction) }, [direction])
     useEffect(() => { setCurrentFlashcard(testFlashcards[currentIndex]) }, [currentIndex])
