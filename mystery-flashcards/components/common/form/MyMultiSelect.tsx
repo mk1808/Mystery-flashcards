@@ -60,6 +60,9 @@ export default function MyMultiSelect({
     const getDisabled = () => ({ disabled });
 
     useEffect(() => {
+        if (options.length === 0) {
+            return;
+        }
         if (multiple) {
             field.onChange(selected.map(option => option.value));
         } else {
@@ -69,9 +72,12 @@ export default function MyMultiSelect({
 
     useEffect(() => {
         setDefaultValue();
-    }, [refresh])
+    }, [refresh, options])
 
     function setDefaultValue() {
+        if (options.length === 0) {
+            return;
+        }
         const selectedOptions = options.filter(option => option.value === field?.value || field?.value?.indexOf(option.value) >= 0);
         setSelected(selectedOptions);
         setTimeout(() => selectedOptions.forEach(option => changeOptionCheckboxState(option.value, true)));
