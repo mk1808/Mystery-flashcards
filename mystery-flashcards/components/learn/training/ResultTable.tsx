@@ -28,7 +28,7 @@ function ResultTable({
             length = answers.length;
         answers.forEach((ans: any, index: number) => {
             let isLast = length == index + 1;
-            tabToDisplay.push(renderSingleAnswer(ans, isLast));
+            tabToDisplay.push(renderSingleAnswer(ans, isLast, index));
         });
         return tabToDisplay;
     }
@@ -41,18 +41,16 @@ function ResultTable({
     )
 
     function renderRows() {
-        return allInfoObjects.map((flashcard: any, index: number) => (
-            renderRow(flashcard, index)
-        ))
+        return allInfoObjects.map(renderRow)
     }
 
     function renderRow(flashcard: any, index: number) {
-        const { wordLang1, wordLang2} = flashcard.flashcard
+        const { wordLang1, wordLang2 } = flashcard.flashcard
         const isMainDirection = direction === "main";
         const mainWord = isMainDirection ? wordLang1 : wordLang2
         const secondaryWord = isMainDirection ? wordLang2 : wordLang1
         return (
-            <tr>
+            <tr key={index}>
                 <th>{index + 1}</th>
                 <td>{mainWord}</td>
                 <td className='max-w-[250px]'>{createAnswersList(flashcard.answers)}</td>
@@ -62,9 +60,9 @@ function ResultTable({
         )
     }
 
-    function renderSingleAnswer(ans: any, isLast: boolean) {
+    function renderSingleAnswer(ans: any, isLast: boolean, index: number) {
         return (
-            <span className={ans.isCorrect ? "" : "text-red-400"}>
+            <span className={ans.isCorrect ? "" : "text-red-400"} key={index}>
                 {`${ans.givenAnswer}${isLast ? "" : ", "}`}
             </span>
         )
