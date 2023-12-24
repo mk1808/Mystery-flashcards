@@ -65,7 +65,7 @@ function FlashcardContainer({
   }, [formState])
 
   const onSubmit = (data: FlashcardsForm) => console.log(data);
-  const onErrors = (errors: any) => console.error(errors);
+  const onErrors = (errors: any) => { };
   const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
   const isDirty = () => Object.keys(formState.dirtyFields).length > 0
   const showDelete = () => (isDirty() || formState.defaultValues?.wordLang1) && flashcardsList.length > 1;

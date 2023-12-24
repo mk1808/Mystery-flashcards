@@ -10,10 +10,10 @@ function useSubmitLearnActions({ dictionary, locale }: { dictionary: any, locale
     const view = useTrainingStore((state) => state.view);
     const flashcardSet = useTrainingStore((state) => state.flashcardSet);
     const currentFlashcardIndex = useTestStore((state) => state.currentFlashcardIndex);
-    const training = useSubmitTrainingAction({ dictionary });
+    const training = useSubmitTrainingAction({ dictionary, locale });
     const trainingResult = useSubmitTrainingResultAction({ dictionary, flashcardSet, locale });
-    const test = useSubmitTestAction({ dictionary });
-    const testResult = useSubmitTestResultAction({ dictionary,  locale });
+    const test = useSubmitTestAction({ dictionary, locale });
+    const testResult = useSubmitTestResultAction({ dictionary, locale });
     const [currentAction, setCurrentAction] = useState<{ mainButtonAttrs: ButtonAttrs, otherButtonAttrs: any }>({
         mainButtonAttrs: {
             title: "",

@@ -24,7 +24,7 @@ function StartLearningForm({ dictionary, flashcardSet, locale }: { dictionary: a
         const path = data.type === "TEST" ? `/${locale}/learn/test/${flashcardSet._id}` : `/${locale}/learn/training/${flashcardSet._id}`;
         router.push(path + `?${createPathParams({ direction: data.direction })}`)
     };
-    const onErrors = (errors: any) => console.error(errors);
+    const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
 
     return (
