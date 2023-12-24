@@ -49,7 +49,6 @@ export default function MyMultiSelect({
     const optionDropdown = useRef<any>(null);
     const optionSearchInput = useRef<any>(null);
     const inputContainer = useRef<any>(null);
-    const toggleDropdownOpenRef = useRef(toggleDropdownOpen);
 
     const stopPropagation = (event: any) => event.stopPropagation()
     const onSelect = (option: any) => setSelected(selected => [...selected, option]);
@@ -84,6 +83,7 @@ export default function MyMultiSelect({
         }
         if (event) {
             stopPropagation(event);
+            emitMultiselectClickEvent();
         }
         if (optionDropdown.current) {
             optionDropdown.current.open = !optionDropdown.current.open;
@@ -94,11 +94,24 @@ export default function MyMultiSelect({
         field.onBlur();
     }
 
+    function emitMultiselectClickEvent() {
+        const event = new CustomEvent("multiselectClick", { detail: { target: optionDropdown.current } });
+        window.dispatchEvent(event);
+    }
+
+    function onMultiselectClickEvent(event: any) {
+        if (event.detail.target != optionDropdown.current) {
+            toggleDropdownOpen(null);
+        }
+    }
+
     function toggleCloseDropdownEventListener() {
         if (optionDropdown.current.open) {
-            window.addEventListener('click', toggleDropdownOpenRef.current)
+            window.addEventListener('click', toggleDropdownOpen)
+            window.addEventListener('multiselectClick', onMultiselectClickEvent)
         } else {
-            window.removeEventListener('click', toggleDropdownOpenRef.current)
+            window.removeEventListener('click', toggleDropdownOpen)
+            window.removeEventListener('multiselectClick', onMultiselectClickEvent)
         }
         field.onBlur();
     }
