@@ -4,10 +4,10 @@ function SingleSidebarStat({ title, value }: { title: any, value: any }) {
     return (
         <div className="my-3 flex items-center justify-between">
             <div className='w-[180px]'>
-                <span className="text-xl">{title}</span>
+                <span className="text-xl font-light">{title}</span>
             </div>
             <div className="text-right">
-                <div className="text-2xl">{value}</div>
+                <div className="text-2xl font-medium">{value}</div>
             </div>
         </div>
     )

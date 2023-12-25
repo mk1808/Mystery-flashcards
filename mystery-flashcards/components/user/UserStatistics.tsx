@@ -11,7 +11,7 @@ export default function UserStatistics({ dictionary }: { dictionary: any }) {
     }, [])
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 my-20 text-xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 mt-[34px] mb-20 text-xl">
             <div className=" md:border-r-4 border-b-4  border-secondary border-dashed">
                 {renderCell(dictionary.common.userPoints, userStatistics?.userPoints)}
             </div>
