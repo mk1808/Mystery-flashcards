@@ -72,7 +72,7 @@ export default function AlertComponent({
 
     function renderProgress() {
         return (
-            <div className="radial-progress" style={{ "--value": progress, "--size": "2rem", "--thickness": "3px" }} role="progressbar" onClick={onClose}>
+            <div className="radial-progress" style={{ "--value": progress, "--size": "2rem", "--thickness": "3px" } as any} role="progressbar" onClick={onClose}>
                 <XMarkIcon className="h-6 w-6 text-black cursor-pointer" />
             </div>
         );

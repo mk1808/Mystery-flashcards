@@ -11,15 +11,20 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     await connectToDB();
     const flashCardSetDto: FlashCardSetDto = { statistics: {} };
     flashCardSetDto.flashcardSet = (await FlashcardSet.findById(id))!;
-    const currentUser = await getUser(request);
+
     if (!flashCardSetDto.flashcardSet) {
         return new NextResponse(JSON.stringify({ message: 'Flash card set not found!' }), { status: 404 });
-    } else if (currentUser) {
-        flashCardSetDto.userFlashcard = (await UserFlashcard.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id }))?.toObject();
-        if (flashCardSetDto.userFlashcard) {
-            flashCardSetDto.testResult = (await TestResult.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id }))!;
-        }
     }
+    try {
+        const currentUser = await getUser(request);
+        if (currentUser) {
+            flashCardSetDto.userFlashcard = (await UserFlashcard.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id }))?.toObject();
+            if (flashCardSetDto.userFlashcard) {
+                flashCardSetDto.testResult = (await TestResult.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id }))!;
+            }
+        }
+    } catch (e) { }
+
     flashCardSetDto.statistics!.favorite = await UserFlashcard.countDocuments({ flashcardSetId: flashCardSetDto.flashcardSet._id, isFavorite: true })
     flashCardSetDto.statistics!.learning = await UserFlashcard.countDocuments({ type: "LEARNING" })
     return new NextResponse(JSON.stringify(flashCardSetDto));

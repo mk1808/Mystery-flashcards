@@ -3,14 +3,13 @@ import NewFlashcardNumber from '@/components/flashcards/NewFlashcardNumber';
 import { fetchDictionary } from '@/dictionaries/dictionaries';
 import { FlashcardSetT } from '@/models/FlashcardSet';
 import { getFlashcardSetRequest } from '@/utils/client/ApiUtils';
-import { createCookieHeader } from '@/utils/client/RestUtils';
-import { cookies } from 'next/headers';
+import { executeServerSideRequest } from '@/utils/server/restUtils';
 import React from 'react'
 
 export default async function FlashcardsEditSidebar({ params }: { params: { id: string, locale: string } }) {
   const dictionary = await fetchDictionary(params.locale);
   const flashcardSetId = params.id;
-  const { flashcardSet }: { flashcardSet: FlashcardSetT } = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
+  const { flashcardSet }: { flashcardSet: FlashcardSetT } = await executeServerSideRequest(getFlashcardSetRequest, flashcardSetId);
 
   return (
     <div>

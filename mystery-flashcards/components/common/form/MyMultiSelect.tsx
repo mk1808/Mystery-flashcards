@@ -54,7 +54,7 @@ export default function MyMultiSelect({
     const onSelect = (option: any) => setSelected(selected => [...selected, option]);
     const onDeselect = (option: any) => setSelected(selected => excludeFromArray([...selected], option, "value"));
     const onSearchTextChange = (event: any) => setSearchTextValue(event.target.value);
-    const showOption = (optionLabel: any) => optionLabel.toLowerCase().includes(searchTextValue.trim().toLowerCase());
+    const showOption = (optionLabel: any) => optionLabel?.toLowerCase().includes(searchTextValue.trim().toLowerCase());
     const getVisibleClass = (show: boolean) => show ? "visible" : "hidden";
     const focusSearchInput = () => optionSearchInput.current.focus();
     const getDisabled = () => ({ disabled });

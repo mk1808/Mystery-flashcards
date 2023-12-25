@@ -1,76 +1,86 @@
 import { UserT } from "@/models/User";
 import { createPathParams, get, patch, post, put } from "./RestUtils";
 
-const PREFIX = "http://localhost:3000/api";
+function getHost(host?: string) {
+    if (host) {
+        console.log("host", host)
+        return `http://${host}/api`
+    }
+    return '/api'
+}
 
-export const loginRequest = (loginForm: LoginForm) => {
+export const loginRequest = (loginForm: LoginForm, host?: string) => {
     console.log(loginForm)
-    return post(loginForm, `${PREFIX}/auth/login`);
+    return post(loginForm, `${getHost(host)}/auth/login`);
 }
 
-export const registerRequest = (registerForm: RegisterForm) => {
+export const registerRequest = (registerForm: RegisterForm, host?: string) => {
     console.log(registerForm)
-    return post(registerForm, `${PREFIX}/auth/register`);
+    return post(registerForm, `${getHost(host)}/auth/register`);
 }
 
-export const createFlashcardSetRequest = (form: any) => {
+export const createFlashcardSetRequest = (form: any, host?: string) => {
     console.log(form)
-    return post(form, `${PREFIX}/flashcards`);
+    return post(form, `${getHost(host)}/flashcards`);
 }
 
-export const updateFlashcardSetRequest = (id: string, form: any) => {
-    return put(form, `${PREFIX}/flashcards/${id}`);
+export const updateFlashcardSetRequest = (id: string, form: any, host?: string) => {
+    return put(form, `${getHost(host)}/flashcards/${id}`);
 }
 
-export const searchFlashcardSets = (data: any) => {
-    return get(`${PREFIX}/flashcards/search?${createPathParams(data)}`);
+export const searchFlashcardSets = (data: any, host?: string) => {
+    return get(`${getHost(host)}/flashcards/search?${createPathParams(data)}`);
 }
 
-export const getFlashcardSetRequest = (id: any, headers: any) => {
+export const getFlashcardSetRequest = (id: any, host?: string, headers?: any) => {
     console.log(id)
-    return get(`${PREFIX}/flashcards/${id}`, "no-store", headers);
+    return get(`${getHost(host)}/flashcards/${id}`, "no-store", headers);
 }
 
-export const postAnswersAndReturnCards = (id: any, body: any, headers?: any) => {
+export const postAnswersAndReturnCards = (id: any, body: any, host?: string, headers?: any) => {
     console.log(id)
-    return post(body, `${PREFIX}/flashcards/${id}/learn/training`, "no-store", headers);
+    return post(body, `${getHost(host)}/flashcards/${id}/learn/training`, "no-store", headers);
 }
 
-export const getTestFlashcardsRequest = (id: any, headers: any) => {
-    return get(`${PREFIX}/flashcards/${id}/learn/test`, "no-store", headers);
+export const getTestFlashcardsRequest = (id: any, host?: string, headers?: any) => {
+    return get(`${getHost(host)}/flashcards/${id}/learn/test`, "no-store", headers);
 }
 
-export const sendTestAnswersRequest = (id: any, body: any) => {
-    return post(body, `${PREFIX}/flashcards/${id}/learn/test`, "no-store");
+export const sendTestAnswersRequest = (id: any, body: any, host?: string) => {
+    return post(body, `${getHost(host)}/flashcards/${id}/learn/test`, "no-store");
 }
 
-export const getUserStatistics = () => {
-    return get(`${PREFIX}/users/statistics`);
+export const getUserStatistics = (host?: string) => {
+    return get(`${getHost(host)}/users/statistics`);
 }
 
-export const getWhoAmi = (headers?: any) => {
-    return get(`${PREFIX}/auth/whoAmI`, "no-store", headers);
+export const getWhoAmi = (host?: string, headers?: any) => {
+    return get(`${getHost(host)}/auth/whoAmI`, "no-store", headers);
 }
 
-export const updateUser = (user: UserT) => {
-    return put(user, `${PREFIX}/users`);
+export const updateUser = (user: UserT, host?: string) => {
+    return put(user, `${getHost(host)}/users`);
 }
 
-export const patchAnswersAndReturnResults = (id: any, body: any, headers?: any) => {
+export const patchAnswersAndReturnResults = (id: any, body: any, host?: string, headers?: any) => {
     console.log(id)
-    return patch(body, `${PREFIX}/flashcards/${id}/learn/training`, "no-store", headers);
+    return patch(body, `${getHost(host)}/flashcards/${id}/learn/training`, "no-store", headers);
 }
 
-export const logout = () => {
-    return post({}, `${PREFIX}/auth/logout`);
+export const logout = (host?: string) => {
+    return post({}, `${getHost(host)}/auth/logout`);
 }
 
-export const postUserFlashcardSet = (body: any) => {
+export const postUserFlashcardSet = (body: any, host?: string) => {
     console.log(body)
-    return post(body, `${PREFIX}/userFlashcards`);
+    return post(body, `${getHost(host)}/userFlashcards`);
 }
 
-export const getHashtags = (headers?: any) => {
-    return get(`${PREFIX}/cached/hashtags`, "no-store", headers);
+export const getHashtags = (host?: string, headers?: any) => {
+    return get(`${getHost(host)}/cached/hashtags`, "no-store", headers);
+}
+
+export const getDictionaryRequest = async (locale: string, host?: string) => {
+    return get(`${getHost(host)}/dictionary?locale=${locale}`, "no-store")
 }
 

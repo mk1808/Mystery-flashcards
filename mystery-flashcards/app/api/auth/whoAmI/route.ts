@@ -4,5 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
     await connectToDB();
-    return new NextResponse(JSON.stringify(await getUser(request)));
+    try {
+        return new NextResponse(JSON.stringify(await getUser(request)));
+    } catch (e) { }
+    return new NextResponse(JSON.stringify({}), { status: 401 });
 }

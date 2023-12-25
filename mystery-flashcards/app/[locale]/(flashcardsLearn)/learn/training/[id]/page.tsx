@@ -2,8 +2,7 @@ import TrainingCardContent from '@/components/learn/training/TrainingCardContent
 import { fetchDictionary } from '@/dictionaries/dictionaries';
 import { getFlashcardSetRequest, postAnswersAndReturnCards } from '@/utils/client/ApiUtils';
 import React from 'react'
-import { cookies } from 'next/headers'
-import { createCookieHeader } from '@/utils/client/RestUtils';
+import { executeServerSideRequest } from '@/utils/server/restUtils';
 
 export default async function LearnTraining({
   params,
@@ -13,10 +12,9 @@ export default async function LearnTraining({
   searchParams: { direction: string }
 }) {
   const dictionary = await fetchDictionary(params.locale);
-  const headers = createCookieHeader(cookies());
 
-  const flashcardSet = await getFlashcardSetRequest(params.id, headers);
-  const roundFlashcards = await postAnswersAndReturnCards(params.id, [], headers);
+  const flashcardSet = await executeServerSideRequest(getFlashcardSetRequest, params.id);
+  const roundFlashcards = await executeServerSideRequest(postAnswersAndReturnCards, params.id, []);
   const view = "TRAINING";
   console.log("roundFlashcards", roundFlashcards)
   return (

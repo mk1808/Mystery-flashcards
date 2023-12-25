@@ -54,3 +54,7 @@ export function createCookieHeader(cookies: any) {
         cookie: 'token=' + cookies.get('token')?.value
     }
 }
+
+export function getHost(headers: any): string {
+    return headers.get("host");
+}
