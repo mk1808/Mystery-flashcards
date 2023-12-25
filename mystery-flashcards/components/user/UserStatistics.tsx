@@ -11,14 +11,14 @@ export default function UserStatistics({ dictionary }: { dictionary: any }) {
     }, [])
 
     return (
-        <div className="grid grid-cols-2 my-20 text-xl">
-            <div className="border-r-4 border-b-4  border-secondary border-dashed">
+        <div className="grid grid-cols-1 md:grid-cols-2 my-20 text-xl">
+            <div className=" md:border-r-4 border-b-4  border-secondary border-dashed">
                 {renderCell(dictionary.common.userPoints, userStatistics?.userPoints)}
             </div>
             <div className="border-b-4 border-secondary border-dashed">
                 {renderCell(dictionary.common.toNextLevel, userStatistics?.toNextLevel)}
             </div>
-            <div className="border-r-4 border-secondary border-dashed">
+            <div className="md:border-r-4 border-b-4 md:border-b-0  border-secondary border-dashed">
                 {renderCell(dictionary.common.userTestsCount, userStatistics?.userTestsCount)}
             </div>
             <div>
@@ -30,7 +30,7 @@ export default function UserStatistics({ dictionary }: { dictionary: any }) {
     function renderCell(title: string, value: any) {
         return (
             <div className="grid grid-cols-1 text-center p-6 h-[250px] relative ">
-<div className="stats shadow">
+                <div className="stats shadow">
 
                     <div className="stat whitespace-normal">
                         <div className="stat-title whitespace-normal">{title}</div>
@@ -38,7 +38,7 @@ export default function UserStatistics({ dictionary }: { dictionary: any }) {
                     </div>
 
                 </div>
-            
+
 
             </div>
         );
@@ -46,7 +46,7 @@ export default function UserStatistics({ dictionary }: { dictionary: any }) {
 
     function renderValueOrLoader(value: any) {
         if (value != undefined) {
-            return value.length>24?value:<>{value}<br/></> ;
+            return value.length > 24 ? value : <>{value}<br /></>;
         }
         return <span className="loading loading-ball loading-sm"></span>
     }
