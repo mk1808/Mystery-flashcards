@@ -10,7 +10,7 @@ function AddWantToLearnModal({ dictionary, flashcardSet, userFlashcard }: { dict
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
         dialogActions={<AddWantToLearnActions dictionary={dictionary} flashcardSet={flashcardSet} userFlashcard={userFlashcard}/>}
-        width="w-5/12"
+        width="xl:w-5/12 sm:w-[600px]"
     />
 
     function renderDialogTrigger() {

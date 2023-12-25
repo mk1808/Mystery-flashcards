@@ -8,7 +8,7 @@ function StartLearningModal({ dictionary, flashcardSet, locale, dialogTriggerCla
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
         dialogActions={<StartLearningActions dictionary={dictionary} flashcardSet={flashcardSet} />}
-        width="xl:w-5/12 w-[600px]"
+        width="xl:w-5/12 sm:w-[600px]"
     />
 
     function renderDialogTrigger() {

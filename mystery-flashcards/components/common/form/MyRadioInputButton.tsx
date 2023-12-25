@@ -28,7 +28,7 @@ function MyRadioInputButton({
             <div className="label">
                 <span className="label-text">{label}</span>
             </div>
-            <div className="join">
+            <div className="join join-vertical sm:join-horizontal">
                 <input
                     className={`join-item btn ${size} ${errorClass(isValid)}`}
                     type="radio"
