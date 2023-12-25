@@ -13,7 +13,7 @@ function StartLearningModal({ dictionary, flashcardSet, locale, dialogTriggerCla
 
     function renderDialogTrigger() {
         return (
-            <button className={`btn btn-primary mr-10 ${dialogTriggerClassName}`} id="modalButton">{dictionary.common.learnThisFlashcardSet}</button>
+            <button className={`btn btn-primary mr-2 md:mr-10 ${dialogTriggerClassName}`} id="modalButton">{dictionary.common.learnThisFlashcardSet}</button>
         )
     }
 
