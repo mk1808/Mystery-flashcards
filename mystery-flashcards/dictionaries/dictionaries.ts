@@ -1,3 +1,6 @@
+import { getDictionaryRequest } from '@/utils/client/ApiUtils';
+import { getHost } from '@/utils/client/RestUtils';
+import { headers } from 'next/headers';
 
 type dictionaryType = { pl: any, en: any };
 
@@ -16,5 +19,5 @@ export const getDictionary = async (locale: string) => {
 }
 
 export const fetchDictionary = async (locale: string) => {
-    return fetch(`http://localhost:3000/api/dictionary?locale=${locale}`, { cache: 'no-store' }).then(resp => resp.json())
+    return getDictionaryRequest(locale, getHost(headers()));
 }

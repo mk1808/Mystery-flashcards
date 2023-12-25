@@ -15,9 +15,9 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     await connectToDB();
 
     const currentUser = await getUser(request),
-        flashcardSet = (await FlashcardSet.findById(id)).toObject(),
+        flashcardSet = (await FlashcardSet.findById(id))?.toObject(),
         newUserFlashcard = { userId: currentUser._id, flashcardSetId: id, learningHistory: [] },
-        existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSetId: flashcardSet._id, userId: currentUser._id })).toObject(),
+        existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSetId: flashcardSet._id, userId: currentUser._id }))?.toObject(),
         userFlashcard = existingUserFlashcard || newUserFlashcard;
     const { randStrategy, prevAnswers } = await addOrUpdateUserFlashcard(userFlashcard, learningHistoryTab, existingUserFlashcard);
     if (!flashcardSet) {
@@ -36,9 +36,9 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     await connectToDB();
 
     const currentUser = await getUser(request),
-        flashcardSet = (await FlashcardSet.findById(id)).toObject(),
+        flashcardSet = (await FlashcardSet.findById(id))?.toObject(),
         newUserFlashcard = { userId: currentUser._id, flashcardSetId: id, learningHistory: [] },
-        existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser })).toObject(),
+        existingUserFlashcard = (await UserFlashcard.findOne({ flashcardSet: flashcardSet, user: currentUser }))?.toObject(),
         userFlashcard = existingUserFlashcard || newUserFlashcard;
     const { udpatedUserFlashcard } = await addOrUpdateUserFlashcard(userFlashcard, learningHistoryTab, existingUserFlashcard);
     const { user, newPoints } = await updateUserPoints(currentUser, learningHistoryTab);

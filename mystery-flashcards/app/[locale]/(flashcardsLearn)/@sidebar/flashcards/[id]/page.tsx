@@ -7,15 +7,14 @@ import { fetchDictionary } from "@/dictionaries/dictionaries";
 import { FlashCardSetDto } from "@/dtos/FlashCardSetDto";
 import { getFlashcardSetRequest } from "@/utils/client/ApiUtils";
 import { formatDate } from "@/utils/client/MathUtils";
-import { createCookieHeader } from "@/utils/client/RestUtils";
+import { executeServerSideRequest } from "@/utils/server/restUtils";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
-import { cookies } from "next/headers";
 import React from 'react'
 
 export default async function FlashcardsDetailsSidebar({ params }: { params: { locale: string, id: string } }) {
   const dictionary = await fetchDictionary(params.locale);
   const flashcardSetId = params.id;
-  const { flashcardSet, userFlashcard, testResult, statistics }: FlashCardSetDto = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
+  const { flashcardSet, userFlashcard, testResult, statistics }: FlashCardSetDto = await executeServerSideRequest(getFlashcardSetRequest, flashcardSetId);
   const date = new Date(flashcardSet?.creationDate || "");
   const shouldRenderStatus = () => userFlashcard && userFlashcard?.type != "NONE";
   const translatedType = userFlashcard?.type ? dictionary.common[userFlashcard?.type!] : "";
@@ -41,9 +40,9 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   function renderMainInfo() {
     return (
       <>
-      <SingleSidebarInfo title={dictionary.common.flashcardsCount} value={flashcardSet?.flashcards?.length.toString()!} />
-      <SingleSidebarInfo title={dictionary.common.languages} value={`${flashcardSet?.lang1} -> ${flashcardSet?.lang2}`}/>
-      <SingleSidebarInfo title={dictionary.common.level} value={flashcardSet?.level!}/>
+        <SingleSidebarInfo title={dictionary.common.flashcardsCount} value={flashcardSet?.flashcards?.length.toString()!} />
+        <SingleSidebarInfo title={dictionary.common.languages} value={`${flashcardSet?.lang1} -> ${flashcardSet?.lang2}`} />
+        <SingleSidebarInfo title={dictionary.common.level} value={flashcardSet?.level!} />
       </>
     )
   }
@@ -52,9 +51,9 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
     return (
       <>
 
-      {renderSingleInfo(dictionary.common.author, flashcardSet?.user?.name!, true)} 
-      <SingleSidebarInfo title={dictionary.common.creationDate} value={formatDate(date)} />
-      <SingleSidebarInfo title={dictionary.common.popularity} value={popularity.toString()} />
+        {renderSingleInfo(dictionary.common.author, flashcardSet?.user?.name!, true)}
+        <SingleSidebarInfo title={dictionary.common.creationDate} value={formatDate(date)} />
+        <SingleSidebarInfo title={dictionary.common.popularity} value={popularity.toString()} />
       </>
     )
   }

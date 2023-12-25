@@ -5,14 +5,13 @@ import StartLearningModal from '@/components/flashcards/flashcardDetails/StartLe
 import { fetchDictionary } from '@/dictionaries/dictionaries';
 import { FlashCardSetDto } from '@/dtos/FlashCardSetDto';
 import { getFlashcardSetRequest } from '@/utils/client/ApiUtils';
-import { createCookieHeader } from '@/utils/client/RestUtils';
-import { cookies } from 'next/headers';
+import { executeServerSideRequest } from '@/utils/server/restUtils';
 import React from 'react'
 
 export default async function FlashcardsDetails({ params }: { params: { locale: string, id: string } }) {
   const dictionary = await fetchDictionary(params.locale);
   const flashcardSetId = params.id;
-  const { flashcardSet, statistics, userFlashcard }: FlashCardSetDto = await getFlashcardSetRequest(flashcardSetId, createCookieHeader(cookies()));
+  const { flashcardSet, statistics, userFlashcard }: FlashCardSetDto = await executeServerSideRequest(getFlashcardSetRequest, flashcardSetId);
   const showWantToLearn = !userFlashcard || userFlashcard.type === "NONE"
 
   return (
