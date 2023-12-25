@@ -3,8 +3,8 @@ import React from 'react'
 function Table({ renderRows, columns }: { renderRows: any, columns: any }) {
     return (
 
-        <div className="overflow-x-auto">
-            <table className="table">
+        <div className="overflow-x-auto ">
+            <table className="table min-w-[600px]">
                 <thead>
                     <tr>
                         {columns.map((col: any) => <th key={col} className='text-sm'>{col}</th>)}

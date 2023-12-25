@@ -83,7 +83,7 @@ function TrainingCardContent({
     }
 
     return currentFlashcard && (
-        <div className="grid sm:grid-cols-2 h-full">
+        <div className="flex-1 grid sm:grid-cols-2">
             <div className='grid grid-rows-2'>
                 <div className='self-end'>
                     <h1 className="text-3xl my-3 ">{getMainWord()}</h1>
