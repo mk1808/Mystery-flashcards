@@ -105,7 +105,7 @@ function Header({
         return (
             <div tabIndex={0} className="collapse bg-base-100 lg:hidden">
                 <input type="checkbox" />
-                <div className="collapse-title flex justify-between">
+                <div className="collapse-title flex justify-between pe-4">
                     {renderLogo()}
                     <div className="btn btn-outline btn-primary"><Bars3Icon className="h-6 w-6 " /></div>
                 </div>
