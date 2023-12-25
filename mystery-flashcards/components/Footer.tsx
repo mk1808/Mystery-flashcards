@@ -78,14 +78,14 @@ function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
 
     return (
         <footer className="footer p-10 mt-4 bg-base-200 text-base-content grid-cols-5">
-            <aside className='col-span-3 md:col-span-2'>
+            <aside className='col-span-3 xl:col-span-2'>
                 <Link href={`/${locale}`} className='mb-2 ml-[-8px]'>
                     <img src='/images/logo5.png' className='h-[100px]' />
                 </Link>
                 <p className='text-lg'>Copyright © {year} Monika Kordoń, Marek Czopor</p>
             </aside>
 
-            <div className="col-span-2 md:col-span-3 md:grid-cols-3 h-full w-full">
+            <div className="col-span-2 xl:col-span-3 xl:grid-cols-3 h-full w-full">
                 <nav className="ps-3 border-s-2 border-slate-600 h-full grid" >
                     <header className="footer-title">{dictionary.common.browse}</header>
                     {mainMenuElements.map(renderMenuElementIfNeeded)}

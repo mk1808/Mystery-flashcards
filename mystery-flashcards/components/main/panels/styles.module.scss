@@ -1,31 +1,8 @@
 .firstPanel {
-    width: 99vw;
     height: calc(100vh - 105px);
 
-    .leftSide {
-        height: 100%;
-        width: 45%;
-        float: left;
-        padding: 50px;
-        display: flex;
-        justify-content: center;
-
-        img {
-            width: 100%;
-        }
-    }
-
     .rightSide {
-        background-image: url('/images/books14.jpg');
-        height: 100%;
-        width: 55%;
-        float: right;
-        background-size: cover;
         mask-image: linear-gradient(to right, transparent, black 30%);
-        background-position: 10px;
     }
 
-    ::after {
-        clear: both
-    }
 }
