@@ -7,16 +7,16 @@ import MyInput from './form/MyInput';
 import MyTextarea from './form/MyTextarea';
 import { isFieldValid } from '@/utils/client/FormUtils';
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
+import useLocaleStore from '@/stores/useLocaleStore';
 
 function FlashcardContainer({
   card,
-  isForm,
-  dictionary
+  isForm
 }: {
   card: FlashcardT,
-  isForm?: boolean,
-  dictionary: any
+  isForm?: boolean
 }) {
+  const { dictionary } = useLocaleStore(state => state);
 
   const updateFlashcard = useNewFlashcardSetStore((state) => state.updateFlashcard);
   const addNewFlashcard = useNewFlashcardSetStore((state) => state.addNewFlashcard);

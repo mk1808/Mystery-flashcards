@@ -1,9 +1,9 @@
 "use client"
-import React, { useEffect, useRef } from 'react'
+
 import FlashcardContainer from '../common/FlashcardContainer'
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
 
-function NewFlashcardListForm({ dictionary, flashcards }: { dictionary: any, flashcards?: any }) {
+function NewFlashcardListForm() {
     const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList)
 
     return (
@@ -11,7 +11,6 @@ function NewFlashcardListForm({ dictionary, flashcards }: { dictionary: any, fla
             <FlashcardContainer
                 key={card._id}
                 card={card}
-                dictionary={dictionary}
                 isForm={true} />
         )
     )

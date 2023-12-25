@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ProvideLocale from "@/components/ProvideLocale";
 import AlertManager from "@/components/alerts/AlertManager";
 import { fetchDictionary } from "@/dictionaries/dictionaries";
 
@@ -14,6 +15,7 @@ export default async function LocaleLayout({ children, params }: any) {
         </main>
         <Footer locale={params.locale} dictionary={dictionary} />
         <AlertManager />
+        <ProvideLocale dictionary={dictionary} locale={params.locale} />
     </>
     )
 }

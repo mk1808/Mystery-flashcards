@@ -2,6 +2,7 @@
 import { AlertType } from '@/enums/AlertType';
 import { FlashcardSetT } from '@/models/FlashcardSet';
 import useAlertStore from '@/stores/useAlertStore';
+import useLocaleStore from '@/stores/useLocaleStore';
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
 import { createFlashcardSetRequest, updateFlashcardSetRequest } from '@/utils/client/ApiUtils';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
@@ -9,14 +10,12 @@ import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react'
 
 function NewFlashcardButtons({
-    editedFlashCardSet,
-    dictionary,
-    locale
+    editedFlashCardSet
 }: {
-    editedFlashCardSet?: FlashcardSetT,
-    dictionary: any,
-    locale: string
+    editedFlashCardSet?: FlashcardSetT
 }) {
+    const { dictionary, locale } = useLocaleStore(state => state);
+
     const sidebarForm = useNewFlashcardSetStore((state) => state.sidebarForm);
     const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList);
     const sidebarFormValid = useNewFlashcardSetStore((state) => state.sidebarFormValid);
