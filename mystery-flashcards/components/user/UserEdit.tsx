@@ -20,7 +20,7 @@ export default function UserEdit({ dictionary }: { dictionary: any }) {
         <div>
             <div className="divider"></div>
             <Title text={dictionary.common.userAccountEdit} />
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {renderUserAvatar()}
 
                 {renderUserEditForm()}

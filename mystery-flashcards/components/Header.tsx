@@ -78,7 +78,7 @@ function Header({
 
     function renderWideMenu() {
         return (
-            <div className="navbar bg-base-100 rounded-lg hidden md:flex">
+            <div className="navbar bg-base-100 rounded-lg hidden lg:flex">
                 <div className="flex-1">
                     {renderLogo()}
                 </div>
@@ -103,7 +103,7 @@ function Header({
 
     function renderNarrowMenu() {
         return (
-            <div tabIndex={0} className="collapse bg-base-100 md:hidden">
+            <div tabIndex={0} className="collapse bg-base-100 lg:hidden">
                 <input type="checkbox" />
                 <div className="collapse-title flex justify-between">
                     {renderLogo()}

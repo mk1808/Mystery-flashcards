@@ -8,9 +8,11 @@ import React from 'react'
 export default async function UserDetails({ params }: { params: { locale: string } }) {
   const dictionary = await fetchDictionary(params.locale);
   return (
-    <Card title={<UserHeader dictionary={dictionary} />} className='h-fit w-[1000px] px-[100px]'>
-      <UserStatistics dictionary={dictionary} />
-      <UserEdit dictionary={dictionary} />
-    </Card>
+    <div className='w-full lg:w-fit px-5'>
+      <Card title={<UserHeader dictionary={dictionary} />} className='h-fit w-full lg:w-[1000px] px-[5%] lg:px-[100px]'>
+        <UserStatistics dictionary={dictionary} />
+        <UserEdit dictionary={dictionary} />
+      </Card>
+    </div>
   )
 }
