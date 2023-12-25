@@ -28,20 +28,28 @@ export default function SecondPanel({
 
     function renderStep(step: StepType, index: number) {
         return (
-            <div className='flex items-center h-1/5' key={step.number}>
+            <div key={step.number} className='flex pt-10 h-1/5'>
                 {renderSpace(step.number, index)}
                 {renderNumberCircle(step.number)}
-                <div className='text-4xl  text-black h-min p-3 bg-base-100 rounded-md'>{step.text}</div>
+                <div className=' text-2xl md:text-4xl text-black h-min p-3 bg-base-100 rounded-md'>{step.text}</div>
             </div>
         );
     }
 
     function renderNumberCircle(number: string) {
-        return <RoundActionButton content={number} border="border-[5px]" styles="bg-neutral m-5 text-4xl font-bold text-primary border-secondary" />
+        return (
+            <div>
+                <RoundActionButton content={number} border="border-[5px]" styles="bg-neutral me-5 text-4xl font-bold text-primary border-secondary " />
+            </div>
+        )
     }
 
     function renderSpace(id: string, amount: number) {
-        const amountTemp = [...Object(Array(amount)).keys()];
-        return amountTemp.map(index => <div key={index + "_" + id} className='w-1/12'></div>);
+        const amountTemp = [...Object(Array(amount + 1)).keys()];
+        return (
+            <div className="flex">
+                {amountTemp.map(index => <div key={index + "_" + id} className='w-[2vw] md:w-[5vw] h-full'></div>)}
+            </div>
+        );
     }
 }
