@@ -1,4 +1,5 @@
 import Badges from "@/components/common/Badges";
+import SingleSidebarInfo from "@/components/common/SingleSidebarInfo";
 import UserAvatar from "@/components/common/UserAvatar";
 import EditButton from "@/components/flashcards/flashcardDetails/EditButton";
 import GoToTestResultsButton from "@/components/flashcards/flashcardDetails/GoToTestResultsButton";
@@ -39,9 +40,9 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   function renderMainInfo() {
     return (
       <>
-        {renderSingleInfo(dictionary.common.flashcardsCount, flashcardSet?.flashcards?.length.toString()!)}
-        {renderSingleInfo(dictionary.common.languages, `${flashcardSet?.lang1} -> ${flashcardSet?.lang2}`)}
-        {renderSingleInfo(dictionary.common.level, flashcardSet?.level!)}
+      <SingleSidebarInfo title={dictionary.common.flashcardsCount} value={flashcardSet?.flashcards?.length.toString()!} />
+      <SingleSidebarInfo title={dictionary.common.languages} value={`${flashcardSet?.lang1} -> ${flashcardSet?.lang2}`}/>
+      <SingleSidebarInfo title={dictionary.common.level} value={flashcardSet?.level!}/>
       </>
     )
   }
@@ -49,9 +50,9 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   function renderCreationInfo() {
     return (
       <>
-        {renderSingleInfo(dictionary.common.author, flashcardSet?.user?.name!, true)}
-        {renderSingleInfo(dictionary.common.creationDate, formatDate(date))}
-        {renderSingleInfo(dictionary.common.popularity, "100")}
+      {renderSingleInfo(dictionary.common.author, flashcardSet?.user?.name!, true)} 
+      <SingleSidebarInfo title={dictionary.common.creationDate} value={formatDate(date)} />
+      <SingleSidebarInfo title={dictionary.common.popularity} value={"100"} />
       </>
     )
   }
