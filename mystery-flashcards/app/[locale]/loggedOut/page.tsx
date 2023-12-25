@@ -1,9 +1,10 @@
 
+"use client"
 import Card from '@/components/Card';
 import useLocaleStore from '@/stores/useLocaleStore';
 import Link from 'next/link';
 
-async function LoggedOut() {
+function LoggedOut() {
   const { dictionary, locale } = useLocaleStore(state => state);
 
   return (

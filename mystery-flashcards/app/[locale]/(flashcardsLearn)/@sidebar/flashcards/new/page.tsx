@@ -1,9 +1,10 @@
+"use client"
 import React from 'react'
 import NewFlashcardForm from '@/components/flashcards/NewFlashcardForm';
 import NewFlashcardNumber from '@/components/flashcards/NewFlashcardNumber';
 import useLocaleStore from '@/stores/useLocaleStore';
 
-export default async function NewFlashcardsSidebar() {
+export default function NewFlashcardsSidebar() {
   const { dictionary } = useLocaleStore(state => state);
 
   return (

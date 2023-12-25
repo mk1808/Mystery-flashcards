@@ -22,7 +22,7 @@ function NewFlashcardForm({
     const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
     const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
     const hashtagsOptions = useHashtags();
-    const { updateSidebarForm, setSidebarFormValid, initState, resetState } = useNewFlashcardSetStore((state) => state);
+    const { updateSidebarForm, setSidebarFormValid, initState, resetState, sidebarFormValid } = useNewFlashcardSetStore((state) => state);
     const initOnceRef = useRef(false)
     const validateLang2 = (lang2: string) => watch("lang1") !== lang2 || dictionary.common.languagesShouldDiffer;
     const {
@@ -41,7 +41,9 @@ function NewFlashcardForm({
     }, [watch])
 
     useEffect(() => {
-        setSidebarFormValid(formState.isValid || !!flashcardSet)
+        if (sidebarFormValid != (formState.isValid || !!flashcardSet)) {
+            setSidebarFormValid(formState.isValid || !!flashcardSet)
+        }
     }, [formState])
 
     useEffect(() => {

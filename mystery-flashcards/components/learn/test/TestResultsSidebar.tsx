@@ -1,3 +1,4 @@
+"use client"
 import LearnStats from '@/components/learn/LearnStats';
 import { FlashCardSetDto } from '@/dtos/FlashCardSetDto';
 import { UserT } from '@/models/User';
@@ -6,7 +7,7 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { findNextRang, getRang } from '@/utils/server/userRangUtils';
 import React from 'react'
 
-export default async function TestResultsSidebar({
+export default function TestResultsSidebar({
     flashcardSetDto,
     user
 }: {

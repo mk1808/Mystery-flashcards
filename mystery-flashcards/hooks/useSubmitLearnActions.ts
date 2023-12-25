@@ -5,8 +5,10 @@ import useSubmitTrainingAction from "./submitLearnActions/useSubmitTrainingActio
 import useSubmitTestAction from "./submitTrainingActions/useSubmitTestAction";
 import useTestStore from "@/stores/useTestStore";
 import useSubmitTestResultAction from "./submitTrainingActions/useSubmitTestResultAction";
+import useLocaleStore from "@/stores/useLocaleStore";
 
 function useSubmitLearnActions(): { mainButtonAttrs: any, otherButtonAttrs: any } {
+    const { dictionary } = useLocaleStore(state => state);
     const { view, flashcardSet } = useTrainingStore((state) => state);
     const { currentFlashcardIndex } = useTestStore((state) => state);
     const training = useSubmitTrainingAction();
@@ -35,7 +37,7 @@ function useSubmitLearnActions(): { mainButtonAttrs: any, otherButtonAttrs: any 
                 setCurrentAction(testResult)
                 break;
         }
-    }, [view, currentFlashcardIndex])
+    }, [view, currentFlashcardIndex, dictionary])
 
     return currentAction;
 }

@@ -1,7 +1,8 @@
+"use client"
 import useLocaleStore from "@/stores/useLocaleStore";
 
 
-async function NotFound() {
+function NotFound() {
     const { dictionary } = useLocaleStore(state => state);
     return <div>{dictionary.common.notFound}</div>
 }

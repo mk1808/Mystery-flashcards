@@ -1,3 +1,4 @@
+"use client"
 import useLocaleStore from '@/stores/useLocaleStore';
 import React from 'react'
 

@@ -1,3 +1,4 @@
+"use client"
 import Modal from '@/components/common/Modal'
 import React from 'react'
 import StartLearningActions from './StartLearningActions'
@@ -5,7 +6,7 @@ import StartLearningContent from './StartLearningContent'
 import useLocaleStore from '@/stores/useLocaleStore';
 
 function StartLearningModal({ flashcardSet, dialogTriggerClassName = "" }: { flashcardSet: any, dialogTriggerClassName?: string }) {
-    const { dictionary} = useLocaleStore(state => state);
+    const { dictionary } = useLocaleStore(state => state);
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
@@ -24,7 +25,7 @@ function StartLearningModal({ flashcardSet, dialogTriggerClassName = "" }: { fla
     }
 
     function renderDialogContent() {
-        return <StartLearningContent flashcardSet={flashcardSet}  />
+        return <StartLearningContent flashcardSet={flashcardSet} />
     }
 }
 
