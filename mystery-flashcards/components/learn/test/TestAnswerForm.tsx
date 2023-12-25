@@ -7,11 +7,9 @@ import { AnswerT } from '@/models/Answer';
 import useSubmitTestAction from '@/hooks/submitTrainingActions/useSubmitTestAction';
 
 function TestAnswerForm({ dictionary, locale }: { dictionary: any, locale: string }) {
-    const onAnswerSave = useTestStore((state) => state.onAnswerSave);
-    const incrementCurrentFlashcardIndex = useTestStore((state) => state.incrementCurrentFlashcardIndex);
-    const currentFlashcardIndex = useTestStore((state) => state.currentFlashcardIndex);
-    const testFlashcards = useTestStore((state) => state.testFlashcards);
-    const { otherButtonAttrs } = useSubmitTestAction({ dictionary, locale })
+    const { currentFlashcardIndex, testFlashcards } = useTestStore((state) => state);
+    const { onAnswerSave, incrementCurrentFlashcardIndex } = useTestStore((state) => state);
+       const { otherButtonAttrs } = useSubmitTestAction({ dictionary, locale })
 
     const {
         register,

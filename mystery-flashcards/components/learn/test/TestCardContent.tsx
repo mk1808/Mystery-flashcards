@@ -21,18 +21,15 @@ function TestCardContent({
     locale: string
 }) {
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
-    const setFlashcardSet = useTestStore((state) => state.setFlashcardSet);
-    const setDirection = useTestStore((state) => state.setDirection);
-    const setTestFlashcards = useTestStore((state) => state.setTestFlashcards);
-    const initStore = useTestStore((state) => state.initStore);
-    const currentIndex = useTestStore((state) => state.currentFlashcardIndex);
-    const setView = useTrainingStore((state) => state.setView);
+    const { currentFlashcardIndex } = useTestStore((state) => state);
+    const { setFlashcardSet, setDirection, setTestFlashcards, initStore } = useTestStore((state) => state);
+    const { setView } = useTrainingStore((state) => state);
 
     useEffect(() => { setView(view) }, [view])
     useEffect(() => { setFlashcardSet(flashcardSet); initStore(); }, [flashcardSet])
     useEffect(() => { setTestFlashcards(testFlashcards) }, [testFlashcards])
     useEffect(() => { setDirection(direction) }, [direction])
-    useEffect(() => { setCurrentFlashcard(testFlashcards[currentIndex]) }, [currentIndex])
+    useEffect(() => { setCurrentFlashcard(testFlashcards[currentFlashcardIndex]) }, [currentFlashcardIndex])
 
     const getWord = () => direction === "main" ? currentFlashcard?.wordLang1 : currentFlashcard?.wordLang2;
     const getDescription = () => direction === "main" ? currentFlashcard?.description1 : currentFlashcard?.description2;

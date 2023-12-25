@@ -1,6 +1,5 @@
 import ResultTable from '@/components/learn/training/ResultTable';
 import { fetchDictionary } from '@/dictionaries/dictionaries';
-import useTrainingStore from '@/stores/useTrainingStore';
 import React from 'react'
 
 export default async function LearnTrainingResults({ params }: { params: { id: string, locale: string } }) {

@@ -8,33 +8,26 @@ import { FlashcardT } from '@/models/Flashcard';
 function TrainingCardContent({
     dictionary,
     flashcardSet,
-    roundFlashcards,
+    roundFlashcardsProp,
     view,
     direction
 }: {
     dictionary: any,
     flashcardSet: any,
-    roundFlashcards: any,
+    roundFlashcardsProp: any,
     view: any,
     direction: string
 }) {
     const [isValid, setIsValid] = useState<Boolean>(true);
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
-    const setView = useTrainingStore((state) => state.setView);
-    const setFlashcardSet = useTrainingStore((state) => state.setFlashcardSet);
-    const initStore = useTrainingStore((state) => state.initStore);
-    const setRoundFlashcards = useTrainingStore((state) => state.setRoundFlashcards);
-    const storedRoundFlashcards = useTrainingStore((state) => state.roundFlashcards);
-    const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
-    const wasChecked = useTrainingStore((state) => state.wasChecked);
-    const setWasChecked = useTrainingStore((state) => state.setWasChecked);
-    const setDirection = useTrainingStore((state) => state.setDirection);
+    const { roundFlashcards, currentFlashcardIndexInRound, wasChecked } = useTrainingStore((state) => state);
+    const { setView, setFlashcardSet, initStore, setRoundFlashcards, setWasChecked, setDirection } = useTrainingStore((state) => state);
 
     useEffect(() => { setView(view) }, [view])
-    useEffect(() => { setRoundFlashcards(roundFlashcards); initStore() }, [])
+    useEffect(() => { setRoundFlashcards(roundFlashcardsProp); initStore() }, [])
     useEffect(() => { setFlashcardSet(flashcardSet); }, [flashcardSet])
     useEffect(() => { setDirection(direction) }, [direction])
-    useEffect(() => { setCurrentFlashcard(storedRoundFlashcards[currentIndex]); }, [currentIndex, storedRoundFlashcards])
+    useEffect(() => { setCurrentFlashcard(roundFlashcards[currentFlashcardIndexInRound]); }, [currentFlashcardIndexInRound, roundFlashcards])
 
     const isMainDirection = direction === "main";
     const { wordLang1, wordLang2, description1, description2 } = currentFlashcard || {};

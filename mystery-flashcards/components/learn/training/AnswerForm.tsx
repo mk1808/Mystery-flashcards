@@ -6,20 +6,11 @@ import useTrainingStore from '@/stores/useTrainingStore';
 import { checkValidity, updateAnswer, updateResult } from '@/utils/client/TrainingUtils';
 import { FlashcardT } from '@/models/Flashcard';
 import { useRef } from 'react';
-import { getFlashcardSetRequest, postAnswersAndReturnCards } from '@/utils/client/ApiUtils';
+import { postAnswersAndReturnCards } from '@/utils/client/ApiUtils';
 
 function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }: { dictionary: any, currentFlashcard: FlashcardT, setIsValid: any, setWasChecked: any }) {
-    const onAnswerSave = useTrainingStore((state) => state.onAnswerSave);
-    const onNewRound = useTrainingStore((state) => state.onNewRound);
-
-    const roundFlashcards = useTrainingStore((state) => state.roundFlashcards);
-    const roundAnswers = useTrainingStore((state) => state.roundAnswers);
-    const direction = useTrainingStore((state) => state.direction);
-    const currentIndex = useTrainingStore((state) => state.currentFlashcardIndexInRound);
-    const result = useTrainingStore((state) => state.result);
-    const wasChecked = useTrainingStore((state) => state.wasChecked);
-    const { flashcardSet } = useTrainingStore((state) => state.flashcardSet);
-    const incrementCurrentFlashcardIndexInRound = useTrainingStore((state) => state.incrementCurrentFlashcardIndexInRound);
+    const { roundFlashcards, roundAnswers, direction, currentFlashcardIndexInRound, result, wasChecked, flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
+    const { onAnswerSave, onNewRound, incrementCurrentFlashcardIndexInRound } = useTrainingStore((state) => state);
     const resultRef = useRef<any>(null);
     resultRef.current = result;
 
@@ -39,7 +30,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
             console.log("answer", answer)
             console.log("TEST ANSWER")
             if (!wasChecked) {
-                const currentFlashcard = roundFlashcards[currentIndex],
+                const currentFlashcard = roundFlashcards[currentFlashcardIndexInRound],
                     isValid = checkValidity(currentFlashcard, answer, direction),
                     updatedAnswer = updateAnswer(answer, currentFlashcard, isValid),
                     updatedResult = updateResult(updatedAnswer, resultRef.current);
@@ -49,7 +40,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
             } else {
                 setWasChecked(false);
                 reset({ givenAnswer: "" })
-                const hasNextFlashcard = currentIndex + 1 < roundFlashcards.length;
+                const hasNextFlashcard = currentFlashcardIndexInRound + 1 < roundFlashcards.length;
                 if (hasNextFlashcard) {
                     incrementCurrentFlashcardIndexInRound();
                 }

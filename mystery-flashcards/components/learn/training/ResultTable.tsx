@@ -14,12 +14,9 @@ function ResultTable({
     dictionary: any,
     locale: string
 }) {
-    const allAnswers = useTrainingStore((state) => state.allAnswers);
-    const flashcardSet = useTrainingStore((state) => state.flashcardSet);
-    const allFlashcards = useTrainingStore((state) => state.allFlashcards);
-    const direction = useTrainingStore((state) => state.direction);
+    const { allAnswers, flashcardSet, allFlashcards, direction } = useTrainingStore((state) => state);
+    const { setView } = useTrainingStore((state) => state);
     const allInfoObjects = createTestResult(allAnswers, allFlashcards);
-    const setView = useTrainingStore((state) => state.setView);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.correctAnswersPercent]
     useEffect(() => { setView(view) }, [view])
 

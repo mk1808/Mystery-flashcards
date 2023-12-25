@@ -17,13 +17,8 @@ function FlashcardContainer({
   isForm?: boolean
 }) {
   const { dictionary } = useLocaleStore(state => state);
-
-  const updateFlashcard = useNewFlashcardSetStore((state) => state.updateFlashcard);
-  const addNewFlashcard = useNewFlashcardSetStore((state) => state.addNewFlashcard);
-  const deleteFlashcard = useNewFlashcardSetStore((state) => state.deleteFlashcard);
-  const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList)
-  const flashcardListInvalidCountInc = useNewFlashcardSetStore((state) => state.flashcardListInvalidCountInc);
-  const flashcardListInvalidCountDec = useNewFlashcardSetStore((state) => state.flashcardListInvalidCountDec);
+  const { flashcardsList } = useNewFlashcardSetStore((state) => state)
+  const { updateFlashcard, addNewFlashcard, deleteFlashcard, flashcardListInvalidCountInc, flashcardListInvalidCountDec } = useNewFlashcardSetStore((state) => state);
   const allFlashCards = useRef(flashcardsList)
   const lastValidationState = useRef(true)
 

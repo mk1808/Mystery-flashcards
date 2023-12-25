@@ -10,8 +10,7 @@ export default function TrainingSidebar({
 }: {
     dictionary: any
 }) {
-    const { flashcardSet } = useTrainingStore((state) => state.flashcardSet);
-    const { result, roundFlashcards, roundCount, direction } = useTrainingStore((state) => state);
+    const { result, roundFlashcards, roundCount, direction, flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
     const statsValues = [
         {
             text: dictionary.common.answersCount,

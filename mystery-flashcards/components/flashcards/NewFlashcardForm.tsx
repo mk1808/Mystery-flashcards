@@ -23,12 +23,8 @@ function NewFlashcardForm({
     const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
     const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
     const hashtagsOptions = useHashtags();
-    const updateSidebarForm = useNewFlashcardSetStore((state) => state.updateSidebarForm);
-    const setSidebarFormValid = useNewFlashcardSetStore((state) => state.setSidebarFormValid);
-    const initState = useNewFlashcardSetStore((state) => state.initState);
-    const resetState = useNewFlashcardSetStore((state) => state.resetState);
+    const { updateSidebarForm, setSidebarFormValid, initState, resetState } = useNewFlashcardSetStore((state) => state);
     const initOnceRef = useRef(false)
-    const router = useRouter();
     const validateLang2 = (lang2: string) => watch("lang1") !== lang2 || dictionary.common.languagesShouldDiffer;
     const {
         register,

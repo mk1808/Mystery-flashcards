@@ -1,7 +1,6 @@
 "use client"
 import useSubmitLearnActions from '@/hooks/useSubmitLearnActions';
-import useTrainingStore from '@/stores/useTrainingStore';
-import React, { useEffect } from 'react'
+import React from 'react'
 
 function LearnSubmitButtons({ dictionary, locale }: { dictionary: any, locale: any }) {
     const { mainButtonAttrs, otherButtonAttrs } = useSubmitLearnActions({ dictionary, locale })

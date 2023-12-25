@@ -7,9 +7,8 @@ import useTestStore from "@/stores/useTestStore";
 import useSubmitTestResultAction from "./submitTrainingActions/useSubmitTestResultAction";
 
 function useSubmitLearnActions({ dictionary, locale }: { dictionary: any, locale: any }): { mainButtonAttrs: any, otherButtonAttrs: any } {
-    const view = useTrainingStore((state) => state.view);
-    const flashcardSet = useTrainingStore((state) => state.flashcardSet);
-    const currentFlashcardIndex = useTestStore((state) => state.currentFlashcardIndex);
+    const { view, flashcardSet } = useTrainingStore((state) => state);
+    const { currentFlashcardIndex } = useTestStore((state) => state);
     const training = useSubmitTrainingAction({ dictionary, locale });
     const trainingResult = useSubmitTrainingResultAction({ dictionary, flashcardSet, locale });
     const test = useSubmitTestAction({ dictionary, locale });

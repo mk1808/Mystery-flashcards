@@ -8,10 +8,8 @@ import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react'
 
 function useSubmitTrainingAction({ dictionary, locale }: { dictionary: any, locale: string }) {
-    const wasChecked = useTrainingStore((state) => state.wasChecked);
-    const roundAnswers = useTrainingStore((state) => state.roundAnswers);
-    const { flashcardSet } = useTrainingStore((state) => state.flashcardSet);
-    const setFinalResult = useTrainingStore((state) => state.setFinalResult);
+    const { wasChecked, roundAnswers, flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
+    const { setFinalResult } = useTrainingStore((state) => state);
     const addAlert = useAlertStore((state) => state.add)
     const router = useRouter();
     const wasCheckedRef = useRef<any>(null)

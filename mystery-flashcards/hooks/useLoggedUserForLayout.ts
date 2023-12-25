@@ -5,9 +5,8 @@ import React, { useEffect } from 'react'
 
 function useLoggedUserForLayout({ renderMenuElement, locale }: { renderMenuElement: any, locale: string }) {
 
-    const currentUser = useAuthStore(state => state.currentUser);
-    const checkWhoAmi = useAuthStore(state => state.checkWhoAmi);
-    const setShouldCheckWhoIam = useAuthStore(state => state.setShouldCheckWhoIam);
+    const { currentUser } = useAuthStore(state => state);
+    const { checkWhoAmi, setShouldCheckWhoIam} = useAuthStore(state => state);
     const router = useRouter();
 
     function renderMenuElementIfNeeded(element: any) {

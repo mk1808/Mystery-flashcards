@@ -17,8 +17,7 @@ function TestResultTable({
     view: any,
     locale: string
 }) {
-    const setView = useTrainingStore((state) => state.setView);
-    const setFlashcardSet = useTrainingStore((state) => state.setFlashcardSet);
+    const { setView, setFlashcardSet } = useTrainingStore((state) => state);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.status]
     useEffect(() => { setView(view) }, [view])
     useEffect(() => { setFlashcardSet(flashcardSetDto) }, [flashcardSetDto])

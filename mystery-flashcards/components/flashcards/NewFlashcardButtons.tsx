@@ -16,11 +16,8 @@ function NewFlashcardButtons({
 }) {
     const { dictionary, locale } = useLocaleStore(state => state);
 
-    const sidebarForm = useNewFlashcardSetStore((state) => state.sidebarForm);
-    const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList);
-    const sidebarFormValid = useNewFlashcardSetStore((state) => state.sidebarFormValid);
-    const flashcardListInvalidCount = useNewFlashcardSetStore((state) => state.flashcardListInvalidCount);
-    const deleteAllFlashcards = useNewFlashcardSetStore((state) => state.deleteAllFlashcards);
+    const { sidebarForm, flashcardsList, sidebarFormValid, flashcardListInvalidCount } = useNewFlashcardSetStore((state) => state);
+    const { deleteAllFlashcards } = useNewFlashcardSetStore((state) => state);
     const sidebarSubmitBtnRef = useRef<any>(null);
     const addAlert = useAlertStore((state) => state.add)
     const router = useRouter();
