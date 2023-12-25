@@ -86,18 +86,18 @@ function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
             </aside>
 
             <div className="col-span-5 xs:col-span-2 xl:col-span-3 xl:grid-cols-3 h-full w-full gap-4 xs:gap-0">
-                <nav className="ps-3 border-s-2 border-slate-600 h-full grid " >
+                <nav className="ps-3 border-s-2 border-slate-600 h-full grid mb-5 xs:mb-0" >
                     <header className="footer-title">{dictionary.common.browse}</header>
                     {mainMenuElements.map(renderMenuElementIfNeeded)}
 
                 </nav>
-                <nav className="ps-3 border-s-2 border-slate-600 h-full grid">
+                <nav className="ps-3 border-s-2 border-slate-600 h-full grid mb-5 xs:mb-0">
                     <header className="footer-title">{dictionary.common.language}</header>
                     {languageMenuElements.map(renderMenuElementIfNeeded)}
                     {renderEmpty()}
                     {renderEmpty()}
                 </nav>
-                <nav className="ps-3 border-s-2 border-slate-600 h-full grid">
+                <nav className="ps-3 border-s-2 border-slate-600 h-full grid mb-5 xs:mb-0">
                     <header className="footer-title">{dictionary.common.contact}</header>
                     {contactMenuElements.map(renderMenuElementIfNeeded)}
                     {renderEmpty()}
