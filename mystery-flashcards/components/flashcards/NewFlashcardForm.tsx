@@ -68,7 +68,7 @@ function NewFlashcardForm({
         // router.push('/user')
         console.log(data);
     };
-    const onErrors = (errors: any) => console.error(errors);
+    const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
 
 

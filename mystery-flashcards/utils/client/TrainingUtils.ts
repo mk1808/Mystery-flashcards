@@ -31,9 +31,9 @@ export const checkValidity = (flashcard: FlashcardT, answer: AnswerForm, directi
     return word?.toLowerCase() == answer.givenAnswer.toLowerCase();
 }
 
-export const getMainButtonAttrs = (wasChecked: Boolean): ButtonAttrs => {
+export const getMainButtonAttrs = (wasChecked: Boolean, dictionary: any): ButtonAttrs => {
     const commonAttrs = { form: "answerForm" }
-    const title = wasChecked ? "Kontynuuj" : "Zatwierdź odpowiedź";
+    const title = wasChecked ? dictionary.common.continue : dictionary.common.confirmAnswer;
     return { ...commonAttrs, title: title, type: "submit" }
 }
 

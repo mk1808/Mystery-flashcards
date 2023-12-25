@@ -6,12 +6,12 @@ import useTestStore from '@/stores/useTestStore';
 import { AnswerT } from '@/models/Answer';
 import useSubmitTestAction from '@/hooks/submitTrainingActions/useSubmitTestAction';
 
-function TestAnswerForm({ dictionary }: { dictionary: any }) {
+function TestAnswerForm({ dictionary, locale }: { dictionary: any, locale: string }) {
     const onAnswerSave = useTestStore((state) => state.onAnswerSave);
     const incrementCurrentFlashcardIndex = useTestStore((state) => state.incrementCurrentFlashcardIndex);
     const currentFlashcardIndex = useTestStore((state) => state.currentFlashcardIndex);
     const testFlashcards = useTestStore((state) => state.testFlashcards);
-    const { otherButtonAttrs } = useSubmitTestAction(dictionary)
+    const { otherButtonAttrs } = useSubmitTestAction({ dictionary, locale })
 
     const {
         register,
@@ -33,7 +33,7 @@ function TestAnswerForm({ dictionary }: { dictionary: any }) {
             setTimeout(otherButtonAttrs.onFinishClick);
         }
     };
-    const onErrors = (errors: any) => console.error(errors);
+    const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
     return (
         <form onSubmit={handleSubmit(onSubmit, onErrors)} id="answerForm">

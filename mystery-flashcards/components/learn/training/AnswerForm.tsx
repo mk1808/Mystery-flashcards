@@ -64,7 +64,7 @@ function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }:
 
         }
     };
-    const onErrors = (errors: any) => console.error(errors);
+    const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
     return (
         <form onSubmit={handleSubmit(onSubmit, onErrors)} id="answerForm">

@@ -12,7 +12,7 @@ function AddWantToLearnActions({ dictionary, flashcardSet, userFlashcard }: { di
         const body = {
             flashcardSetId: flashcardSet._id,
             type: "WANT_TO_LEARN",
-            isFavorite: userFlashcard.isFavorite
+            isFavorite: userFlashcard?.isFavorite
         }
         try {
             const response = await postUserFlashcardSet(body);

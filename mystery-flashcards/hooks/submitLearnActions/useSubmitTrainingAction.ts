@@ -7,7 +7,7 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react'
 
-function useSubmitTrainingAction({ dictionary }: { dictionary: any }) {
+function useSubmitTrainingAction({ dictionary, locale }: { dictionary: any, locale: string }) {
     const wasChecked = useTrainingStore((state) => state.wasChecked);
     const roundAnswers = useTrainingStore((state) => state.roundAnswers);
     const { flashcardSet } = useTrainingStore((state) => state.flashcardSet);
@@ -16,13 +16,13 @@ function useSubmitTrainingAction({ dictionary }: { dictionary: any }) {
     const router = useRouter();
     const wasCheckedRef = useRef<any>(null)
     wasCheckedRef.current = wasChecked;
-    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(wasCheckedRef.current);
+    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(wasCheckedRef.current, dictionary);
     const flashcardSetRef = useRef<any>(null)
     flashcardSetRef.current = flashcardSet;
     const roundAnswersRef = useRef<any>(null)
     roundAnswersRef.current = roundAnswers;
 
-    const goToResults = () => router.push(`/learn/training/${flashcardSetRef.current._id}/results`)
+    const goToResults = () => router.push(`/${locale}/learn/training/${flashcardSetRef.current._id}/results`)
     const onFinishClick = async () => {
         try {
             const result = await patchAnswersAndReturnResults(flashcardSetRef.current._id, roundAnswersRef.current);
@@ -33,7 +33,7 @@ function useSubmitTrainingAction({ dictionary }: { dictionary: any }) {
         }
 
     }
-    const otherButtonAttrs = { onFinishClick, title: "Zakończ naukę" }
+    const otherButtonAttrs = { onFinishClick, title: dictionary.common.endLearning }
 
     return { mainButtonAttrs, otherButtonAttrs };
 }

@@ -138,7 +138,11 @@
         "FINISHED": "Ukończone",
         "wantToLearn": "Chcę się uczyć",
         "lastTestResult": "Wynik testu",
-        "openSidebar": "Wyświetl szczegóły"
+        "openSidebar": "Wyświetl szczegóły",
+        "continue": "Kontynuuj",
+        "confirmAnswer": "Zatwierdź odpowiedź",
+        "endLearning": "Zakończ naukę",
+        "endTest": "Zakończ test"
     },
     "userRanges": {
         "preschooler": "Przedszkolak",

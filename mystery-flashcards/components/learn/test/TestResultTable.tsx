@@ -44,7 +44,7 @@ function TestResultTable({
         const mainWord = isMainDirection ? wordLang1 : wordLang2;
         const secondaryWord = isMainDirection ? wordLang2 : wordLang1;
         return (
-            <tr>
+            <tr key={index}>
                 <th>{index + 1}</th>
                 <td>{mainWord}</td>
                 <td>{answer.givenAnswer}</td>

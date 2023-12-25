@@ -7,7 +7,8 @@ type UnsecuredRoutesTypes = { GET: string[], POST: string[] };
 const unsecuredRoutes: UnsecuredRoutesTypes = {
     GET: [
         '^/api/flashcards/.*$',
-        '^/api/dictionary.*$'
+        '^/api/dictionary.*$',
+        '^/api/cached.*$'
     ],
     POST: [
         '^/api/auth/register$',

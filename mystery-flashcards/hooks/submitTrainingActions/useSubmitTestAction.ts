@@ -9,7 +9,7 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
-function useSubmitTestAction({ dictionary }: { dictionary: any }) {
+function useSubmitTestAction({ dictionary, locale }: { dictionary: any, locale: string }) {
     const testAnswers = useTestStore((state) => state.testAnswers);
     const currentFlashcardIndex = useTestStore((state) => state.currentFlashcardIndex);
     const testFlashcards = useTestStore((state) => state.testFlashcards);
@@ -19,15 +19,15 @@ function useSubmitTestAction({ dictionary }: { dictionary: any }) {
     const addAlert = useAlertStore((state) => state.add)
     const router = useRouter();
 
-    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(false);
+    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(false, dictionary);
     console.log("currentFlashcardIndex < testFlashcards.length - 1", currentFlashcardIndex < testFlashcards.length - 1)
-    mainButtonAttrs.title = currentFlashcardIndex < testFlashcards.length - 1 ? "Kontynuuj" : "Zakończ test";
+    mainButtonAttrs.title = currentFlashcardIndex < testFlashcards.length - 1 ? dictionary.common.continue : dictionary.common.endTest;
     const flashcardSetRef = useRef<any>(null)
     flashcardSetRef.current = flashcardSet;
     const testAnswersRef = useRef<any>(null)
     testAnswersRef.current = testAnswers;
 
-    const goToResults = () => router.push(`/learn/test/${flashcardSetRef.current._id}/results`)
+    const goToResults = () => router.push(`/${locale}/learn/test/${flashcardSetRef.current._id}/results`)
     const onFinishClick = async () => {
         try {
             const testResult: TestResultT = {
@@ -41,7 +41,7 @@ function useSubmitTestAction({ dictionary }: { dictionary: any }) {
             addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
         }
     }
-    const otherButtonAttrs = { onFinishClick, title: "Zakończ naukę" }
+    const otherButtonAttrs = { onFinishClick, title: dictionary.common.endLearning }
 
     return { mainButtonAttrs, otherButtonAttrs };
 }

@@ -8,7 +8,7 @@ async function NewFlashcards({ params }: { params: { id: String, locale: string 
 
   return (
     <div className="h-full">
-      <NewFlashcardButtons dictionary={dictionary} />
+      <NewFlashcardButtons dictionary={dictionary} locale={params.locale} />
       <NewFlashcardListForm dictionary={dictionary} />
     </div>
   )
