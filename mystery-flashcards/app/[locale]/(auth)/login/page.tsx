@@ -1,12 +1,10 @@
 
 import LoginForm from '@/components/auth/LoginForm';
-import { fetchDictionary } from '@/dictionaries/dictionaries';
 import React from 'react'
 
-async function Login({ params }: { params: { locale: string } }) {
-  const dictionary = await fetchDictionary(params.locale);
+async function Login() {
 
-  return <LoginForm dictionary={dictionary} locale={params.locale} />
+  return <LoginForm />
 }
 
 export default Login

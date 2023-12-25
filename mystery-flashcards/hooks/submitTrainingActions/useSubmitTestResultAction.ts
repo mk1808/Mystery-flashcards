@@ -1,8 +1,10 @@
+import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
-function useSubmitTestResultAction({ dictionary, locale }: { dictionary: any, locale: any }) {
+function useSubmitTestResultAction() {
+    const { dictionary, locale } = useLocaleStore(state => state);
     const { flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
     const router = useRouter();
     const mainButtonAttrs: ButtonAttrs = {

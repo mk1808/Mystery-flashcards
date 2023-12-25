@@ -1,6 +1,5 @@
 "use client"
 import { isFieldValid } from '@/utils/client/FormUtils';
-import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useRef } from 'react'
 import MyInput from '../common/form/MyInput';
 import { useForm } from 'react-hook-form';
@@ -12,14 +11,14 @@ import { LangOptions } from '@/enums/LangOptions';
 import { translateOptions } from '@/utils/client/EnumUtils';
 import { LevelOptions } from '@/enums/LevelOptions';
 import useHashtags from '@/hooks/useHashtags';
+import useLocaleStore from '@/stores/useLocaleStore';
 
 function NewFlashcardForm({
-    dictionary,
     flashcardSet
 }: {
-    dictionary: any,
     flashcardSet?: FlashcardSetT
 }) {
+    const { dictionary } = useLocaleStore(state => state);
     const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
     const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
     const hashtagsOptions = useHashtags();

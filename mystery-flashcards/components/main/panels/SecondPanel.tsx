@@ -1,3 +1,4 @@
+import useLocaleStore from "@/stores/useLocaleStore";
 import RoundActionButton from "../../common/RoundActionButton";
 
 type StepType = {
@@ -6,11 +7,8 @@ type StepType = {
 }
 
 
-export default function SecondPanel({
-    dictionary
-}: {
-    dictionary: any
-}) {
+export default function SecondPanel() {
+    const { dictionary } = useLocaleStore(state => state);
 
     const steps: StepType[] = [
         { number: "1", text: dictionary.common.mainInstructionStep1 },

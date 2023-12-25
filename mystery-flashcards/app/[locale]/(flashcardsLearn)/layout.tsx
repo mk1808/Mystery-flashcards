@@ -1,12 +1,10 @@
 import Sidebar from '@/components/Sidebar'
-import { fetchDictionary } from '@/dictionaries/dictionaries';
 import React from 'react'
 
-async function FlashcardsLayout({ children, params, sidebar }: { children: any, params: any, sidebar: any }) {
-    const dictionary = await fetchDictionary(params.locale);
+async function FlashcardsLayout({ children, sidebar }: { children: any, sidebar: any }) {
 
     return (
-        <Sidebar drawerContent={sidebar} dictionary={dictionary}>{children}</Sidebar>
+        <Sidebar drawerContent={sidebar}>{children}</Sidebar>
     )
 }
 

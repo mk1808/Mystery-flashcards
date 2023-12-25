@@ -3,16 +3,16 @@ import SingleSidebarInfo from "@/components/common/SingleSidebarInfo";
 import UserAvatar from "@/components/common/UserAvatar";
 import EditButton from "@/components/flashcards/flashcardDetails/EditButton";
 import GoToTestResultsButton from "@/components/flashcards/flashcardDetails/GoToTestResultsButton";
-import { fetchDictionary } from "@/dictionaries/dictionaries";
 import { FlashCardSetDto } from "@/dtos/FlashCardSetDto";
+import useLocaleStore from "@/stores/useLocaleStore";
 import { getFlashcardSetRequest } from "@/utils/client/ApiUtils";
 import { formatDate } from "@/utils/client/MathUtils";
 import { executeServerSideRequest } from "@/utils/server/restUtils";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import React from 'react'
 
-export default async function FlashcardsDetailsSidebar({ params }: { params: { locale: string, id: string } }) {
-  const dictionary = await fetchDictionary(params.locale);
+export default async function FlashcardsDetailsSidebar({ params }: { params: { id: string } }) {
+  const { dictionary } = useLocaleStore(state => state);
   const flashcardSetId = params.id;
   const { flashcardSet, userFlashcard, testResult, statistics }: FlashCardSetDto = await executeServerSideRequest(getFlashcardSetRequest, flashcardSetId);
   const date = new Date(flashcardSet?.creationDate || "");
@@ -66,7 +66,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
         {isTest &&
           <div className="flex items-center">
             {renderSingleInfo(dictionary.common.lastTestResult, Math.round(testResult?.resultPercent!) + "%")}
-            <GoToTestResultsButton dictionary={dictionary} author={flashcardSet?.user} flashcardSetId={flashcardSet?._id} locale={params.locale} />
+            <GoToTestResultsButton author={flashcardSet?.user} flashcardSetId={flashcardSet?._id} />
           </div>
         }
       </>
@@ -99,7 +99,7 @@ export default async function FlashcardsDetailsSidebar({ params }: { params: { l
   function renderEditButton() {
     return (
       <div className="flex justify-center mt-6">
-        <EditButton dictionary={dictionary} author={flashcardSet?.user} flashcardSetId={flashcardSet?._id} locale={params.locale} />
+        <EditButton author={flashcardSet?.user} flashcardSetId={flashcardSet?._id} />
       </div>
     )
   }

@@ -4,12 +4,14 @@ import AddWantToLearnActions from './AddWantToLearnActions';
 import AddWantToLearnContent from './AddWantToLearnContent';
 import { FolderPlusIcon } from '@heroicons/react/24/outline';
 import { UserFlashcardT } from '@/models/UserFlashcard';
+import useLocaleStore from '@/stores/useLocaleStore';
 
-function AddWantToLearnModal({ dictionary, flashcardSet, userFlashcard }: { dictionary: any, flashcardSet: any, userFlashcard: UserFlashcardT }) {
+function AddWantToLearnModal({ flashcardSet, userFlashcard }: { flashcardSet: any, userFlashcard: UserFlashcardT }) {
+    const { dictionary } = useLocaleStore(state => state);
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
-        dialogActions={<AddWantToLearnActions dictionary={dictionary} flashcardSet={flashcardSet} userFlashcard={userFlashcard}/>}
+        dialogActions={<AddWantToLearnActions flashcardSet={flashcardSet} userFlashcard={userFlashcard} />}
         width="xl:w-5/12 sm:w-[600px]"
     />
 
@@ -28,7 +30,7 @@ function AddWantToLearnModal({ dictionary, flashcardSet, userFlashcard }: { dict
     }
 
     function renderDialogContent() {
-        return <AddWantToLearnContent dictionary={dictionary} flashcardSet={flashcardSet} />
+        return <AddWantToLearnContent flashcardSet={flashcardSet} />
     }
 }
 

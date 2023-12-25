@@ -1,13 +1,11 @@
 import NewFlashcardForm from '@/components/flashcards/NewFlashcardForm';
 import NewFlashcardNumber from '@/components/flashcards/NewFlashcardNumber';
-import { fetchDictionary } from '@/dictionaries/dictionaries';
 import { FlashcardSetT } from '@/models/FlashcardSet';
 import { getFlashcardSetRequest } from '@/utils/client/ApiUtils';
 import { executeServerSideRequest } from '@/utils/server/restUtils';
 import React from 'react'
 
-export default async function FlashcardsEditSidebar({ params }: { params: { id: string, locale: string } }) {
-  const dictionary = await fetchDictionary(params.locale);
+export default async function FlashcardsEditSidebar({ params }: { params: { id: string } }) {
   const flashcardSetId = params.id;
   const { flashcardSet }: { flashcardSet: FlashcardSetT } = await executeServerSideRequest(getFlashcardSetRequest, flashcardSetId);
 
@@ -15,8 +13,8 @@ export default async function FlashcardsEditSidebar({ params }: { params: { id: 
     <div>
       <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet.name}</h1>
       <div className="divider"></div>
-      <NewFlashcardNumber dictionary={dictionary} />
-      <NewFlashcardForm dictionary={dictionary} flashcardSet={flashcardSet} />
+      <NewFlashcardNumber />
+      <NewFlashcardForm flashcardSet={flashcardSet} />
     </div>
   )
 }

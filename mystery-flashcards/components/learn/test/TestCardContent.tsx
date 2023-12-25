@@ -6,20 +6,16 @@ import TestAnswerForm from './TestAnswerForm';
 import useTrainingStore from '@/stores/useTrainingStore';
 
 function TestCardContent({
-    dictionary,
     flashcardSet,
     testFlashcards,
     view,
-    direction,
-    locale
+    direction
 }: {
-    dictionary: any,
     flashcardSet: any,
     testFlashcards: any,
     view: any,
-    direction: string,
-    locale: string
-}) {
+    direction: string
+    }) {
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
     const { currentFlashcardIndex } = useTestStore((state) => state);
     const { setFlashcardSet, setDirection, setTestFlashcards, initStore } = useTestStore((state) => state);
@@ -47,7 +43,7 @@ function TestCardContent({
                 <div className="divider hidden sm:flex divider-horizontal ml-0"></div>
                 <div className="w-full h-full grid grid-rows-2">
                     <div className="self-end">
-                        <TestAnswerForm dictionary={dictionary} locale={locale} />
+                        <TestAnswerForm  />
                     </div>
                 </div>
             </div>

@@ -1,7 +1,8 @@
-import { fetchDictionary } from "@/dictionaries/dictionaries";
+import useLocaleStore from "@/stores/useLocaleStore";
 
-async function NotFound({ params }: { params: { locale: string } }) {
-    const dictionary = await fetchDictionary(params.locale);
+
+async function NotFound() {
+    const { dictionary } = useLocaleStore(state => state);
     return <div>{dictionary.common.notFound}</div>
 }
 

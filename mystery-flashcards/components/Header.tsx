@@ -5,17 +5,13 @@ import React, { useRef } from 'react'
 import useLoggedUserForLayout from '@/hooks/useLoggedUserForLayout';
 import useWatchUserAuthentication from '@/hooks/useWatchUserAuthentication';
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import useLocaleStore from '@/stores/useLocaleStore';
 
-function Header({
-    locale,
-    dictionary
-}: {
-    locale: string,
-    dictionary: any
-}) {
+function Header() {
+    const { dictionary, locale } = useLocaleStore(state => state);
     const detailsElement = useRef<any>(null);
-    const { renderMenuElementIfNeeded, onLogout } = useLoggedUserForLayout({ renderMenuElement, locale });
-    useWatchUserAuthentication(locale);
+    const { renderMenuElementIfNeeded, onLogout } = useLoggedUserForLayout({ renderMenuElement });
+    useWatchUserAuthentication();
 
     const mainMenuElements = [
         {

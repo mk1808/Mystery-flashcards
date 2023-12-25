@@ -1,13 +1,15 @@
 "use client"
 import useLoggedUserForLayout from '@/hooks/useLoggedUserForLayout';
+import useLocaleStore from '@/stores/useLocaleStore';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react'
 
-function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
+function Footer() {
+    const { dictionary, locale } = useLocaleStore(state => state);
     const newTabAttrs = { rel: "noopener noreferrer", target: "_blank" }
     const year = new Date().getFullYear();
-    const { renderMenuElementIfNeeded } = useLoggedUserForLayout({ renderMenuElement, locale });
+    const { renderMenuElementIfNeeded } = useLoggedUserForLayout({ renderMenuElement });
     const pathname = usePathname();
     const router = useRouter();
 

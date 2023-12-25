@@ -1,6 +1,8 @@
+import useLocaleStore from '@/stores/useLocaleStore';
 import React from 'react'
 
-function AddWantToLearnContent({ dictionary, flashcardSet }: { dictionary: any, flashcardSet: any }) {
+function AddWantToLearnContent({ flashcardSet }: { flashcardSet: any }) {
+  const { dictionary } = useLocaleStore(state => state);
   return (
     <div className='my-3'>{dictionary.common.doAddCollectionTo}
       <span className='font-medium text-primary text-lg'> {flashcardSet.name} </span>

@@ -7,8 +7,10 @@ import useAlertStore from '@/stores/useAlertStore';
 import { AlertType } from '@/enums/AlertType';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { registerRequest } from '@/utils/client/ApiUtils';
+import useLocaleStore from '@/stores/useLocaleStore';
 
-export default function RegisterForm({ dictionary, locale }: { dictionary: any, locale: string }) {
+export default function RegisterForm() {
+    const { dictionary, locale } = useLocaleStore(state => state);
     const router = useRouter();
     const addAlert = useAlertStore((state) => state.add)
     const {

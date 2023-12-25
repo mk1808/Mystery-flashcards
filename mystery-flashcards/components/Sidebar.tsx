@@ -1,6 +1,8 @@
+import useLocaleStore from '@/stores/useLocaleStore';
 import React from 'react'
 
-function Sidebar({ children, drawerContent, dictionary }: any) {
+function Sidebar({ children, drawerContent }: any) {
+    const { dictionary } = useLocaleStore(state => state);
     return (
         <div className='w-full'>
             <div className="drawer lg:drawer-open">

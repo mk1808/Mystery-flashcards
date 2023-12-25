@@ -1,9 +1,11 @@
 "use client"
 
+import useLocaleStore from "@/stores/useLocaleStore";
 import { getUserStatistics } from "@/utils/client/ApiUtils";
 import { useState, useEffect } from "react";
 
-export default function UserStatistics({ dictionary }: { dictionary: any }) {
+export default function UserStatistics() {
+    const { dictionary } = useLocaleStore(state => state);
     const [userStatistics, setUserStatistics] = useState<UserStatisticsDto>();
 
     useEffect(() => {
