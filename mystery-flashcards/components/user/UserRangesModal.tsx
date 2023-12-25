@@ -11,7 +11,7 @@ export default function UserRangesModal({ dictionary }: { dictionary: any }) {
     }
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}
-        dialogContent={<Steps steps={getRanges()} />}
+        dialogContent={renderModalContent()}
         dialogActions={renderModalActions()}
     />
 
@@ -29,8 +29,15 @@ export default function UserRangesModal({ dictionary }: { dictionary: any }) {
 
     function renderModalActions() {
         return (
+            <button className="btn">{dictionary.common.close}</button>
+        )
+    }
+
+    function renderModalContent() {
+        return (
             <>
-                <button className="btn">{dictionary.common.close}</button>
+                <div className='my-3 text-left font-light text-lg'>{dictionary.common.levelsInfo}</div>
+                <Steps steps={getRanges()} />
             </>
         )
     }
