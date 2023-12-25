@@ -13,7 +13,7 @@ function AddToFavModal({ dictionary, flashcardSet, userFlashcard }: { dictionary
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
         dialogActions={<AddToFavActions dictionary={dictionary} flashcardSet={flashcardSet} />}
-        width="w-5/12"
+        width="xl:w-5/12 sm:w-[600px]"
         disabled={isFav}
     />
 

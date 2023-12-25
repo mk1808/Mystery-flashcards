@@ -21,17 +21,17 @@ export default function SecondPanel({
     ]
 
     return (
-        <div className="w-full p-12 h-screen" id='secondPanel'>
+        <div className="w-full p-4 sm:p-12 h-screen" id='secondPanel'>
             {steps.map(renderStep)}
         </div>
     )
 
     function renderStep(step: StepType, index: number) {
         return (
-            <div key={step.number} className='flex pt-10 h-1/5'>
+            <div key={step.number} className='flex h-1/5 pt-10'>
                 {renderSpace(step.number, index)}
                 {renderNumberCircle(step.number)}
-                <div className=' text-2xl md:text-4xl text-black h-min p-3 bg-base-100 rounded-md'>{step.text}</div>
+                <div className=' text-xl md:text-3xl lg:text-4xl text-black h-min p-3 bg-base-100 rounded-md '>{step.text}</div>
             </div>
         );
     }
@@ -48,7 +48,7 @@ export default function SecondPanel({
         const amountTemp = [...Object(Array(amount + 1)).keys()];
         return (
             <div className="flex">
-                {amountTemp.map(index => <div key={index + "_" + id} className='w-[2vw] md:w-[5vw] h-full'></div>)}
+                {amountTemp.map(index => <div key={index + "_" + id} className='w-[0px] sm:w-[2vw] md:w-[5vw] h-full xs:hidden'></div>)}
             </div>
         );
     }

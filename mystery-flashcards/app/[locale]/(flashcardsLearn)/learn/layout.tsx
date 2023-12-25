@@ -7,8 +7,8 @@ import React from 'react'
 async function LearnLayout({ children, params }: { children: any, params: any }) {
     const dictionary = await fetchDictionary(params.locale);
     return (
-        <div className='grid items-start'>
-            <Card title={<LearnTitle dictionary={dictionary} />} className='min-h-[60vh] h-full mb-8 '>
+        <div >
+            <Card title={<LearnTitle dictionary={dictionary} />} className='min-h-[60vh] mb-8 '>
                 {children}
             </Card>
             <div className='grid justify-center'>
