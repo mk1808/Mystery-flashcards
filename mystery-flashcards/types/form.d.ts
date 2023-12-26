@@ -13,9 +13,9 @@ interface RegisterForm {
 interface NewFlashcardSetForm {
     name: string,
     level: string,
-    hashtags: string,
+    hashtags: string[],
     flashcards: string,
-    isPublic: string,
+    isPublic: boolean,
     lang1: string,
     lang2: string
 }

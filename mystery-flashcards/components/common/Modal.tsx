@@ -1,7 +1,7 @@
 "use client"
 import { useRef } from "react";
 
-export default function Modal({
+function Modal({
     modalTrigger,
     dialogHeader,
     dialogContent,
@@ -36,3 +36,5 @@ export default function Modal({
         </>
     )
 }
+
+export default Modal

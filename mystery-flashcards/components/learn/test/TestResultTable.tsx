@@ -2,18 +2,14 @@
 import Table from '@/components/common/Table';
 import StartLearningModal from '@/components/flashcards/flashcardDetails/StartLearningModal';
 import { FlashCardSetDto } from '@/dtos/FlashCardSetDto';
+import { DirectionOptions } from '@/enums/DirectionOptions';
+import { LearnViewType } from '@/enums/LearnViewOptions';
 import { AnswerT } from '@/models/Answer';
 import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import React, { useEffect } from 'react'
 
-function TestResultTable({
-    flashcardSetDto,
-    view
-}: {
-    flashcardSetDto: FlashCardSetDto,
-    view: any
-}) {
+function TestResultTable({ flashcardSetDto, view }: { flashcardSetDto: FlashCardSetDto, view: LearnViewType }) {
     const { dictionary } = useLocaleStore(state => state);
     const { setView, setFlashcardSet } = useTrainingStore((state) => state);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.status]
@@ -27,7 +23,7 @@ function TestResultTable({
     return (
         <>
             <Table columns={columns} renderRows={renderRows} />
-            <StartLearningModal flashcardSet={flashcardSetDto?.flashcardSet} dialogTriggerClassName='hidden' />
+            <StartLearningModal flashcardSet={flashcardSetDto?.flashcardSet!} dialogTriggerClassName='hidden' />
         </>
     )
 
@@ -37,7 +33,7 @@ function TestResultTable({
 
     function renderRow(answer: AnswerT, index: number) {
         const { wordLang1, wordLang2 } = getFlashcard(answer.flashcardId!)!
-        const isMainDirection = flashcardSetDto.testResult?.direction === "main";
+        const isMainDirection = flashcardSetDto.testResult?.direction === DirectionOptions.MAIN;
         const mainWord = isMainDirection ? wordLang1 : wordLang2;
         const secondaryWord = isMainDirection ? wordLang2 : wordLang1;
         return (

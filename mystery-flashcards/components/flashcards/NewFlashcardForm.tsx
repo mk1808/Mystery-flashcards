@@ -13,11 +13,7 @@ import { LevelOptions } from '@/enums/LevelOptions';
 import useHashtags from '@/hooks/useHashtags';
 import useLocaleStore from '@/stores/useLocaleStore';
 
-function NewFlashcardForm({
-    flashcardSet
-}: {
-    flashcardSet?: FlashcardSetT
-}) {
+function NewFlashcardForm({ flashcardSet }: { flashcardSet?: FlashcardSetT }) {
     const { dictionary } = useLocaleStore(state => state);
     const { updateSidebarForm, setSidebarFormValid, initState, resetState, sidebarFormValid } = useNewFlashcardSetStore((state) => state);
 
@@ -37,7 +33,7 @@ function NewFlashcardForm({
     } = useForm<NewFlashcardSetForm>({ mode: 'onBlur', defaultValues: getDefaultValues() });
 
     useEffect(() => {
-        const subscription = watch((value) => { updateSidebarForm({ ...value }) })
+        const subscription = watch((value) => { updateSidebarForm({ ...value as NewFlashcardSetForm }) })
         return () => subscription.unsubscribe()
     }, [watch])
 
@@ -66,7 +62,7 @@ function NewFlashcardForm({
     const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
 
-    const getDefaultValues = () => {
+    function getDefaultValues() {
         return flashcardSet ?
             {
                 name: flashcardSet.name,
@@ -102,7 +98,7 @@ function NewFlashcardForm({
                     options={langOptions}
                     noValueLabel={dictionary.common.fillLang2}
                     isValid={isValid("lang2")}
-                    validate={validateLang2}/>
+                    validate={validateLang2} />
                 <MyMultiSelect
                     label={dictionary.common.level}
                     control={control}

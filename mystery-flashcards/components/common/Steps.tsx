@@ -1,17 +1,7 @@
 import React from 'react'
 
-export type Step = {
-    icon?: any,
-    title?: any,
-    description?: any
-}
+function Steps({ steps }: { steps: Step[] }) {
 
-export default function Steps({
-    steps
-}: {
-    steps: Step[]
-}) {
-    
     return (
         <div className="p-4 max-w-xl mx-auto">
             {steps.map(renderStep)}
@@ -56,3 +46,5 @@ export default function Steps({
         )
     }
 }
+
+export default Steps

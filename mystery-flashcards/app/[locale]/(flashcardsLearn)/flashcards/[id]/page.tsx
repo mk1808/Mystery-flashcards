@@ -7,9 +7,9 @@ import { getFlashcardSetRequest } from '@/utils/client/ApiUtils';
 import { executeServerSideRequest } from '@/utils/server/restUtils';
 import React from 'react'
 
-export default async function FlashcardsDetails({ params }: { params: { id: string } }) {
+async function FlashcardsDetails({ params }: { params: { id: string } }) {
   const flashcardSetId = params.id;
-  const { flashcardSet, statistics, userFlashcard }: FlashCardSetDto = await executeServerSideRequest(getFlashcardSetRequest, flashcardSetId);
+  const { flashcardSet, userFlashcard }: FlashCardSetDto = await executeServerSideRequest(getFlashcardSetRequest, flashcardSetId);
   const showWantToLearn = !userFlashcard || userFlashcard.type === "NONE"
 
   return (
@@ -23,11 +23,13 @@ export default async function FlashcardsDetails({ params }: { params: { id: stri
     return (
       <div className="mb-12 flex justify-end">
         <StartLearningModal flashcardSet={flashcardSet} />
-        <AddToFavModal flashcardSet={flashcardSet} userFlashcard={userFlashcard!} />
+        <AddToFavModal flashcardSet={flashcardSet!} userFlashcard={userFlashcard!} />
         {showWantToLearn &&
-          <AddWantToLearnModal flashcardSet={flashcardSet} userFlashcard={userFlashcard!} />
+          <AddWantToLearnModal flashcardSet={flashcardSet!} userFlashcard={userFlashcard!} />
         }
       </div>
     )
   }
 }
+
+export default FlashcardsDetails

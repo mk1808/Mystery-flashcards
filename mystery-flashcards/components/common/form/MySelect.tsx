@@ -4,7 +4,7 @@ import React from 'react'
 function MySelect({
     label,
     defaultValue = "",
-    noValueLabel = "Pick",
+    noValueLabel = "",
     options,
     inputParams,
     className = "",
@@ -13,12 +13,12 @@ function MySelect({
     label: string,
     defaultValue?: string,
     noValueLabel?: string,
-    options: any[],
+    options: Option[],
     className?: string,
     inputParams: any,
     isValid?: boolean
 }) {
-    const renderOption = ({ value, label }: { value: any, label: any }) => <option value={value} key={value}>{label}</option>;
+    const renderOption = ({ value, label }: Option) => <option value={value} key={value}>{label}</option>;
     return (
         <label className={`form-control w-full ${className}`}>
             <div className="label">

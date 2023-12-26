@@ -7,7 +7,7 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils'
 import { findNextRang, getRang } from '@/utils/server/userRangUtils'
 import React from 'react'
 
-export default function TrainingResultsSidebar() {
+function TrainingResultsSidebar() {
     const { dictionary } = useLocaleStore(state => state);
     const { flashcardSet: { flashcardSet }, result, roundCount } = useTrainingStore((state) => state);
     const currentUser = useAuthStore(state => state.currentUser);
@@ -22,7 +22,7 @@ export default function TrainingResultsSidebar() {
         },
         {
             text: dictionary.common.correctAnswersPercent,
-            value: Math.round((result?.resultPercent) * 100) + "%"
+            value: Math.round((result?.resultPercent!) * 100) + "%"
         },
         {
             text: dictionary.common.roundCount,
@@ -61,3 +61,5 @@ export default function TrainingResultsSidebar() {
         )
     }
 }
+
+export default TrainingResultsSidebar

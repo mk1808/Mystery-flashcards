@@ -4,12 +4,12 @@ import React from 'react'
 
 async function NewFlashcards() {
 
-  return (
-    <div className="h-full">
-      <NewFlashcardButtons />
-      <NewFlashcardListForm />
-    </div>
-  )
+    return (
+        <div className="h-full">
+            <NewFlashcardButtons />
+            <NewFlashcardListForm />
+        </div>
+    )
 }
 
 export default NewFlashcards;

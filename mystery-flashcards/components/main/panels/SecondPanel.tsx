@@ -2,7 +2,7 @@
 import useLocaleStore from "@/stores/useLocaleStore";
 import RoundActionButton from "../../common/RoundActionButton";
 
-type StepType = {
+type StepType = { 
     number: string,
     text: string
 }

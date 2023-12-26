@@ -49,7 +49,7 @@ export type FlashcardSetT = {
     level?: string,
     hashtags?: string[],
     flashcards?: FlashcardT[],
-    isPublic?: Boolean,
+    isPublic?: boolean,
     creationDate?: Date,
     lang1?: string,
     lang2?: string,

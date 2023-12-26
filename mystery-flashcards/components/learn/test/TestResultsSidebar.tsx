@@ -7,13 +7,7 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { findNextRang, getRang } from '@/utils/server/userRangUtils';
 import React from 'react'
 
-export default function TestResultsSidebar({
-    flashcardSetDto,
-    user
-}: {
-    flashcardSetDto: FlashCardSetDto,
-    user: UserT
-}) {
+function TestResultsSidebar({ flashcardSetDto, user }: { flashcardSetDto: FlashCardSetDto, user: UserT }) {
     const { dictionary } = useLocaleStore(state => state);
     const statsValues = [
         {
@@ -61,3 +55,5 @@ export default function TestResultsSidebar({
         )
     }
 }
+
+export default TestResultsSidebar

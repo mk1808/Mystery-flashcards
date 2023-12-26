@@ -21,6 +21,7 @@ function FlashcardContainer({
   const { updateFlashcard, addNewFlashcard, deleteFlashcard, flashcardListInvalidCountInc, flashcardListInvalidCountDec } = useNewFlashcardSetStore((state) => state);
   const allFlashCards = useRef(flashcardsList)
   const lastValidationState = useRef(true)
+  const getDefaultValues = () => card || {};
 
   useEffect(() => {
     allFlashCards.current = flashcardsList
@@ -36,7 +37,7 @@ function FlashcardContainer({
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      updateFlashcard({ ...card, ...value })
+      updateFlashcard({ ...card as FlashcardsForm, ...value })
       const lastFlashcard = allFlashCards.current[allFlashCards.current.length - 1],
         isLast = lastFlashcard._id === card._id;
       if (isLast) {
@@ -63,12 +64,11 @@ function FlashcardContainer({
   const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
   const isDirty = () => Object.keys(formState.dirtyFields).length > 0
   const showDelete = () => (isDirty() || formState.defaultValues?.wordLang1) && flashcardsList.length > 1;
-  const getDefaultValues = () => card || {};
   function onDelete() {
     if (!formState.isValid) {
       flashcardListInvalidCountDec()
     }
-    deleteFlashcard(card);
+    deleteFlashcard(card as FlashcardsForm);
   }
 
   return (

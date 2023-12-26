@@ -9,7 +9,7 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { registerRequest } from '@/utils/client/ApiUtils';
 import useLocaleStore from '@/stores/useLocaleStore';
 
-export default function RegisterForm() {
+function RegisterForm() {
     const { dictionary, locale } = useLocaleStore(state => state);
     const addAlert = useAlertStore((state) => state.add)
     const router = useRouter();
@@ -74,3 +74,5 @@ export default function RegisterForm() {
         </form>
     )
 }
+
+export default RegisterForm

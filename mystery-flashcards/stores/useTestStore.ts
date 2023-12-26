@@ -1,5 +1,6 @@
 import { FlashCardSetDto } from "@/dtos/FlashCardSetDto";
 import { TestResultDto } from "@/dtos/TestResultDto";
+import { DirectionType } from "@/enums/DirectionOptions";
 import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
 import { create } from "zustand";
@@ -10,7 +11,7 @@ type State = {
     testFlashcards: FlashcardT[],
     currentFlashcardIndex: number,
     finalResult: TestResultDto,
-    direction: string
+    direction: DirectionType
 }
 
 type Action = {
@@ -20,7 +21,7 @@ type Action = {
     incrementCurrentFlashcardIndex: () => void,
     setFinalResult: (finalResult: TestResultDto) => void,
     initStore: () => void,
-    setDirection: (direction: string) => void
+    setDirection: (direction: DirectionType) => void
 }
 
 const initStore = () => ({

@@ -6,8 +6,9 @@ import AddWantToLearnContent from './AddWantToLearnContent';
 import { FolderPlusIcon } from '@heroicons/react/24/outline';
 import { UserFlashcardT } from '@/models/UserFlashcard';
 import useLocaleStore from '@/stores/useLocaleStore';
+import { FlashcardSetT } from '@/models/FlashcardSet';
 
-function AddWantToLearnModal({ flashcardSet, userFlashcard }: { flashcardSet: any, userFlashcard: UserFlashcardT }) {
+function AddWantToLearnModal({ flashcardSet, userFlashcard }: { flashcardSet: FlashcardSetT, userFlashcard: UserFlashcardT }) {
     const { dictionary } = useLocaleStore(state => state);
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}

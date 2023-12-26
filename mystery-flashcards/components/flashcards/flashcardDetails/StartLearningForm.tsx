@@ -1,5 +1,7 @@
 "use client"
 import MyRadioInputButton from '@/components/common/form/MyRadioInputButton';
+import { DirectionOptions } from '@/enums/DirectionOptions';
+import { FlashcardSetT } from '@/models/FlashcardSet';
 import useLocaleStore from '@/stores/useLocaleStore';
 import { isFieldValid } from '@/utils/client/FormUtils';
 import { createPathParams } from '@/utils/client/RestUtils';
@@ -8,13 +10,13 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 
-function StartLearningForm({ flashcardSet }: { flashcardSet: any }) {
+function StartLearningForm({ flashcardSet }: { flashcardSet: FlashcardSetT }) {
     const { dictionary, locale } = useLocaleStore(state => state);
     const router = useRouter();
 
     const label1 = getLangsDirection(flashcardSet?.lang1, flashcardSet?.lang2)
     const label2 = getLangsDirection(flashcardSet?.lang2, flashcardSet?.lang1)
-    const direction = { main: "main", reversed: "reversed" }
+
     const {
         register,
         handleSubmit,
@@ -39,18 +41,14 @@ function StartLearningForm({ flashcardSet }: { flashcardSet: any }) {
                     value2="TEST"
                     inputParams={{ ...register("type", { required: true }) }}
                     isValid={isValid("type")}
-                    size="w-48 h-16"
-                    className='items-center'
                 />
                 <MyRadioInputButton
                     option1Label={label1}
                     option2Label={label2}
-                    value1={direction.main}
-                    value2={direction.reversed}
+                    value1={DirectionOptions.MAIN}
+                    value2={DirectionOptions.REVERSED}
                     inputParams={{ ...register("direction", { required: true }) }}
                     isValid={isValid("direction")}
-                    size="w-48 h-16"
-                    className='items-center'
                 />
             </div>
         </form>

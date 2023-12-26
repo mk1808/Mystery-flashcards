@@ -8,11 +8,7 @@ import { getNestedFieldByPath } from "@/utils/server/objectUtils";
 import { updateUser } from "@/utils/client/ApiUtils";
 import useLocaleStore from "@/stores/useLocaleStore";
 
-function UserEditForm({
-    user
-}: {
-    user: UserT
-}) {
+function UserEditForm({ user }: { user: UserT }) {
     const { dictionary } = useLocaleStore(state => state);
     const addAlert = useAlertStore((state) => state.add)
 

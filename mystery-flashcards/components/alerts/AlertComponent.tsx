@@ -3,11 +3,7 @@ import useAlertStore from "@/stores/useAlertStore";
 import { XMarkIcon, XCircleIcon, InformationCircleIcon, CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 
-export default function AlertComponent({
-    alert
-}: {
-    alert: Alert
-}) {    
+function AlertComponent({ alert }: { alert: Alert }) {
     const close = useAlertStore((state) => state.close)
     const [scale, setScale] = useState("scale-0")
     const [progress, setProgress] = useState(100)
@@ -78,3 +74,5 @@ export default function AlertComponent({
         );
     }
 }
+
+export default AlertComponent

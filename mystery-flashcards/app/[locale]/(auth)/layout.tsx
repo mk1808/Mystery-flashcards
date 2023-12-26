@@ -1,7 +1,7 @@
 import Card from "@/components/Card";
 import AuthTitle from "@/components/auth/AuthTitle";
 
-export default async function AuthLayout({ children }: any) {
+async function AuthLayout({ children }: any) {
 
     return (
         <div className="m-5 w-full ">
@@ -11,3 +11,5 @@ export default async function AuthLayout({ children }: any) {
         </div>
     )
 }
+
+export default AuthLayout

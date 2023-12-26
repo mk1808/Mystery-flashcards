@@ -17,11 +17,7 @@ import { StatusOptions } from '@/enums/StatusOptions';
 import useLocaleStore from '@/stores/useLocaleStore';
 import { FlashcardSetSearchParams as SearchParams } from '@/enums/FlashcardSetSearchParams';
 
-function FlashcardSetsFilters({
-    search
-}: {
-    search: (data: FlashcardSearchDto) => any
-}) {
+function FlashcardSetsFilters({ search }: { search: (data: FlashcardSearchDto) => any }) {
     const { dictionary } = useLocaleStore(state => state);
     const currentUser = useAuthStore(state => state.currentUser);
 
