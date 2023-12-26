@@ -5,6 +5,7 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react'
+import Logo from './Logo';
 
 function Footer() {
     const { dictionary, locale } = useLocaleStore(state => state);
@@ -83,9 +84,7 @@ function Footer() {
     return (
         <footer className="footer p-10 mt-4 bg-base-200 text-base-content grid-cols-5">
             <aside className='col-span-5 xs:col-span-3 xl:col-span-2'>
-                <Link href={`/${locale}`} className='mb-2 ml-[-8px]'>
-                    <img src='/images/logo5.png' className='h-[100px]' />
-                </Link>
+                <Logo className='mb-2 ml-[-8px]' height={100}/>
                 <p className='text-lg'>Copyright © {year} Monika Kordoń, Marek Czopor</p>
             </aside>
 

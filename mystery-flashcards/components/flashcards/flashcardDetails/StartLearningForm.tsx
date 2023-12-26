@@ -5,6 +5,7 @@ import { FlashcardSetT } from '@/models/FlashcardSet';
 import useLocaleStore from '@/stores/useLocaleStore';
 import { isFieldValid } from '@/utils/client/FormUtils';
 import { createPathParams } from '@/utils/client/RestUtils';
+import { getLangsDirection } from '@/utils/client/TrainingUtils';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 import { useForm } from 'react-hook-form';
@@ -13,8 +14,9 @@ function StartLearningForm({ flashcardSet }: { flashcardSet: FlashcardSetT }) {
     const { dictionary, locale } = useLocaleStore(state => state);
     const router = useRouter();
 
-    const label1 = `${flashcardSet.lang1} -> ${flashcardSet.lang2}`;
-    const label2 = `${flashcardSet.lang2} -> ${flashcardSet.lang1}`;
+    const label1 = getLangsDirection(flashcardSet?.lang1, flashcardSet?.lang2)
+    const label2 = getLangsDirection(flashcardSet?.lang2, flashcardSet?.lang1)
+
     const {
         register,
         handleSubmit,
