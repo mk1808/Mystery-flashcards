@@ -13,17 +13,18 @@ import { TestResultT } from "@/models/TestResult";
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
     await connectToDB();
-    const flashcardSetId = params.id;
-    const test: TestResultT = await request.json();
-    const currentUser: UserT = await getUser(request);
-    const flashcardSet = (await FlashcardSet.findById(flashcardSetId));
+    const flashcardSetId = params.id,
+        test: TestResultT = await request.json(),
+        currentUser: UserT = await getUser(request),
+        flashcardSet = (await FlashcardSet.findById(flashcardSetId)),
 
-    const newResults = checkAnswers(flashcardSet, test);
-    const savedResult = await saveTestResult(flashcardSetId, newResults, currentUser)
+        newResults = checkAnswers(flashcardSet, test),
+        savedResult = await saveTestResult(flashcardSetId, newResults, currentUser);
+
     await updateUserFlashcard(flashcardSetId, currentUser);
 
-    const gainPoints = (savedResult?.validCount || 0) * 10;
-    const updatedUser = await updateUser(currentUser, gainPoints)
+    const gainPoints = (savedResult?.validCount || 0) * 10,
+        updatedUser = await updateUser(currentUser, gainPoints);
 
     const response: TestResultDto = {
         testResults: savedResult!,
