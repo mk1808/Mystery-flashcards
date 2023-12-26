@@ -3,7 +3,7 @@
 import React from 'react'
 
 export default function GlobalError() {
-  return (
-    <div>GlobalError</div>
-  )
+    return (
+        <div>GlobalError</div>
+    )
 }

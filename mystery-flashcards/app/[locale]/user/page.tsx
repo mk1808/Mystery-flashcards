@@ -5,14 +5,14 @@ import UserStatistics from '@/components/user/UserStatistics'
 import React from 'react'
 
 async function UserDetails() {
-  return (
-    <div className='w-full lg:w-fit px-5'>
-      <Card title={<UserHeader />} className='h-fit w-full lg:w-[1000px] px-[5%] lg:px-[100px]'>
-        <UserStatistics />
-        <UserEdit />
-      </Card>
-    </div>
-  )
+    return (
+        <div className='w-full lg:w-fit px-5'>
+            <Card title={<UserHeader />} className='h-fit w-full lg:w-[1000px] px-[5%] lg:px-[100px]'>
+                <UserStatistics />
+                <UserEdit />
+            </Card>
+        </div>
+    )
 }
 
 export default UserDetails

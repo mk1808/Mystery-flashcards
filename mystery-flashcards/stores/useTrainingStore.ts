@@ -50,7 +50,7 @@ const initResult: () => TestResultT = () => ({
     validCount: 0,
     allCount: 0,
     answers: [],
-    direction: ""
+    direction: DirectionOptions.MAIN
 })
 
 const initStore = () => ({

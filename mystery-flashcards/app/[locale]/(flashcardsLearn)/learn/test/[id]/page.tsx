@@ -8,20 +8,20 @@ import { executeServerSideRequest } from '@/utils/server/restUtils';
 import React from 'react'
 
 async function LearnTest({
-  params,
-  searchParams,
+    params,
+    searchParams,
 }: {
-  params: { id: string },
-  searchParams: { direction: DirectionType },
+    params: { id: string },
+    searchParams: { direction: DirectionType },
 }) {
 
-  const flashcardSet: FlashCardSetDto = await executeServerSideRequest(getFlashcardSetRequest, params.id);
-  const { flashcards }: FlashcardSetT = await executeServerSideRequest(getTestFlashcardsRequest, params.id);
-  const view: LearnViewType = LearnViewOptions.TEST;
+    const flashcardSet: FlashCardSetDto = await executeServerSideRequest(getFlashcardSetRequest, params.id);
+    const { flashcards }: FlashcardSetT = await executeServerSideRequest(getTestFlashcardsRequest, params.id);
+    const view: LearnViewType = LearnViewOptions.TEST;
 
-  return (
-    <TestCardContent flashcardSet={flashcardSet} testFlashcards={flashcards!} view={view} direction={searchParams.direction} />
-  )
+    return (
+        <TestCardContent flashcardSet={flashcardSet} testFlashcards={flashcards!} view={view} direction={searchParams.direction} />
+    )
 }
 
 export default LearnTest

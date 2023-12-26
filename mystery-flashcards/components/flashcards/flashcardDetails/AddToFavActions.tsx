@@ -17,31 +17,31 @@ const fullHeart = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" f
 `
 
 function AddToFavActions({ flashcardSet }: { flashcardSet: FlashcardSetT }) {
-  const { dictionary } = useLocaleStore(state => state);
-  const addAlert = useAlertStore((state) => state.add)
-  const onSubmit = async () => {
-    const body: UserFlashcardT = {
-      flashcardSetId: flashcardSet._id,
-      type: "NONE",
-      isFavorite: true
-    }
-    try {
-      const response = await postUserFlashcardSet(body);
-      document.getElementById("addToFavTrigger")!.innerHTML = response.isFavorite ? fullHeart : emptyHeart;
-      document.getElementById("addToFavTooltip")!.setAttribute("data-tip", dictionary.common.alreadyInFavorites);
+    const { dictionary } = useLocaleStore(state => state);
+    const addAlert = useAlertStore((state) => state.add)
+    const onSubmit = async () => {
+        const body: UserFlashcardT = {
+            flashcardSetId: flashcardSet._id,
+            type: "NONE",
+            isFavorite: true
+        }
+        try {
+            const response = await postUserFlashcardSet(body);
+            document.getElementById("addToFavTrigger")!.innerHTML = response.isFavorite ? fullHeart : emptyHeart;
+            document.getElementById("addToFavTooltip")!.setAttribute("data-tip", dictionary.common.alreadyInFavorites);
 
-      addAlert({ type: AlertType.success, title: dictionary.common.addToFavSuccess })
-    } catch (errorResponse: any) {
-      addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
-    }
+            addAlert({ type: AlertType.success, title: dictionary.common.addToFavSuccess })
+        } catch (errorResponse: any) {
+            addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
+        }
 
-  }
-  return (
-    <>
-      <button className="btn ml-3">{dictionary.common.close}</button>
-      <button className="btn btn-primary ml-3" onClick={onSubmit}> {dictionary.common.confirm}</button>
-    </>
-  )
+    }
+    return (
+        <>
+            <button className="btn ml-3">{dictionary.common.close}</button>
+            <button className="btn btn-primary ml-3" onClick={onSubmit}> {dictionary.common.confirm}</button>
+        </>
+    )
 }
 
 export default AddToFavActions
