@@ -47,7 +47,7 @@ export default function SecondPanel() {
         const amountTemp = [...Object(Array(amount + 1)).keys()];
         return (
             <div className="flex">
-                {amountTemp.map(index => <div key={index + "_" + id} className='w-[0px] sm:w-[2vw] md:w-[5vw] h-full xs:hidden'></div>)}
+                {amountTemp.map(index => <div key={index + "_" + id} className='w-[0px] sm:w-[2vw] md:w-[5vw] h-full xs:hidden' />)}
             </div>
         );
     }

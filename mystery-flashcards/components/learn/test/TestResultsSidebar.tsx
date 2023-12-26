@@ -32,7 +32,7 @@ export default function TestResultsSidebar({
     return (
         <div>
             {renderTitle()}
-            <div className="divider"></div>
+            <div className="divider" />
             <h1 className="text-3xl text-center mt-3 mb-8">{dictionary.common.testingResults} <br />
                 {dictionary.common.collection}:&nbsp;
                 <span className='font-medium'>{flashcardSetDto.flashcardSet?.name}</span>

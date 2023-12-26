@@ -50,6 +50,6 @@ export default function UserStatistics() {
         if (value != undefined) {
             return value.length > 24 ? value : <>{value}<br /></>;
         }
-        return <span className="loading loading-ball loading-sm"></span>
+        return <span className="loading loading-ball loading-sm" />
     }
 }

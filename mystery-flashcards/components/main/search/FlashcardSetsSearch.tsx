@@ -26,7 +26,7 @@ function FlashcardSetsSearch() {
 
     return (
         <div id='flashcardSetsSearch' className="mt-16">
-            <FlashcardSetsFilters search={search}  />
+            <FlashcardSetsFilters search={search} />
             {renderResults()}
         </div>
     )
@@ -43,7 +43,7 @@ function FlashcardSetsSearch() {
     function renderLoader() {
         return (
             <div className="mt-20 mb-52 flex justify-center text-4xl font-bold text-secondary">
-                <span className="loading loading-ball loading-lg"></span>
+                <span className="loading loading-ball loading-lg" />
             </div>
         )
     }
@@ -65,7 +65,7 @@ function FlashcardSetsSearch() {
     }
 
     function renderCard(flashcardSet: FlashcardSetT) {
-        return <SetCard flashcardSet={flashcardSet} key={flashcardSet._id}/>
+        return <SetCard flashcardSet={flashcardSet} key={flashcardSet._id} />
     }
 }
 

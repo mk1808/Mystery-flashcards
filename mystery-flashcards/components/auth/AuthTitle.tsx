@@ -12,7 +12,7 @@ function AuthTitle() {
     return (
         <div className="flex flex-col justify-around items-center h-[140px]">
             <LockClosedIcon className="h-9 w-9 text-primary" />
-            <Title text={title}></Title>
+            <Title text={title} />
         </div>
     )
 }

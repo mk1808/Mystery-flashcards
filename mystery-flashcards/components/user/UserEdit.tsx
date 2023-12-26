@@ -20,7 +20,7 @@ export default function UserEdit() {
 
     return (
         <div>
-            <div className="divider"></div>
+            <div className="divider" />
             <Title text={dictionary.common.userAccountEdit} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {renderUserAvatar()}
@@ -38,6 +38,6 @@ export default function UserEdit() {
         if (currentUser) {
             return <UserEditForm user={currentUser} />
         }
-        return <span className="loading loading-ball loading-lx"></span>
+        return <span className="loading loading-ball loading-lx" />
     }
 }

@@ -12,7 +12,7 @@ export default async function FlashcardsEditSidebar({ params }: { params: { id: 
   return (
     <div>
       <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet.name}</h1>
-      <div className="divider"></div>
+      <div className="divider" />
       <NewFlashcardNumber />
       <NewFlashcardForm flashcardSet={flashcardSet} />
     </div>

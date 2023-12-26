@@ -82,10 +82,10 @@ function TrainingCardContent({
                     <h1 className="text-3xl my-3 ">{getMainWord()}</h1>
                 </div>
                 <div><p>{getDescription()}</p></div>
-                <div className="divider  sm:hidden w-full"></div>
+                <div className="divider  sm:hidden w-full" />
             </div>
             <div className='flex items-center'>
-                <div className="divider hidden sm:flex divider-horizontal ml-0"></div>
+                <div className="divider hidden sm:flex divider-horizontal ml-0" />
                 <div className="w-full h-full grid grid-rows-2">
                     <div className="self-end">
                         <AnswerForm setIsValid={setIsValid} setWasChecked={setWasChecked} />

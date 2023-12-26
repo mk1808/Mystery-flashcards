@@ -30,11 +30,11 @@ export default function TestSidebar() {
     return (
         <div>
             {renderTitleAndTags()}
-            <div className="divider"></div>
+            <div className="divider" />
             <SingleSidebarInfo title={dictionary.common.flashcardsCount} value={flashcardSet?.flashcards?.length} />
             <SingleSidebarInfo title={dictionary.common.languages} value={languages} />
             <SingleSidebarInfo title={dictionary.common.level} value={flashcardSet?.level} />
-            <div className="divider"></div>
+            <div className="divider" />
             <LearnStats stats={statsValues} />
 
             <br />

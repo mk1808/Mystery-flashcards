@@ -28,7 +28,7 @@ export default function UserHeader() {
     }
     return (
         <div className="text-center ">
-            <span className="loading loading-ball loading-xl"></span>
+            <span className="loading loading-ball loading-xl" />
         </div>
     )
 

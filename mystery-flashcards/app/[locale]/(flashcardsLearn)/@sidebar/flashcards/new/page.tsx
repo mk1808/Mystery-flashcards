@@ -10,7 +10,7 @@ export default function NewFlashcardsSidebar() {
   return (
     <div>
       <h1 className="text-4xl text-center mt-3 mb-8">{dictionary.common.newCollection}</h1>
-      <div className="divider"></div>
+      <div className="divider" />
       <NewFlashcardNumber />
       <NewFlashcardForm />
     </div>

@@ -111,7 +111,7 @@ function Footer() {
     )
 
     function renderEmpty() {
-        return <a className='min-h-[1.25rem]'></a>;
+        return <a className='min-h-[1.25rem]' />;
     }
 
     function renderMenuElement(element: any) {

@@ -19,8 +19,8 @@ function NewFlashcardForm({
     flashcardSet?: FlashcardSetT
 }) {
     const { dictionary } = useLocaleStore(state => state);
-    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
-    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
+    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [dictionary])
+    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [dictionary])
     const hashtagsOptions = useHashtags();
     const { updateSidebarForm, setSidebarFormValid, initState, resetState, sidebarFormValid } = useNewFlashcardSetStore((state) => state);
     const initOnceRef = useRef(false)
@@ -94,7 +94,7 @@ function NewFlashcardForm({
                 <MyMultiSelect
                     label={dictionary.common.lang1}
                     control={control}
-                    required={true}
+                    required
                     name='lang1'
                     options={langOptions}
                     noValueLabel={dictionary.common.fillLang1}
@@ -102,7 +102,7 @@ function NewFlashcardForm({
                 <MyMultiSelect
                     label={dictionary.common.lang2}
                     control={control}
-                    required={true}
+                    required
                     name='lang2'
                     options={langOptions}
                     noValueLabel={dictionary.common.fillLang2}
@@ -112,7 +112,7 @@ function NewFlashcardForm({
                 <MyMultiSelect
                     label={dictionary.common.level}
                     control={control}
-                    required={true}
+                    required
                     name='level'
                     options={levelOptions}
                     noValueLabel={dictionary.common.fillLevel}
@@ -120,9 +120,9 @@ function NewFlashcardForm({
                 <MyMultiSelect
                     label={dictionary.common.hashtags}
                     control={control}
-                    required={true}
-                    multiple={true}
-                    allowNew={true}
+                    required
+                    multiple
+                    allowNew
                     name='hashtags'
                     options={hashtagsOptions}
                     noValueLabel={dictionary.common.fillHashtags}
