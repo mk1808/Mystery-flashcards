@@ -8,6 +8,8 @@ import useLocaleStore from '@/stores/useLocaleStore';
 import { FlashcardSetT } from '@/models/FlashcardSet';
 import { LearnViewType } from '@/enums/LearnViewOptions';
 import { DirectionOptions, DirectionType } from '@/enums/DirectionOptions';
+import LearnCardWordAndDesc from '../LearnCardWordAndDesc';
+import LearnCardContent from '../LearnCardContent';
 
 function TrainingCardContent({
     flashcardSet,
@@ -40,24 +42,23 @@ function TrainingCardContent({
     const getDescription = () => isMainDirection ? description1 : description2;
 
     return currentFlashcard && (
-        <div className="flex-1 grid sm:grid-cols-2">
-            <div className='grid grid-rows-2'>
-                <div className='self-end'>
-                    <h1 className="text-3xl my-3 ">{getMainWord()}</h1>
-                </div>
-                <div><p>{getDescription()}</p></div>
-                <div className="divider  sm:hidden w-full" />
-            </div>
-            <div className='flex items-center'>
-                <div className="divider hidden sm:flex divider-horizontal ml-0" />
-                <div className="w-full h-full grid grid-rows-2">
+        <LearnCardContent
+            questionSide={
+                <>
+                    <LearnCardWordAndDesc word={getMainWord()} description={getDescription()} />
+                    <div className="divider sm:hidden w-full" />
+                </>
+            }
+            answerSide={
+                <>
                     <div className="self-end">
                         <AnswerForm setIsValid={setIsValid} setWasChecked={setWasChecked} />
                     </div>
                     <div>{renderAnswerValidity()}</div>
-                </div>
-            </div>
-        </div>
+                </>
+            }
+        />
+
     )
 
     function renderAnswerValidity() {

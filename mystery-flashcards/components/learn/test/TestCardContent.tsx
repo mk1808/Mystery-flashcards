@@ -7,6 +7,8 @@ import useTrainingStore from '@/stores/useTrainingStore';
 import { FlashcardSetT } from '@/models/FlashcardSet';
 import { LearnViewType } from '@/enums/LearnViewOptions';
 import { DirectionType, DirectionOptions } from '@/enums/DirectionOptions';
+import LearnCardWordAndDesc from '../LearnCardWordAndDesc';
+import LearnCardContent from '../LearnCardContent';
 
 function TestCardContent({
     flashcardSet,
@@ -34,34 +36,21 @@ function TestCardContent({
     const getDescription = () => direction === DirectionOptions.MAIN ? currentFlashcard?.description1 : currentFlashcard?.description2;
 
     return (
-        <div className="grid sm:grid-cols-2 h-full">
-            <div className='grid grid-rows-2'>
-                {renderWordAndDesc()}
-                <div className="divider sm:hidden w-full" />
-            </div>
-            <div className='flex items-center'>
-                <div className="divider hidden sm:flex divider-horizontal ml-0" />
-                <div className="w-full h-full grid grid-rows-2">
-                    <div className="self-end">
-                        <TestAnswerForm />
-                    </div>
+        <LearnCardContent
+            questionSide={
+                <>
+                    <LearnCardWordAndDesc word={getWord()} description={getDescription()} />
+                    <div className="divider sm:hidden w-full" />
+                </>
+            }
+            answerSide={
+                <div className="self-end">
+                    <TestAnswerForm />
                 </div>
-            </div>
-        </div>
-    )
+            }
+        />
 
-    function renderWordAndDesc() {
-        return (
-            <>
-                <div className='self-end'>
-                    <h1 className="text-3xl my-3">{getWord()}</h1>
-                </div>
-                <div>
-                    <p>{getDescription()}</p>
-                </div>
-            </>
-        )
-    }
+    )
 }
 
 export default TestCardContent
