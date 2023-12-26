@@ -9,6 +9,7 @@ import { TestResultT } from "@/models/TestResult";
 import { UserFlashcardT } from "@/models/UserFlashcard";
 import useLocaleStore from "@/stores/useLocaleStore";
 import { formatDate } from "@/utils/client/MathUtils";
+import { getLangsDirection } from "@/utils/client/TrainingUtils";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import React from 'react'
 
@@ -52,7 +53,7 @@ export default function FlashcardsDetailsSidebar(
         return (
             <>
                 <SingleSidebarInfo title={dictionary.common.flashcardsCount} value={flashcardSet?.flashcards?.length.toString()!} />
-                <SingleSidebarInfo title={dictionary.common.languages} value={`${flashcardSet?.lang1} -> ${flashcardSet?.lang2}`} />
+                <SingleSidebarInfo title={dictionary.common.languages} value={getLangsDirection(flashcardSet?.lang1, flashcardSet?.lang2)} />
                 <SingleSidebarInfo title={dictionary.common.level} value={flashcardSet?.level!} />
             </>
         )

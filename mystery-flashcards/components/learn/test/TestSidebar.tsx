@@ -4,6 +4,7 @@ import SingleSidebarInfo from '@/components/common/SingleSidebarInfo'
 import LearnStats from '@/components/learn/LearnStats';
 import useLocaleStore from '@/stores/useLocaleStore';
 import useTestStore from '@/stores/useTestStore';
+import { getLangsDirection } from '@/utils/client/TrainingUtils';
 import React from 'react'
 
 export default function TestSidebar() {
@@ -22,7 +23,7 @@ export default function TestSidebar() {
     ]
 
     const { lang1, lang2 } = flashcardSet || {};
-    const languages = direction === "main" ? `${lang1} -> ${lang2}` : `${lang2} -> ${lang1}`
+    const languages = direction === "main" ? getLangsDirection(lang1, lang2) : getLangsDirection(lang2, lang1);
 
     return (
         <div>
