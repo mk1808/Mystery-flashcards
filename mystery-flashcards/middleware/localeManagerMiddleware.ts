@@ -1,4 +1,4 @@
-import { NextFetchEvent, NextMiddleware, NextRequest, NextResponse } from "next/server";
+import { NextFetchEvent, NextMiddleware, NextRequest } from "next/server";
 import { MiddlewareFactory } from "./types";
 import { defaultLocale, dictionaries } from "@/dictionaries/dictionaries";
 

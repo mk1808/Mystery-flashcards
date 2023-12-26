@@ -1,33 +1,41 @@
 
 import User from "@/models/User";
 import connectToDB from "@/utils/server/database";
-import { NextRequest, NextResponse } from "next/server";
-import { hashPassword } from '@/utils/server/encryptionUtils';
+import { NextRequest } from "next/server";
+import { simpleMessageResponse } from "@/utils/server/responseFactories";
+import { hashPassword } from "@/utils/server/encryptionUtils";
 import { UserRanges } from "@/enums/UserRang";
 
 export async function POST(request: NextRequest) {
     await connectToDB();
     const registerForm: RegisterForm = await request.json();
 
-    const existingUser = await User.findOne({ name: registerForm.name });
-    if (existingUser) {
-        return new NextResponse(JSON.stringify({ message: 'common.userExists' }), { status: 409 });
+    if (checkPasswordDoNotMatch(registerForm)) {
+        return simpleMessageResponse('common.passwordDoNotMatch', 400)
+    } else if (await checkIfUserExists(registerForm)) {
+        return simpleMessageResponse('common.userExists', 409)
     }
 
-    if (registerForm.password !== registerForm.confirmPassword) {
-        return new NextResponse(JSON.stringify({ message: 'common.passwordDoNotMatch' }), { status: 400 });
-    }
+    await User.create(await createUser(registerForm));
 
-    const newUser = {
+    return simpleMessageResponse('common.userRegisteredSuccessfully', 201)
+}
+
+function checkPasswordDoNotMatch(registerForm: RegisterForm) {
+    return registerForm.password !== registerForm.confirmPassword
+}
+
+async function checkIfUserExists(registerForm: RegisterForm) {
+    return !!await User.findOne({ name: registerForm.name })
+}
+
+async function createUser(registerForm: RegisterForm) {
+    return {
         mail: registerForm.mail,
         name: registerForm.name,
         password: await hashPassword(registerForm.password),
         points: 0,
-        avatar:"",
+        avatar: "",
         rang: UserRanges[0].id
     }
-
-    const user = await User.create(newUser);
-
-    return new NextResponse(JSON.stringify({ message: 'common.userRegisteredSuccessfully' }), { status: 201 });
 }

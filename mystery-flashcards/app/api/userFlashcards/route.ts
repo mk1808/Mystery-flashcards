@@ -1,30 +1,30 @@
-import FlashcardSet from "@/models/FlashcardSet";
-import UserFlashcard from "@/models/UserFlashcard";
+import { UserT } from "@/models/User";
+import UserFlashcard, { UserFlashcardT } from "@/models/UserFlashcard";
 import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-    const requestBody = await request.json();
     await connectToDB();
 
-    const currentUser = await getUser(request);
-    const existingUserFlashcard = await UserFlashcard.findOne({ flashcardSetId: requestBody.flashcardSetId, userId: currentUser._id });
+    const updatedUserFlashcard: UserFlashcardT = await request.json();
+    const currentUser: UserT = await getUser(request);
+    const existingUserFlashcard = await UserFlashcard.findOne({ flashcardSetId: updatedUserFlashcard.flashcardSetId, userId: currentUser._id });
 
     if (existingUserFlashcard) {
-        existingUserFlashcard.type = requestBody.type == "NONE" ? existingUserFlashcard.type : requestBody.type;
-        existingUserFlashcard.isFavorite = requestBody.isFavorite;
-        const updatedUserFlashCard = await UserFlashcard.findOneAndReplace({ _id: existingUserFlashcard._id }, existingUserFlashcard, { new: true });
-        return new NextResponse(JSON.stringify(updatedUserFlashCard), { status: 200 });
+        return NextResponse.json(await updateExistingUserFlashcard(existingUserFlashcard, updatedUserFlashcard));
     }
+    return NextResponse.json(await createNewUserFlashcard(updatedUserFlashcard, currentUser));
+}
 
-    const newUserFlashCard = {
-        userId: currentUser._id,
-        flashcardSetId: requestBody.flashcardSetId,
-        learningHistory: [],
-        type: requestBody.type,
-        isFavorite: !!requestBody.isFavorite
-    }
-    const savedUserFlashcard = await UserFlashcard.create(newUserFlashCard);
-    return new NextResponse(JSON.stringify(savedUserFlashcard), { status: 200 });
+async function updateExistingUserFlashcard(existingUserFlashcard: UserFlashcardT, updatedUserFlashcard: UserFlashcardT) {
+    existingUserFlashcard.type = updatedUserFlashcard.type === "NONE" ? existingUserFlashcard.type : updatedUserFlashcard.type;
+    existingUserFlashcard.isFavorite = updatedUserFlashcard.isFavorite;
+    return await UserFlashcard.findOneAndReplace({ _id: existingUserFlashcard._id }, existingUserFlashcard, { new: true });
+}
+
+async function createNewUserFlashcard(updatedUserFlashcard: UserFlashcardT, currentUser: UserT) {
+    updatedUserFlashcard.userId = currentUser._id;
+    updatedUserFlashcard.learningHistory = [];
+    return await UserFlashcard.create(updatedUserFlashcard);
 }
