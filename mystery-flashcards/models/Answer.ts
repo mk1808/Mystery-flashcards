@@ -1,5 +1,6 @@
 import { Schema, SchemaTypes, model, models } from 'mongoose';
 import { FlashcardT } from './Flashcard';
+import { AnswerAttemptType } from '@/enums/CommonEnums';
 
 export const answerSchema = new Schema({
     flashcardId: {
@@ -27,7 +28,7 @@ export type AnswerT = {
     flashcard?: FlashcardT,
     isCorrect?: Boolean,
     givenAnswer?: string,
-    attempt?: string
+    attempt?: AnswerAttemptType
 };
 
 export default Answer;

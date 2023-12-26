@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { apiAccessControlMiddleware } from "./middleware/apiAccessControlMiddleware";
 import { localeManagerMiddleware } from "./middleware/localeManagerMiddleware";
 import { stackMiddlewares } from "./middleware/stackMiddlewares";

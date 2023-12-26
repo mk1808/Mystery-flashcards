@@ -1,70 +1,80 @@
 import { FlashCardSetDto } from "@/dtos/FlashCardSetDto";
-import FlashcardSet from "@/models/FlashcardSet";
-import TestResult from "@/models/TestResult";
-import UserFlashcard from "@/models/UserFlashcard";
+import FlashcardSet, { FlashcardSetT } from "@/models/FlashcardSet";
 import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
+import { simpleMessageResponse } from "@/utils/server/responseFactories";
 import { NextRequest, NextResponse } from "next/server";
+import UserFlashcard from "@/models/UserFlashcard";
+import TestResult from "@/models/TestResult";
+import { StatusType } from "@/enums/StatusOptions";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-    const id = params.id;
     await connectToDB();
-    const flashCardSetDto: FlashCardSetDto = { statistics: {} };
-    flashCardSetDto.flashcardSet = (await FlashcardSet.findById(id))!;
+    const flashcardSetId = params.id,
+        flashCardSetDto: FlashCardSetDto = { statistics: {} };
+
+    flashCardSetDto.flashcardSet = (await FlashcardSet.findById(flashcardSetId))!;
 
     if (!flashCardSetDto.flashcardSet) {
-        return new NextResponse(JSON.stringify({ message: 'Flash card set not found!' }), { status: 404 });
+        return simpleMessageResponse('Flashcard set not found!', 404)
     }
-    try {
-        const currentUser = await getUser(request);
-        if (currentUser) {
-            flashCardSetDto.userFlashcard = (await UserFlashcard.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id }))?.toObject();
-            if (flashCardSetDto.userFlashcard) {
-                flashCardSetDto.testResult = (await TestResult.findOne({ flashcardSetId: flashCardSetDto.flashcardSet._id, userId: currentUser._id }))!;
-            }
-        }
-    } catch (e) { }
 
-    flashCardSetDto.statistics!.favorite = await UserFlashcard.countDocuments({ flashcardSetId: flashCardSetDto.flashcardSet._id, isFavorite: true })
-    flashCardSetDto.statistics!.learning = await UserFlashcard.countDocuments({ type: "LEARNING" })
+    await updateUserFlashcard(request, flashCardSetDto);
+    await updateStatistics(flashCardSetDto);
+
     return new NextResponse(JSON.stringify(flashCardSetDto));
 }
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
-    const id = params.id;
-    const requestBody = await request.json();
     await connectToDB();
+    const id = params.id,
+        updatedFlashcardSet: FlashcardSetT = await request.json(),
+        existingFlashcardSet = await FlashcardSet.findById(id),
+        currentUser = await getUser(request),
+        userIsAuthor = existingFlashcardSet.user._id.equals(currentUser._id)
 
-    const existingFlashcardSet = await FlashcardSet.findById(id);
-    const currentUser = await getUser(request);
-    const userIsAuthor = existingFlashcardSet.user._id.equals(currentUser._id)
     if (!userIsAuthor) {
-        return new NextResponse('Access denied!', { status: 401 });
+        return simpleMessageResponse('Access denied!', 401)
     }
 
-    const updatedFlashCardSet = {
-        _id: existingFlashcardSet._id,
-        user: existingFlashcardSet.user,
-        name: requestBody.name,
-        level: requestBody.level,
-        hashtags: requestBody.hashtags,
-        flashcards: requestBody.flashcards,
-        isPublic: requestBody.isPublic,
-        lang1: requestBody.lang1,
-        lang2: requestBody.lang2,
-    }
-    const result = await FlashcardSet.findOneAndReplace({ _id: id }, updatedFlashCardSet, { new: true });
+    updatedFlashcardSet._id = existingFlashcardSet._id
+    updatedFlashcardSet.user = currentUser
+
+    const result = await FlashcardSet.findOneAndReplace({ _id: id }, updatedFlashcardSet, { new: true });
+
     return new NextResponse(JSON.stringify(result), { status: 200 });
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-    const id = params.id;
     await connectToDB();
-    const existingSet = await FlashcardSet.findById(id);
-    if (existingSet == null) {
-        return new NextResponse('FlashcardSet does not exist!', { status: 404 });
+    const id = params.id,
+        existingFlashcardSet = await FlashcardSet.findById(id),
+        currentUser = await getUser(request),
+        userIsAuthor = existingFlashcardSet.user._id.equals(currentUser._id);
+
+    if (existingFlashcardSet == null) {
+        return simpleMessageResponse('Flashcard set not found!', 404)
+    } else if (!userIsAuthor) {
+        return simpleMessageResponse('Access denied!', 401)
     }
 
     const result = await FlashcardSet.deleteOne({ _id: id })
     return NextResponse.json(result);
+}
+
+async function updateUserFlashcard(request: NextRequest, flashCardSetDto: FlashCardSetDto) {
+    try {
+        const currentUser = await getUser(request);
+        if (currentUser) {
+            flashCardSetDto.userFlashcard = (await UserFlashcard.findOne({ flashcardSetId: flashCardSetDto?.flashcardSet?._id, userId: currentUser._id }))?.toObject();
+            if (flashCardSetDto.userFlashcard) {
+                flashCardSetDto.testResult = (await TestResult.findOne({ flashcardSetId: flashCardSetDto?.flashcardSet?._id, userId: currentUser._id }))?.toObject();
+            }
+        }
+    } catch (e) { }
+}
+
+async function updateStatistics(flashCardSetDto: FlashCardSetDto) {
+    flashCardSetDto.statistics!.favorite = await UserFlashcard.countDocuments({ flashcardSetId: flashCardSetDto?.flashcardSet?._id, isFavorite: true })
+    flashCardSetDto.statistics!.learning = await UserFlashcard.countDocuments({ type: StatusType.LEARNING })
 }

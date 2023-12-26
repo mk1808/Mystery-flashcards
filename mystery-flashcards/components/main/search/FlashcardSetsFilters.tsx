@@ -15,12 +15,13 @@ import useAuthStore from '@/stores/useAuthStore';
 import { useSearchParams } from 'next/navigation';
 import { StatusOptions } from '@/enums/StatusOptions';
 import useLocaleStore from '@/stores/useLocaleStore';
+import { FlashcardSetSearchParams as SearchParams } from '@/enums/FlashcardSetSearchParams';
 
 function FlashcardSetsFilters({
     search
 }: {
     search: (data: FlashcardSearchDto) => any
-    }) {
+}) {
     const { dictionary } = useLocaleStore(state => state);
     const [statusFieldRefresh, setStatusFieldRefresh] = useState(0);
     const searchParams = useSearchParams()
@@ -44,10 +45,10 @@ function FlashcardSetsFilters({
 
     useEffect(() => {
         if (mySetParam === "true") {
-            setValue("status", ["mine"])
+            setValue(SearchParams.STATUS, ["mine"])
             setStatusFieldRefresh(setStatusFieldRefresh => setStatusFieldRefresh + 1)
 
-            setTimeout(() => search({ status: ["mine"] }), 100)
+            setTimeout(() => search({ [SearchParams.STATUS]: ["mine"] }), 100)
         }
     }, [mySetParam])
 
@@ -73,12 +74,12 @@ function FlashcardSetsFilters({
         return (
             <form onSubmit={handleSubmit(onSubmit, onErrors)}>
                 <div className="card-body grid grid-cols-1 md:grid-cols-2 cards3:grid-cols-3">
-                    {renderInput("name", dictionary.common.basicName, dictionary.common.fillBasicName)}
-                    {renderSelect("lang1", dictionary.common.lang1, dictionary.common.fillLang1, langOptions)}
-                    {renderSelect("lang2", dictionary.common.lang2, dictionary.common.fillLang2, langOptions)}
+                    {renderInput(SearchParams.NAME, dictionary.common.basicName, dictionary.common.fillBasicName)}
+                    {renderSelect(SearchParams.LANG1, dictionary.common.lang1, dictionary.common.fillLang1, langOptions)}
+                    {renderSelect(SearchParams.LANG2, dictionary.common.lang2, dictionary.common.fillLang2, langOptions)}
 
-                    {renderSelect("level", dictionary.common.level, dictionary.common.fillLevel, levelOptions)}
-                    {renderSelect("hashtags", dictionary.common.hashtags, dictionary.common.fillHashtags, hashtagsOptions, true)}
+                    {renderSelect(SearchParams.LEVEL, dictionary.common.level, dictionary.common.fillLevel, levelOptions)}
+                    {renderSelect(SearchParams.HASHTAGS, dictionary.common.hashtags, dictionary.common.fillHashtags, hashtagsOptions, true)}
                     {renderStatus()}
                     {renderSubmitButton()}
                 </div>
@@ -115,7 +116,7 @@ function FlashcardSetsFilters({
 
     function renderStatus() {
         if (currentUser != null) {
-            return renderSelect("status", dictionary.common.status, dictionary.common.fillStatus, statusesOptions, true, statusFieldRefresh);
+            return renderSelect(SearchParams.STATUS, dictionary.common.status, dictionary.common.fillStatus, statusesOptions, true, statusFieldRefresh);
         }
         return <></>
     }
