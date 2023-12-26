@@ -5,13 +5,14 @@ import LearnStats from '@/components/learn/LearnStats';
 import { DirectionOptions } from '@/enums/DirectionOptions';
 import useLocaleStore from '@/stores/useLocaleStore';
 import useTestStore from '@/stores/useTestStore';
+import { getPercentDisplay } from '@/utils/client/MathUtils';
 import { getLangsDirection } from '@/utils/client/TrainingUtils';
 import React from 'react'
 
 function TestSidebar() {
     const { dictionary } = useLocaleStore(state => state);
     const { testAnswers, testFlashcards, direction, flashcardSet: { flashcardSet } } = useTestStore((state) => state);
-    const progress = (testAnswers.length * 100 / testFlashcards?.length).toFixed(0) + "%";
+    const progress = getPercentDisplay(testAnswers.length, testFlashcards?.length) + "%";
     const statsValues = [
         {
             text: dictionary.common.answersCount,
@@ -24,7 +25,6 @@ function TestSidebar() {
     ]
 
     const { lang1, lang2 } = flashcardSet || {};
-
     const languages = direction === DirectionOptions.MAIN ? getLangsDirection(lang1, lang2) : getLangsDirection(lang2, lang1);
 
     return (

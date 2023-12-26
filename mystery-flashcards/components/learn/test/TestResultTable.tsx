@@ -32,7 +32,7 @@ function TestResultTable({ flashcardSetDto, view }: { flashcardSetDto: FlashCard
     }
 
     function renderRow(answer: AnswerT, index: number) {
-        const { wordLang1, wordLang2 } = getFlashcard(answer.flashcardId!)!
+        const { wordLang1, wordLang2 } = getFlashcard(answer.flashcardId!)!;
         const isMainDirection = flashcardSetDto.testResult?.direction === DirectionOptions.MAIN;
         const mainWord = isMainDirection ? wordLang1 : wordLang2;
         const secondaryWord = isMainDirection ? wordLang2 : wordLang1;
