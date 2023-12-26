@@ -7,6 +7,7 @@ import SecondThirdDivider from "@/components/main/panels/SecondThirdDivider";
 import FlashcardSetsSearch from "@/components/main/search/FlashcardSetsSearch";
 
 async function Page() {
+
     return (
         <>
             <FirstPanel />

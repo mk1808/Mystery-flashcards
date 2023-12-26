@@ -4,6 +4,7 @@ import LearnTitle from '@/components/learn/LearnTitle'
 import React from 'react'
 
 async function LearnLayout({ children }: { children: any }) {
+
     return (
         <div >
             <Card title={<LearnTitle />} className='min-h-[60vh] mb-8 '>
