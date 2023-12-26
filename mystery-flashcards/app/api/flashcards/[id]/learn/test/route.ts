@@ -1,72 +1,47 @@
 import { TestResultDto } from "@/dtos/TestResultDto";
-import { AnswerT } from "@/models/Answer";
 import FlashcardSet from "@/models/FlashcardSet";
-import TestResult, { TestResultT } from "@/models/TestResult";
-import User, { UserT } from "@/models/User";
-import UserFlashcard, { UserFlashcardT } from "@/models/UserFlashcard";
+import { UserT } from "@/models/User";
 import { shuffleArray } from "@/utils/server/arrayUtils";
 import { getUser } from "@/utils/server/authUtils";
 import connectToDB from "@/utils/server/database";
+import { simpleMessageResponse } from "@/utils/server/responseFactories";
 import { checkAnswers } from "@/utils/server/testUtils";
-import { findNextRang, findRangByPoints, getRang } from "@/utils/server/userRangUtils";
+import { findNextRang, getRang } from "@/utils/server/userRangUtils";
 import { NextRequest, NextResponse } from "next/server";
+import { saveTestResult, updateUser, updateUserFlashcard } from "./utils";
+import { TestResultT } from "@/models/TestResult";
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+    await connectToDB();
     const flashcardSetId = params.id;
     const test: TestResultT = await request.json();
-    await connectToDB();
     const currentUser: UserT = await getUser(request);
     const flashcardSet = (await FlashcardSet.findById(flashcardSetId));
 
     const newResults = checkAnswers(flashcardSet, test);
+    const savedResult = await saveTestResult(flashcardSetId, newResults, currentUser)
+    await updateUserFlashcard(flashcardSetId, currentUser);
 
-    let testResult: TestResultT = (await TestResult.findOne({ userId: currentUser._id, flashcardSetId: flashcardSetId }))?.toObject();
-    if (testResult) {
-        testResult.allCount = newResults.allCount;
-        testResult.answers = newResults.answers;
-        testResult.resultPercent = newResults.resultPercent;
-        testResult.validCount = newResults.validCount;
-        testResult.direction = newResults.direction;
-        await TestResult.findOneAndReplace({ _id: testResult._id }, testResult, { new: true });
-    } else {
-        newResults.userId = currentUser._id;
-        testResult = await TestResult.create(newResults);
-    }
+    const gainPoints = (savedResult?.validCount || 0) * 10;
+    const updatedUser = await updateUser(currentUser, gainPoints)
 
-    const existingUserFlashcard: UserFlashcardT = (await UserFlashcard.findOne({ flashcardSetId: flashcardSetId, userId: currentUser._id }))?.toObject()
-    if (existingUserFlashcard) {
-        existingUserFlashcard.type = "TESTING";
-        await UserFlashcard.findOneAndReplace({ _id: existingUserFlashcard._id }, existingUserFlashcard, { new: true });
-    } else {
-        const newUserFlashCard = {
-            userId: currentUser._id,
-            flashcardSetId: flashcardSetId,
-            learningHistory: [],
-            type: "TESTING"
-        }
-        await UserFlashcard.create(newUserFlashCard);
-    }
-    const points = (testResult?.validCount || 0) * 10;
-    currentUser.points += points;
-    currentUser.rang = findRangByPoints(currentUser.points).id;
-    await User.findOneAndReplace({ _id: currentUser._id }, currentUser, { new: true });
     const response: TestResultDto = {
-        testResults: testResult!,
-        gainPoints: points,
+        testResults: savedResult!,
+        gainPoints: gainPoints,
         currentPoints: currentUser.points,
-        currentRang: getRang(currentUser.rang),
-        nextRang: findNextRang(currentUser.rang)
+        currentRang: getRang(updatedUser.rang!),
+        nextRang: findNextRang(updatedUser.rang!)
     }
     return NextResponse.json(response);
 }
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-    const id = params.id;
     await connectToDB();
+    const id = params.id;
 
     const flashcardSet = await FlashcardSet.findById(id);
     if (!flashcardSet) {
-        return new NextResponse('Flash card set not found!', { status: 404 });
+        return simpleMessageResponse('Flash card set not found!', 404)
     }
     shuffleArray(flashcardSet.flashcards);
 
