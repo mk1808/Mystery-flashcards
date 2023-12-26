@@ -6,17 +6,17 @@ import { patchAnswersAndReturnResults } from '@/utils/client/ApiUtils';
 import { getMainButtonAttrs } from '@/utils/client/TrainingUtils';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { useRouter } from 'next/navigation';
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 
-function useSubmitTrainingAction() {
+function useSubmitTrainingAction(): MainAndOtherButton {
     const { dictionary, locale } = useLocaleStore(state => state);
     const { wasChecked, roundAnswers, flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
     const { setFinalResult } = useTrainingStore((state) => state);
     const addAlert = useAlertStore((state) => state.add)
     const router = useRouter();
+
     const wasCheckedRef = useRef<any>(null)
     wasCheckedRef.current = wasChecked;
-    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(wasCheckedRef.current, dictionary);
     const flashcardSetRef = useRef<any>(null)
     flashcardSetRef.current = flashcardSet;
     const roundAnswersRef = useRef<any>(null)
@@ -31,9 +31,13 @@ function useSubmitTrainingAction() {
         } catch (errorResponse: any) {
             addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
         }
-
     }
-    const otherButtonAttrs = { onFinishClick, title: dictionary.common.endLearning }
+
+    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(wasCheckedRef.current, dictionary);
+    const otherButtonAttrs: ButtonAttrs = {
+        title: dictionary.common.endLearning,
+        onClick: onFinishClick
+    }
 
     return { mainButtonAttrs, otherButtonAttrs };
 }

@@ -1,27 +1,33 @@
 import useTrainingStore from "@/stores/useTrainingStore";
-import { useEffect, useRef, useState } from "react";
-import useSubmitTrainingResultAction from "./submitLearnActions/useSubmitTrainingResultAction";
-import useSubmitTrainingAction from "./submitLearnActions/useSubmitTrainingAction";
-import useSubmitTestAction from "./submitTrainingActions/useSubmitTestAction";
+import { useEffect, useState } from "react";
+import useSubmitTrainingResultAction from "./submitTrainingActions/useSubmitTrainingResultAction";
+import useSubmitTrainingAction from "./submitTrainingActions/useSubmitTrainingAction";
+import useSubmitTestAction from "./submitTestActions/useSubmitTestAction";
 import useTestStore from "@/stores/useTestStore";
-import useSubmitTestResultAction from "./submitTrainingActions/useSubmitTestResultAction";
+import useSubmitTestResultAction from "./submitTestActions/useSubmitTestResultAction";
 import useLocaleStore from "@/stores/useLocaleStore";
 
-function useSubmitLearnActions(): { mainButtonAttrs: any, otherButtonAttrs: any } {
+function useSubmitLearnActions(): MainAndOtherButton {
     const { dictionary } = useLocaleStore(state => state);
     const { view, flashcardSet } = useTrainingStore((state) => state);
     const { currentFlashcardIndex } = useTestStore((state) => state);
-    const training = useSubmitTrainingAction();
-    const trainingResult = useSubmitTrainingResultAction({ flashcardSet });
-    const test = useSubmitTestAction();
-    const testResult = useSubmitTestResultAction();
-    const [currentAction, setCurrentAction] = useState<{ mainButtonAttrs: ButtonAttrs, otherButtonAttrs: any }>({
+
+    const [currentAction, setCurrentAction] = useState<MainAndOtherButton>({
         mainButtonAttrs: {
             title: "",
             type: "button"
         },
-        otherButtonAttrs: ""
+        otherButtonAttrs: {
+            title: "",
+            type: undefined
+        }
     });
+
+    const training = useSubmitTrainingAction();
+    const trainingResult = useSubmitTrainingResultAction({ flashcardSet });
+    const test = useSubmitTestAction();
+    const testResult = useSubmitTestResultAction();
+
     useEffect(() => {
         switch (view) {
             case "TRAINING":
