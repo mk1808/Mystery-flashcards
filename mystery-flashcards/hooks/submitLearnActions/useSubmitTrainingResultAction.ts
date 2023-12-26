@@ -1,12 +1,14 @@
+import useLocaleStore from '@/stores/useLocaleStore';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
-function useSubmitTrainingResultAction({ dictionary, flashcardSet, locale }: { dictionary: any, flashcardSet: any, locale: any }) {
+function useSubmitTrainingResultAction({ flashcardSet }: { flashcardSet: any }) {
+    const { dictionary, locale } = useLocaleStore(state => state);
     const router = useRouter();
     const mainButtonAttrs: ButtonAttrs = {
         title: dictionary.common.tryAgain,
         type: undefined,
-        onClick: () => { 
+        onClick: () => {
             const modalButton = document.getElementById("modalButton")
             modalButton?.click();
         }

@@ -25,7 +25,7 @@ export default function Steps({
                     <div>
                         {renderStepIcon(step)}
                     </div>
-                    {!isLast && <div className="h-full w-px bg-gray-300 dark:bg-slate-500"></div>}
+                    {!isLast && <div className="h-full w-px bg-gray-300 dark:bg-slate-500" />}
                 </div>
                 <div className="pt-1 pb-8 text-left">
                     <p className="mb-2 text-xl font-bold text-gray-900 dark:text-slate-300">{step.title}</p>

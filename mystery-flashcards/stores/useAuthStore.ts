@@ -20,7 +20,7 @@ const useAuthStore = create<State & Action>((set) => ({
     currentUser: null,
     shouldCheckWhoIam: true,
     set: (currentUser: UserT | null) => set((state) => ({ currentUser: currentUser, shouldCheckWhoIam: !!currentUser || state.shouldCheckWhoIam })),
-    checkWhoAmi: checkWhoAmi,
+    checkWhoAmi: () => checkWhoAmi,
     clear: () => set(() => ({ currentUser: null, shouldCheckWhoIam: true })),
     setShouldCheckWhoIam: (shouldCheckWhoIam) => set(() => ({ shouldCheckWhoIam }))
 }))

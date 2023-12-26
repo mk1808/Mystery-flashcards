@@ -1,13 +1,10 @@
 import ResultTable from '@/components/learn/training/ResultTable';
-import { fetchDictionary } from '@/dictionaries/dictionaries';
-import useTrainingStore from '@/stores/useTrainingStore';
 import React from 'react'
 
-export default async function LearnTrainingResults({ params }: { params: { id: string, locale: string } }) {
-  const dictionary = await fetchDictionary(params.locale);
+export default async function LearnTrainingResults() {
   const view = "TRAINING_RESULT"
   return (
-    <ResultTable view={view} dictionary={dictionary} locale={params.locale}/>
+    <ResultTable view={view} />
 
   )
 }

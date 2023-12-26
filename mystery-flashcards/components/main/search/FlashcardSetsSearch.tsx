@@ -5,8 +5,10 @@ import SetCard from './FlashcardSetCard'
 import FlashcardSetsFilters from './FlashcardSetsFilters';
 import { searchFlashcardSets } from '@/utils/client/ApiUtils';
 import { FlashcardSetT } from '@/models/FlashcardSet';
+import useLocaleStore from '@/stores/useLocaleStore';
 
-function FlashcardSetsSearch({ dictionary, locale }: { dictionary?: any, locale:string }) {
+function FlashcardSetsSearch() {
+    const { dictionary } = useLocaleStore(state => state);
     const [searchResults, setSearchResults] = useState<FlashcardSetT[] | null>(null)
 
     useEffect(() => {
@@ -24,7 +26,7 @@ function FlashcardSetsSearch({ dictionary, locale }: { dictionary?: any, locale:
 
     return (
         <div id='flashcardSetsSearch' className="mt-16">
-            <FlashcardSetsFilters search={search} dictionary={dictionary} />
+            <FlashcardSetsFilters search={search} />
             {renderResults()}
         </div>
     )
@@ -41,7 +43,7 @@ function FlashcardSetsSearch({ dictionary, locale }: { dictionary?: any, locale:
     function renderLoader() {
         return (
             <div className="mt-20 mb-52 flex justify-center text-4xl font-bold text-secondary">
-                <span className="loading loading-ball loading-lg"></span>
+                <span className="loading loading-ball loading-lg" />
             </div>
         )
     }
@@ -63,7 +65,7 @@ function FlashcardSetsSearch({ dictionary, locale }: { dictionary?: any, locale:
     }
 
     function renderCard(flashcardSet: FlashcardSetT) {
-        return <SetCard flashcardSet={flashcardSet} key={flashcardSet._id} dictionary={dictionary} locale={locale}/>
+        return <SetCard flashcardSet={flashcardSet} key={flashcardSet._id} />
     }
 }
 

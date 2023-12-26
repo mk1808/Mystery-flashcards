@@ -7,23 +7,18 @@ import MyInput from './form/MyInput';
 import MyTextarea from './form/MyTextarea';
 import { isFieldValid } from '@/utils/client/FormUtils';
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore';
+import useLocaleStore from '@/stores/useLocaleStore';
 
 function FlashcardContainer({
   card,
-  isForm,
-  dictionary
+  isForm = false
 }: {
   card: FlashcardT,
-  isForm?: boolean,
-  dictionary: any
+  isForm?: boolean
 }) {
-
-  const updateFlashcard = useNewFlashcardSetStore((state) => state.updateFlashcard);
-  const addNewFlashcard = useNewFlashcardSetStore((state) => state.addNewFlashcard);
-  const deleteFlashcard = useNewFlashcardSetStore((state) => state.deleteFlashcard);
-  const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList)
-  const flashcardListInvalidCountInc = useNewFlashcardSetStore((state) => state.flashcardListInvalidCountInc);
-  const flashcardListInvalidCountDec = useNewFlashcardSetStore((state) => state.flashcardListInvalidCountDec);
+  const { dictionary } = useLocaleStore(state => state);
+  const { flashcardsList } = useNewFlashcardSetStore((state) => state)
+  const { updateFlashcard, addNewFlashcard, deleteFlashcard, flashcardListInvalidCountInc, flashcardListInvalidCountDec } = useNewFlashcardSetStore((state) => state);
   const allFlashCards = useRef(flashcardsList)
   const lastValidationState = useRef(true)
 
@@ -82,7 +77,7 @@ function FlashcardContainer({
             <div className="w-full justify-end">
               {renderLeftSide()}
             </div>
-            <div className="divider sm:divider-horizontal"></div>
+            <div className="divider sm:divider-horizontal" />
             <div className="w-full">
               {renderRightSide()}
             </div>

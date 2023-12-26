@@ -7,8 +7,10 @@ import { UserT } from "@/models/User";
 import UserEditForm from "./UserEditForm";
 import { getWhoAmi } from "@/utils/client/ApiUtils";
 import UserAvatar from "../common/UserAvatar";
+import useLocaleStore from "@/stores/useLocaleStore";
 
-export default function UserEdit({ dictionary }: { dictionary: any }) {
+export default function UserEdit() {
+    const { dictionary } = useLocaleStore(state => state);
     const [currentUser, setCurrentUser] = useState<UserT>();
     const [imageSrcError, setImageSrcError] = useState(false);
 
@@ -18,7 +20,7 @@ export default function UserEdit({ dictionary }: { dictionary: any }) {
 
     return (
         <div>
-            <div className="divider"></div>
+            <div className="divider" />
             <Title text={dictionary.common.userAccountEdit} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {renderUserAvatar()}
@@ -34,8 +36,8 @@ export default function UserEdit({ dictionary }: { dictionary: any }) {
 
     function renderUserEditForm() {
         if (currentUser) {
-            return <UserEditForm dictionary={dictionary} user={currentUser} />
+            return <UserEditForm user={currentUser} />
         }
-        return <span className="loading loading-ball loading-lx"></span>
+        return <span className="loading loading-ball loading-lx" />
     }
 }

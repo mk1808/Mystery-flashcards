@@ -1,3 +1,5 @@
+"use client"
+import useLocaleStore from "@/stores/useLocaleStore";
 import RoundActionButton from "../../common/RoundActionButton";
 
 type StepType = {
@@ -6,11 +8,8 @@ type StepType = {
 }
 
 
-export default function SecondPanel({
-    dictionary
-}: {
-    dictionary: any
-}) {
+export default function SecondPanel() {
+    const { dictionary } = useLocaleStore(state => state);
 
     const steps: StepType[] = [
         { number: "1", text: dictionary.common.mainInstructionStep1 },
@@ -48,7 +47,7 @@ export default function SecondPanel({
         const amountTemp = [...Object(Array(amount + 1)).keys()];
         return (
             <div className="flex">
-                {amountTemp.map(index => <div key={index + "_" + id} className='w-[0px] sm:w-[2vw] md:w-[5vw] h-full xs:hidden'></div>)}
+                {amountTemp.map(index => <div key={index + "_" + id} className='w-[0px] sm:w-[2vw] md:w-[5vw] h-full xs:hidden' />)}
             </div>
         );
     }

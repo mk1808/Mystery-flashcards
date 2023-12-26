@@ -1,13 +1,14 @@
 import useAuthStore from '@/stores/useAuthStore';
+import useLocaleStore from '@/stores/useLocaleStore';
 import { logout } from '@/utils/client/ApiUtils';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
-function useLoggedUserForLayout({ renderMenuElement, locale }: { renderMenuElement: any, locale: string }) {
+function useLoggedUserForLayout({ renderMenuElement }: { renderMenuElement: any }) {
+    const { locale } = useLocaleStore(state => state);
 
-    const currentUser = useAuthStore(state => state.currentUser);
-    const checkWhoAmi = useAuthStore(state => state.checkWhoAmi);
-    const setShouldCheckWhoIam = useAuthStore(state => state.setShouldCheckWhoIam);
+    const { currentUser } = useAuthStore(state => state);
+    const { checkWhoAmi, setShouldCheckWhoIam } = useAuthStore(state => state);
     const router = useRouter();
 
     function renderMenuElementIfNeeded(element: any) {

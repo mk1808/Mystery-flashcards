@@ -1,10 +1,21 @@
+export const Lang = {
+    PL: "pl",
+    ENG: "eng",
+    GE: "ge",
+    FR: "fr",
+    ZH: "zh",
+    ES: "es",
+    PT: "pt",
+    RU: "ru"
+} as const;
+
 export const LangOptions: Option[] = [
-    { value: "pl", label: "langOptions.pl" },
-    { value: "eng", label: "langOptions.en" },
-    { value: "ge", label: "langOptions.ge" },
-    { value: "fr", label: "langOptions.fr" },
-    { value: "zh", label: "langOptions.zh" },
-    { value: "es", label: "langOptions.es" },
-    { value: "pt", label: "langOptions.pt" },
-    { value: "ru", label: "langOptions.ru" }
+    { value: Lang.PL, label: "langOptions.pl" },
+    { value: Lang.ENG, label: "langOptions.en" },
+    { value: Lang.GE, label: "langOptions.ge" },
+    { value: Lang.FR, label: "langOptions.fr" },
+    { value: Lang.ZH, label: "langOptions.zh" },
+    { value: Lang.ES, label: "langOptions.es" },
+    { value: Lang.PT, label: "langOptions.pt" },
+    { value: Lang.RU, label: "langOptions.ru" }
 ];

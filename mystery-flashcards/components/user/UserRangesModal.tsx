@@ -3,8 +3,10 @@ import Modal from "../common/Modal"
 import Steps, { Step } from "../common/Steps"
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { getNestedFieldByPath } from "@/utils/server/objectUtils";
+import useLocaleStore from "@/stores/useLocaleStore";
 
-export default function UserRangesModal({ dictionary }: { dictionary: any }) {
+export default function UserRangesModal() {
+    const { dictionary } = useLocaleStore(state => state);
 
     function getRanges(): Step[] {
         return UserRanges.map(rang => ({ title: getNestedFieldByPath(dictionary, rang.name), description: rang.pointsFrom }));

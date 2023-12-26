@@ -2,11 +2,13 @@
 import React from 'react'
 import SingleSidebarInfo from '../common/SingleSidebarInfo'
 import useNewFlashcardSetStore from '@/stores/useNewFlashcardSetStore'
+import useLocaleStore from '@/stores/useLocaleStore';
 
-function NewFlashcardNumber({ dictionary }: { dictionary: any }) {
-    const flashcardsList = useNewFlashcardSetStore((state) => state.flashcardsList)
+function NewFlashcardNumber() {
+    const { dictionary } = useLocaleStore(state => state);
+    const { flashcardsList } = useNewFlashcardSetStore((state) => state)
     return (
-        <SingleSidebarInfo title="Liczba kart" value={flashcardsList.length} />
+        <SingleSidebarInfo title={dictionary.common.flashcardsCount} value={flashcardsList.length} />
     )
 }
 

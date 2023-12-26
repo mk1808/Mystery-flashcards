@@ -1,4 +1,7 @@
 import { FlashCardSetDto } from "@/dtos/FlashCardSetDto";
+import { TrainingResultDto } from "@/dtos/TrainingResultDto";
+import { DirectionType, DirectionOptions } from "@/enums/DirectionOptions";
+import { LearnViewType, LearnViewOptions } from "@/enums/LearnViewOptions";
 import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
 import { FlashcardSetT } from "@/models/FlashcardSet";
@@ -9,37 +12,37 @@ type State = {
     flashcardSet: FlashCardSetDto,
     allAnswers: AnswerT[],
     roundAnswers: AnswerT[],
-    result: any,
+    result: TestResultT,
     allFlashcards: FlashcardT[],
     roundFlashcards: FlashcardT[],
     currentFlashcardIndexInRound: number,
     wasChecked: boolean,
-    finalResult: any,
+    finalResult: TrainingResultDto,
     roundCount: number,
-    view: "TRAINING" | "TEST" | "TRAINING_RESULT" | "TEST_RESULT",
-    direction: string
+    view: LearnViewType,
+    direction: DirectionType
 }
 
 type Action = {
-    setFlashcardSet: (flashcardSet: any) => void,
-    addToAllAnswers: (answer: any) => void,
-    addToRoundAnswers: (answer: any) => void,
+    setFlashcardSet: (flashcardSet: FlashCardSetDto) => void,
+    addToAllAnswers: (answer: AnswerT) => void,
+    addToRoundAnswers: (answer: AnswerT) => void,
     resetRoundAnswers: () => void,
-    updateResult: (result: any) => void,
-    addToAllFlashcards: (flashcard: any) => void,
-    setRoundFlashcards: (flashcards: []) => void,
+    updateResult: (result: TestResultT) => void,
+    addToAllFlashcards: (flashcard: FlashcardT) => void,
+    setRoundFlashcards: (flashcards: FlashcardT[]) => void,
     incrementCurrentFlashcardIndexInRound: () => void,
     resetCurrentFlashcardIndexInRound: () => void,
-    onAnswerSave: (answer: any, flashcard: any, result: any) => void,
-    onNewRound: (flashcards: []) => void,
+    onAnswerSave: (answer: AnswerT, flashcard: FlashcardT, result: any) => void,
+    onNewRound: (flashcards: FlashcardT[]) => void,
     setWasChecked: (checked: boolean) => void,
-    setFinalResult: (finalResult: any) => void,
-    setView: (view: any) => void,
+    setFinalResult: (finalResult: TrainingResultDto) => void,
+    setView: (view: LearnViewType) => void,
     initStore: () => void,
-    setDirection: (direction: string) => void
+    setDirection: (direction: DirectionType) => void
 }
 
-const initResult = () => ({
+const initResult: () => TestResultT = () => ({
     _id: "",
     userId: "",
     flashcardSetId: "",
@@ -65,18 +68,18 @@ const useTrainingStore = create<State & Action>((set) => ({
     ...initStore(),
     flashcardSet: {},
     roundFlashcards: [],
-    view: "TRAINING",
-    direction: "main",
-    setFlashcardSet: (flashcardSet) => set(() => ({ flashcardSet: flashcardSet })),
-    addToAllAnswers: (answer) => set((state) => ({ allAnswers: [...state.allAnswers, answer] })),
-    addToRoundAnswers: (answer) => set((state) => ({ roundAnswers: [...state.roundAnswers, answer] })),
+    view: LearnViewOptions.TRAINING,
+    direction: DirectionOptions.MAIN,
+    setFlashcardSet: (flashcardSet: FlashCardSetDto) => set(() => ({ flashcardSet: flashcardSet })),
+    addToAllAnswers: (answer: AnswerT) => set((state) => ({ allAnswers: [...state.allAnswers, answer] })),
+    addToRoundAnswers: (answer: AnswerT) => set((state) => ({ roundAnswers: [...state.roundAnswers, answer] })),
     resetRoundAnswers: () => set(() => ({ roundAnswers: [] })),
-    updateResult: (result) => set(() => ({ result: result })),
-    addToAllFlashcards: (flashcard) => set((state) => ({ allFlashcards: [...state.allFlashcards, flashcard] })),
-    setRoundFlashcards: (flashcards) => set(() => ({ roundFlashcards: flashcards })),
+    updateResult: (result: TestResultT) => set(() => ({ result: result })),
+    addToAllFlashcards: (flashcard: FlashcardT) => set((state) => ({ allFlashcards: [...state.allFlashcards, flashcard] })),
+    setRoundFlashcards: (flashcards: FlashcardT[]) => set(() => ({ roundFlashcards: flashcards })),
     incrementCurrentFlashcardIndexInRound: () => set((state) => ({ currentFlashcardIndexInRound: state.currentFlashcardIndexInRound + 1 })),
     resetCurrentFlashcardIndexInRound: () => set(() => ({ currentFlashcardIndexInRound: 0 })),
-    onAnswerSave: (answer, flashcard, result) => set((state) => {
+    onAnswerSave: (answer: AnswerT, flashcard: FlashcardT, result: TestResultT) => set((state) => {
         return {
             allAnswers: [...state.allAnswers, answer],
             roundAnswers: [...state.roundAnswers, answer],
@@ -84,7 +87,7 @@ const useTrainingStore = create<State & Action>((set) => ({
             allFlashcards: [...state.allFlashcards, flashcard]
         }
     }),
-    onNewRound: (flashcards) => set((state) => {
+    onNewRound: (flashcards: FlashcardT[]) => set((state) => {
         return {
             roundAnswers: [],
             currentFlashcardIndexInRound: 0,
@@ -92,11 +95,11 @@ const useTrainingStore = create<State & Action>((set) => ({
             roundCount: state.roundCount + 1
         }
     }),
-    setWasChecked: (checked) => set(() => ({ wasChecked: checked })),
-    setFinalResult: (finalResult) => set(() => ({ finalResult: finalResult })),
-    setView: (view) => set(() => ({ view: view })),
+    setWasChecked: (checked: boolean) => set(() => ({ wasChecked: checked })),
+    setFinalResult: (finalResult: TrainingResultDto) => set(() => ({ finalResult: finalResult })),
+    setView: (view:LearnViewType) => set(() => ({ view: view })),
     initStore: () => set(initStore),
-    setDirection: (direction) => set(() => ({ direction }))
+    setDirection: (direction:DirectionType) => set(() => ({ direction }))
 }))
 
 export default useTrainingStore;

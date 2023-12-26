@@ -1,8 +1,10 @@
 import useAuthStore from "@/stores/useAuthStore";
+import useLocaleStore from "@/stores/useLocaleStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-export default function useWatchUserAuthentication(locale: string) {
+export default function useWatchUserAuthentication() {
+    const { locale } = useLocaleStore(state => state);
     const { currentUser, shouldCheckWhoIam } = useAuthStore(state => state);
     const userRef = useRef<any>();
     const router = useRouter();

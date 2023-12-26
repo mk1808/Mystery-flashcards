@@ -5,36 +5,33 @@ import React, { useRef } from 'react'
 import useLoggedUserForLayout from '@/hooks/useLoggedUserForLayout';
 import useWatchUserAuthentication from '@/hooks/useWatchUserAuthentication';
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import useLocaleStore from '@/stores/useLocaleStore';
+import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 
-function Header({
-    locale,
-    dictionary
-}: {
-    locale: string,
-    dictionary: any
-}) {
+function Header() {
+    const { dictionary, locale } = useLocaleStore(state => state);
     const detailsElement = useRef<any>(null);
-    const { renderMenuElementIfNeeded, onLogout } = useLoggedUserForLayout({ renderMenuElement, locale });
-    useWatchUserAuthentication(locale);
+    const { renderMenuElementIfNeeded, onLogout } = useLoggedUserForLayout({ renderMenuElement });
+    useWatchUserAuthentication();
 
     const mainMenuElements = [
         {
-            name: dictionary.common.mainPage,
+            name: "common.mainPage",
             link: `/${locale}`,
             forAll: true
         },
         {
-            name: dictionary.common.searchSets,
+            name: "common.searchSets",
             link: `/${locale}#flashcardSetsSearch`,
             forAll: true
         },
         {
-            name: dictionary.common.addNewSet,
+            name: "common.addNewSet",
             link: `/${locale}/flashcards/new`,
             forLogged: true
         },
         {
-            name: dictionary.common.mySets,
+            name: "common.mySets",
             link: `/${locale}?mySet=true#flashcardSetsSearch`,
             forLogged: true
         },
@@ -42,22 +39,22 @@ function Header({
 
     const nestedMenuElements = [
         {
-            name: dictionary.common.login,
+            name: "common.login",
             link: `/${locale}/login`,
             forNotLogged: true
         },
         {
-            name: dictionary.common.register,
+            name: "common.register",
             link: `/${locale}/register`,
             forNotLogged: true
         },
         {
-            name: dictionary.common.accountDetails,
+            name: "common.accountDetails",
             link: `/${locale}/user`,
             forLogged: true
         },
         {
-            name: dictionary.common.logout,
+            name: "common.logout",
             onClick: onLogout,
             forLogged: true
         },
@@ -145,10 +142,11 @@ function Header({
     }
 
     function renderNavElement(element: any) {
+        const name = getNestedFieldByPath(dictionary, element.name)
         if (element.onClick) {
-            return <span onClick={element.onClick}>{element.name}</span>;
+            return <span onClick={element.onClick}>{name}</span>;
         }
-        return <Link href={element.link} onClick={() => console.log("test")}>{element.name}</Link>;
+        return <Link href={element.link} onClick={() => console.log("test")}>{name}</Link>;
     }
 
 }

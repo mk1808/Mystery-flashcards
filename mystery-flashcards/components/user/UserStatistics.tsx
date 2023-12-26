@@ -1,9 +1,11 @@
 "use client"
 
+import useLocaleStore from "@/stores/useLocaleStore";
 import { getUserStatistics } from "@/utils/client/ApiUtils";
 import { useState, useEffect } from "react";
 
-export default function UserStatistics({ dictionary }: { dictionary: any }) {
+export default function UserStatistics() {
+    const { dictionary } = useLocaleStore(state => state);
     const [userStatistics, setUserStatistics] = useState<UserStatisticsDto>();
 
     useEffect(() => {
@@ -48,6 +50,6 @@ export default function UserStatistics({ dictionary }: { dictionary: any }) {
         if (value != undefined) {
             return value.length > 24 ? value : <>{value}<br /></>;
         }
-        return <span className="loading loading-ball loading-sm"></span>
+        return <span className="loading loading-ball loading-sm" />
     }
 }

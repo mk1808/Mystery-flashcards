@@ -1,9 +1,11 @@
+import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
-function useSubmitTestResultAction({ dictionary, locale }: { dictionary: any, locale: any }) {
-    const flashcardSet = useTrainingStore((state) => state.flashcardSet);
+function useSubmitTestResultAction() {
+    const { dictionary, locale } = useLocaleStore(state => state);
+    const { flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
     const router = useRouter();
     const mainButtonAttrs: ButtonAttrs = {
         title: dictionary.common.tryAgain,
@@ -13,7 +15,7 @@ function useSubmitTestResultAction({ dictionary, locale }: { dictionary: any, lo
             modalButton?.click();
         }
     }
-    const onFinishClick = () => { router.push(`/${locale}/flashcards/${flashcardSet?.flashcardSet?._id}`) }
+    const onFinishClick = () => { router.push(`/${locale}/flashcards/${flashcardSet?._id}`) }
     const otherButtonAttrs = { onFinishClick, title: dictionary.common.goBack }
 
     return { mainButtonAttrs, otherButtonAttrs };

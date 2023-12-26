@@ -1,20 +1,15 @@
 "use client"
 import LearnStats from '@/components/learn/LearnStats'
 import useAuthStore from '@/stores/useAuthStore'
+import useLocaleStore from '@/stores/useLocaleStore'
 import useTrainingStore from '@/stores/useTrainingStore'
 import { getNestedFieldByPath } from '@/utils/server/objectUtils'
 import { findNextRang, getRang } from '@/utils/server/userRangUtils'
 import React from 'react'
 
-export default function TrainingResultsSidebar({
-    dictionary
-}: {
-    dictionary: any
-}) {
-    const { flashcardSet } = useTrainingStore((state) => state.flashcardSet);
-    const { result } = useTrainingStore((state) => state);
-    const { finalResult, roundCount } = useTrainingStore((state) => state);
-    const { roundFlashcards } = useTrainingStore((state) => state);
+export default function TrainingResultsSidebar() {
+    const { dictionary } = useLocaleStore(state => state);
+    const { flashcardSet: { flashcardSet }, result, roundCount } = useTrainingStore((state) => state);
     const currentUser = useAuthStore(state => state.currentUser);
     const statsValues = [
         {
@@ -37,9 +32,9 @@ export default function TrainingResultsSidebar({
     return (
         <div>
             {renderTitle()}
-            <div className="divider"></div>
+            <div className="divider" />
             <h1 className="text-3xl text-center mt-3 mb-8">{dictionary.common.learningResults} <br /> {dictionary.common.collection}:&nbsp;
-            <span className='font-medium'>{flashcardSet?.name}</span>
+                <span className='font-medium'>{flashcardSet?.name}</span>
             </h1>
 
             <LearnStats stats={statsValues} />
@@ -53,13 +48,13 @@ export default function TrainingResultsSidebar({
         return (
             <>
                 <h1 className="text-4xl text-center mt-3 mb-8">{dictionary.common.gainedPointsAre}
-                <span className='font-semibold text-secondary'>&nbsp;{result?.validCount}&nbsp;</span> 
-                {dictionary.common.pointsShortcut}!</h1>
+                    <span className='font-semibold text-secondary'>&nbsp;{result?.validCount}&nbsp;</span>
+                    {dictionary.common.pointsShortcut}!</h1>
                 <h1 className="text-2xl text-left mt-3 mb-8 font-light">{dictionary.common.currentLevelIs}
-                <span className='font-medium'>&nbsp;{range}</span>.<br />
-                {dictionary.common.toNextLevel}
-                <span className='font-medium'>&nbsp;{toNextLevel}&nbsp;</span>  
-                {dictionary.common.pointsShortcut}.</h1>
+                    <span className='font-medium'>&nbsp;{range}</span>.<br />
+                    {dictionary.common.toNextLevel}
+                    <span className='font-medium'>&nbsp;{toNextLevel}&nbsp;</span>
+                    {dictionary.common.pointsShortcut}.</h1>
             </>
         )
     }

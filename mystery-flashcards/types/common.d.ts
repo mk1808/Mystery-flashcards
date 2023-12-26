@@ -18,3 +18,11 @@ interface Option {
     value: any,
     label: string
 }
+
+interface Dictionary {
+    common?: any,
+    userRanges?: any,
+    langOptions?: any,
+    levelOptions?: any,
+    statusOptions?: any
+}

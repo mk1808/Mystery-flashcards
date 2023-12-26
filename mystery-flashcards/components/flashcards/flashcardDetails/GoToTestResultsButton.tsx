@@ -1,18 +1,16 @@
 "use client"
+import useLocaleStore from '@/stores/useLocaleStore';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
 function GoToTestResultsButton({
-    dictionary,
     author,
-    flashcardSetId,
-    locale
+    flashcardSetId
 }: {
-    dictionary: any,
     author: any,
-    flashcardSetId: any,
-    locale: string
+    flashcardSetId: any
 }) {
+    const { dictionary, locale } = useLocaleStore(state => state);
     const router = useRouter();
     const onGoToTest = () => router.push(`/${locale}/learn/test/${flashcardSetId}/results`)
     return (

@@ -1,6 +1,7 @@
 import { AlertType } from '@/enums/AlertType';
 import { TestResultT } from '@/models/TestResult';
 import useAlertStore from '@/stores/useAlertStore';
+import useLocaleStore from '@/stores/useLocaleStore';
 import useTestStore from '@/stores/useTestStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { sendTestAnswersRequest } from '@/utils/client/ApiUtils';
@@ -9,13 +10,10 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
-function useSubmitTestAction({ dictionary, locale }: { dictionary: any, locale: string }) {
-    const testAnswers = useTestStore((state) => state.testAnswers);
-    const currentFlashcardIndex = useTestStore((state) => state.currentFlashcardIndex);
-    const testFlashcards = useTestStore((state) => state.testFlashcards);
-    const { flashcardSet } = useTestStore((state) => state.flashcardSet);
-    const direction = useTestStore((state) => state.direction);
-    const setFinalResult = useTrainingStore((state) => state.setFinalResult);
+function useSubmitTestAction() {
+    const { dictionary, locale } = useLocaleStore(state => state);
+    const { testAnswers, currentFlashcardIndex, testFlashcards, direction, flashcardSet: { flashcardSet } } = useTestStore((state) => state);
+    const { setFinalResult } = useTrainingStore((state) => state);
     const addAlert = useAlertStore((state) => state.add)
     const router = useRouter();
 
