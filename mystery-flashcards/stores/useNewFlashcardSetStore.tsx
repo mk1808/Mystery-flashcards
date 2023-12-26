@@ -7,15 +7,15 @@ type State = {
     flashcardsList: FlashcardsForm[],
     sidebarFormValid: boolean,
     flashcardListInvalidCount: number,
-    invalidCardsIndexes: any[]
+    invalidCardsIndexes: number[]
 }
 
 type Action = {
-    updateSidebarForm: (sidebar: any) => void,
-    updateFlashcard: (flashcard: any) => void,
+    updateSidebarForm: (sidebar: NewFlashcardSetForm) => void,
+    updateFlashcard: (flashcard: FlashcardsForm) => void,
     addNewFlashcard: () => void,
-    addEditedFlashcard: (flashcard: any) => void,
-    deleteFlashcard: (flashcard: any) => void,
+    addEditedFlashcard: (flashcard: FlashcardsForm) => void,
+    deleteFlashcard: (flashcard: FlashcardsForm) => void,
     deleteAllFlashcards: () => void,
     setSidebarFormValid: (value: boolean) => void,
     flashcardListInvalidCountInc: () => void,
@@ -25,7 +25,7 @@ type Action = {
     initState: (flashcardSet: FlashcardSetT) => void
 }
 
-const getInitialFlashcard = () => ({ _id: Math.floor(Math.random() * 1000_000), wordLang1: "", wordLang2: "", description1: "", description2: "" })
+const getInitialFlashcard: () => FlashcardsForm = () => ({ _id: Math.floor(Math.random() * 1000_000), wordLang1: "", wordLang2: "", description1: "", description2: "" })
 
 const initState = () => ({
     sidebarForm: {
@@ -61,18 +61,18 @@ const initStateByFlashcard = (flashcardSet: FlashcardSetT): any => ({
 
 const useNewFlashcardSetStore = create<State & Action>((set) => ({
     ...initState(),
-    updateSidebarForm: (sidebarForm) => set(() => ({ sidebarForm: sidebarForm })),
-    updateFlashcard: (flashcard) => set((state) => ({ flashcardsList: [...updateElement(state.flashcardsList, flashcard)] })),
+    updateSidebarForm: (sidebarForm: NewFlashcardSetForm) => set(() => ({ sidebarForm: sidebarForm })),
+    updateFlashcard: (flashcard: FlashcardsForm) => set((state) => ({ flashcardsList: [...updateElement(state.flashcardsList, flashcard)] })),
     addNewFlashcard: () => set((state) => ({ flashcardsList: [...state.flashcardsList, getInitialFlashcard()] })),
-    addEditedFlashcard: (flashcard) => set((state) => ({ flashcardsList: [...state.flashcardsList, flashcard] })),
-    deleteFlashcard: (flashcard) => set((state) => ({ flashcardsList: [...excludeFromArray(state.flashcardsList, flashcard)] })),
-    deleteAllFlashcards: () => set((state) => ({ flashcardsList: [getInitialFlashcard()] })),
-    setSidebarFormValid: (value) => set(() => ({ sidebarFormValid: value })),
+    addEditedFlashcard: (flashcard: FlashcardsForm) => set((state) => ({ flashcardsList: [...state.flashcardsList, flashcard] })),
+    deleteFlashcard: (flashcard: FlashcardsForm) => set((state) => ({ flashcardsList: [...excludeFromArray(state.flashcardsList, flashcard)] })),
+    deleteAllFlashcards: () => set(() => ({ flashcardsList: [getInitialFlashcard()] })),
+    setSidebarFormValid: (value: boolean) => set(() => ({ sidebarFormValid: value })),
     flashcardListInvalidCountInc: () => set((state) => ({ flashcardListInvalidCount: state.flashcardListInvalidCount + 1 })),
     flashcardListInvalidCountDec: () => set((state) => ({ flashcardListInvalidCount: state.flashcardListInvalidCount - 1 })),
-    addToInvalidCardsIndexes: (index) => set((state) => ({ invalidCardsIndexes: [...state.invalidCardsIndexes, index] })),
+    addToInvalidCardsIndexes: (index: number) => set((state) => ({ invalidCardsIndexes: [...state.invalidCardsIndexes, index] })),
     resetState: () => set(() => ({ ...initState() })),
-    initState: (flashcard) => set(() => initStateByFlashcard(flashcard))
+    initState: (flashcard: FlashcardSetT) => set(() => initStateByFlashcard(flashcard))
 }))
 
 export default useNewFlashcardSetStore;

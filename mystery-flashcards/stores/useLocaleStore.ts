@@ -1,3 +1,4 @@
+import { Lang } from "@/enums/LangOptions";
 import { create } from "zustand";
 
 type State = {
@@ -11,7 +12,7 @@ type Action = {
 }
 
 const useLocaleStore = create<State & Action>((set) => ({
-    locale: "pl",
+    locale: Lang.PL,
     dictionary: { common: {}, langOptions: {}, levelOptions: {}, statusOptions: {}, userRanges: {} },
     setLocale: (locale: string) => set(() => ({ locale })),
     setDictionary: (dictionary: Dictionary) => set(() => ({ dictionary }))

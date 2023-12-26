@@ -1,4 +1,5 @@
 import { FlashCardSetDto } from "@/dtos/FlashCardSetDto";
+import { TestResultDto } from "@/dtos/TestResultDto";
 import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
 import { create } from "zustand";
@@ -8,7 +9,7 @@ type State = {
     testAnswers: AnswerT[],
     testFlashcards: FlashcardT[],
     currentFlashcardIndex: number,
-    finalResult: any,
+    finalResult: TestResultDto,
     direction: string
 }
 
@@ -17,7 +18,7 @@ type Action = {
     onAnswerSave: (answer: AnswerT) => void,
     setTestFlashcards: (flashcards: FlashcardT[]) => void,
     incrementCurrentFlashcardIndex: () => void,
-    setFinalResult: (finalResult: any) => void,
+    setFinalResult: (finalResult: TestResultDto) => void,
     initStore: () => void,
     setDirection: (direction: string) => void
 }
@@ -37,7 +38,7 @@ const useTestStore = create<State & Action>((set) => ({
     onAnswerSave: (answer) => set((state) => ({ testAnswers: [...state.testAnswers, answer] })),
     setTestFlashcards: (flashcards: FlashcardT[]) => set(() => ({ testFlashcards: flashcards })),
     incrementCurrentFlashcardIndex: () => set((state) => ({ currentFlashcardIndex: state.currentFlashcardIndex + 1 })),
-    setFinalResult: (finalResult) => set(() => ({ finalResult: finalResult })),
+    setFinalResult: (finalResult: TestResultDto) => set(() => ({ finalResult: finalResult })),
     initStore: () => set(initStore),
     setDirection: (direction) => set(() => ({ direction }))
 }))
