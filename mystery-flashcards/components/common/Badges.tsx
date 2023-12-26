@@ -21,7 +21,7 @@ function Badges({
     function renderBadge(badge: string, index: number) {
         return (
             <div
-                key={badge}
+                key={badge + index}
                 className="badge badge-secondary badge-outline mr-3 mt-2"
                 onClick={(event) => onClick(event, index)}
             >

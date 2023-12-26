@@ -112,12 +112,12 @@ function Footer() {
         )
     }
 
-    function renderEmpty() {
-        return <a className='min-h-[1.25rem]' />;
+    function renderEmpty(key: any) {
+        return <a className='min-h-[1.25rem]' key={key} />;
     }
 
     function renderMenuElement(element: any) {
-        const name = getNestedFieldByPath(dictionary, element.name)
+        const name = getNestedFieldByPath(dictionary, element.name) || element.name
         if (element.onClick) {
             return renderClickable(element, name)
         }

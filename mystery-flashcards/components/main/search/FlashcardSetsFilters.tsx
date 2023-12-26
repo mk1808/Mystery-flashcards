@@ -24,9 +24,9 @@ function FlashcardSetsFilters({ search }: { search: (data: FlashcardSearchDto) =
     const [statusFieldRefresh, setStatusFieldRefresh] = useState(0);
     const searchParams = useSearchParams();
     const hashtagsOptions = useHashtags();
-    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
-    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
-    const statusesOptions = useMemo(() => translateOptions(StatusOptions, dictionary), [])
+    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [dictionary])
+    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [dictionary])
+    const statusesOptions = useMemo(() => translateOptions(StatusOptions, dictionary), [dictionary])
     const mySetParam = searchParams.get("mySet");
 
     const {

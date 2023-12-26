@@ -42,7 +42,7 @@ function FlashcardContainer({
 
     useEffect(onFormStateChange, [formState])
 
-    const onSubmit = (data: FlashcardsForm) => console.log(data);
+    const onSubmit = (data: FlashcardsForm) => { };
     const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
     const isDirty = () => Object.keys(formState.dirtyFields).length > 0
