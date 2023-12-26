@@ -7,6 +7,7 @@ import useWatchUserAuthentication from '@/hooks/useWatchUserAuthentication';
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import useLocaleStore from '@/stores/useLocaleStore';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
+import Logo from './Logo';
 
 function Header() {
     const { dictionary, locale } = useLocaleStore(state => state);
@@ -77,7 +78,7 @@ function Header() {
         return (
             <div className="navbar bg-base-100 rounded-lg hidden lg:flex">
                 <div className="flex-1">
-                    {renderLogo()}
+                    <Logo/>
                 </div>
                 <div className="flex-none">
                     <ul className="menu menu-horizontal px-1">
@@ -103,7 +104,7 @@ function Header() {
             <div tabIndex={0} className="collapse bg-base-100 lg:hidden">
                 <input type="checkbox" />
                 <div className="collapse-title flex justify-between pe-4">
-                    {renderLogo()}
+                    <Logo />
                     <div className="btn btn-outline btn-primary"><Bars3Icon className="h-6 w-6 " /></div>
                 </div>
                 <div className="collapse-content">
@@ -122,14 +123,6 @@ function Header() {
                     </ul>
                 </div>
             </div>
-        )
-    }
-
-    function renderLogo() {
-        return (
-            <Link href={`/${locale}`}>
-                <img src='/images/logo5.png' className='h-[60px]' />
-            </Link>
         )
     }
 
