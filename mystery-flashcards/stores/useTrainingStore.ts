@@ -1,5 +1,7 @@
 import { FlashCardSetDto } from "@/dtos/FlashCardSetDto";
 import { TrainingResultDto } from "@/dtos/TrainingResultDto";
+import { DirectionType, DirectionOptions } from "@/enums/DirectionOptions";
+import { LearnViewType, LearnViewOptions } from "@/enums/LearnViewOptions";
 import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
 import { FlashcardSetT } from "@/models/FlashcardSet";
@@ -17,8 +19,8 @@ type State = {
     wasChecked: boolean,
     finalResult: TrainingResultDto,
     roundCount: number,
-    view: "TRAINING" | "TEST" | "TRAINING_RESULT" | "TEST_RESULT",
-    direction: string
+    view: LearnViewType,
+    direction: DirectionType
 }
 
 type Action = {
@@ -35,9 +37,9 @@ type Action = {
     onNewRound: (flashcards: FlashcardT[]) => void,
     setWasChecked: (checked: boolean) => void,
     setFinalResult: (finalResult: TrainingResultDto) => void,
-    setView: (view: any) => void,
+    setView: (view: LearnViewType) => void,
     initStore: () => void,
-    setDirection: (direction: string) => void
+    setDirection: (direction: DirectionType) => void
 }
 
 const initResult: () => TestResultT = () => ({
@@ -66,8 +68,8 @@ const useTrainingStore = create<State & Action>((set) => ({
     ...initStore(),
     flashcardSet: {},
     roundFlashcards: [],
-    view: "TRAINING",
-    direction: "main",
+    view: LearnViewOptions.TRAINING,
+    direction: DirectionOptions.MAIN,
     setFlashcardSet: (flashcardSet: FlashCardSetDto) => set(() => ({ flashcardSet: flashcardSet })),
     addToAllAnswers: (answer: AnswerT) => set((state) => ({ allAnswers: [...state.allAnswers, answer] })),
     addToRoundAnswers: (answer: AnswerT) => set((state) => ({ roundAnswers: [...state.roundAnswers, answer] })),
@@ -95,9 +97,9 @@ const useTrainingStore = create<State & Action>((set) => ({
     }),
     setWasChecked: (checked: boolean) => set(() => ({ wasChecked: checked })),
     setFinalResult: (finalResult: TrainingResultDto) => set(() => ({ finalResult: finalResult })),
-    setView: (view) => set(() => ({ view: view })),
+    setView: (view:LearnViewType) => set(() => ({ view: view })),
     initStore: () => set(initStore),
-    setDirection: (direction) => set(() => ({ direction }))
+    setDirection: (direction:DirectionType) => set(() => ({ direction }))
 }))
 
 export default useTrainingStore;
