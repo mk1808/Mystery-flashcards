@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import Image from 'next/image'
 import Title from "../common/Title";
 import { UserT } from "@/models/User";
 import UserEditForm from "./UserEditForm";
@@ -9,10 +8,9 @@ import { getWhoAmi } from "@/utils/client/ApiUtils";
 import UserAvatar from "../common/UserAvatar";
 import useLocaleStore from "@/stores/useLocaleStore";
 
-export default function UserEdit() {
+function UserEdit() {
     const { dictionary } = useLocaleStore(state => state);
     const [currentUser, setCurrentUser] = useState<UserT>();
-    const [imageSrcError, setImageSrcError] = useState(false);
 
     useEffect(() => {
         getWhoAmi().then(user => setCurrentUser(user));
@@ -24,7 +22,6 @@ export default function UserEdit() {
             <Title text={dictionary.common.userAccountEdit} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {renderUserAvatar()}
-
                 {renderUserEditForm()}
             </div>
         </div>
@@ -41,3 +38,5 @@ export default function UserEdit() {
         return <span className="loading loading-ball loading-lx" />
     }
 }
+
+export default UserEdit

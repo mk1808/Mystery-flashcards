@@ -5,12 +5,16 @@ import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { getNestedFieldByPath } from "@/utils/server/objectUtils";
 import useLocaleStore from "@/stores/useLocaleStore";
 
-export default function UserRangesModal() {
+function UserRangesModal() {
     const { dictionary } = useLocaleStore(state => state);
 
-    function getRanges(): Step[] {
-        return UserRanges.map(rang => ({ title: getNestedFieldByPath(dictionary, rang.name), description: rang.pointsFrom }));
-    }
+    const getRanges = (): Step[] => UserRanges.map(rang => (
+        {
+            title: getNestedFieldByPath(dictionary, rang.name),
+            description: rang.pointsFrom
+        }
+    ));
+
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}
         dialogContent={renderModalContent()}
@@ -29,12 +33,6 @@ export default function UserRangesModal() {
         return <h2 className="font-bold text-3xl">{dictionary.common.availableLevels}</h2>
     }
 
-    function renderModalActions() {
-        return (
-            <button className="btn">{dictionary.common.close}</button>
-        )
-    }
-
     function renderModalContent() {
         return (
             <>
@@ -43,4 +41,12 @@ export default function UserRangesModal() {
             </>
         )
     }
+
+    function renderModalActions() {
+        return (
+            <button className="btn">{dictionary.common.close}</button>
+        )
+    }
 }
+
+export default UserRangesModal

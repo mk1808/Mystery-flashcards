@@ -4,7 +4,7 @@ import useLocaleStore from "@/stores/useLocaleStore";
 import { getUserStatistics } from "@/utils/client/ApiUtils";
 import { useState, useEffect } from "react";
 
-export default function UserStatistics() {
+function UserStatistics() {
     const { dictionary } = useLocaleStore(state => state);
     const [userStatistics, setUserStatistics] = useState<UserStatisticsDto>();
 
@@ -40,8 +40,6 @@ export default function UserStatistics() {
                     </div>
 
                 </div>
-
-
             </div>
         );
     }
@@ -53,3 +51,5 @@ export default function UserStatistics() {
         return <span className="loading loading-ball loading-sm" />
     }
 }
+
+export default UserStatistics
