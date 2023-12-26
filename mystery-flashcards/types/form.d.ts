@@ -41,7 +41,12 @@ interface ChooseLearnTypeForm {
 
 interface ButtonAttrs {
     title: string,
-    type: "submit" | "reset" | "button" | undefined,
+    type?: "submit" | "reset" | "button" | undefined,
     form?: string,
     onClick?: any
+}
+
+interface MainAndOtherButton {
+    mainButtonAttrs: ButtonAttrs,
+    otherButtonAttrs: ButtonAttrs
 }

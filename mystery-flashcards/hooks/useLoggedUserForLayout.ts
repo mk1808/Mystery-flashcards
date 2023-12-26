@@ -2,14 +2,21 @@ import useAuthStore from '@/stores/useAuthStore';
 import useLocaleStore from '@/stores/useLocaleStore';
 import { logout } from '@/utils/client/ApiUtils';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 function useLoggedUserForLayout({ renderMenuElement }: { renderMenuElement: any }) {
-    const { locale } = useLocaleStore(state => state);
+    const INTERVAL_TIME = 60 * 1000;
 
+    const { locale } = useLocaleStore(state => state);
     const { currentUser } = useAuthStore(state => state);
     const { checkWhoAmi, setShouldCheckWhoIam } = useAuthStore(state => state);
     const router = useRouter();
+
+    useEffect(() => {
+        checkWhoAmi();
+        const interval = setInterval(checkWhoAmi, INTERVAL_TIME);
+        return () => clearInterval(interval);
+    }, [])
 
     function renderMenuElementIfNeeded(element: any) {
         const isLogged = !!currentUser;
@@ -25,11 +32,6 @@ function useLoggedUserForLayout({ renderMenuElement }: { renderMenuElement: any 
         router.push(`/${locale}`)
     }
 
-    useEffect(() => {
-        checkWhoAmi();
-        const interval = setInterval(checkWhoAmi, 60 * 1000);
-        return () => clearInterval(interval);
-    }, [])
     return { renderMenuElementIfNeeded, onLogout }
 }
 

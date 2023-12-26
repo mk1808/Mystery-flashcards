@@ -3,7 +3,7 @@ import useLocaleStore from "@/stores/useLocaleStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-export default function useWatchUserAuthentication() {
+function useWatchUserAuthentication() {
     const { locale } = useLocaleStore(state => state);
     const { currentUser, shouldCheckWhoIam } = useAuthStore(state => state);
     const userRef = useRef<any>();
@@ -16,3 +16,5 @@ export default function useWatchUserAuthentication() {
         userRef.current = currentUser;
     }, [currentUser, shouldCheckWhoIam])
 }
+
+export default useWatchUserAuthentication;

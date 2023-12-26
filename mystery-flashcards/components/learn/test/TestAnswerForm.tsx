@@ -4,7 +4,7 @@ import { isFieldValid } from '@/utils/client/FormUtils';
 import MyInput from '@/components/common/form/MyInput';
 import useTestStore from '@/stores/useTestStore';
 import { AnswerT } from '@/models/Answer';
-import useSubmitTestAction from '@/hooks/submitTrainingActions/useSubmitTestAction';
+import useSubmitTestAction from '@/hooks/submitTestActions/useSubmitTestAction';
 import useLocaleStore from '@/stores/useLocaleStore';
 
 function TestAnswerForm() {
@@ -30,7 +30,7 @@ function TestAnswerForm() {
             incrementCurrentFlashcardIndex();
             reset({ givenAnswer: "" });
         } else {
-            setTimeout(otherButtonAttrs.onFinishClick);
+            setTimeout(otherButtonAttrs.onClick);
         }
     };
     const onErrors = (errors: any) => { };
