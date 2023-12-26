@@ -3,7 +3,7 @@ import React from 'react'
 
 async function Register() {
 
-  return <RegisterForm />
+    return <RegisterForm />
 }
 
 export default Register

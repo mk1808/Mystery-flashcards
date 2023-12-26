@@ -1,5 +1,6 @@
 import { Schema, SchemaTypes, model, models } from 'mongoose';
 import { AnswerT, answerSchema } from './Answer';
+import { DirectionType } from '@/enums/DirectionOptions';
 
 const testResultSchema = new Schema({
     userId: {
@@ -39,7 +40,7 @@ export type TestResultT = {
     validCount?: number,
     allCount?: number,
     answers?: AnswerT[],
-    direction?: string
+    direction?: DirectionType
 };
 
 export default TestResult;

@@ -10,7 +10,7 @@ import { loginRequest } from '@/utils/client/ApiUtils';
 import useAuthStore from '@/stores/useAuthStore';
 import useLocaleStore from '@/stores/useLocaleStore';
 
-export default function LoginForm() {
+function LoginForm() {
     const { dictionary, locale } = useLocaleStore(state => state);
     const addAlert = useAlertStore((state) => state.add)
     const checkWhoAmi = useAuthStore(state => state.checkWhoAmi);
@@ -61,3 +61,5 @@ export default function LoginForm() {
         </form>
     )
 }
+
+export default LoginForm

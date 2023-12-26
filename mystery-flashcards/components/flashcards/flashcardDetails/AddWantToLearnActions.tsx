@@ -1,12 +1,14 @@
 "use client"
 import { AlertType } from '@/enums/AlertType';
+import { FlashcardSetT } from '@/models/FlashcardSet';
+import { UserFlashcardT } from '@/models/UserFlashcard';
 import useAlertStore from '@/stores/useAlertStore';
 import useLocaleStore from '@/stores/useLocaleStore';
 import { postUserFlashcardSet } from '@/utils/client/ApiUtils';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import React from 'react'
 
-function AddWantToLearnActions({ flashcardSet, userFlashcard }: { flashcardSet: any, userFlashcard: any }) {
+function AddWantToLearnActions({ flashcardSet, userFlashcard }: { flashcardSet: FlashcardSetT, userFlashcard: UserFlashcardT }) {
     const { dictionary } = useLocaleStore(state => state);
     const addAlert = useAlertStore((state) => state.add)
     const onSubmit = async () => {

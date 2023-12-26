@@ -26,3 +26,9 @@ interface Dictionary {
     levelOptions?: any,
     statusOptions?: any
 }
+
+interface Step {
+    icon?: any,
+    title?: any,
+    description?: any
+}

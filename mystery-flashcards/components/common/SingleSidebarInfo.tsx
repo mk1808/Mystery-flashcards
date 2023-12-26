@@ -1,7 +1,7 @@
 import React from 'react'
 import { ChevronDoubleRightIcon } from '@heroicons/react/24/outline'
 
-function SingleSidebarInfo({ title, value }: { title: any, value: any }) {
+function SingleSidebarInfo({ title, value }: { title: string, value: string | number | undefined }) {
 
     return (
         <div className="my-3 flex items-center">

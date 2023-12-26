@@ -7,8 +7,9 @@ import AddToFavActions from './AddToFavActions'
 import AddToFavContent from './AddToFavContent'
 import { UserFlashcardT } from '@/models/UserFlashcard'
 import useLocaleStore from '@/stores/useLocaleStore'
+import { FlashcardSetT } from '@/models/FlashcardSet'
 
-function AddToFavModal({ flashcardSet, userFlashcard }: { flashcardSet: any, userFlashcard: UserFlashcardT }) {
+function AddToFavModal({ flashcardSet, userFlashcard }: { flashcardSet: FlashcardSetT, userFlashcard: UserFlashcardT }) {
     const { dictionary } = useLocaleStore(state => state);
     const isFav = userFlashcard?.isFavorite;
 

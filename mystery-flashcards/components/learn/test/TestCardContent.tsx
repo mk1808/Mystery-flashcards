@@ -4,6 +4,9 @@ import { FlashcardT } from '@/models/Flashcard';
 import useTestStore from '@/stores/useTestStore';
 import TestAnswerForm from './TestAnswerForm';
 import useTrainingStore from '@/stores/useTrainingStore';
+import { FlashcardSetT } from '@/models/FlashcardSet';
+import { LearnViewType } from '@/enums/LearnViewOptions';
+import { DirectionType } from '@/enums/DirectionOptions';
 
 function TestCardContent({
     flashcardSet,
@@ -11,10 +14,10 @@ function TestCardContent({
     view,
     direction
 }: {
-    flashcardSet: any,
-    testFlashcards: any,
-    view: any,
-    direction: string
+    flashcardSet: FlashcardSetT,
+    testFlashcards: FlashcardT[],
+    view: LearnViewType,
+    direction: DirectionType
 }) {
     const { currentFlashcardIndex } = useTestStore((state) => state);
     const { setFlashcardSet, setDirection, setTestFlashcards, initStore } = useTestStore((state) => state);

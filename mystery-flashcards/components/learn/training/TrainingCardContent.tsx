@@ -5,6 +5,9 @@ import AnswerForm from './AnswerForm';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { FlashcardT } from '@/models/Flashcard';
 import useLocaleStore from '@/stores/useLocaleStore';
+import { FlashcardSetT } from '@/models/FlashcardSet';
+import { LearnViewType } from '@/enums/LearnViewOptions';
+import { DirectionOptions, DirectionType } from '@/enums/DirectionOptions';
 
 function TrainingCardContent({
     flashcardSet,
@@ -12,18 +15,18 @@ function TrainingCardContent({
     view,
     direction
 }: {
-    flashcardSet: any,
-    roundFlashcardsProp: any,
-    view: any,
-    direction: string
-}) {    
-    
+    flashcardSet: FlashcardSetT,
+    roundFlashcardsProp: FlashcardT[],
+    view: LearnViewType,
+    direction: DirectionType
+}) {
+
     const { roundFlashcards, currentFlashcardIndexInRound, wasChecked } = useTrainingStore((state) => state);
     const { setView, setFlashcardSet, initStore, setRoundFlashcards, setWasChecked, setDirection } = useTrainingStore((state) => state);
     const { dictionary } = useLocaleStore(state => state);
     const [isValid, setIsValid] = useState<boolean>(true);
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
-    const isMainDirection = direction === "main";
+    const isMainDirection = direction === DirectionOptions.MAIN;
     const { wordLang1, wordLang2, description1, description2 } = currentFlashcard || {};
 
     useEffect(() => { setView(view) }, [view])

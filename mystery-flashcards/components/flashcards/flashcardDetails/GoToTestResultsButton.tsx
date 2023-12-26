@@ -3,13 +3,7 @@ import useLocaleStore from '@/stores/useLocaleStore';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
-function GoToTestResultsButton({
-    author,
-    flashcardSetId
-}: {
-    author: any,
-    flashcardSetId: any
-}) {
+function GoToTestResultsButton({ flashcardSetId }: { flashcardSetId: string }) {
     const { dictionary, locale } = useLocaleStore(state => state);
     const router = useRouter();
     const onGoToTest = () => router.push(`/${locale}/learn/test/${flashcardSetId}/results`)

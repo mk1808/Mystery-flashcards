@@ -6,7 +6,7 @@ import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import React from 'react'
 
-export default function TrainingSidebar() {
+function TrainingSidebar() {
     const { dictionary } = useLocaleStore(state => state);
     const { result, roundFlashcards, roundCount, direction, flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
     const statsValues = [
@@ -20,7 +20,7 @@ export default function TrainingSidebar() {
         },
         {
             text: dictionary.common.correctAnswersPercent,
-            value: Math.round(result?.resultPercent * 100) + "%"
+            value: Math.round(result?.resultPercent! * 100) + "%"
         },
         {
             text: dictionary.common.roundCount,
@@ -58,3 +58,4 @@ export default function TrainingSidebar() {
     }
 }
 
+export default TrainingSidebar

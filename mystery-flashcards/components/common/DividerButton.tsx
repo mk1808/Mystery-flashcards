@@ -1,6 +1,6 @@
 import RoundActionButton from "./RoundActionButton";
 
-export default function DividerButton({
+function DividerButton({
     content,
     buttonStyle = "",
     containerStyle = "",
@@ -21,3 +21,5 @@ export default function DividerButton({
         </div>
     )
 }
+
+export default DividerButton

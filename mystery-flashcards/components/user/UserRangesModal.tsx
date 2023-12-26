@@ -1,6 +1,6 @@
 import { UserRanges } from "@/enums/UserRang";
 import Modal from "../common/Modal"
-import Steps, { Step } from "../common/Steps"
+import Steps from "../common/Steps"
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { getNestedFieldByPath } from "@/utils/server/objectUtils";
 import useLocaleStore from "@/stores/useLocaleStore";

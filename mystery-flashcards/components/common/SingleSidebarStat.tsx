@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SingleSidebarStat({ title, value }: { title: any, value: any }) {
+function SingleSidebarStat({ title, value }: { title: string, value: string }) {
     return (
         <div className="my-3 flex items-center justify-between">
             <div className='w-[180px]'>

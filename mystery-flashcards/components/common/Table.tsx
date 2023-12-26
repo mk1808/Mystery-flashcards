@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Table({ renderRows, columns }: { renderRows: any, columns: any }) {
+function Table({ renderRows, columns }: { renderRows: () => any, columns: string[] }) {
     return (
 
         <div className="overflow-x-auto ">

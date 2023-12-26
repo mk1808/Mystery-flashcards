@@ -2,7 +2,7 @@
 import useAlertStore from "@/stores/useAlertStore"
 import AlertComponent from "./AlertComponent"
 
-export default function AlertManager() {
+function AlertManager() {
     const alerts = useAlertStore((state) => state.alerts)
 
     return (
@@ -11,3 +11,5 @@ export default function AlertManager() {
         </div>
     )
 }
+
+export default AlertManager

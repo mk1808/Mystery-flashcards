@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
 
-export default function NotFound() {
+function NotFound() {
     redirect("not-found")
 }
+
+export default NotFound

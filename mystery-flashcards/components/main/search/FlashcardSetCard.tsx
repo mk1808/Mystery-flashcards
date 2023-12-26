@@ -7,13 +7,9 @@ import Badges from '@/components/common/Badges'
 import { HeartIcon } from "@heroicons/react/24/solid"
 import useLocaleStore from '@/stores/useLocaleStore'
 
-function FlashcardSetCard({
-    flashcardSet
-}: {
-    flashcardSet: FlashcardSetT
-    }) {
+function FlashcardSetCard({ flashcardSet }: { flashcardSet: FlashcardSetT }) {
     const { dictionary } = useLocaleStore(state => state);
-    
+
     const { userFlashcard } = flashcardSet;
     const isType = userFlashcard && userFlashcard.type != "NONE"
     const isFav = userFlashcard?.isFavorite;

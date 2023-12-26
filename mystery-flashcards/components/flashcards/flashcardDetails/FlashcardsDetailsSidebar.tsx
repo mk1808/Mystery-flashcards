@@ -4,27 +4,14 @@ import SingleSidebarInfo from "@/components/common/SingleSidebarInfo";
 import UserAvatar from "@/components/common/UserAvatar";
 import EditButton from "@/components/flashcards/flashcardDetails/EditButton";
 import GoToTestResultsButton from "@/components/flashcards/flashcardDetails/GoToTestResultsButton";
-import { FlashcardSetT } from "@/models/FlashcardSet";
-import { TestResultT } from "@/models/TestResult";
-import { UserFlashcardT } from "@/models/UserFlashcard";
+import { FlashCardSetDto } from "@/dtos/FlashCardSetDto";
 import useLocaleStore from "@/stores/useLocaleStore";
 import { formatDate } from "@/utils/client/MathUtils";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import React from 'react'
 
-export default function FlashcardsDetailsSidebar(
-    {
-        flashcardSet,
-        userFlashcard,
-        testResult,
-        statistics
-    }: {
-        flashcardSet?: FlashcardSetT,
-        userFlashcard?: UserFlashcardT,
-        testResult?: TestResultT,
-        statistics?: FlashcardStatisticsDto
-    }
-) {
+export default function FlashcardsDetailsSidebar({ flashCardSetDto }: { flashCardSetDto: FlashCardSetDto }) {
+    const { flashcardSet, userFlashcard, testResult, statistics } = flashCardSetDto
     const { dictionary } = useLocaleStore(state => state);
     const date = new Date(flashcardSet?.creationDate || "");
     const shouldRenderStatus = () => userFlashcard && userFlashcard?.type != "NONE";
@@ -76,7 +63,7 @@ export default function FlashcardsDetailsSidebar(
                 {isTest &&
                     <div className="flex items-center">
                         {renderSingleInfo(dictionary.common.lastTestResult, Math.round(testResult?.resultPercent!) + "%")}
-                        <GoToTestResultsButton author={flashcardSet?.user} flashcardSetId={flashcardSet?._id} />
+                        <GoToTestResultsButton flashcardSetId={flashcardSet?._id!} />
                     </div>
                 }
             </>
@@ -96,7 +83,7 @@ export default function FlashcardsDetailsSidebar(
                     <div className="h-[39px]">
                         <UserAvatar
                             alt={dictionary.common.userAvatarAlt}
-                            currentUser={flashcardSet?.user}
+                            currentUser={flashcardSet?.user!}
                             className="ml-3 border-2 rounded-lg border-secondary"
                             width={50}
                             imgClassName="rounded-lg border-secondary" />
@@ -109,7 +96,7 @@ export default function FlashcardsDetailsSidebar(
     function renderEditButton() {
         return (
             <div className="flex justify-center mt-6">
-                <EditButton author={flashcardSet?.user} flashcardSetId={flashcardSet?._id} />
+                <EditButton author={flashcardSet?.user!} flashcardSetId={flashcardSet?._id!} />
             </div>
         )
     }

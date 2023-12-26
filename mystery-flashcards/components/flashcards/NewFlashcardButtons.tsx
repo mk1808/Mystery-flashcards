@@ -9,11 +9,7 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react'
 
-function NewFlashcardButtons({
-    editedFlashCardSet
-}: {
-    editedFlashCardSet?: FlashcardSetT
-}) {
+function NewFlashcardButtons({ editedFlashCardSet }: { editedFlashCardSet?: FlashcardSetT }) {
     const { dictionary, locale } = useLocaleStore(state => state);
     const { sidebarForm, flashcardsList, sidebarFormValid, flashcardListInvalidCount } = useNewFlashcardSetStore((state) => state);
     const { deleteAllFlashcards } = useNewFlashcardSetStore((state) => state);

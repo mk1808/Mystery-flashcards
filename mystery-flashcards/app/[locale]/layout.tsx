@@ -4,8 +4,7 @@ import ProvideLocale from "@/components/ProvideLocale";
 import AlertManager from "@/components/alerts/AlertManager";
 import { fetchDictionary } from "@/dictionaries/dictionaries";
 
-
-export default async function LocaleLayout({ children, params }: any) {
+async function LocaleLayout({ children, params }: { children: any, params: { locale: string } }) {
     const dictionary = await fetchDictionary(params.locale);
 
     return (<>
@@ -19,3 +18,5 @@ export default async function LocaleLayout({ children, params }: any) {
     </>
     )
 }
+
+export default LocaleLayout

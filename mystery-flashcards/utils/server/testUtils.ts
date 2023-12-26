@@ -1,3 +1,4 @@
+import { DirectionOptions } from "@/enums/DirectionOptions";
 import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
 import { FlashcardSetT } from "@/models/FlashcardSet";
@@ -20,7 +21,7 @@ export function checkAnswers(flashCardSet: FlashcardSetT, test: TestResultT): Te
     function checkSingleFlashcard(fc: FlashcardT, missing: AnswerT[], test: TestResultT, validCount: number) {
         const matchedAnswer = test.answers!.filter(answer => answer.flashcardId == fc._id)[0]
         if (matchedAnswer) {
-            matchedAnswer.isCorrect = test.direction === "main" ? matchedAnswer.givenAnswer == fc.wordLang2 : matchedAnswer.givenAnswer == fc.wordLang1;
+            matchedAnswer.isCorrect = test.direction === DirectionOptions.MAIN ? matchedAnswer.givenAnswer == fc.wordLang2 : matchedAnswer.givenAnswer == fc.wordLang1;
             matchedAnswer.flashcard = fc;
             if (matchedAnswer.isCorrect) {
                 validCount++

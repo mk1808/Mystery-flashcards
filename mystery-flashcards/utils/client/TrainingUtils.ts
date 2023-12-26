@@ -3,6 +3,7 @@ import { FlashcardT } from "@/models/Flashcard";
 import { TestResultT } from "@/models/TestResult";
 import { getAllIndexes } from "../server/arrayUtils";
 import { getPercentDisplay } from "./MathUtils";
+import { DirectionOptions, DirectionType } from "@/enums/DirectionOptions";
 
 export const updateAnswer = (answerForm: AnswerForm, flashcard: any, isValid: boolean): AnswerT => ({
     flashcardId: flashcard._id,
@@ -20,8 +21,8 @@ export const updateResult = (answer: AnswerT, result: TestResultT) => {
     return result;
 }
 
-export const checkValidity = (flashcard: FlashcardT, answer: AnswerForm, direction: string) => {
-    const word = direction === "main" ? flashcard.wordLang2 : flashcard.wordLang1;
+export const checkValidity = (flashcard: FlashcardT, answer: AnswerForm, direction: DirectionType) => {
+    const word = direction === DirectionOptions.MAIN ? flashcard.wordLang2 : flashcard.wordLang1;
     return word?.toLowerCase() == answer.givenAnswer.toLowerCase();
 }
 

@@ -4,7 +4,7 @@ import DividerButton from "./DividerButton";
 import { useEffect, useRef, useState } from "react";
 import useDocumentScroll from "@/hooks/useDocumentScroll";
 
-export default function PanelDivider({
+function PanelDivider({
     renderContent,
     onClick,
 }: {
@@ -63,8 +63,13 @@ export default function PanelDivider({
             return <></>
         }
 
-        return <DividerButton buttonStyle={getButtonStyles()} containerStyle={getContainerStyles()} content={renderContent(displayUpperHalf())} onClick={() => onClick(displayUpperHalf())} />
+        return <DividerButton
+            buttonStyle={getButtonStyles()}
+            containerStyle={getContainerStyles()}
+            content={renderContent(displayUpperHalf())}
+            onClick={() => onClick(displayUpperHalf())}
+        />
     }
-
-
 }
+
+export default PanelDivider

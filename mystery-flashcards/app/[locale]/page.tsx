@@ -6,8 +6,7 @@ import FirstSecondDivider from "@/components/main/panels/FirstSecondDivider";
 import SecondThirdDivider from "@/components/main/panels/SecondThirdDivider";
 import FlashcardSetsSearch from "@/components/main/search/FlashcardSetsSearch";
 
-export default async function Page() {
-
+async function Page() {
     return (
         <>
             <FirstPanel />
@@ -18,7 +17,5 @@ export default async function Page() {
             <FlashcardSetsSearch />
         </>
     )
-
-
 }
-//return <div>{dictionary.common.mainPage}</div>
+export default Page

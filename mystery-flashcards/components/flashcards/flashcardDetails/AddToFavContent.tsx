@@ -1,7 +1,8 @@
+import { FlashcardSetT } from '@/models/FlashcardSet';
 import useLocaleStore from '@/stores/useLocaleStore';
 import React from 'react'
 
-function AddToFavContent({ flashcardSet }: { flashcardSet: any }) {
+function AddToFavContent({ flashcardSet }: { flashcardSet: FlashcardSetT }) {
   const { dictionary } = useLocaleStore(state => state);
   return (
     <div className='my-3'>{dictionary.common.doAddCollectionTo}

@@ -2,8 +2,9 @@ import { isFieldValid } from '@/utils/client/FormUtils';
 import React from 'react'
 import StartLearningForm from './StartLearningForm';
 import useLocaleStore from '@/stores/useLocaleStore';
+import { FlashcardSetT } from '@/models/FlashcardSet';
 
-function StartLearningContent({ flashcardSet }: { flashcardSet: any }) {
+function StartLearningContent({ flashcardSet }: { flashcardSet: FlashcardSetT }) {
     const { dictionary } = useLocaleStore(state => state);
     return (
         <div className='my-3'>

@@ -2,11 +2,11 @@ import { errorClass } from "@/utils/client/FormUtils";
 import { useState, useRef, useEffect } from 'react';
 import { PlusCircleIcon } from "@heroicons/react/24/outline"
 import { excludeFromArray } from "@/utils/server/arrayUtils";
-import { Control, useController } from "react-hook-form";
+import { useController } from "react-hook-form";
 import Badges from "../Badges";
 
 
-export default function MyMultiSelect({
+function MyMultiSelect({
     label,
     noValueLabel = "",
     options,
@@ -293,3 +293,5 @@ export default function MyMultiSelect({
     }
 
 }
+
+export default MyMultiSelect

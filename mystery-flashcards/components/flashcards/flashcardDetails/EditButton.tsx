@@ -1,11 +1,12 @@
 "use client"
+import { UserT } from '@/models/User';
 import useAuthStore from '@/stores/useAuthStore';
 import useLocaleStore from '@/stores/useLocaleStore';
 import { PencilSquareIcon } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
-function EditButton({ author, flashcardSetId }: { author: any, flashcardSetId: any }) {
+function EditButton({ author, flashcardSetId }: { author: UserT, flashcardSetId: string }) {
     const { dictionary, locale } = useLocaleStore(state => state);
     const currentUser = useAuthStore(state => state.currentUser);
     const router = useRouter();

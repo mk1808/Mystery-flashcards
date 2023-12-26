@@ -1,8 +1,6 @@
 "use client"
 
-import { useMemo } from "react"
-
-export default function RoundActionButton({
+function RoundActionButton({
     content,
     styles = "",
     border = "border-[10px]",
@@ -23,3 +21,5 @@ export default function RoundActionButton({
         </div>
     )
 }
+
+export default RoundActionButton

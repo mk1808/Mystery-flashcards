@@ -1,5 +1,7 @@
 "use client"
 import { AlertType } from '@/enums/AlertType'
+import { FlashcardSetT } from '@/models/FlashcardSet'
+import { UserFlashcardT } from '@/models/UserFlashcard'
 import useAlertStore from '@/stores/useAlertStore'
 import useLocaleStore from '@/stores/useLocaleStore'
 import { postUserFlashcardSet } from '@/utils/client/ApiUtils'
@@ -14,11 +16,11 @@ const fullHeart = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" f
 </svg>
 `
 
-function AddToFavActions({ flashcardSet }: { flashcardSet: any }) {
+function AddToFavActions({ flashcardSet }: { flashcardSet: FlashcardSetT }) {
   const { dictionary } = useLocaleStore(state => state);
   const addAlert = useAlertStore((state) => state.add)
   const onSubmit = async () => {
-    const body = {
+    const body: UserFlashcardT = {
       flashcardSetId: flashcardSet._id,
       type: "NONE",
       isFavorite: true

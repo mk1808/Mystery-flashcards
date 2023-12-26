@@ -4,8 +4,9 @@ import React from 'react'
 import StartLearningActions from './StartLearningActions'
 import StartLearningContent from './StartLearningContent'
 import useLocaleStore from '@/stores/useLocaleStore';
+import { FlashcardSetT } from '@/models/FlashcardSet'
 
-function StartLearningModal({ flashcardSet, dialogTriggerClassName = "" }: { flashcardSet: any, dialogTriggerClassName?: string }) {
+function StartLearningModal({ flashcardSet, dialogTriggerClassName = "" }: { flashcardSet: FlashcardSetT, dialogTriggerClassName?: string }) {
     const { dictionary } = useLocaleStore(state => state);
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}

@@ -1,16 +1,14 @@
 "use client"
 import Table from '@/components/common/Table';
 import StartLearningModal from '@/components/flashcards/flashcardDetails/StartLearningModal';
+import { DirectionOptions } from '@/enums/DirectionOptions';
+import { LearnViewType } from '@/enums/LearnViewOptions';
 import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { createTestResult } from '@/utils/client/TrainingUtils';
 import React, { useEffect } from 'react'
 
-function ResultTable({
-    view
-}: {
-    view: any
-}) {
+function ResultTable({ view }: { view: LearnViewType }) {
     const { dictionary } = useLocaleStore(state => state);
     const { allAnswers, flashcardSet, allFlashcards, direction } = useTrainingStore((state) => state);
     const { setView } = useTrainingStore((state) => state);
@@ -31,7 +29,7 @@ function ResultTable({
     return (
         <>
             <Table columns={columns} renderRows={renderRows} />
-            <StartLearningModal flashcardSet={flashcardSet?.flashcardSet} dialogTriggerClassName='hidden' />
+            <StartLearningModal flashcardSet={flashcardSet?.flashcardSet!} dialogTriggerClassName='hidden' />
         </>
     )
 
@@ -41,7 +39,7 @@ function ResultTable({
 
     function renderRow(flashcard: any, index: number) {
         const { wordLang1, wordLang2 } = flashcard.flashcard
-        const isMainDirection = direction === "main";
+        const isMainDirection = direction === DirectionOptions.MAIN;
         const mainWord = isMainDirection ? wordLang1 : wordLang2
         const secondaryWord = isMainDirection ? wordLang2 : wordLang1
         return (

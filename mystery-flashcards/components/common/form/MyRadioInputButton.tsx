@@ -3,14 +3,14 @@ import React from 'react'
 
 function MyRadioInputButton({
     label = "",
-    option1Label = "",
-    option2Label = "",
-    value1 = "",
-    value2 = "",
-    className = "",
+    option1Label,
+    option2Label,
+    value1,
+    value2,
+    className = "items-center",
     inputParams,
     isValid = true,
-    size = ""
+    size = "w-48 h-16"
 }: {
     label?: string,
     option1Label: string,
@@ -20,7 +20,7 @@ function MyRadioInputButton({
     className?: string,
     inputParams: any,
     isValid?: boolean,
-    size: string
+    size?: string
 }) {
 
     return (

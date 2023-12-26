@@ -8,7 +8,7 @@ import { useRef } from 'react';
 import { postAnswersAndReturnCards } from '@/utils/client/ApiUtils';
 import useLocaleStore from '@/stores/useLocaleStore';
 
-function AnswerForm({ setIsValid, setWasChecked }: { setIsValid: any, setWasChecked: any }) {
+function AnswerForm({ setIsValid, setWasChecked }: { setIsValid: (value: boolean) => any, setWasChecked: (value: boolean) => any }) {
     const { dictionary } = useLocaleStore(state => state);
     const { roundFlashcards, roundAnswers, direction, currentFlashcardIndexInRound, result, wasChecked, flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
     const { onAnswerSave, onNewRound, incrementCurrentFlashcardIndexInRound } = useTrainingStore((state) => state);
@@ -47,7 +47,7 @@ function AnswerForm({ setIsValid, setWasChecked }: { setIsValid: any, setWasChec
                 }
                 setTimeout(() => setFocus("givenAnswer"), 10)
             }
-        } catch (errorResponse: any) {}
+        } catch (errorResponse: any) { }
     };
     const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);

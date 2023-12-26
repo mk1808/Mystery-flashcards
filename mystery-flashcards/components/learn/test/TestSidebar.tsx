@@ -2,11 +2,12 @@
 import Badges from '@/components/common/Badges';
 import SingleSidebarInfo from '@/components/common/SingleSidebarInfo'
 import LearnStats from '@/components/learn/LearnStats';
+import { DirectionOptions } from '@/enums/DirectionOptions';
 import useLocaleStore from '@/stores/useLocaleStore';
 import useTestStore from '@/stores/useTestStore';
 import React from 'react'
 
-export default function TestSidebar() {
+function TestSidebar() {
     const { dictionary } = useLocaleStore(state => state);
     const { testAnswers, testFlashcards, direction, flashcardSet: { flashcardSet } } = useTestStore((state) => state);
     const progress = (testAnswers.length * 100 / testFlashcards?.length).toFixed(0) + "%";
@@ -22,7 +23,7 @@ export default function TestSidebar() {
     ]
 
     const { lang1, lang2 } = flashcardSet || {};
-    const languages = direction === "main" ? `${lang1} -> ${lang2}` : `${lang2} -> ${lang1}`
+    const languages = direction === DirectionOptions.MAIN ? `${lang1} -> ${lang2}` : `${lang2} -> ${lang1}`
 
     return (
         <div>
@@ -46,3 +47,5 @@ export default function TestSidebar() {
         )
     }
 }
+
+export default TestSidebar
