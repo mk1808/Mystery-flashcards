@@ -73,7 +73,6 @@ export default function FlashcardsDetailsSidebar(
         return (
             <>
                 {renderSingleInfo(dictionary.common.status, translatedType)}
-
                 {isTest &&
                     <div className="flex items-center">
                         {renderSingleInfo(dictionary.common.lastTestResult, Math.round(testResult?.resultPercent!) + "%")}

@@ -36,5 +36,3 @@ function AddWantToLearnModal({ flashcardSet, userFlashcard }: { flashcardSet: an
 }
 
 export default AddWantToLearnModal
-
-

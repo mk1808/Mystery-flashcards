@@ -19,19 +19,20 @@ export default function Modal({
     const buttonRef = useRef<any>(null);
     const onClick = (event: any) => disabled ? "" : buttonRef.current?.showModal();
 
-    return (<>
-        <div onClick={onClick}>{modalTrigger}</div>
-        <dialog ref={buttonRef} className="modal">
-            <div className={`modal-box max-w-5xl sm:${width}`}>
-                {dialogHeader}
-                <div className="max-h-[70vh] overflow-y-auto">{dialogContent}</div>
-                <div className="modal-action">
-                    <form method="dialog">
-                        {dialogActions}
-                    </form>
+    return (
+        <>
+            <div onClick={onClick}>{modalTrigger}</div>
+            <dialog ref={buttonRef} className="modal">
+                <div className={`modal-box max-w-5xl sm:${width}`}>
+                    {dialogHeader}
+                    <div className="max-h-[70vh] overflow-y-auto">{dialogContent}</div>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            {dialogActions}
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </dialog>
-    </>
+            </dialog>
+        </>
     )
 }

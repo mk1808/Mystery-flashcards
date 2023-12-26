@@ -10,8 +10,8 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 
 function Header() {
     const { dictionary, locale } = useLocaleStore(state => state);
-    const detailsElement = useRef<any>(null);
     const { renderMenuElementIfNeeded, onLogout } = useLoggedUserForLayout({ renderMenuElement });
+    const detailsElement = useRef<any>(null);
     useWatchUserAuthentication();
 
     const mainMenuElements = [
@@ -146,9 +146,8 @@ function Header() {
         if (element.onClick) {
             return <span onClick={element.onClick}>{name}</span>;
         }
-        return <Link href={element.link} onClick={() => console.log("test")}>{name}</Link>;
+        return <Link href={element.link}>{name}</Link>;
     }
-
 }
 
 export default Header

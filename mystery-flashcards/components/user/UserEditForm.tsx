@@ -8,7 +8,7 @@ import { getNestedFieldByPath } from "@/utils/server/objectUtils";
 import { updateUser } from "@/utils/client/ApiUtils";
 import useLocaleStore from "@/stores/useLocaleStore";
 
-export default function UserEditForm({
+function UserEditForm({
     user
 }: {
     user: UserT
@@ -21,10 +21,10 @@ export default function UserEditForm({
         handleSubmit,
         watch,
         getFieldState,
-        formState,
-        reset
+        formState
     } = useForm<UserT & { confirmPassword: string }>({
-        mode: 'onBlur', defaultValues: {
+        mode: 'onBlur',
+        defaultValues: {
             name: user?.name,
             mail: user?.mail,
             avatar: user?.avatar
@@ -49,7 +49,6 @@ export default function UserEditForm({
     return (
         <form className="mt-12" onSubmit={handleSubmit(onSubmit, onErrors)}>
             <div>
-
                 <MyInput
                     label={dictionary.common.name}
                     placeholder={dictionary.common.fillName}
@@ -79,10 +78,17 @@ export default function UserEditForm({
                     inputParams={{ ...register("confirmPassword", { required: false, validate: validatePassword }) }}
                     isValid={isValid("confirmPassword")} />
             </div>
+            {renderButtons()}
+        </form >
+    )
 
+    function renderButtons() {
+        return (
             <div className="mt-6 flex items-center justify-end gap-x-6">
                 <button className="btn btn-active btn-primary" disabled={!formState.isValid}>{dictionary.common.save}</button>
             </div>
-        </form >
-    )
+        )
+    }
 }
+
+export default UserEditForm

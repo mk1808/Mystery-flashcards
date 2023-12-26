@@ -3,7 +3,7 @@
 import useLocaleStore from "@/stores/useLocaleStore"
 import { useEffect } from "react";
 
-export default function ProvideLocale({
+function ProvideLocale({
     locale,
     dictionary
 }: {
@@ -23,3 +23,5 @@ export default function ProvideLocale({
 
     return <></>
 }
+
+export default ProvideLocale

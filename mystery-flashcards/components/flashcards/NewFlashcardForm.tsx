@@ -19,11 +19,13 @@ function NewFlashcardForm({
     flashcardSet?: FlashcardSetT
 }) {
     const { dictionary } = useLocaleStore(state => state);
+    const { updateSidebarForm, setSidebarFormValid, initState, resetState, sidebarFormValid } = useNewFlashcardSetStore((state) => state);
+
     const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [dictionary])
     const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [dictionary])
     const hashtagsOptions = useHashtags();
-    const { updateSidebarForm, setSidebarFormValid, initState, resetState, sidebarFormValid } = useNewFlashcardSetStore((state) => state);
     const initOnceRef = useRef(false)
+
     const validateLang2 = (lang2: string) => watch("lang1") !== lang2 || dictionary.common.languagesShouldDiffer;
     const {
         register,
@@ -31,7 +33,6 @@ function NewFlashcardForm({
         watch,
         getFieldState,
         formState,
-        reset,
         control
     } = useForm<NewFlashcardSetForm>({ mode: 'onBlur', defaultValues: getDefaultValues() });
 
@@ -60,27 +61,21 @@ function NewFlashcardForm({
     }, [flashcardSet])
 
     const onSubmit = async (data: NewFlashcardSetForm, e: any) => {
-        // const response = await login(data);
-        // reset();
-        // router.push('/user')
         console.log(data);
     };
     const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
 
-
-    function getDefaultValues(): any {
-        if (flashcardSet) {
-            return {
+    const getDefaultValues = () => {
+        return flashcardSet ?
+            {
                 name: flashcardSet.name,
                 lang1: flashcardSet.lang1,
                 lang2: flashcardSet.lang2,
                 level: flashcardSet.level,
                 hashtags: flashcardSet.hashtags,
-                isPublic: flashcardSet.isPublic,
-            }
-        }
-        return {}
+                isPublic: flashcardSet.isPublic
+            } : {};
     }
 
     return (
@@ -107,8 +102,7 @@ function NewFlashcardForm({
                     options={langOptions}
                     noValueLabel={dictionary.common.fillLang2}
                     isValid={isValid("lang2")}
-                    validate={validateLang2}
-                />
+                    validate={validateLang2}/>
                 <MyMultiSelect
                     label={dictionary.common.level}
                     control={control}

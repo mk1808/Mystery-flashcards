@@ -16,10 +16,10 @@ function TestCardContent({
     view: any,
     direction: string
 }) {
-    const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
     const { currentFlashcardIndex } = useTestStore((state) => state);
     const { setFlashcardSet, setDirection, setTestFlashcards, initStore } = useTestStore((state) => state);
     const { setView } = useTrainingStore((state) => state);
+    const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
 
     useEffect(() => { setView(view) }, [view])
     useEffect(() => { setFlashcardSet(flashcardSet); initStore(); }, [flashcardSet])

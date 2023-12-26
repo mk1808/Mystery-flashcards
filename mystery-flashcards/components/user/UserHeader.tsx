@@ -9,7 +9,7 @@ import { getWhoAmi } from "@/utils/client/ApiUtils";
 import { getNestedFieldByPath } from "@/utils/server/objectUtils";
 import useLocaleStore from "@/stores/useLocaleStore";
 
-export default function UserHeader() {
+function UserHeader() {
     const { dictionary } = useLocaleStore(state => state);
     const [currentUser, setCurrentUser] = useState<UserT>();
 
@@ -43,17 +43,18 @@ export default function UserHeader() {
                 <span>{currentUser?.rang}</span>
                 <UserRangesModal />
             </div>
-
         );
     }
 
     function renderRange() {
         const rang = getNestedFieldByPath(dictionary, getRang(currentUser!.rang!)?.name!)
         return (
-            <div className="text-2xl flex items-center place-content-center ">
+            <div className="text-2xl flex items-center place-content-center">
                 <span className="font-bold me-2">{`${dictionary.common.userRange}: `}</span>
                 <span>{rang}</span>
             </div>
         )
     }
 }
+
+export default UserHeader

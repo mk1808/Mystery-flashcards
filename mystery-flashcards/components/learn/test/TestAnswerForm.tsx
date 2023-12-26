@@ -16,7 +16,6 @@ function TestAnswerForm() {
     const {
         register,
         handleSubmit,
-        watch,
         getFieldState,
         formState,
         reset

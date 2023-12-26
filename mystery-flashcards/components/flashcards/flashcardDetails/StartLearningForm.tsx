@@ -9,17 +9,16 @@ import { useForm } from 'react-hook-form';
 
 function StartLearningForm({ flashcardSet }: { flashcardSet: any }) {
     const { dictionary, locale } = useLocaleStore(state => state);
+    const router = useRouter();
+
     const label1 = `${flashcardSet.lang1} -> ${flashcardSet.lang2}`;
     const label2 = `${flashcardSet.lang2} -> ${flashcardSet.lang1}`;
     const direction = { main: "main", reversed: "reversed" }
-    const router = useRouter();
     const {
         register,
         handleSubmit,
-        watch,
         getFieldState,
-        formState,
-        reset
+        formState
     } = useForm<ChooseLearnTypeForm>({ mode: 'onBlur' });
 
     const onSubmit = async (data: ChooseLearnTypeForm, e: any) => {

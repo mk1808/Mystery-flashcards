@@ -11,8 +11,9 @@ import useLocaleStore from '@/stores/useLocaleStore';
 
 export default function RegisterForm() {
     const { dictionary, locale } = useLocaleStore(state => state);
-    const router = useRouter();
     const addAlert = useAlertStore((state) => state.add)
+    const router = useRouter();
+
     const {
         register,
         handleSubmit,

@@ -44,7 +44,6 @@ export default function TrainingSidebar() {
             <SingleSidebarInfo title={dictionary.common.level} value={flashcardSet?.level} />
             <div className="divider" />
             <LearnStats stats={statsValues} />
-
             <br />
         </div>
     )
@@ -53,7 +52,7 @@ export default function TrainingSidebar() {
         return (
             <>
                 <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet?.name}</h1>
-                <Badges badges={flashcardSet?.hashtags || []} />
+                <Badges badges={flashcardSet?.hashtags ?? []} />
             </>
         )
     }

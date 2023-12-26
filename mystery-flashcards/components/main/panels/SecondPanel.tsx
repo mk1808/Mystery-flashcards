@@ -7,8 +7,7 @@ type StepType = {
     text: string
 }
 
-
-export default function SecondPanel() {
+function SecondPanel() {
     const { dictionary } = useLocaleStore(state => state);
 
     const steps: StepType[] = [
@@ -52,3 +51,5 @@ export default function SecondPanel() {
         );
     }
 }
+
+export default SecondPanel

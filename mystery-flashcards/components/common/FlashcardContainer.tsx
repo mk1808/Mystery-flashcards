@@ -36,7 +36,6 @@ function FlashcardContainer({
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      console.log(value, name, type)
       updateFlashcard({ ...card, ...value })
       const lastFlashcard = allFlashCards.current[allFlashCards.current.length - 1],
         isLast = lastFlashcard._id === card._id;
@@ -64,9 +63,12 @@ function FlashcardContainer({
   const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
   const isDirty = () => Object.keys(formState.dirtyFields).length > 0
   const showDelete = () => (isDirty() || formState.defaultValues?.wordLang1) && flashcardsList.length > 1;
-
-  function getDefaultValues(): any {
-    return card || {};
+  const getDefaultValues = () => card || {};
+  function onDelete() {
+    if (!formState.isValid) {
+      flashcardListInvalidCountDec()
+    }
+    deleteFlashcard(card);
   }
 
   return (
@@ -148,13 +150,6 @@ function FlashcardContainer({
         inputParams={{ ...register(name, { required: false }) }}
         isValid={isValid(name)} />
     )
-  }
-
-  function onDelete() {
-    if (!formState.isValid) {
-      flashcardListInvalidCountDec()
-    }
-    deleteFlashcard(card);
   }
 }
 

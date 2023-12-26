@@ -1,6 +1,6 @@
 import styles from '@/components/main/panels/styles.module.scss'
 
-export default function FirstPanel() {
+function FirstPanel() {
 
     return (
         <div className={`flex flex-col xl:flex-row w-full ${styles.firstPanel}`} id='firstPanel'>
@@ -9,3 +9,5 @@ export default function FirstPanel() {
         </div>
     )
 }
+
+export default FirstPanel

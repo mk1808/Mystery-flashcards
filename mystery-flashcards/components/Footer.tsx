@@ -8,11 +8,12 @@ import React from 'react'
 
 function Footer() {
     const { dictionary, locale } = useLocaleStore(state => state);
-    const newTabAttrs = { rel: "noopener noreferrer", target: "_blank" }
-    const year = new Date().getFullYear();
     const { renderMenuElementIfNeeded } = useLoggedUserForLayout({ renderMenuElement });
     const pathname = usePathname();
     const router = useRouter();
+
+    const newTabAttrs = { rel: "noopener noreferrer", target: "_blank" }
+    const year = new Date().getFullYear();
 
     const mainMenuElements = [
         {

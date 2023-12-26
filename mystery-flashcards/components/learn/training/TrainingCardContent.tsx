@@ -16,12 +16,15 @@ function TrainingCardContent({
     roundFlashcardsProp: any,
     view: any,
     direction: string
-}) {
-    const { dictionary } = useLocaleStore(state => state);
-    const [isValid, setIsValid] = useState<Boolean>(true);
-    const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
+}) {    
+    
     const { roundFlashcards, currentFlashcardIndexInRound, wasChecked } = useTrainingStore((state) => state);
     const { setView, setFlashcardSet, initStore, setRoundFlashcards, setWasChecked, setDirection } = useTrainingStore((state) => state);
+    const { dictionary } = useLocaleStore(state => state);
+    const [isValid, setIsValid] = useState<boolean>(true);
+    const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
+    const isMainDirection = direction === "main";
+    const { wordLang1, wordLang2, description1, description2 } = currentFlashcard || {};
 
     useEffect(() => { setView(view) }, [view])
     useEffect(() => { setRoundFlashcards(roundFlashcardsProp); initStore() }, [])
@@ -29,11 +32,30 @@ function TrainingCardContent({
     useEffect(() => { setDirection(direction) }, [direction])
     useEffect(() => { setCurrentFlashcard(roundFlashcards[currentFlashcardIndexInRound]); }, [currentFlashcardIndexInRound, roundFlashcards])
 
-    const isMainDirection = direction === "main";
-    const { wordLang1, wordLang2, description1, description2 } = currentFlashcard || {};
     const getMainWord = () => isMainDirection ? wordLang1 : wordLang2;
     const getSecondaryWord = () => isMainDirection ? wordLang2 : wordLang1;
     const getDescription = () => isMainDirection ? description1 : description2;
+
+    return currentFlashcard && (
+        <div className="flex-1 grid sm:grid-cols-2">
+            <div className='grid grid-rows-2'>
+                <div className='self-end'>
+                    <h1 className="text-3xl my-3 ">{getMainWord()}</h1>
+                </div>
+                <div><p>{getDescription()}</p></div>
+                <div className="divider  sm:hidden w-full" />
+            </div>
+            <div className='flex items-center'>
+                <div className="divider hidden sm:flex divider-horizontal ml-0" />
+                <div className="w-full h-full grid grid-rows-2">
+                    <div className="self-end">
+                        <AnswerForm setIsValid={setIsValid} setWasChecked={setWasChecked} />
+                    </div>
+                    <div>{renderAnswerValidity()}</div>
+                </div>
+            </div>
+        </div>
+    )
 
     function renderAnswerValidity() {
         return (
@@ -74,27 +96,6 @@ function TrainingCardContent({
             </div>
         )
     }
-
-    return currentFlashcard && (
-        <div className="flex-1 grid sm:grid-cols-2">
-            <div className='grid grid-rows-2'>
-                <div className='self-end'>
-                    <h1 className="text-3xl my-3 ">{getMainWord()}</h1>
-                </div>
-                <div><p>{getDescription()}</p></div>
-                <div className="divider  sm:hidden w-full" />
-            </div>
-            <div className='flex items-center'>
-                <div className="divider hidden sm:flex divider-horizontal ml-0" />
-                <div className="w-full h-full grid grid-rows-2">
-                    <div className="self-end">
-                        <AnswerForm setIsValid={setIsValid} setWasChecked={setWasChecked} />
-                    </div>
-                    <div>{renderAnswerValidity()}</div>
-                </div>
-            </div>
-        </div>
-    )
 }
 
 export default TrainingCardContent

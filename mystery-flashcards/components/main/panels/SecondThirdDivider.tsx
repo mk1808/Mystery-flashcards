@@ -2,7 +2,7 @@
 import PanelDivider from "../../common/PanelDivider";
 import { ArrowLongUpIcon, ArrowLongDownIcon } from "@heroicons/react/24/outline";
 
-export default function SecondThirdDivider() {
+function SecondThirdDivider() {
     const onUpClick = () => document.getElementById("secondPanel")?.scrollIntoView({ behavior: "smooth" });
     const onDownClick = () => document.getElementById("flashcardSetsSearch")?.scrollIntoView({ behavior: "smooth" });
     const onClick = (isUpperHalf: boolean) => isUpperHalf ? onUpClick() : onDownClick();
@@ -16,3 +16,5 @@ export default function SecondThirdDivider() {
 
     return <PanelDivider onClick={onClick} renderContent={renderContent} />
 }
+
+export default SecondThirdDivider

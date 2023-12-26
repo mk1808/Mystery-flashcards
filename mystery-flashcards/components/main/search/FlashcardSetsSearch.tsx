@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import SetCard from './FlashcardSetCard'
-
 import FlashcardSetsFilters from './FlashcardSetsFilters';
 import { searchFlashcardSets } from '@/utils/client/ApiUtils';
 import { FlashcardSetT } from '@/models/FlashcardSet';

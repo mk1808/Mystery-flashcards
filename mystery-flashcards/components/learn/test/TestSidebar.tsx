@@ -8,11 +8,8 @@ import React from 'react'
 
 export default function TestSidebar() {
     const { dictionary } = useLocaleStore(state => state);
-    const { flashcardSet } = useTestStore((state) => state.flashcardSet);
-    const { testAnswers, testFlashcards, direction } = useTestStore((state) => state);
-
+    const { testAnswers, testFlashcards, direction, flashcardSet: { flashcardSet } } = useTestStore((state) => state);
     const progress = (testAnswers.length * 100 / testFlashcards?.length).toFixed(0) + "%";
-
     const statsValues = [
         {
             text: dictionary.common.answersCount,
@@ -36,7 +33,6 @@ export default function TestSidebar() {
             <SingleSidebarInfo title={dictionary.common.level} value={flashcardSet?.level} />
             <div className="divider" />
             <LearnStats stats={statsValues} />
-
             <br />
         </div>
     )
