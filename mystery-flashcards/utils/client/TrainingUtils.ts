@@ -61,3 +61,5 @@ export function createTestResult(allAnswers: AnswerT[], allFlashcards: Flashcard
     })
     return allInfoObjects;
 }
+
+export const getLangsDirection = (lang1: string | undefined, lang2: string | undefined) => `${lang1 ?? ""} -> ${lang2 ?? ""}`
