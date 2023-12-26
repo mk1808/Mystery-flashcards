@@ -1,23 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { checkPasswordMatch } from '@/utils/server/encryptionUtils';
 import { signToken } from '@/utils/server/jwtUtils';
 import User from "@/models/User";
 import connectToDB from "@/utils/server/database";
+import { simpleMessageResponse } from "@/utils/server/responseFactories";
 
 export async function POST(request: NextRequest) {
     await connectToDB();
     const loginForm: LoginForm = await request.json();
 
     const existingUser = await User.findOne({ name: loginForm.name });
-
     if (!existingUser || ! await checkPasswordMatch(loginForm.password, existingUser.password)) {
-        return new NextResponse(JSON.stringify({ message: 'common.invalidCredentials' }), { status: 401 });
+        return simpleMessageResponse('common.invalidCredentials', 401)
     }
 
     const token = await signToken({ name: existingUser.name, id: existingUser.id });
-
-    return new NextResponse(JSON.stringify({ message: 'common.successfulLogin' }), {
-        status: 200,
-        headers: { 'Set-Cookie': `token=Bearer ${token}; Path=/` },
-    });
+    return simpleMessageResponse('common.successfulLogin', 200, { 'Set-Cookie': `token=Bearer ${token}; Path=/` })
 }

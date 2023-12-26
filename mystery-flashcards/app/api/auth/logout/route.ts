@@ -1,9 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { simpleMessageResponse } from "@/utils/server/responseFactories";
 
-export async function POST(request: NextRequest) {
+export async function POST() {
 
-    return new NextResponse(JSON.stringify({ message: 'common.userLoggedOut' }), {
-        status: 200,
-        headers: { 'Set-Cookie': `token=; Path=/` },
-    });
+    return simpleMessageResponse('common.userLoggedOut', 200, { 'Set-Cookie': `token=; Path=/` })
 }
