@@ -11,6 +11,7 @@ export default function Steps({
 }: {
     steps: Step[]
 }) {
+    
     return (
         <div className="p-4 max-w-xl mx-auto">
             {steps.map(renderStep)}

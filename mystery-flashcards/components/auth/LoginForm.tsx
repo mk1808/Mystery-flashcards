@@ -12,17 +12,15 @@ import useLocaleStore from '@/stores/useLocaleStore';
 
 export default function LoginForm() {
     const { dictionary, locale } = useLocaleStore(state => state);
-    const router = useRouter();
     const addAlert = useAlertStore((state) => state.add)
     const checkWhoAmi = useAuthStore(state => state.checkWhoAmi);
+    const router = useRouter();
 
     const {
         register,
         handleSubmit,
-        watch,
         getFieldState,
-        formState,
-        reset
+        formState
     } = useForm<LoginForm>({ mode: 'onBlur' });
 
     const onSubmit = async (data: LoginForm, e: any) => {

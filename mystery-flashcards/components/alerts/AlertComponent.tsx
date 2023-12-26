@@ -7,10 +7,10 @@ export default function AlertComponent({
     alert
 }: {
     alert: Alert
-}) {
+}) {    
+    const close = useAlertStore((state) => state.close)
     const [scale, setScale] = useState("scale-0")
     const [progress, setProgress] = useState(100)
-    const close = useAlertStore((state) => state.close)
 
     useEffect(() => {
         setTimeout(() => {
