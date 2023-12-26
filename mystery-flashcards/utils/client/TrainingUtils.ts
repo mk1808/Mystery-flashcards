@@ -4,13 +4,11 @@ import { TestResultT } from "@/models/TestResult";
 import { getAllIndexes } from "../server/arrayUtils";
 import { getPercentDisplay } from "./MathUtils";
 
-export const updateAnswer = (answerForm: AnswerForm, flashcard: any, isValid: boolean): AnswerT => {
-    return {
-        flashcardId: flashcard._id,
-        isCorrect: isValid,
-        givenAnswer: answerForm.givenAnswer
-    }
-}
+export const updateAnswer = (answerForm: AnswerForm, flashcard: any, isValid: boolean): AnswerT => ({
+    flashcardId: flashcard._id,
+    isCorrect: isValid,
+    givenAnswer: answerForm.givenAnswer
+})
 
 export const updateResult = (answer: AnswerT, result: TestResultT) => {
     result.answers?.push(answer);
