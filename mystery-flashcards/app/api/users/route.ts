@@ -19,7 +19,6 @@ export async function PUT(request: NextRequest) {
     }
 
     const newPassword = userForm.password ? await hashPassword(userForm.password) : logged.password;
-
     logged.avatar = userForm.avatar;
     logged.password = newPassword;
 

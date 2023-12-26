@@ -33,10 +33,9 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
 export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
     await connectToDB();
-    const flashcardSetId = params.id;
-    const lastAnswers: AnswerT[] = await request.json();
-
-    const currentUser = await getUser(request),
+    const flashcardSetId = params.id,
+        lastAnswers: AnswerT[] = await request.json(),
+        currentUser = await getUser(request),
         flashcardSet: FlashcardSetT = (await FlashcardSet.findById(flashcardSetId))?.toObject()
 
     if (!flashcardSet) {

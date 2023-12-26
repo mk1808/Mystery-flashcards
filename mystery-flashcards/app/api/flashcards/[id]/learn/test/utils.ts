@@ -1,3 +1,4 @@
+import { StatusType } from "@/enums/StatusOptions";
 import TestResult, { TestResultT } from "@/models/TestResult";
 import User, { UserT } from "@/models/User";
 import UserFlashcard, { UserFlashcardT } from "@/models/UserFlashcard";
@@ -15,14 +16,14 @@ export async function saveTestResult(flashcardSetId: string, newResults: TestRes
 export async function updateUserFlashcard(flashcardSetId: string, currentUser: UserT): Promise<UserFlashcardT> {
     const existingUserFlashcard: UserFlashcardT = (await UserFlashcard.findOne({ flashcardSetId: flashcardSetId, userId: currentUser._id }))?.toObject()
     if (existingUserFlashcard) {
-        existingUserFlashcard.type = "TESTING";
+        existingUserFlashcard.type = StatusType.TESTING;
         return (await UserFlashcard.findOneAndReplace({ _id: existingUserFlashcard._id }, existingUserFlashcard, { new: true }))!;
     }
     const newUserFlashCard = {
         userId: currentUser._id,
         flashcardSetId: flashcardSetId,
         learningHistory: [],
-        type: "TESTING"
+        type: StatusType.TESTING
     }
     return await UserFlashcard.create(newUserFlashCard);
 }

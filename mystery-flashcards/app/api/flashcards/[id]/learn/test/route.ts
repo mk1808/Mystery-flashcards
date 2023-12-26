@@ -38,9 +38,9 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     await connectToDB();
-    const id = params.id;
+    const id = params.id,
+        flashcardSet = await FlashcardSet.findById(id);
 
-    const flashcardSet = await FlashcardSet.findById(id);
     if (!flashcardSet) {
         return simpleMessageResponse('Flash card set not found!', 404)
     }

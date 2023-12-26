@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
     const loginForm: LoginForm = await request.json();
 
     const existingUser = await User.findOne({ name: loginForm.name });
-
     if (!existingUser || ! await checkPasswordMatch(loginForm.password, existingUser.password)) {
         return simpleMessageResponse('common.invalidCredentials', 401)
     }
