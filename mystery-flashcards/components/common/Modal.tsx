@@ -21,20 +21,44 @@ function Modal({
 
     return (
         <>
+            {renderTrigger()}
+            {renderDialog()}
+        </>
+    )
+
+    function renderTrigger() {
+        return (
             <div onClick={onClick}>{modalTrigger}</div>
+        )
+    }
+
+    function renderDialog() {
+        return (
             <dialog ref={buttonRef} className="modal">
                 <div className={`modal-box max-w-5xl sm:${width}`}>
                     {dialogHeader}
-                    <div className="max-h-[70vh] overflow-y-auto">{dialogContent}</div>
-                    <div className="modal-action">
-                        <form method="dialog">
-                            {dialogActions}
-                        </form>
-                    </div>
+                    {renderDialogBody()}
+                    {renderDialogActions()}
                 </div>
             </dialog>
-        </>
-    )
+        )
+    }
+
+    function renderDialogBody() {
+        return (
+            <div className="max-h-[70vh] overflow-y-auto">{dialogContent}</div>
+        )
+    }
+
+    function renderDialogActions() {
+        return (
+            <div className="modal-action">
+                <form method="dialog">
+                    {dialogActions}
+                </form>
+            </div>
+        )
+    }
 }
 
 export default Modal

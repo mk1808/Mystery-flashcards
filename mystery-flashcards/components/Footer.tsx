@@ -83,32 +83,34 @@ function Footer() {
 
     return (
         <footer className="footer p-10 mt-4 bg-base-200 text-base-content grid-cols-5">
-            <aside className='col-span-5 xs:col-span-3 xl:col-span-2'>
-                <Logo className='mb-2 ml-[-8px]' height={100}/>
-                <p className='text-lg'>Copyright © {year} Monika Kordoń, Marek Czopor</p>
-            </aside>
+            {renderLogo()}
 
             <div className="col-span-5 xs:col-span-2 xl:col-span-3 xl:grid-cols-3 h-full w-full gap-4 xs:gap-0">
-                <nav className="ps-3 border-s-2 border-slate-600 h-full grid mb-5 xs:mb-0" >
-                    <header className="footer-title">{dictionary.common.browse}</header>
-                    {mainMenuElements.map(renderMenuElementIfNeeded)}
-
-                </nav>
-                <nav className="ps-3 border-s-2 border-slate-600 h-full grid mb-5 xs:mb-0">
-                    <header className="footer-title">{dictionary.common.language}</header>
-                    {languageMenuElements.map(renderMenuElementIfNeeded)}
-                    {renderEmpty()}
-                    {renderEmpty()}
-                </nav>
-                <nav className="ps-3 border-s-2 border-slate-600 h-full grid mb-5 xs:mb-0">
-                    <header className="footer-title">{dictionary.common.contact}</header>
-                    {contactMenuElements.map(renderMenuElementIfNeeded)}
-                    {renderEmpty()}
-                    {renderEmpty()}
-                </nav>
+                {renderMenuElements(dictionary.common.browse, mainMenuElements)}
+                {renderMenuElements(dictionary.common.language, languageMenuElements, [1, 2])}
+                {renderMenuElements(dictionary.common.contact, contactMenuElements, [1, 2])}
             </div>
         </footer>
     )
+
+    function renderLogo() {
+        return (
+            <aside className='col-span-5 xs:col-span-3 xl:col-span-2'>
+                <Logo className='mb-2 ml-[-8px]' height={100} />
+                <p className='text-lg'>Copyright © {year} Monika Kordoń, Marek Czopor</p>
+            </aside>
+        )
+    }
+
+    function renderMenuElements(headerTitle: String, elements: any[], empty: any[] = []) {
+        return (
+            <nav className="ps-3 border-s-2 border-slate-600 h-full grid mb-5 xs:mb-0" >
+                <header className="footer-title">{headerTitle}</header>
+                {elements.map(renderMenuElementIfNeeded)}
+                {empty.map(renderEmpty)}
+            </nav>
+        )
+    }
 
     function renderEmpty() {
         return <a className='min-h-[1.25rem]' />;
@@ -117,10 +119,23 @@ function Footer() {
     function renderMenuElement(element: any) {
         const name = getNestedFieldByPath(dictionary, element.name)
         if (element.onClick) {
-            return <a className="link link-hover min-h-[1.25rem]" key={element.name} onClick={element.onClick}>{name}</a>
+            return renderClickable(element, name)
         }
-        return <Link href={element.link} {...(element.newTab ? newTabAttrs : {})} key={element.name}>{name}</Link>;
+        return renderLink(element, name)
     }
+
+    function renderClickable(element: any, name: String) {
+        return (
+            <a className="link link-hover min-h-[1.25rem]" key={element.name} onClick={element.onClick}>{name}</a>
+        )
+    }
+
+    function renderLink(element: any, name: String) {
+        return (
+            <Link href={element.link} {...(element.newTab ? newTabAttrs : {})} key={element.name}>{name}</Link>
+        )
+    }
+
 }
 
 export default Footer

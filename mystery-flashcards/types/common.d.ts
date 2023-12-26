@@ -32,3 +32,8 @@ interface Step {
     title?: any,
     description?: any
 }
+
+interface StepType {
+    number: string,
+    text: string
+}

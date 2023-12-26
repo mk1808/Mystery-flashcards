@@ -6,6 +6,7 @@ import useSubmitTestAction from "./submitTestActions/useSubmitTestAction";
 import useTestStore from "@/stores/useTestStore";
 import useSubmitTestResultAction from "./submitTestActions/useSubmitTestResultAction";
 import useLocaleStore from "@/stores/useLocaleStore";
+import { LearnViewOptions } from "@/enums/LearnViewOptions";
 
 function useSubmitLearnActions(): MainAndOtherButton {
     const { dictionary } = useLocaleStore(state => state);
@@ -30,16 +31,16 @@ function useSubmitLearnActions(): MainAndOtherButton {
 
     useEffect(() => {
         switch (view) {
-            case "TRAINING":
+            case LearnViewOptions.TRAINING:
                 setCurrentAction(training)
                 break;
-            case "TRAINING_RESULT":
+            case LearnViewOptions.TRAINING_RESULT:
                 setCurrentAction(trainingResult)
                 break;
-            case "TEST":
+            case LearnViewOptions.TEST:
                 setCurrentAction(test)
                 break;
-            case "TEST_RESULT":
+            case LearnViewOptions.TEST_RESULT:
                 setCurrentAction(testResult)
                 break;
         }

@@ -24,14 +24,25 @@ function MySelect({
             <div className="label">
                 <span className="label-text">{label}</span>
             </div>
-            <select className={`select select-bordered w-full mb-3  ${errorSelectClass(isValid)}`}
+            <select
+                className={`select select-bordered w-full mb-3  ${errorSelectClass(isValid)}`}
                 defaultValue={defaultValue}
                 {...inputParams}>
-                <option disabled value="">{noValueLabel}</option>
-                {options.map(renderOption)}
+                {renderOptions()}
             </select>
         </label>
     )
+
+    function renderOptions() {
+        return (
+            <>
+                <option disabled value="">
+                    {noValueLabel}
+                </option>
+                {options.map(renderOption)}
+            </>
+        )
+    }
 }
 
 export default MySelect

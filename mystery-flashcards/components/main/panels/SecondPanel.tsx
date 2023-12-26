@@ -2,11 +2,6 @@
 import useLocaleStore from "@/stores/useLocaleStore";
 import RoundActionButton from "../../common/RoundActionButton";
 
-type StepType = { 
-    number: string,
-    text: string
-}
-
 function SecondPanel() {
     const { dictionary } = useLocaleStore(state => state);
 

@@ -22,7 +22,13 @@ function MyInput({
             <div className="label">
                 <span className="label-text">{label}</span>
             </div>
-            <input type={type} placeholder={placeholder} className={`input input-bordered w-full ${errorClass(isValid)}`} {...inputParams} autoComplete="off" />
+            <input
+                type={type}
+                placeholder={placeholder}
+                className={`input input-bordered w-full ${errorClass(isValid)}`}
+                {...inputParams}
+                autoComplete="off"
+            />
         </label>
     )
 }

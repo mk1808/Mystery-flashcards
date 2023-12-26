@@ -64,7 +64,9 @@ function FlashcardSetsSearch() {
     }
 
     function renderCard(flashcardSet: FlashcardSetT) {
-        return <SetCard flashcardSet={flashcardSet} key={flashcardSet._id} />
+        return (
+            <SetCard flashcardSet={flashcardSet} key={flashcardSet._id} />
+        )
     }
 }
 
