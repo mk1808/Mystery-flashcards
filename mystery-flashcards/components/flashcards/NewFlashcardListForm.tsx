@@ -10,7 +10,7 @@ function NewFlashcardListForm() {
             <FlashcardContainer
                 key={card._id}
                 card={card}
-                isForm={true} />
+                isForm />
         )
     )
 }

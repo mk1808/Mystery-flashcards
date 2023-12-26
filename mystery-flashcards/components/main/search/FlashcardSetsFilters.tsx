@@ -14,14 +14,14 @@ import useHashtags from '@/hooks/useHashtags';
 import useAuthStore from '@/stores/useAuthStore';
 import { useSearchParams } from 'next/navigation';
 import { StatusOptions } from '@/enums/StatusOptions';
+import useLocaleStore from '@/stores/useLocaleStore';
 
 function FlashcardSetsFilters({
-    dictionary,
     search
 }: {
-    dictionary: any,
     search: (data: FlashcardSearchDto) => any
-}) {
+    }) {
+    const { dictionary } = useLocaleStore(state => state);
     const [statusFieldRefresh, setStatusFieldRefresh] = useState(0);
     const searchParams = useSearchParams()
     const addAlert = useAlertStore((state) => state.add);

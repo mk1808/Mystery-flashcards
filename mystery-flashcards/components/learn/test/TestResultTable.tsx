@@ -3,20 +3,18 @@ import Table from '@/components/common/Table';
 import StartLearningModal from '@/components/flashcards/flashcardDetails/StartLearningModal';
 import { FlashCardSetDto } from '@/dtos/FlashCardSetDto';
 import { AnswerT } from '@/models/Answer';
+import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import React, { useEffect } from 'react'
 
 function TestResultTable({
     flashcardSetDto,
-    dictionary,
-    view,
-    locale
+    view
 }: {
     flashcardSetDto: FlashCardSetDto,
-    dictionary: any,
-    view: any,
-    locale: string
+    view: any
 }) {
+    const { dictionary } = useLocaleStore(state => state);
     const { setView, setFlashcardSet } = useTrainingStore((state) => state);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.status]
     useEffect(() => { setView(view) }, [view])
@@ -29,7 +27,7 @@ function TestResultTable({
     return (
         <>
             <Table columns={columns} renderRows={renderRows} />
-            <StartLearningModal dictionary={dictionary} flashcardSet={flashcardSetDto?.flashcardSet} locale={locale} dialogTriggerClassName='hidden' />
+            <StartLearningModal flashcardSet={flashcardSetDto?.flashcardSet} dialogTriggerClassName='hidden' />
         </>
     )
 

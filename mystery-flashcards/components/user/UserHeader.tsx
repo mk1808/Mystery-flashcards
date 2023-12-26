@@ -7,8 +7,10 @@ import { UserT } from "@/models/User";
 import { getRang } from "@/utils/server/userRangUtils";
 import { getWhoAmi } from "@/utils/client/ApiUtils";
 import { getNestedFieldByPath } from "@/utils/server/objectUtils";
+import useLocaleStore from "@/stores/useLocaleStore";
 
-export default function UserHeader({ dictionary }: { dictionary: any }) {
+export default function UserHeader() {
+    const { dictionary } = useLocaleStore(state => state);
     const [currentUser, setCurrentUser] = useState<UserT>();
 
     useEffect(() => {
@@ -26,7 +28,7 @@ export default function UserHeader({ dictionary }: { dictionary: any }) {
     }
     return (
         <div className="text-center ">
-            <span className="loading loading-ball loading-xl"></span>
+            <span className="loading loading-ball loading-xl" />
         </div>
     )
 
@@ -39,7 +41,7 @@ export default function UserHeader({ dictionary }: { dictionary: any }) {
             <div className="text-2xl flex items-center place-content-center ">
                 <span className="font-bold me-2">{`${dictionary.common.userLevel}: `}</span>
                 <span>{currentUser?.rang}</span>
-                <UserRangesModal dictionary={dictionary} />
+                <UserRangesModal />
             </div>
 
         );

@@ -1,16 +1,14 @@
 "use client"
 import LearnStats from '@/components/learn/LearnStats'
 import useAuthStore from '@/stores/useAuthStore'
+import useLocaleStore from '@/stores/useLocaleStore'
 import useTrainingStore from '@/stores/useTrainingStore'
 import { getNestedFieldByPath } from '@/utils/server/objectUtils'
 import { findNextRang, getRang } from '@/utils/server/userRangUtils'
 import React from 'react'
 
-export default function TrainingResultsSidebar({
-    dictionary
-}: {
-    dictionary: any
-}) {
+export default function TrainingResultsSidebar() {
+    const { dictionary } = useLocaleStore(state => state);
     const { flashcardSet: { flashcardSet }, result, roundCount } = useTrainingStore((state) => state);
     const currentUser = useAuthStore(state => state.currentUser);
     const statsValues = [
@@ -34,7 +32,7 @@ export default function TrainingResultsSidebar({
     return (
         <div>
             {renderTitle()}
-            <div className="divider"></div>
+            <div className="divider" />
             <h1 className="text-3xl text-center mt-3 mb-8">{dictionary.common.learningResults} <br /> {dictionary.common.collection}:&nbsp;
                 <span className='font-medium'>{flashcardSet?.name}</span>
             </h1>

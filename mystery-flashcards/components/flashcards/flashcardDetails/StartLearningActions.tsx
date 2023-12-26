@@ -1,7 +1,9 @@
 "use client"
+import useLocaleStore from '@/stores/useLocaleStore';
 import React from 'react'
 
-function StartLearningActions({ dictionary, flashcardSet }: { dictionary: any, flashcardSet: any }) {
+function StartLearningActions() {
+  const { dictionary } = useLocaleStore(state => state);
   return (
     <>
       <button className="btn ml-3">{dictionary.common.close}</button>

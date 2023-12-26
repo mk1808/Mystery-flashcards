@@ -72,7 +72,7 @@ function Playground({ params }: { params: { locale: string } }) {
                     <button className="btn btn-accent">Accent</button>
                     <button className="btn btn-ghost">Ghost</button>
                     <button className="btn btn-link">Link</button>
-                    <div style={{ width: 200, height: 200 }} className="bg-primary"></div>
+                    <div style={{ width: 200, height: 200 }} className="bg-primary" />
                 </div>
             </div>
             {renderStepsCard()}
@@ -136,7 +136,7 @@ function Playground({ params }: { params: { locale: string } }) {
                             <div className="w-full flex justify-end">
                                 text
                             </div>
-                            <div className="divider divider-horizontal"></div>
+                            <div className="divider divider-horizontal" />
                             <div className="w-full">
                                 text
                             </div>

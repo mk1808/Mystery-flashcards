@@ -1,6 +1,5 @@
 "use client"
 import { isFieldValid } from '@/utils/client/FormUtils';
-import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useRef } from 'react'
 import MyInput from '../common/form/MyInput';
 import { useForm } from 'react-hook-form';
@@ -12,18 +11,18 @@ import { LangOptions } from '@/enums/LangOptions';
 import { translateOptions } from '@/utils/client/EnumUtils';
 import { LevelOptions } from '@/enums/LevelOptions';
 import useHashtags from '@/hooks/useHashtags';
+import useLocaleStore from '@/stores/useLocaleStore';
 
 function NewFlashcardForm({
-    dictionary,
     flashcardSet
 }: {
-    dictionary: any,
     flashcardSet?: FlashcardSetT
 }) {
-    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
-    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
+    const { dictionary } = useLocaleStore(state => state);
+    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [dictionary])
+    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [dictionary])
     const hashtagsOptions = useHashtags();
-    const { updateSidebarForm, setSidebarFormValid, initState, resetState } = useNewFlashcardSetStore((state) => state);
+    const { updateSidebarForm, setSidebarFormValid, initState, resetState, sidebarFormValid } = useNewFlashcardSetStore((state) => state);
     const initOnceRef = useRef(false)
     const validateLang2 = (lang2: string) => watch("lang1") !== lang2 || dictionary.common.languagesShouldDiffer;
     const {
@@ -42,7 +41,9 @@ function NewFlashcardForm({
     }, [watch])
 
     useEffect(() => {
-        setSidebarFormValid(formState.isValid || !!flashcardSet)
+        if (sidebarFormValid != (formState.isValid || !!flashcardSet)) {
+            setSidebarFormValid(formState.isValid || !!flashcardSet)
+        }
     }, [formState])
 
     useEffect(() => {
@@ -93,7 +94,7 @@ function NewFlashcardForm({
                 <MyMultiSelect
                     label={dictionary.common.lang1}
                     control={control}
-                    required={true}
+                    required
                     name='lang1'
                     options={langOptions}
                     noValueLabel={dictionary.common.fillLang1}
@@ -101,7 +102,7 @@ function NewFlashcardForm({
                 <MyMultiSelect
                     label={dictionary.common.lang2}
                     control={control}
-                    required={true}
+                    required
                     name='lang2'
                     options={langOptions}
                     noValueLabel={dictionary.common.fillLang2}
@@ -111,7 +112,7 @@ function NewFlashcardForm({
                 <MyMultiSelect
                     label={dictionary.common.level}
                     control={control}
-                    required={true}
+                    required
                     name='level'
                     options={levelOptions}
                     noValueLabel={dictionary.common.fillLevel}
@@ -119,9 +120,9 @@ function NewFlashcardForm({
                 <MyMultiSelect
                     label={dictionary.common.hashtags}
                     control={control}
-                    required={true}
-                    multiple={true}
-                    allowNew={true}
+                    required
+                    multiple
+                    allowNew
                     name='hashtags'
                     options={hashtagsOptions}
                     noValueLabel={dictionary.common.fillHashtags}

@@ -1,5 +1,6 @@
 import { AlertType } from '@/enums/AlertType';
 import useAlertStore from '@/stores/useAlertStore';
+import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { patchAnswersAndReturnResults } from '@/utils/client/ApiUtils';
 import { getMainButtonAttrs } from '@/utils/client/TrainingUtils';
@@ -7,7 +8,8 @@ import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react'
 
-function useSubmitTrainingAction({ dictionary, locale }: { dictionary: any, locale: string }) {
+function useSubmitTrainingAction() {
+    const { dictionary, locale } = useLocaleStore(state => state);
     const { wasChecked, roundAnswers, flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
     const { setFinalResult } = useTrainingStore((state) => state);
     const addAlert = useAlertStore((state) => state.add)

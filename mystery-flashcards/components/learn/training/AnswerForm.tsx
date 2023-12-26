@@ -4,11 +4,12 @@ import { isFieldValid } from '@/utils/client/FormUtils';
 import MyInput from '@/components/common/form/MyInput';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { checkValidity, updateAnswer, updateResult } from '@/utils/client/TrainingUtils';
-import { FlashcardT } from '@/models/Flashcard';
 import { useRef } from 'react';
 import { postAnswersAndReturnCards } from '@/utils/client/ApiUtils';
+import useLocaleStore from '@/stores/useLocaleStore';
 
-function AnswerForm({ dictionary, currentFlashcard, setIsValid, setWasChecked }: { dictionary: any, currentFlashcard: FlashcardT, setIsValid: any, setWasChecked: any }) {
+function AnswerForm({ setIsValid, setWasChecked }: { setIsValid: any, setWasChecked: any }) {
+    const { dictionary } = useLocaleStore(state => state);
     const { roundFlashcards, roundAnswers, direction, currentFlashcardIndexInRound, result, wasChecked, flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
     const { onAnswerSave, onNewRound, incrementCurrentFlashcardIndexInRound } = useTrainingStore((state) => state);
     const resultRef = useRef<any>(null);

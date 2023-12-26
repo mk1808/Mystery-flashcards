@@ -8,8 +8,10 @@ import { AlertType } from '@/enums/AlertType';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { loginRequest } from '@/utils/client/ApiUtils';
 import useAuthStore from '@/stores/useAuthStore';
+import useLocaleStore from '@/stores/useLocaleStore';
 
-export default function LoginForm({ dictionary, locale }: { dictionary: any, locale: string }) {
+export default function LoginForm() {
+    const { dictionary, locale } = useLocaleStore(state => state);
     const router = useRouter();
     const addAlert = useAlertStore((state) => state.add)
     const checkWhoAmi = useAuthStore(state => state.checkWhoAmi);

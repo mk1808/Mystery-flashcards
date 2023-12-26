@@ -1,19 +1,17 @@
 "use client"
 import Table from '@/components/common/Table';
 import StartLearningModal from '@/components/flashcards/flashcardDetails/StartLearningModal';
+import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { createTestResult } from '@/utils/client/TrainingUtils';
 import React, { useEffect } from 'react'
 
 function ResultTable({
-    view,
-    dictionary,
-    locale
+    view
 }: {
-    view: any,
-    dictionary: any,
-    locale: string
+    view: any
 }) {
+    const { dictionary } = useLocaleStore(state => state);
     const { allAnswers, flashcardSet, allFlashcards, direction } = useTrainingStore((state) => state);
     const { setView } = useTrainingStore((state) => state);
     const allInfoObjects = createTestResult(allAnswers, allFlashcards);
@@ -33,7 +31,7 @@ function ResultTable({
     return (
         <>
             <Table columns={columns} renderRows={renderRows} />
-            <StartLearningModal dictionary={dictionary} flashcardSet={flashcardSet?.flashcardSet} locale={locale} dialogTriggerClassName='hidden' />
+            <StartLearningModal flashcardSet={flashcardSet?.flashcardSet} dialogTriggerClassName='hidden' />
         </>
     )
 

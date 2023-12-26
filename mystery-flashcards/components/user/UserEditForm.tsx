@@ -6,14 +6,14 @@ import useAlertStore from "@/stores/useAlertStore";
 import { AlertType } from "@/enums/AlertType";
 import { getNestedFieldByPath } from "@/utils/server/objectUtils";
 import { updateUser } from "@/utils/client/ApiUtils";
+import useLocaleStore from "@/stores/useLocaleStore";
 
 export default function UserEditForm({
-    dictionary,
     user
 }: {
-    dictionary: any,
     user: UserT
 }) {
+    const { dictionary } = useLocaleStore(state => state);
     const addAlert = useAlertStore((state) => state.add)
 
     const {

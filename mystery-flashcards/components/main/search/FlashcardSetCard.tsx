@@ -5,22 +5,20 @@ import { FlashcardSetT } from '@/models/FlashcardSet'
 import FlashcardSetCardContainer from './FlashcardSetCardContainer'
 import Badges from '@/components/common/Badges'
 import { HeartIcon } from "@heroicons/react/24/solid"
+import useLocaleStore from '@/stores/useLocaleStore'
 
 function FlashcardSetCard({
-    flashcardSet,
-    dictionary,
-    locale
+    flashcardSet
 }: {
-    flashcardSet: FlashcardSetT,
-    dictionary: any,
-    locale: string
-}) {
+    flashcardSet: FlashcardSetT
+    }) {
+    const { dictionary } = useLocaleStore(state => state);
     const { userFlashcard } = flashcardSet;
     const isType = userFlashcard && userFlashcard.type != "NONE"
     const isFav = userFlashcard?.isFavorite;
     const translatedType = dictionary.common[userFlashcard?.type!];
     return (
-        <FlashcardSetCardContainer flashcardSet={flashcardSet} locale={locale}>
+        <FlashcardSetCardContainer flashcardSet={flashcardSet}>
             <div className="card w-[350px] bg-base-100 shadow-xl">
                 <div className="absolute left-[120px] -top-6" >
                     <div className="w-[110px] h-[50px] bg-primary flex items-center justify-center text-base-100 rounded-xl shadow-xl">

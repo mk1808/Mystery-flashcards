@@ -4,20 +4,20 @@ import React, { ReactNode, useEffect, useState, useRef } from 'react'
 import AnswerForm from './AnswerForm';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { FlashcardT } from '@/models/Flashcard';
+import useLocaleStore from '@/stores/useLocaleStore';
 
 function TrainingCardContent({
-    dictionary,
     flashcardSet,
     roundFlashcardsProp,
     view,
     direction
 }: {
-    dictionary: any,
     flashcardSet: any,
     roundFlashcardsProp: any,
     view: any,
     direction: string
 }) {
+    const { dictionary } = useLocaleStore(state => state);
     const [isValid, setIsValid] = useState<Boolean>(true);
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
     const { roundFlashcards, currentFlashcardIndexInRound, wasChecked } = useTrainingStore((state) => state);
@@ -82,13 +82,13 @@ function TrainingCardContent({
                     <h1 className="text-3xl my-3 ">{getMainWord()}</h1>
                 </div>
                 <div><p>{getDescription()}</p></div>
-                <div className="divider  sm:hidden w-full"></div>
+                <div className="divider  sm:hidden w-full" />
             </div>
             <div className='flex items-center'>
-                <div className="divider hidden sm:flex divider-horizontal ml-0"></div>
+                <div className="divider hidden sm:flex divider-horizontal ml-0" />
                 <div className="w-full h-full grid grid-rows-2">
                     <div className="self-end">
-                        <AnswerForm dictionary={dictionary} currentFlashcard={currentFlashcard} setIsValid={setIsValid} setWasChecked={setWasChecked} />
+                        <AnswerForm setIsValid={setIsValid} setWasChecked={setWasChecked} />
                     </div>
                     <div>{renderAnswerValidity()}</div>
                 </div>

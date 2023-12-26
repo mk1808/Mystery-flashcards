@@ -11,7 +11,7 @@ import useLocaleStore from '@/stores/useLocaleStore';
 
 function FlashcardContainer({
   card,
-  isForm
+  isForm = false
 }: {
   card: FlashcardT,
   isForm?: boolean
@@ -77,7 +77,7 @@ function FlashcardContainer({
             <div className="w-full justify-end">
               {renderLeftSide()}
             </div>
-            <div className="divider sm:divider-horizontal"></div>
+            <div className="divider sm:divider-horizontal" />
             <div className="w-full">
               {renderRightSide()}
             </div>

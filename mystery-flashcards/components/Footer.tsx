@@ -1,44 +1,47 @@
 "use client"
 import useLoggedUserForLayout from '@/hooks/useLoggedUserForLayout';
+import useLocaleStore from '@/stores/useLocaleStore';
+import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react'
 
-function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
+function Footer() {
+    const { dictionary, locale } = useLocaleStore(state => state);
     const newTabAttrs = { rel: "noopener noreferrer", target: "_blank" }
     const year = new Date().getFullYear();
-    const { renderMenuElementIfNeeded } = useLoggedUserForLayout({ renderMenuElement, locale });
+    const { renderMenuElementIfNeeded } = useLoggedUserForLayout({ renderMenuElement });
     const pathname = usePathname();
     const router = useRouter();
 
     const mainMenuElements = [
         {
-            name: dictionary.common.mainPage,
+            name: "common.mainPage",
             link: `/${locale}`,
             forAll: true
         },
         {
-            name: dictionary.common.searchSets,
+            name: "common.searchSets",
             link: `/${locale}#flashcardSetsSearch`,
             forAll: true
         },
         {
-            name: dictionary.common.addNewSet,
+            name: "common.addNewSet",
             link: `/${locale}/flashcards/new`,
             forLogged: true
         },
         {
-            name: dictionary.common.mySets,
+            name: "common.mySets",
             link: `/${locale}?mySet=true#flashcardSetsSearch`,
             forLogged: true
         },
         {
-            name: dictionary.common.login,
+            name: "common.login",
             link: `/${locale}/login`,
             forNotLogged: true
         },
         {
-            name: dictionary.common.register,
+            name: "common.register",
             link: `/${locale}/register`,
             forNotLogged: true
         },
@@ -46,12 +49,12 @@ function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
 
     const languageMenuElements = [
         {
-            name: dictionary.common.languagePL,
+            name: "common.languagePL",
             onClick: () => changeLanguage("pl"),
             forAll: true
         },
         {
-            name: dictionary.common.languageENG,
+            name: "common.languageENG",
             onClick: () => changeLanguage("en"),
             forAll: true
         },
@@ -108,14 +111,15 @@ function Footer({ dictionary, locale }: { dictionary: any, locale: any }) {
     )
 
     function renderEmpty() {
-        return <a className='min-h-[1.25rem]'></a>;
+        return <a className='min-h-[1.25rem]' />;
     }
 
     function renderMenuElement(element: any) {
+        const name = getNestedFieldByPath(dictionary, element.name)
         if (element.onClick) {
-            return <a className="link link-hover min-h-[1.25rem]" key={element.name} onClick={element.onClick}>{element.name}</a>
+            return <a className="link link-hover min-h-[1.25rem]" key={element.name} onClick={element.onClick}>{name}</a>
         }
-        return <Link href={element.link} {...(element.newTab ? newTabAttrs : {})} key={element.name}>{element.name}</Link>;
+        return <Link href={element.link} {...(element.newTab ? newTabAttrs : {})} key={element.name}>{name}</Link>;
     }
 }
 

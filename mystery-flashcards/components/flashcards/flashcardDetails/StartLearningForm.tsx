@@ -1,12 +1,14 @@
 "use client"
 import MyRadioInputButton from '@/components/common/form/MyRadioInputButton';
+import useLocaleStore from '@/stores/useLocaleStore';
 import { isFieldValid } from '@/utils/client/FormUtils';
 import { createPathParams } from '@/utils/client/RestUtils';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 
-function StartLearningForm({ dictionary, flashcardSet, locale }: { dictionary: any, flashcardSet: any, locale: string }) {
+function StartLearningForm({ flashcardSet }: { flashcardSet: any }) {
+    const { dictionary, locale } = useLocaleStore(state => state);
     const label1 = `${flashcardSet.lang1} -> ${flashcardSet.lang2}`;
     const label2 = `${flashcardSet.lang2} -> ${flashcardSet.lang1}`;
     const direction = { main: "main", reversed: "reversed" }

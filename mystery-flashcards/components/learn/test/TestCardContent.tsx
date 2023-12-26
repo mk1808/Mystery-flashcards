@@ -6,19 +6,15 @@ import TestAnswerForm from './TestAnswerForm';
 import useTrainingStore from '@/stores/useTrainingStore';
 
 function TestCardContent({
-    dictionary,
     flashcardSet,
     testFlashcards,
     view,
-    direction,
-    locale
+    direction
 }: {
-    dictionary: any,
     flashcardSet: any,
     testFlashcards: any,
     view: any,
-    direction: string,
-    locale: string
+    direction: string
 }) {
     const [currentFlashcard, setCurrentFlashcard] = useState<FlashcardT>({ wordLang1: "", description1: "" });
     const { currentFlashcardIndex } = useTestStore((state) => state);
@@ -41,13 +37,13 @@ function TestCardContent({
                     <h1 className="text-3xl my-3 ">{getWord()}</h1>
                 </div>
                 <div><p>{getDescription()}</p></div>
-                <div className="divider  sm:hidden w-full"></div>
+                <div className="divider  sm:hidden w-full" />
             </div>
             <div className='flex items-center'>
-                <div className="divider hidden sm:flex divider-horizontal ml-0"></div>
+                <div className="divider hidden sm:flex divider-horizontal ml-0" />
                 <div className="w-full h-full grid grid-rows-2">
                     <div className="self-end">
-                        <TestAnswerForm dictionary={dictionary} locale={locale} />
+                        <TestAnswerForm />
                     </div>
                 </div>
             </div>

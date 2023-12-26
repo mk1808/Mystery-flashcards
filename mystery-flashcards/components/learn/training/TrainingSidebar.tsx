@@ -2,14 +2,12 @@
 import Badges from '@/components/common/Badges';
 import SingleSidebarInfo from '@/components/common/SingleSidebarInfo';
 import LearnStats from '@/components/learn/LearnStats';
+import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import React from 'react'
 
-export default function TrainingSidebar({
-    dictionary
-}: {
-    dictionary: any
-}) {
+export default function TrainingSidebar() {
+    const { dictionary } = useLocaleStore(state => state);
     const { result, roundFlashcards, roundCount, direction, flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
     const statsValues = [
         {
@@ -40,11 +38,11 @@ export default function TrainingSidebar({
     return (
         <div>
             {renderTitleAndTags()}
-            <div className="divider"></div>
+            <div className="divider" />
             <SingleSidebarInfo title={dictionary.common.flashcardsCount} value={flashcardSet?.flashcards?.length} />
             <SingleSidebarInfo title={dictionary.common.languages} value={languages} />
             <SingleSidebarInfo title={dictionary.common.level} value={flashcardSet?.level} />
-            <div className="divider"></div>
+            <div className="divider" />
             <LearnStats stats={statsValues} />
 
             <br />

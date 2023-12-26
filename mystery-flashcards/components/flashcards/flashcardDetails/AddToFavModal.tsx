@@ -1,3 +1,4 @@
+"use client"
 import Modal from '@/components/common/Modal'
 import React from 'react'
 import { HeartIcon } from "@heroicons/react/24/outline"
@@ -5,14 +6,16 @@ import { HeartIcon as FullHeartIcon } from "@heroicons/react/24/solid"
 import AddToFavActions from './AddToFavActions'
 import AddToFavContent from './AddToFavContent'
 import { UserFlashcardT } from '@/models/UserFlashcard'
+import useLocaleStore from '@/stores/useLocaleStore'
 
-function AddToFavModal({ dictionary, flashcardSet, userFlashcard }: { dictionary: any, flashcardSet: any, userFlashcard: UserFlashcardT }) {
+function AddToFavModal({ flashcardSet, userFlashcard }: { flashcardSet: any, userFlashcard: UserFlashcardT }) {
+    const { dictionary } = useLocaleStore(state => state);
     const isFav = userFlashcard?.isFavorite;
 
     return <Modal modalTrigger={renderDialogTrigger()}
         dialogHeader={renderDialogHeader()}
         dialogContent={renderDialogContent()}
-        dialogActions={<AddToFavActions dictionary={dictionary} flashcardSet={flashcardSet} />}
+        dialogActions={<AddToFavActions flashcardSet={flashcardSet} />}
         width="xl:w-5/12 sm:w-[600px]"
         disabled={isFav}
     />
@@ -32,7 +35,7 @@ function AddToFavModal({ dictionary, flashcardSet, userFlashcard }: { dictionary
     }
 
     function renderDialogContent() {
-        return <AddToFavContent dictionary={dictionary} flashcardSet={flashcardSet} />
+        return <AddToFavContent flashcardSet={flashcardSet} />
     }
 }
 
