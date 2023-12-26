@@ -15,11 +15,9 @@ function AnswerForm({ setIsValid, setWasChecked }: { setIsValid: any, setWasChec
     const resultRef = useRef<any>(null);
     resultRef.current = result;
 
-
     const {
         register,
         handleSubmit,
-        watch,
         getFieldState,
         formState,
         reset,
@@ -28,8 +26,6 @@ function AnswerForm({ setIsValid, setWasChecked }: { setIsValid: any, setWasChec
 
     const onSubmit = async (answer: AnswerForm, e: any) => {
         try {
-            console.log("answer", answer)
-            console.log("TEST ANSWER")
             if (!wasChecked) {
                 const currentFlashcard = roundFlashcards[currentFlashcardIndexInRound],
                     isValid = checkValidity(currentFlashcard, answer, direction),
@@ -48,13 +44,10 @@ function AnswerForm({ setIsValid, setWasChecked }: { setIsValid: any, setWasChec
                 else {
                     const roundFlashcards = await postAnswersAndReturnCards(flashcardSet?._id, roundAnswers);
                     onNewRound(roundFlashcards);
-                    console.log("ROUND: ", roundFlashcards)
                 }
                 setTimeout(() => setFocus("givenAnswer"), 10)
             }
-        } catch (errorResponse: any) {
-
-        }
+        } catch (errorResponse: any) {}
     };
     const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);

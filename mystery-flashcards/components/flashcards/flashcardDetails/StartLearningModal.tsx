@@ -15,9 +15,7 @@ function StartLearningModal({ flashcardSet, dialogTriggerClassName = "" }: { fla
     />
 
     function renderDialogTrigger() {
-        return (
-            <button className={`btn btn-primary mr-2 md:mr-10 ${dialogTriggerClassName}`} id="modalButton">{dictionary.common.learnThisFlashcardSet}</button>
-        )
+        return <button className={`btn btn-primary mr-2 md:mr-10 ${dialogTriggerClassName}`} id="modalButton">{dictionary.common.learnThisFlashcardSet}</button>;
     }
 
     function renderDialogHeader() {

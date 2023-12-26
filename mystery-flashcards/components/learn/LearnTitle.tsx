@@ -1,6 +1,5 @@
 'use client'
 import React from 'react'
-import { use } from "react";
 import Title from '../common/Title'
 import { usePathname } from 'next/navigation'
 import useLocaleStore from '@/stores/useLocaleStore';

@@ -21,8 +21,7 @@ function UserEditForm({
         handleSubmit,
         watch,
         getFieldState,
-        formState,
-        reset
+        formState
     } = useForm<UserT & { confirmPassword: string }>({
         mode: 'onBlur',
         defaultValues: {

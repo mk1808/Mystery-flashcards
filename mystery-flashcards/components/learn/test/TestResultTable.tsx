@@ -20,7 +20,7 @@ function TestResultTable({
     useEffect(() => { setView(view) }, [view])
     useEffect(() => { setFlashcardSet(flashcardSetDto) }, [flashcardSetDto])
 
-    function getFlashcard(flashcardId: string) {
+    const getFlashcard = (flashcardId: string) => {
         return flashcardSetDto.flashcardSet?.flashcards?.find(flashcard => flashcard._id === flashcardId);
     }
 

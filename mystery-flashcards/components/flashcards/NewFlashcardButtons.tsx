@@ -15,12 +15,12 @@ function NewFlashcardButtons({
     editedFlashCardSet?: FlashcardSetT
 }) {
     const { dictionary, locale } = useLocaleStore(state => state);
-
     const { sidebarForm, flashcardsList, sidebarFormValid, flashcardListInvalidCount } = useNewFlashcardSetStore((state) => state);
     const { deleteAllFlashcards } = useNewFlashcardSetStore((state) => state);
+    const addAlert = useAlertStore((state) => state.add);
     const sidebarSubmitBtnRef = useRef<any>(null);
-    const addAlert = useAlertStore((state) => state.add)
     const router = useRouter();
+
     const isFormValid = () => sidebarFormValid && flashcardListInvalidCount === 0;
     const prepareFlashcard = () => {
         const updatedFlashcardsList = flashcardsList.slice(0, flashcardsList.length - 1);
@@ -33,10 +33,8 @@ function NewFlashcardButtons({
         try {
             if (editedFlashCardSet) {
                 response = await updateFlashcardSetRequest(editedFlashCardSet._id!, formToSave);
-                console.log(response);
             } else {
                 response = await createFlashcardSetRequest(formToSave);
-                console.log(response);
             }
             const id = response?._id;
             router.push(`/${locale}/flashcards/${id}`);

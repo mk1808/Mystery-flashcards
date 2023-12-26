@@ -49,12 +49,14 @@ export default function TrainingResultsSidebar() {
             <>
                 <h1 className="text-4xl text-center mt-3 mb-8">{dictionary.common.gainedPointsAre}
                     <span className='font-semibold text-secondary'>&nbsp;{result?.validCount}&nbsp;</span>
-                    {dictionary.common.pointsShortcut}!</h1>
+                    {dictionary.common.pointsShortcut}!
+                </h1>
                 <h1 className="text-2xl text-left mt-3 mb-8 font-light">{dictionary.common.currentLevelIs}
                     <span className='font-medium'>&nbsp;{range}</span>.<br />
                     {dictionary.common.toNextLevel}
                     <span className='font-medium'>&nbsp;{toNextLevel}&nbsp;</span>
-                    {dictionary.common.pointsShortcut}.</h1>
+                    {dictionary.common.pointsShortcut}.
+                </h1>
             </>
         )
     }

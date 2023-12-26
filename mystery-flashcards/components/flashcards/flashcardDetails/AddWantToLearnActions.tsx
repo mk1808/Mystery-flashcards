@@ -10,7 +10,6 @@ function AddWantToLearnActions({ flashcardSet, userFlashcard }: { flashcardSet: 
     const { dictionary } = useLocaleStore(state => state);
     const addAlert = useAlertStore((state) => state.add)
     const onSubmit = async () => {
-
         const body = {
             flashcardSetId: flashcardSet._id,
             type: "WANT_TO_LEARN",

@@ -13,6 +13,7 @@ function FlashcardSetCard({
     flashcardSet: FlashcardSetT
     }) {
     const { dictionary } = useLocaleStore(state => state);
+    
     const { userFlashcard } = flashcardSet;
     const isType = userFlashcard && userFlashcard.type != "NONE"
     const isFav = userFlashcard?.isFavorite;

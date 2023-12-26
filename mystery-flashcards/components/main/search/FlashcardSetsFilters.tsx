@@ -20,42 +20,37 @@ function FlashcardSetsFilters({
     search
 }: {
     search: (data: FlashcardSearchDto) => any
-    }) {
+}) {
     const { dictionary } = useLocaleStore(state => state);
+    const currentUser = useAuthStore(state => state.currentUser);
+
     const [statusFieldRefresh, setStatusFieldRefresh] = useState(0);
-    const searchParams = useSearchParams()
-    const addAlert = useAlertStore((state) => state.add);
+    const searchParams = useSearchParams();
+    const hashtagsOptions = useHashtags();
     const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
     const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
     const statusesOptions = useMemo(() => translateOptions(StatusOptions, dictionary), [])
-    const hashtagsOptions = useHashtags();
-    const currentUser = useAuthStore(state => state.currentUser);
     const mySetParam = searchParams.get("mySet");
     const {
         register,
         handleSubmit,
-        watch,
         getFieldState,
         formState,
-        reset,
         control,
         setValue
     } = useForm<FlashcardSearchDto>({ mode: 'onBlur' });
+
+    const onSubmit = async (data: FlashcardSearchDto, e: any) => search(data);
+    const onErrors = (errors: any) => { };
+    const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
 
     useEffect(() => {
         if (mySetParam === "true") {
             setValue("status", ["mine"])
             setStatusFieldRefresh(setStatusFieldRefresh => setStatusFieldRefresh + 1)
-
             setTimeout(() => search({ status: ["mine"] }), 100)
         }
     }, [mySetParam])
-
-    const onSubmit = async (data: FlashcardSearchDto, e: any) => {
-        search(data);
-    };
-    const onErrors = (errors: any) => { };
-    const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
 
     return (
         <div className='mt-20 mx-5 md:mx-0'>
@@ -123,7 +118,8 @@ function FlashcardSetsFilters({
     function renderSubmitButton() {
         return (
             <div className="md:col-span-2 cards3:col-span-3 flex justify-center mt-6">
-                <button type="submit" className="btn btn-primary">{dictionary.common.search}
+                <button type="submit" className="btn btn-primary">
+                    {dictionary.common.search}
                     <MagnifyingGlassIcon className="h-6 w-6" />
                 </button>
             </div >

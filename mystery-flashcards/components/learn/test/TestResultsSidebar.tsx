@@ -15,15 +15,16 @@ export default function TestResultsSidebar({
     user: UserT
 }) {
     const { dictionary } = useLocaleStore(state => state);
-
     const statsValues = [
         {
             text: dictionary.common.answersCount,
             value: flashcardSetDto.testResult?.allCount
-        }, {
+        },
+        {
             text: dictionary.common.correctAnswersCount,
             value: flashcardSetDto.testResult?.validCount
-        }, {
+        },
+        {
             text: dictionary.common.correctAnswersPercent,
             value: flashcardSetDto.testResult?.resultPercent?.toFixed(0) + "%"
         }
@@ -37,7 +38,6 @@ export default function TestResultsSidebar({
                 {dictionary.common.collection}:&nbsp;
                 <span className='font-medium'>{flashcardSetDto.flashcardSet?.name}</span>
             </h1>
-
             <LearnStats stats={statsValues} />
             <br />
         </div>
