@@ -36,7 +36,7 @@ export const patch = (body: any, url: string, cache: RequestCache | undefined = 
 }).then(onResponse);
 
 export function createPathParams(params: any) {
-    var pathParams: string[] = [];
+    let pathParams: string[] = [];
     for (const param in params) {
         if (params[param]) {
             if (Array.isArray(params[param])) {
@@ -49,12 +49,6 @@ export function createPathParams(params: any) {
     return pathParams.join("&");
 }
 
-export function createCookieHeader(cookies: any) {
-    return {
-        cookie: 'token=' + cookies.get('token')?.value
-    }
-}
+export const createCookieHeader = (cookies: any) => ({ cookie: 'token=' + cookies.get('token')?.value })
 
-export function getHost(headers: any): string {
-    return headers.get("host");
-}
+export const getHost = (headers: any): string => headers.get("host");

@@ -12,7 +12,7 @@ export default async function connectToDB() {
 
     try {
         await mongoose.connect(process.env.MONGODB_URI || "", {
-            dbName: "mysteryFlashcards"
+            dbName: process.env.DB_NAME
         })
         isConnected = true;
         console.log('MongoDB connected')
