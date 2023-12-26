@@ -1,8 +1,8 @@
 
 export function getNestedFieldByPath(object: any, fieldPath: string) {
-    const pathParts = fieldPath.split(".");
+    const pathParts = fieldPath?.split(".");
     let tempObject = object;
-    pathParts.forEach(part => {
+    pathParts?.forEach(part => {
         if (tempObject) {
             tempObject = tempObject[part]
         }

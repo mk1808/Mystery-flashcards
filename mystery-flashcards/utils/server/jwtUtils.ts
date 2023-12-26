@@ -1,10 +1,10 @@
 import { SignJWT, decodeJwt, jwtVerify } from "jose";
 import { NextRequest } from "next/server";
 
-const tokenType = "Bearer ";
-const tokenCookieName = "token";
-const encryptionAlgorytm = "HS256";
-const expirationTime = "2d";
+const TOKEN_TYPE = "Bearer ";
+const TOKEN_COOKIE_NAME = "token";
+const ENCRYPTION_ALGORYTM = "HS256";
+const EXPIRATION_TIME = "2d";
 
 export async function verifyToken(request: NextRequest) {
     await jwtVerify(getTokenFromCookie(request), getSecret());
@@ -12,8 +12,8 @@ export async function verifyToken(request: NextRequest) {
 
 export async function signToken(data: any) {
     return await new SignJWT(data)
-        .setProtectedHeader({ alg: encryptionAlgorytm })
-        .setExpirationTime(expirationTime)
+        .setProtectedHeader({ alg: ENCRYPTION_ALGORYTM })
+        .setExpirationTime(EXPIRATION_TIME)
         .sign(getSecret());
 }
 
@@ -22,8 +22,8 @@ export function decodeToken(request: NextRequest) {
 }
 
 function getTokenFromCookie(request: NextRequest) {
-    const cookieToken = request.cookies.get(tokenCookieName)?.value || "";
-    return cookieToken.replace(tokenType, "");
+    const cookieToken = request.cookies.get(TOKEN_COOKIE_NAME)?.value || "";
+    return cookieToken.replace(TOKEN_TYPE, "");
 }
 
 function getSecret() {

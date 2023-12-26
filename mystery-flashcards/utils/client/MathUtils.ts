@@ -3,6 +3,6 @@ export const getPercentDisplay = (part: number, all: number) => {
 }
 
 export const formatDate = (date?: any) => {
-    var datestring = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+    let datestring = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
     return datestring;
 }

@@ -10,11 +10,9 @@ export function findRangByPoints(points: number): UserRang {
     return highestRang;
 }
 
-export function getRang(id: number) {
-    return UserRanges.find(rang => rang.id === id);
-}
+export const getRang = (id: number): UserRang | undefined => UserRanges.find(rang => rang.id === id);
 
-export function findNextRang(id: number) {
+export function findNextRang(id: number): UserRang {
     const rang = getRang(id);
     const nextRangIndex = UserRanges.indexOf(rang!) + 1;
     return UserRanges[nextRangIndex];

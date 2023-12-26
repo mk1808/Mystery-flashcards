@@ -4,14 +4,12 @@ import { TestResultT } from "@/models/TestResult";
 import { getAllIndexes } from "../server/arrayUtils";
 import { getPercentDisplay } from "./MathUtils";
 
-export const updateAnswer = (answerForm: AnswerForm, flashcard: any, isValid: boolean) => {
-    const answer: AnswerT = {
+export const updateAnswer = (answerForm: AnswerForm, flashcard: any, isValid: boolean): AnswerT => {
+    return {
         flashcardId: flashcard._id,
         isCorrect: isValid,
         givenAnswer: answerForm.givenAnswer
     }
-    //   console.log(answer)
-    return answer;
 }
 
 export const updateResult = (answer: AnswerT, result: TestResultT) => {
@@ -21,8 +19,6 @@ export const updateResult = (answer: AnswerT, result: TestResultT) => {
     if (result.validCount != 0 && result.allCount != 0) {
         result.resultPercent = Number((result.validCount! / result.allCount!).toFixed(2));
     }
-
-    //  console.log(result)
     return result;
 }
 
@@ -31,35 +27,39 @@ export const checkValidity = (flashcard: FlashcardT, answer: AnswerForm, directi
     return word?.toLowerCase() == answer.givenAnswer.toLowerCase();
 }
 
-export const getMainButtonAttrs = (wasChecked: Boolean, dictionary: any): ButtonAttrs => {
-    const commonAttrs = { form: "answerForm" }
-    const title = wasChecked ? dictionary.common.continue : dictionary.common.confirmAnswer;
+export const getMainButtonAttrs = (wasChecked: boolean, dictionary: any): ButtonAttrs => {
+    const commonAttrs = { form: "answerForm" },
+        title = wasChecked ? dictionary.common.continue : dictionary.common.confirmAnswer;
     return { ...commonAttrs, title: title, type: "submit" }
 }
 
-export const createTestResult = (allAnswers: any[], allFlashcards: any[]) => {
+const getResults = (userAnswers: [], userAnswersValidity: []) => {
+    const allAnswersNumber = userAnswers.length,
+        correctAnswersNumber = userAnswersValidity.filter((ans: any) => ans).length,
+        percent = getPercentDisplay(correctAnswersNumber, allAnswersNumber);
+    return { allAnswersNumber, correctAnswersNumber, percent };
+}
+
+export function createTestResult(allAnswers: AnswerT[], allFlashcards: FlashcardT[]) {
     const flashcardsIds = allFlashcards.map((card: any) => card._id),
         uniqueIds = [...new Set(flashcardsIds)],
         allInfoObjects: any = [];
 
-
     uniqueIds.forEach((id: any) => {
-        const indexes = getAllIndexes(flashcardsIds, id);
-        const firstId = indexes[0];
-        const flashcard = allFlashcards[firstId];
-        const answers: any = [];
-        const userAnswers: any = [];
-        const userAnswersValidity: any = [];
+        const indexes = getAllIndexes(flashcardsIds, id),
+            firstId = indexes[0],
+            flashcard = allFlashcards[firstId],
+            answers: any = [],
+            userAnswers: any = [],
+            userAnswersValidity: any = [];
         indexes.forEach((id: any) => {
             const currentAnswer = allAnswers[id]
             answers.push(currentAnswer);
             userAnswers.push(currentAnswer.givenAnswer);
             userAnswersValidity.push(currentAnswer.isCorrect)
         })
-        const allAnswersNumber = userAnswers.length,
-            correctAnswersNumber = userAnswersValidity.filter((ans: any) => ans == true).length,
-            percent = getPercentDisplay(correctAnswersNumber, allAnswersNumber);
-        allInfoObjects.push({ id: firstId, flashcard, answers, userAnswers, allAnswersNumber, correctAnswersNumber, percent })
+        const results = getResults(userAnswers, userAnswersValidity);
+        allInfoObjects.push({ id: firstId, flashcard, answers, userAnswers, ...results })
     })
     return allInfoObjects;
 }
