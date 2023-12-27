@@ -37,20 +37,28 @@ function TestCardContent({
 
     return (
         <LearnCardContent
-            questionSide={
-                <>
-                    <LearnCardWordAndDesc word={getWord()} description={getDescription()} />
-                    <div className="divider sm:hidden w-full" />
-                </>
-            }
-            answerSide={
-                <div className="self-end">
-                    <TestAnswerForm />
-                </div>
-            }
+            questionSide={renderQuestionSide()}
+            answerSide={renderAnswerSide()}
         />
-
     )
+    
+    function renderQuestionSide() {
+        return (
+            <>
+                <LearnCardWordAndDesc word={getWord()} description={getDescription()} />
+                <div className="divider sm:hidden w-full" />
+            </>
+        )
+    }
+
+    function renderAnswerSide() {
+        return (
+            <div className="self-end">
+                <TestAnswerForm />
+            </div>
+        )
+    }
+
 }
 
 export default TestCardContent

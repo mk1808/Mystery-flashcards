@@ -43,23 +43,30 @@ function TrainingCardContent({
 
     return currentFlashcard && (
         <LearnCardContent
-            questionSide={
-                <>
-                    <LearnCardWordAndDesc word={getMainWord()} description={getDescription()} />
-                    <div className="divider sm:hidden w-full" />
-                </>
-            }
-            answerSide={
-                <>
-                    <div className="self-end">
-                        <AnswerForm setIsValid={setIsValid} setWasChecked={setWasChecked} />
-                    </div>
-                    <div>{renderAnswerValidity()}</div>
-                </>
-            }
+            questionSide={renderQuestionSide()}
+            answerSide={renderAnswerSide()}
         />
-
     )
+
+    function renderQuestionSide() {
+        return (
+            <>
+                <LearnCardWordAndDesc word={getMainWord()} description={getDescription()} />
+                <div className="divider sm:hidden w-full" />
+            </>
+        )
+    }
+
+    function renderAnswerSide() {
+        return (
+            <>
+                <div className="self-end">
+                    <AnswerForm setIsValid={setIsValid} setWasChecked={setWasChecked} />
+                </div>
+                <div>{renderAnswerValidity()}</div>
+            </>
+        )
+    }
 
     function renderAnswerValidity() {
         return (
