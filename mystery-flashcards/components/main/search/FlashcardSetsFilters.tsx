@@ -13,7 +13,7 @@ import { translateOptions } from '@/utils/client/EnumUtils';
 import useHashtags from '@/hooks/useHashtags';
 import useAuthStore from '@/stores/useAuthStore';
 import { useSearchParams } from 'next/navigation';
-import { StatusOptions } from '@/enums/StatusOptions';
+import { StatusOptions, StatusType } from '@/enums/StatusOptions';
 import useLocaleStore from '@/stores/useLocaleStore';
 import { FlashcardSetSearchParams as SearchParams } from '@/enums/FlashcardSetSearchParams';
 
@@ -24,10 +24,11 @@ function FlashcardSetsFilters({ search }: { search: (data: FlashcardSearchDto) =
     const [statusFieldRefresh, setStatusFieldRefresh] = useState(0);
     const searchParams = useSearchParams();
     const hashtagsOptions = useHashtags();
-    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [])
-    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [])
-    const statusesOptions = useMemo(() => translateOptions(StatusOptions, dictionary), [])
+    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [dictionary])
+    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [dictionary])
+    const statusesOptions = useMemo(() => translateOptions(StatusOptions, dictionary), [dictionary])
     const mySetParam = searchParams.get("mySet");
+
     const {
         register,
         handleSubmit,
@@ -40,14 +41,17 @@ function FlashcardSetsFilters({ search }: { search: (data: FlashcardSearchDto) =
     const onSubmit = async (data: FlashcardSearchDto, e: any) => search(data);
     const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
+    const refreshStatusField = () => setStatusFieldRefresh(setStatusFieldRefresh => setStatusFieldRefresh + 1);
 
-    useEffect(() => {
+    useEffect(onMySetParamChange, [mySetParam])
+
+    function onMySetParamChange() {
         if (mySetParam === "true") {
-            setValue(SearchParams.STATUS, ["mine"])
-            setStatusFieldRefresh(setStatusFieldRefresh => setStatusFieldRefresh + 1)
-            setTimeout(() => search({ [SearchParams.STATUS]: ["mine"] }), 100)
+            setValue(SearchParams.STATUS, [StatusType.MINE]);
+            refreshStatusField();
+            setTimeout(() => search({ [SearchParams.STATUS]: [StatusType.MINE] }), 100);
         }
-    }, [mySetParam])
+    }
 
     return (
         <div className='mt-20 mx-5 md:mx-0'>
@@ -77,6 +81,10 @@ function FlashcardSetsFilters({ search }: { search: (data: FlashcardSearchDto) =
             </form>
         )
     }
+    function renderStatus() {
+        return currentUser != null &&
+            renderSelect(SearchParams.STATUS, dictionary.common.status, dictionary.common.fillStatus, statusesOptions, true, statusFieldRefresh);
+    }
 
     function renderSelect(name: any, label: string, noValueLabel: string, options: any[], multiple = false, refresh?: number) {
         return (
@@ -103,13 +111,6 @@ function FlashcardSetsFilters({ search }: { search: (data: FlashcardSearchDto) =
                     inputParams={{ ...register(name) }} />
             </div >
         )
-    }
-
-    function renderStatus() {
-        if (currentUser != null) {
-            return renderSelect(SearchParams.STATUS, dictionary.common.status, dictionary.common.fillStatus, statusesOptions, true, statusFieldRefresh);
-        }
-        return <></>
     }
 
     function renderSubmitButton() {

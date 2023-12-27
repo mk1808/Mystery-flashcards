@@ -1,8 +1,8 @@
 import React from 'react'
 
 function Table({ renderRows, columns }: { renderRows: () => any, columns: string[] }) {
-    return (
 
+    return (
         <div className="overflow-x-auto ">
             <table className="table min-w-[600px]">
                 <thead>

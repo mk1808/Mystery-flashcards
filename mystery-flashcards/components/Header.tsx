@@ -78,22 +78,10 @@ function Header() {
         return (
             <div className="navbar bg-base-100 rounded-lg hidden lg:flex">
                 <div className="flex-1">
-                    <Logo/>
+                    <Logo />
                 </div>
                 <div className="flex-none">
-                    <ul className="menu menu-horizontal px-1">
-                        {mainMenuElements.map(renderMenuElementIfNeeded)}
-                        <li>
-                            <details ref={detailsElement}>
-                                <summary>
-                                    {dictionary.common.account}
-                                </summary>
-                                <ul className="p-1 w-40 bg-base-100 rounded-t-none z-20 right-0 border-t">
-                                    {nestedMenuElements.map(renderMenuElementIfNeeded)}
-                                </ul>
-                            </details>
-                        </li>
-                    </ul>
+                    {renderMenu("menu-horizontal", "w-40")}
                 </div>
             </div>
         )
@@ -108,21 +96,33 @@ function Header() {
                     <div className="btn btn-outline btn-primary"><Bars3Icon className="h-6 w-6 " /></div>
                 </div>
                 <div className="collapse-content">
-                    <ul className="menu px-1 ">
-                        {mainMenuElements.map(renderMenuElementIfNeeded)}
-                        <li>
-                            <details ref={detailsElement}>
-                                <summary>
-                                    {dictionary.common.account}
-                                </summary>
-                                <ul className="p-1  bg-base-100 rounded-t-none z-20 right-0 border-t">
-                                    {nestedMenuElements.map(renderMenuElementIfNeeded)}
-                                </ul>
-                            </details>
-                        </li>
-                    </ul>
+                    {renderMenu()}
                 </div>
             </div>
+        )
+    }
+
+    function renderMenu(menuClass = "", dropdownClass = "") {
+        return (
+            <ul className={`menu px-1 ${menuClass}`}>
+                {mainMenuElements.map(renderMenuElementIfNeeded)}
+                <li>
+                    {renderDropdownMenu(dropdownClass)}
+                </li>
+            </ul>
+        )
+    }
+
+    function renderDropdownMenu(dropdownClass: string) {
+        return (
+            <details ref={detailsElement}>
+                <summary>
+                    {dictionary.common.account}
+                </summary>
+                <ul className={`p-1 bg-base-100 rounded-t-none z-20 right-0 border-t ${dropdownClass}`}>
+                    {nestedMenuElements.map(renderMenuElementIfNeeded)}
+                </ul>
+            </details>
         )
     }
 

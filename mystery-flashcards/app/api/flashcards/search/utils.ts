@@ -89,7 +89,7 @@ export async function getUserFlashcards(sets: FlashcardSetT[], request: NextRequ
     try {
         const userFlashcards = await getUserFlashcardsBySets(sets, request);
         matchUserFlashcards(sets, userFlashcards);
-    } catch (e) { console.log(e) }
+    } catch (e) { }
     return sets;
 }
 

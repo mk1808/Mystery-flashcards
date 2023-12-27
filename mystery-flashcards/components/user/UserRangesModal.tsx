@@ -8,18 +8,15 @@ import useLocaleStore from "@/stores/useLocaleStore";
 function UserRangesModal() {
     const { dictionary } = useLocaleStore(state => state);
 
-    const getRanges = (): Step[] => UserRanges.map(rang => (
-        {
-            title: getNestedFieldByPath(dictionary, rang.name),
-            description: rang.pointsFrom
-        }
-    ));
+    const getRanges = (): Step[] => UserRanges.map(rang => ({ title: getNestedFieldByPath(dictionary, rang.name), description: rang.pointsFrom }));
 
-    return <Modal modalTrigger={renderDialogTrigger()}
-        dialogHeader={renderDialogHeader()}
-        dialogContent={renderModalContent()}
-        dialogActions={renderModalActions()}
-    />
+    return (
+        <Modal modalTrigger={renderDialogTrigger()}
+            dialogHeader={renderDialogHeader()}
+            dialogContent={renderModalContent()}
+            dialogActions={renderModalActions()}
+        />
+    )
 
     function renderDialogTrigger() {
         return (
@@ -30,7 +27,11 @@ function UserRangesModal() {
     }
 
     function renderDialogHeader() {
-        return <h2 className="font-bold text-3xl">{dictionary.common.availableLevels}</h2>
+        return (
+            <h2 className="font-bold text-3xl">
+                {dictionary.common.availableLevels}
+            </h2>
+        )
     }
 
     function renderModalContent() {

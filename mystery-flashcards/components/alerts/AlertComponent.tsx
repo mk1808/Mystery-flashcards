@@ -4,16 +4,14 @@ import { XMarkIcon, XCircleIcon, InformationCircleIcon, CheckCircleIcon, Exclama
 import { useEffect, useState } from "react";
 
 function AlertComponent({ alert }: { alert: Alert }) {
-    const close = useAlertStore((state) => state.close)
+    const { close } = useAlertStore((state) => state)
     const [scale, setScale] = useState("scale-0")
     const [progress, setProgress] = useState(100)
 
     useEffect(() => {
-        setTimeout(() => {
-            setScale("scale-100");
-        }, 100);
-        const interval = setInterval(calcProgressToClose, 25)
-        return () => { clearInterval(interval) }
+        setTimeout(() => setScale("scale-100"), 100);
+        const interval = setInterval(calcProgressToClose, 25);
+        return () => clearInterval(interval);
     }, []);
 
     function calcProgressToClose() {
@@ -27,9 +25,7 @@ function AlertComponent({ alert }: { alert: Alert }) {
 
     function onClose() {
         setScale("scale-0");
-        setTimeout(() => {
-            close(alert);
-        }, 150);
+        setTimeout(() => close(alert), 150);
     }
 
     function getColor() {

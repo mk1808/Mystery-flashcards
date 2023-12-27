@@ -3,24 +3,20 @@ import { createPathParams, get, patch, post, put } from "./RestUtils";
 
 function getHost(host?: string) {
     if (host) {
-        console.log("host", host)
         return `http://${host}/api`
     }
     return '/api'
 }
 
 export const loginRequest = (loginForm: LoginForm, host?: string) => {
-    console.log(loginForm)
     return post(loginForm, `${getHost(host)}/auth/login`);
 }
 
 export const registerRequest = (registerForm: RegisterForm, host?: string) => {
-    console.log(registerForm)
     return post(registerForm, `${getHost(host)}/auth/register`);
 }
 
 export const createFlashcardSetRequest = (form: any, host?: string) => {
-    console.log(form)
     return post(form, `${getHost(host)}/flashcards`);
 }
 
@@ -33,12 +29,10 @@ export const searchFlashcardSets = (data: any, host?: string) => {
 }
 
 export const getFlashcardSetRequest = (id: any, host?: string, headers?: any) => {
-    console.log(id)
     return get(`${getHost(host)}/flashcards/${id}`, "no-store", headers);
 }
 
 export const postAnswersAndReturnCards = (id: any, body: any, host?: string, headers?: any) => {
-    console.log(id)
     return post(body, `${getHost(host)}/flashcards/${id}/learn/training`, "no-store", headers);
 }
 
@@ -63,7 +57,6 @@ export const updateUser = (user: UserT, host?: string) => {
 }
 
 export const patchAnswersAndReturnResults = (id: any, body: any, host?: string, headers?: any) => {
-    console.log(id)
     return patch(body, `${getHost(host)}/flashcards/${id}/learn/training`, "no-store", headers);
 }
 
@@ -72,7 +65,6 @@ export const logout = (host?: string) => {
 }
 
 export const postUserFlashcardSet = (body: any, host?: string) => {
-    console.log(body)
     return post(body, `${getHost(host)}/userFlashcards`);
 }
 

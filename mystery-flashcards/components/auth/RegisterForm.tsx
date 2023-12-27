@@ -3,15 +3,13 @@ import { useForm } from 'react-hook-form';
 import MyInput from '../common/form/MyInput';
 import { isFieldValid } from '@/utils/client/FormUtils';
 import { useRouter } from 'next/navigation';
-import useAlertStore from '@/stores/useAlertStore';
-import { AlertType } from '@/enums/AlertType';
-import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { registerRequest } from '@/utils/client/ApiUtils';
 import useLocaleStore from '@/stores/useLocaleStore';
+import useAlert from '@/hooks/useAlert';
 
 function RegisterForm() {
     const { dictionary, locale } = useLocaleStore(state => state);
-    const addAlert = useAlertStore((state) => state.add)
+    const { addErrorAlert, addSuccessAlert } = useAlert()
     const router = useRouter();
 
     const {
@@ -31,17 +29,25 @@ function RegisterForm() {
     async function onSubmit(data: RegisterForm, e: any) {
         try {
             const response = await registerRequest(data);
-            addAlert({ type: AlertType.success, title: getNestedFieldByPath(dictionary, response.message) })
+            addSuccessAlert(response.message);
             goToLogin();
         } catch (errorResponse: any) {
-            addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
+            addErrorAlert(errorResponse.body.message);
         }
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit, onErrors)}>
             <div className='px-2 sm:px-24'>
+                {renderInputs()}
+                {renderButtons()}
+            </div>
+        </form>
+    )
 
+    function renderInputs() {
+        return (
+            <>
                 <MyInput
                     label={dictionary.common.name}
                     placeholder={dictionary.common.fillName}
@@ -65,14 +71,18 @@ function RegisterForm() {
                     type="password"
                     inputParams={{ ...register("confirmPassword", { required: true, validate: validatePassword }) }}
                     isValid={isValid("confirmPassword")} />
+            </>
+        )
+    }
 
-                <div className='grid justify-center mt-6'>
-                    <button type="submit" className="btn btn-primary mb-3 btn-wide">{dictionary.common.register}</button>
-                    <button type="button" className="btn btn-secondary btn-outline mb-3 btn-wide" onClick={goToLogin}>{dictionary.common.login}</button>
-                </div>
+    function renderButtons() {
+        return (
+            <div className='grid justify-center mt-6'>
+                <button type="submit" className="btn btn-primary mb-3 btn-wide">{dictionary.common.register}</button>
+                <button type="button" className="btn btn-secondary btn-outline mb-3 btn-wide" onClick={goToLogin}>{dictionary.common.login}</button>
             </div>
-        </form>
-    )
+        )
+    }
 }
 
 export default RegisterForm

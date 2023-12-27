@@ -31,9 +31,9 @@ const initState = () => ({
     sidebarForm: {
         name: "",
         level: "",
-        hashtags: "",
+        hashtags: [],
         flashcards: "",
-        isPublic: "",
+        isPublic: false,
         lang1: "",
         lang2: ""
     },

@@ -28,7 +28,9 @@ function UserEdit() {
     )
 
     function renderUserAvatar() {
-        return <UserAvatar alt={dictionary.common.userAvatarAlt} currentUser={currentUser!} />
+        return (
+            <UserAvatar alt={dictionary.common.userAvatarAlt} currentUser={currentUser!} />
+        )
     }
 
     function renderUserEditForm() {

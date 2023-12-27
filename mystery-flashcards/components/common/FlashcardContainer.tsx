@@ -36,18 +36,28 @@ function FlashcardContainer({
     } = useForm<FlashcardsForm>({ mode: 'onBlur', defaultValues: getDefaultValues() });
 
     useEffect(() => {
-        const subscription = watch((value, { name, type }) => {
-            updateFlashcard({ ...card as FlashcardsForm, ...value })
-            const lastFlashcard = allFlashCards.current[allFlashCards.current.length - 1],
-                isLast = lastFlashcard._id === card._id;
-            if (isLast) {
-                addNewFlashcard();
-            }
-        })
+        const subscription = watch(watchForm)
         return () => subscription.unsubscribe()
     }, [watch])
 
-    useEffect(() => {
+    useEffect(onFormStateChange, [formState])
+
+    const onSubmit = (data: FlashcardsForm) => { };
+    const onErrors = (errors: any) => { };
+    const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
+    const isDirty = () => Object.keys(formState.dirtyFields).length > 0
+    const showDelete = () => (isDirty() || formState.defaultValues?.wordLang1) && flashcardsList.length > 1;
+
+    function watchForm(value: FlashcardsForm) {
+        updateFlashcard({ ...card, ...value })
+        const lastFlashcard = allFlashCards.current[allFlashCards.current.length - 1],
+            isLast = lastFlashcard._id === card._id;
+        if (isLast) {
+            addNewFlashcard();
+        }
+    }
+
+    function onFormStateChange() {
         const isDirty = Object.keys(formState.dirtyFields).length > 0
         if (isDirty && lastValidationState.current != formState.isValid) {
             if (formState.isValid) {
@@ -57,13 +67,8 @@ function FlashcardContainer({
             }
             lastValidationState.current = formState.isValid
         }
-    }, [formState])
+    }
 
-    const onSubmit = (data: FlashcardsForm) => console.log(data);
-    const onErrors = (errors: any) => { };
-    const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
-    const isDirty = () => Object.keys(formState.dirtyFields).length > 0
-    const showDelete = () => (isDirty() || formState.defaultValues?.wordLang1) && flashcardsList.length > 1;
     function onDelete() {
         if (!formState.isValid) {
             flashcardListInvalidCountDec()
@@ -75,53 +80,59 @@ function FlashcardContainer({
         <form onSubmit={handleSubmit(onSubmit, onErrors)}>
             <div className="card w-full bg-base-100 shadow-xl mb-10">
                 <div className="card-body">
-                    <div className="flex flex-col sm:flex-row justify-around min-h-[107px] items-center">
-                        <div className="w-full justify-end">
-                            {renderLeftSide()}
-                        </div>
-                        <div className="divider sm:divider-horizontal" />
-                        <div className="w-full">
-                            {renderRightSide()}
-                        </div>
-                    </div>
-                    {renderDeleteIcon()}
+                    {renderCardBody()}
                 </div>
             </div>
         </form>
     )
 
+    function renderCardBody() {
+        return (
+            <>
+                <div className="flex flex-col sm:flex-row justify-around min-h-[107px] items-center">
+                    <div className="w-full justify-end">
+                        {renderLeftSide()}
+                    </div>
+                    <div className="divider sm:divider-horizontal" />
+                    <div className="w-full">
+                        {renderRightSide()}
+                    </div>
+                </div>
+                {renderDeleteIcon()}
+            </>
+        )
+    }
+
     function renderLeftSide() {
         if (isForm) {
-            return (
-                <div>
-                    {renderInput("wordLang1", "wordBasicLanguage")}
-                    {renderTextarea("description1")}
-                </div>
-            );
+            return renderInputs("wordLang1", "wordBasicLanguage", "description1");
         }
-        return (
-            <div>
-                <h1 className="text-3xl my-3">{card.wordLang1}</h1>
-                <p>{card.description1}</p>
-            </div>
-        );
+        return renderValues(card.wordLang1!, card.description1!);
     }
 
     function renderRightSide() {
         if (isForm) {
-            return (
-                <div>
-                    {renderInput("wordLang2", "wordForeignLanguage")}
-                    {renderTextarea("description2")}
-                </div>
-            );
+            return renderInputs("wordLang2", "wordForeignLanguage", "description2");
         }
+        return renderValues(card.wordLang2!, card.description2!);
+    }
+
+    function renderInputs(inputName: string, inputLabel: string, textareaName: string) {
         return (
             <div>
-                <h1 className="text-3xl my-3">{card.wordLang2}</h1>
-                <p>{card.description2}</p>
+                {renderInput(inputName, inputLabel)}
+                {renderTextarea(textareaName)}
             </div>
-        );
+        )
+    }
+
+    function renderValues(lang: string, description: string) {
+        return (
+            <div>
+                <h1 className="text-3xl my-3">{lang}</h1>
+                <p>{description}</p>
+            </div>
+        )
     }
 
     function renderDeleteIcon() {

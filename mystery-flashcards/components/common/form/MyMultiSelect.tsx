@@ -111,12 +111,6 @@ function MyMultiSelect({
         window.dispatchEvent(event);
     }
 
-    function onMultiselectClickEvent(event: any) {
-        if (event.detail.target != optionDropdown.current) {
-            toggleDropdownOpen(null);
-        }
-    }
-
     function toggleCloseDropdownEventListener() {
         if (optionDropdown.current.open) {
             window.addEventListener('click', closeDropdown)
@@ -223,7 +217,9 @@ function MyMultiSelect({
     }
 
     function renderSelectedBadges() {
-        return <Badges badges={selected.map(option => option.label)} onClick={onBadgeClick} />
+        return (
+            <Badges badges={selected.map(option => option.label)} onClick={onBadgeClick} />
+        )
     }
 
     function renderSingleSelected() {
@@ -233,7 +229,9 @@ function MyMultiSelect({
     }
 
     function renderNoValuePlaceholder() {
-        return selected.length === 0 && <span className="text-gray-400">{noValueLabel}</span>
+        return selected.length === 0 && (
+            <span className="text-gray-400">{noValueLabel}</span>
+        )
     }
 
     function renderDropdown() {
@@ -268,13 +266,17 @@ function MyMultiSelect({
 
     function renderAddNewButton() {
         return allowNew && (
-            <button type="button" className="btn btn-secondary btn-outline ms-2 btn-sm"><PlusCircleIcon className="h-6 w-6 " onClick={onAddNew} /></button>
+            <button type="button" className="btn btn-secondary btn-outline ms-2 btn-sm">
+                <PlusCircleIcon className="h-6 w-6 " onClick={onAddNew} />
+            </button>
         )
     }
 
     function renderEmptyOption() {
         return !multiple && (
-            <span className="text-gray-500 p-2 cursor-pointer hover:bg-gray-100 duration-150" onClick={resetSelection}>{noValueLabel}</span>
+            <span className="text-gray-500 p-2 cursor-pointer hover:bg-gray-100 duration-150" onClick={resetSelection}>
+                {noValueLabel}
+            </span>
         )
     }
 
@@ -289,7 +291,9 @@ function MyMultiSelect({
     }
 
     function renderCheckbox(value: any) {
-        return multiple && <input type="checkbox" value={value} className="checkbox checkbox-primary" onChange={onCheckboxChange} />
+        return multiple && (
+            <input type="checkbox" value={value} className="checkbox checkbox-primary" onChange={onCheckboxChange} />
+        )
     }
 
 }

@@ -17,10 +17,12 @@ function UserAvatar(
         width?: number,
         height?: number,
         imgClassName?: string
-    }) {
+    }
+) {
     const [imageSrcError, setImageSrcError] = useState(false);
     const defaultAvatar = "/images/defaultAvatar.jpg"
     const avatarSrc = imageSrcError ? defaultAvatar : currentUser?.avatar || defaultAvatar;
+
     return (
         <div className={`grid justify-items-center items-center ${className}`}>
             <img

@@ -7,7 +7,9 @@ function FirstSecondDivider() {
     const onDownClick = () => document.getElementById("secondPanel")?.scrollIntoView({ behavior: "smooth" });
     const onClick = (isUpperHalf: boolean) => isUpperHalf ? onUpClick() : onDownClick();
 
-    return <PanelDivider onClick={onClick} renderContent={renderContent} />
+    return (
+        <PanelDivider onClick={onClick} renderContent={renderContent} />
+    )
 
     function renderContent(isUpperHalf: boolean) {
         if (isUpperHalf) {

@@ -3,7 +3,8 @@ export const StatusType = {
     FAVORITE: "favorite",
     WANT_TO_LEARN: "WANT_TO_LEARN",
     LEARNING: "LEARNING",
-    TESTING: "TESTING"
+    TESTING: "TESTING",
+    NONE: "NONE"
 } as const;
 
 export const StatusOptions: Option[] = [

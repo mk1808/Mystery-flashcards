@@ -56,9 +56,7 @@ function NewFlashcardForm({ flashcardSet }: { flashcardSet?: FlashcardSetT }) {
         }
     }, [flashcardSet])
 
-    const onSubmit = async (data: NewFlashcardSetForm, e: any) => {
-        console.log(data);
-    };
+    const onSubmit = async (data: NewFlashcardSetForm, e: any) => { };
     const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
 

@@ -2,15 +2,13 @@ import { UserT } from "@/models/User"
 import MyInput from "../common/form/MyInput"
 import { useForm } from 'react-hook-form';
 import { isFieldValid } from "@/utils/client/FormUtils";
-import useAlertStore from "@/stores/useAlertStore";
-import { AlertType } from "@/enums/AlertType";
-import { getNestedFieldByPath } from "@/utils/server/objectUtils";
 import { updateUser } from "@/utils/client/ApiUtils";
 import useLocaleStore from "@/stores/useLocaleStore";
+import useAlert from "@/hooks/useAlert";
 
 function UserEditForm({ user }: { user: UserT }) {
     const { dictionary } = useLocaleStore(state => state);
-    const addAlert = useAlertStore((state) => state.add)
+    const { addErrorAlert, addSuccessAlert } = useAlert()
 
     const {
         register,
@@ -30,20 +28,27 @@ function UserEditForm({ user }: { user: UserT }) {
     const onSubmit = async (data: UserT, e: any) => {
         try {
             updateUser(data);
-            addAlert({ title: dictionary.common.userUpdated, type: AlertType.success })
+            addSuccessAlert(dictionary.common.userUpdated)
             setTimeout(() => {
                 location.reload()
             }, 2000)
         } catch (errorResponse: any) {
-            addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
+            addErrorAlert(errorResponse.body.message)
         }
     };
     const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
-    const validatePassword = (confirmPassword: string) => watch("password") === confirmPassword || "Password do not match";
+    const validatePassword = (confirmPassword: string) => watch("password") === confirmPassword || dictionary.common.passwordDoNotMatch;
 
     return (
         <form className="mt-12" onSubmit={handleSubmit(onSubmit, onErrors)}>
+            {renderInputs()}
+            {renderButtons()}
+        </form >
+    )
+
+    function renderInputs() {
+        return (
             <div>
                 <MyInput
                     label={dictionary.common.name}
@@ -74,9 +79,8 @@ function UserEditForm({ user }: { user: UserT }) {
                     inputParams={{ ...register("confirmPassword", { required: false, validate: validatePassword }) }}
                     isValid={isValid("confirmPassword")} />
             </div>
-            {renderButtons()}
-        </form >
-    )
+        )
+    }
 
     function renderButtons() {
         return (

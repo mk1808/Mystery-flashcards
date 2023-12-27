@@ -1,10 +1,11 @@
 import ResultTable from '@/components/learn/training/ResultTable';
+import { LearnViewOptions } from '@/enums/LearnViewOptions';
 import React from 'react'
 
 async function LearnTrainingResults() {
-    const view = "TRAINING_RESULT"
+
     return (
-        <ResultTable view={view} />
+        <ResultTable view={LearnViewOptions.TRAINING_RESULT} />
     )
 }
 
