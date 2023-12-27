@@ -8,12 +8,16 @@ import { FlashcardSetT } from '@/models/FlashcardSet'
 
 function StartLearningModal({ flashcardSet, dialogTriggerClassName = "" }: { flashcardSet: FlashcardSetT, dialogTriggerClassName?: string }) {
     const { dictionary } = useLocaleStore(state => state);
-    return <Modal modalTrigger={renderDialogTrigger()}
-        dialogHeader={renderDialogHeader()}
-        dialogContent={renderDialogContent()}
-        dialogActions={<StartLearningActions />}
-        width="xl:w-5/12 sm:w-[600px]"
-    />
+
+    return (
+        <Modal
+            modalTrigger={renderDialogTrigger()}
+            dialogHeader={renderDialogHeader()}
+            dialogContent={renderDialogContent()}
+            dialogActions={renderDialogActions()}
+            width="xl:w-5/12 sm:w-[600px]"
+        />
+    )
 
     function renderDialogTrigger() {
         return <button className={`btn btn-primary mr-2 md:mr-10 ${dialogTriggerClassName}`} id="modalButton">{dictionary.common.learnThisFlashcardSet}</button>;
@@ -25,6 +29,10 @@ function StartLearningModal({ flashcardSet, dialogTriggerClassName = "" }: { fla
 
     function renderDialogContent() {
         return <StartLearningContent flashcardSet={flashcardSet} />
+    }
+
+    function renderDialogActions() {
+        return <StartLearningActions />
     }
 }
 

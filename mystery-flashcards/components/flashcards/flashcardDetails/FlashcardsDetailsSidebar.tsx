@@ -5,6 +5,7 @@ import UserAvatar from "@/components/common/UserAvatar";
 import EditButton from "@/components/flashcards/flashcardDetails/EditButton";
 import GoToTestResultsButton from "@/components/flashcards/flashcardDetails/GoToTestResultsButton";
 import { FlashCardSetDto } from "@/dtos/FlashCardSetDto";
+import { StatusType } from "@/enums/StatusOptions";
 import useLocaleStore from "@/stores/useLocaleStore";
 import { formatDate } from "@/utils/client/MathUtils";
 import { getLangsDirection } from "@/utils/client/TrainingUtils";
@@ -15,30 +16,35 @@ export default function FlashcardsDetailsSidebar({ flashCardSetDto }: { flashCar
     const { flashcardSet, userFlashcard, testResult, statistics } = flashCardSetDto
     const { dictionary } = useLocaleStore(state => state);
     const date = new Date(flashcardSet?.creationDate || "");
-    const shouldRenderStatus = () => userFlashcard && userFlashcard?.type != "NONE";
     const translatedType = userFlashcard?.type ? dictionary.common[userFlashcard?.type!] : "";
-    const isTest = userFlashcard?.type == "TESTING";
+    const isTest = userFlashcard?.type == StatusType.TESTING;
     const popularity = statistics?.favorite! + statistics?.learning!;
+    const shouldRenderStatus = () => userFlashcard && userFlashcard?.type != StatusType.NONE;
+
     return (
         <div>
-            <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet?.name}</h1>
-            <Badges badges={flashcardSet?.hashtags!} />
-            <div className="divider" />
+            {renderTitle()}
+            {renderBadges()}
             {renderMainInfo()}
-            <div className="divider" />
             {renderCreationInfo()}
-            {shouldRenderStatus() && <>
-                <div className="divider" />
-                {renderStatusInfo()}
-            </>}
-            <br />
+            {renderStatus()}
             {renderEditButton()}
         </div>
     )
 
+    function renderTitle() {
+        return <h1 className="text-4xl text-center mt-3 mb-8">{flashcardSet?.name}</h1>
+
+    }
+
+    function renderBadges() {
+        return <Badges badges={flashcardSet?.hashtags!} />
+    }
+
     function renderMainInfo() {
         return (
             <>
+                <div className="divider" />
                 <SingleSidebarInfo title={dictionary.common.flashcardsCount} value={flashcardSet?.flashcards?.length.toString()!} />
                 <SingleSidebarInfo title={dictionary.common.languages} value={getLangsDirection(flashcardSet?.lang1, flashcardSet?.lang2)} />
                 <SingleSidebarInfo title={dictionary.common.level} value={flashcardSet?.level!} />
@@ -49,10 +55,19 @@ export default function FlashcardsDetailsSidebar({ flashCardSetDto }: { flashCar
     function renderCreationInfo() {
         return (
             <>
-
+                <div className="divider" />
                 {renderSingleInfo(dictionary.common.author, flashcardSet?.user?.name!, true)}
                 <SingleSidebarInfo title={dictionary.common.creationDate} value={formatDate(date)} />
                 <SingleSidebarInfo title={dictionary.common.popularity} value={popularity.toString()} />
+            </>
+        )
+    }
+
+    function renderStatus() {
+        return shouldRenderStatus() && (
+            <>
+                <div className="divider" />
+                {renderStatusInfo()}
             </>
         )
     }
@@ -61,13 +76,17 @@ export default function FlashcardsDetailsSidebar({ flashCardSetDto }: { flashCar
         return (
             <>
                 {renderSingleInfo(dictionary.common.status, translatedType)}
-                {isTest &&
-                    <div className="flex items-center">
-                        {renderSingleInfo(dictionary.common.lastTestResult, Math.round(testResult?.resultPercent!) + "%")}
-                        <GoToTestResultsButton flashcardSetId={flashcardSet?._id!} />
-                    </div>
-                }
+                {renderTestResult()}
             </>
+        )
+    }
+
+    function renderTestResult() {
+        return isTest && (
+            <div className="flex items-center">
+                {renderSingleInfo(dictionary.common.lastTestResult, Math.round(testResult?.resultPercent!) + "%")}
+                <GoToTestResultsButton flashcardSetId={flashcardSet?._id!} />
+            </div>
         )
     }
 
@@ -80,25 +99,32 @@ export default function FlashcardsDetailsSidebar({ flashCardSetDto }: { flashCar
                 <span className="text-xl me-2">:</span>
                 <span className="text-xl">{value}</span>
 
-                {withPhoto &&
-                    <div className="h-[39px]">
-                        <UserAvatar
-                            alt={dictionary.common.userAvatarAlt}
-                            currentUser={flashcardSet?.user!}
-                            className="ml-3 border-2 rounded-lg border-secondary"
-                            width={50}
-                            imgClassName="rounded-lg border-secondary" />
-                    </div>
-                }
+                {renderPhoto(withPhoto)}
+            </div>
+        )
+    }
+
+    function renderPhoto(withPhoto?: boolean) {
+        return withPhoto && (
+            <div className="h-[39px]">
+                <UserAvatar
+                    alt={dictionary.common.userAvatarAlt}
+                    currentUser={flashcardSet?.user!}
+                    className="ml-3 border-2 rounded-lg border-secondary"
+                    width={50}
+                    imgClassName="rounded-lg border-secondary" />
             </div>
         )
     }
 
     function renderEditButton() {
         return (
-            <div className="flex justify-center mt-6">
-                <EditButton author={flashcardSet?.user!} flashcardSetId={flashcardSet?._id!} />
-            </div>
+            <>
+                <br />
+                <div className="flex justify-center mt-6">
+                    <EditButton author={flashcardSet?.user!} flashcardSetId={flashcardSet?._id!} />
+                </div>
+            </>
         )
     }
 }

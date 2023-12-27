@@ -17,10 +17,10 @@ function NewFlashcardForm({ flashcardSet }: { flashcardSet?: FlashcardSetT }) {
     const { dictionary } = useLocaleStore(state => state);
     const { updateSidebarForm, setSidebarFormValid, initState, resetState, sidebarFormValid } = useNewFlashcardSetStore((state) => state);
 
-    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [dictionary])
-    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [dictionary])
+    const langOptions = useMemo(() => translateOptions(LangOptions, dictionary), [dictionary]);
+    const levelOptions = useMemo(() => translateOptions(LevelOptions, dictionary), [dictionary]);
     const hashtagsOptions = useHashtags();
-    const initOnceRef = useRef(false)
+    const initOnceRef = useRef(false);
 
     const validateLang2 = (lang2: string) => watch("lang1") !== lang2 || dictionary.common.languagesShouldDiffer;
     const {
@@ -33,13 +33,14 @@ function NewFlashcardForm({ flashcardSet }: { flashcardSet?: FlashcardSetT }) {
     } = useForm<NewFlashcardSetForm>({ mode: 'onBlur', defaultValues: getDefaultValues() });
 
     useEffect(() => {
-        const subscription = watch((value) => { updateSidebarForm({ ...value as NewFlashcardSetForm }) })
+        const subscription = watch((value) => updateSidebarForm({ ...value as NewFlashcardSetForm }));
         return () => subscription.unsubscribe()
     }, [watch])
 
     useEffect(() => {
-        if (sidebarFormValid != (formState.isValid || !!flashcardSet)) {
-            setSidebarFormValid(formState.isValid || !!flashcardSet)
+        const currentSidebarFormValid = (formState.isValid || !!flashcardSet)
+        if (sidebarFormValid != currentSidebarFormValid) {
+            setSidebarFormValid(currentSidebarFormValid)
         }
     }, [formState])
 
@@ -69,7 +70,8 @@ function NewFlashcardForm({ flashcardSet }: { flashcardSet?: FlashcardSetT }) {
                 level: flashcardSet.level,
                 hashtags: flashcardSet.hashtags,
                 isPublic: flashcardSet.isPublic
-            } : {};
+            }
+            : {};
     }
 
     return (
