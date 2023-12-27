@@ -37,3 +37,13 @@ interface StepType {
     number: string,
     text: string
 }
+
+interface TrainingResultForCard {
+    id: any,
+    flashcard: FlashcardT,
+    answers: AnswerT[],
+    userAnswers: AnswerT[],
+    allAnswersNumber: number,
+    correctAnswersNumber: number,
+    percent: string
+}

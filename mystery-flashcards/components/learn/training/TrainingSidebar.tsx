@@ -2,6 +2,7 @@
 import Badges from '@/components/common/Badges';
 import SingleSidebarInfo from '@/components/common/SingleSidebarInfo';
 import LearnStats from '@/components/learn/LearnStats';
+import { DirectionOptions } from '@/enums/DirectionOptions';
 import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { getLangsDirection } from '@/utils/client/TrainingUtils';
@@ -34,7 +35,7 @@ function TrainingSidebar() {
     ]
 
     const { lang1, lang2 } = flashcardSet || {};
-    const languages = direction === "main" ? getLangsDirection(lang1, lang2) : getLangsDirection(lang2, lang1);
+    const languages = direction === DirectionOptions.MAIN ? getLangsDirection(lang1, lang2) : getLangsDirection(lang2, lang1);
 
     return (
         <div>

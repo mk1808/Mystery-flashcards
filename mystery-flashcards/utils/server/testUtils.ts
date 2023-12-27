@@ -19,7 +19,7 @@ export function checkAnswers(flashCardSet: FlashcardSetT, test: TestResultT): Te
     }
 
     function checkSingleFlashcard(fc: FlashcardT, missing: AnswerT[], test: TestResultT, validCount: number) {
-        const matchedAnswer = test.answers!.filter(answer => answer.flashcardId == fc._id)[0]
+        const matchedAnswer = test.answers!.filter(answer => answer.flashcardId  == fc._id?.toString())[0]
         if (matchedAnswer) {
             matchedAnswer.isCorrect = test.direction === DirectionOptions.MAIN ? matchedAnswer.givenAnswer == fc.wordLang2 : matchedAnswer.givenAnswer == fc.wordLang1;
             matchedAnswer.flashcard = fc;
