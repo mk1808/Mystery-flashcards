@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { isFieldValid } from '@/utils/client/FormUtils';
 import MyInput from '@/components/common/form/MyInput';
 import useTrainingStore from '@/stores/useTrainingStore';
-import { checkValidity, updateAnswer, updateResult } from '@/utils/client/TrainingUtils';
+import { checkValidity, getUpdatedAnswerInfo, updateAnswer, updateResult } from '@/utils/client/TrainingUtils';
 import { useRef } from 'react';
 import { postAnswersAndReturnCards } from '@/utils/client/ApiUtils';
 import useLocaleStore from '@/stores/useLocaleStore';
@@ -28,9 +28,7 @@ function AnswerForm({ setIsValid, setWasChecked }: { setIsValid: (value: boolean
         try {
             if (!wasChecked) {
                 const currentFlashcard = roundFlashcards[currentFlashcardIndexInRound],
-                    isValid = checkValidity(currentFlashcard, answer, direction),
-                    updatedAnswer = updateAnswer(answer, currentFlashcard, isValid),
-                    updatedResult = updateResult(updatedAnswer, resultRef.current);
+                    { isValid, updatedAnswer, updatedResult } = getUpdatedAnswerInfo(currentFlashcard, answer, direction, resultRef.current);
                 onAnswerSave(updatedAnswer, currentFlashcard, updatedResult);
                 setWasChecked(true);
                 setIsValid(isValid);

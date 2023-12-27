@@ -6,9 +6,16 @@ import useLocaleStore from '@/stores/useLocaleStore';
 import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { findNextRang, getRang } from '@/utils/server/userRangUtils';
 import React from 'react'
+import ResultPointsInfo from '../ResultPointsInfo';
+import ResultStatsTitle from '../ResultStatsTitle';
 
 function TestResultsSidebar({ flashcardSetDto, user }: { flashcardSetDto: FlashCardSetDto, user: UserT }) {
     const { dictionary } = useLocaleStore(state => state);
+    const pointsInfo = {
+        gainPoints: flashcardSetDto.testResult?.validCount! * 10,
+        range: getNestedFieldByPath(dictionary, getRang(user!.rang!)?.name!),
+        toNextLevel: findNextRang(user.rang!).pointsFrom - user.points
+    }
     const statsValues = [
         {
             text: dictionary.common.answersCount,
@@ -26,34 +33,13 @@ function TestResultsSidebar({ flashcardSetDto, user }: { flashcardSetDto: FlashC
 
     return (
         <div>
-            {renderTitle()}
+            <ResultPointsInfo {...pointsInfo} />
             <div className="divider" />
-            <h1 className="text-3xl text-center mt-3 mb-8">{dictionary.common.testingResults} <br />
-                {dictionary.common.collection}:&nbsp;
-                <span className='font-medium'>{flashcardSetDto.flashcardSet?.name}</span>
-            </h1>
+            <ResultStatsTitle name={flashcardSetDto.flashcardSet?.name} resultsTypeText={dictionary.common.testingResults} />
             <LearnStats stats={statsValues} />
             <br />
         </div>
     )
-
-    function renderTitle() {
-        const gainPoints = flashcardSetDto.testResult?.validCount! * 10;
-        const range = getNestedFieldByPath(dictionary, getRang(user!.rang!)?.name!);
-        const toNextLevel = findNextRang(user.rang!).pointsFrom - user.points;
-        return (
-            <>
-                <h1 className="text-4xl text-center mt-3 mb-8">{dictionary.common.gainedPointsAre}
-                    <span className='font-semibold text-secondary'>&nbsp;{gainPoints}&nbsp;</span>
-                    {dictionary.common.pointsShortcut}!</h1>
-                <h1 className="text-2xl text-left mt-3 mb-8 font-light">{dictionary.common.currentLevelIs}
-                    <span className='font-medium'>&nbsp;{range}</span>.<br />
-                    {dictionary.common.toNextLevel}
-                    <span className='font-medium'>&nbsp;{toNextLevel}&nbsp;</span>
-                    {dictionary.common.pointsShortcut}.</h1>
-            </>
-        )
-    }
 }
 
 export default TestResultsSidebar
