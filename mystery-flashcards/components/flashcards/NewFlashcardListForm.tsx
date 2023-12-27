@@ -6,7 +6,7 @@ function NewFlashcardListForm() {
     const { flashcardsList } = useNewFlashcardSetStore((state) => state)
 
     return (
-        flashcardsList.map((card: any) =>
+        flashcardsList.map(card =>
             <FlashcardContainer
                 key={card._id}
                 card={card}

@@ -1,7 +1,8 @@
+import { FlashCardSetDto } from '@/dtos/FlashCardSetDto';
 import useLocaleStore from '@/stores/useLocaleStore';
 import { useRouter } from 'next/navigation';
 
-function useSubmitTrainingResultAction({ flashcardSet }: { flashcardSet: any }): MainAndOtherButton {
+function useSubmitTrainingResultAction({ flashcardSet }: { flashcardSet: FlashCardSetDto }): MainAndOtherButton {
     const { dictionary, locale } = useLocaleStore(state => state);
     const router = useRouter();
 

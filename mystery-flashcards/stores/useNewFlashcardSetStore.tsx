@@ -16,7 +16,6 @@ type Action = {
     addNewFlashcard: () => void,
     addEditedFlashcard: (flashcard: FlashcardsForm) => void,
     deleteFlashcard: (flashcard: FlashcardsForm) => void,
-    deleteAllFlashcards: () => void,
     setSidebarFormValid: (value: boolean) => void,
     flashcardListInvalidCountInc: () => void,
     flashcardListInvalidCountDec: () => void,
@@ -32,7 +31,7 @@ const initState = () => ({
         name: "",
         level: "",
         hashtags: [],
-        flashcards: "",
+        flashcards: [],
         isPublic: false,
         lang1: "",
         lang2: ""
@@ -43,15 +42,16 @@ const initState = () => ({
     flashcardListInvalidCount: 0,
 })
 
-const initStateByFlashcard = (flashcardSet: FlashcardSetT): any => ({
+const initStateByFlashcard = (flashcardSet: FlashcardSetT): State => ({
     ...initState(),
     sidebarForm: {
-        name: flashcardSet.name,
-        lang1: flashcardSet.lang1,
-        lang2: flashcardSet.lang2,
-        level: flashcardSet.level,
-        hashtags: flashcardSet.hashtags,
-        isPublic: flashcardSet.isPublic,
+        name: flashcardSet.name!,
+        lang1: flashcardSet.lang1!,
+        lang2: flashcardSet.lang2!,
+        level: flashcardSet.level!,
+        hashtags: flashcardSet.hashtags!,
+        flashcards: [],
+        isPublic: flashcardSet.isPublic!,
     },
     flashcardsList: [
         ...flashcardSet.flashcards!,
@@ -66,7 +66,6 @@ const useNewFlashcardSetStore = create<State & Action>((set) => ({
     addNewFlashcard: () => set((state) => ({ flashcardsList: [...state.flashcardsList, getInitialFlashcard()] })),
     addEditedFlashcard: (flashcard: FlashcardsForm) => set((state) => ({ flashcardsList: [...state.flashcardsList, flashcard] })),
     deleteFlashcard: (flashcard: FlashcardsForm) => set((state) => ({ flashcardsList: [...excludeFromArray(state.flashcardsList, flashcard)] })),
-    deleteAllFlashcards: () => set(() => ({ flashcardsList: [getInitialFlashcard()] })),
     setSidebarFormValid: (value: boolean) => set(() => ({ sidebarFormValid: value })),
     flashcardListInvalidCountInc: () => set((state) => ({ flashcardListInvalidCount: state.flashcardListInvalidCount + 1 })),
     flashcardListInvalidCountDec: () => set((state) => ({ flashcardListInvalidCount: state.flashcardListInvalidCount - 1 })),

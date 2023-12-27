@@ -21,7 +21,7 @@ function NewFlashcardButtons({ editedFlashCardSet }: { editedFlashCardSet?: Flas
 
     const prepareFlashcard = () => {
         const updatedFlashcardsList = flashcardsList.slice(0, flashcardsList.length - 1);
-        updatedFlashcardsList.forEach((card: any) => delete card._id)
+        updatedFlashcardsList.forEach(card => delete card._id)
         return { ...sidebarForm, flashcards: updatedFlashcardsList };
     }
 

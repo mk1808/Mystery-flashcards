@@ -15,7 +15,7 @@ type State = {
 }
 
 type Action = {
-    setFlashcardSet: (flashcardSet: any) => void,
+    setFlashcardSet: (flashcardSet: FlashCardSetDto) => void,
     onAnswerSave: (answer: AnswerT) => void,
     setTestFlashcards: (flashcards: FlashcardT[]) => void,
     incrementCurrentFlashcardIndex: () => void,
