@@ -7,15 +7,19 @@ import { AnswerT } from '@/models/Answer';
 import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { createTrainingResult } from '@/utils/client/TrainingUtils';
+import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
 function ResultTable({ view }: { view: LearnViewType }) {
     const { dictionary } = useLocaleStore(state => state);
     const { allAnswers, flashcardSet, allFlashcards, direction } = useTrainingStore((state) => state);
     const { setView } = useTrainingStore((state) => state);
+    const router = useRouter();
     const allInfoObjects: TrainingResultForCard[] = createTrainingResult(allAnswers, allFlashcards);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.correctAnswersPercent]
     useEffect(() => { setView(view) }, [view])
+
+    useEffect(() => { if (!flashcardSet?.flashcardSet) router.back() }, [flashcardSet])
 
     return (
         <>

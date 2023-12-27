@@ -1,11 +1,9 @@
-import { AlertType } from '@/enums/AlertType';
 import { TestResultT } from '@/models/TestResult';
 import useLocaleStore from '@/stores/useLocaleStore';
 import useTestStore from '@/stores/useTestStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { sendTestAnswersRequest } from '@/utils/client/ApiUtils';
 import { getMainButtonAttrs } from '@/utils/client/TrainingUtils';
-import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import useAlert from '../useAlert';

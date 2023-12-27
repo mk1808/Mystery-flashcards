@@ -1,5 +1,5 @@
 import { AnswerAttempt, AnswerAttemptType } from "@/enums/CommonEnums";
-import { StatusType } from "@/enums/StatusOptions";
+import { StatusOptions, StatusType } from "@/enums/StatusOptions";
 import { AnswerT } from "@/models/Answer";
 import { FlashcardT } from "@/models/Flashcard";
 import User, { UserT } from "@/models/User";
@@ -12,7 +12,7 @@ export async function getUserFlashcard(currentUser: UserT, flashcardSetId: strin
     if (existingUserFlashcard) {
         return existingUserFlashcard
     }
-    const newUserFlashcard = { userId: currentUser._id, flashcardSetId: flashcardSetId, learningHistory: [] };
+    const newUserFlashcard = { userId: currentUser._id, flashcardSetId: flashcardSetId, learningHistory: [], type: StatusType.LEARNING };
     return (await UserFlashcard.create(newUserFlashcard)).toObject()
 }
 

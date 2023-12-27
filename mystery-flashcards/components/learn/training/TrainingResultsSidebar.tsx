@@ -13,9 +13,10 @@ function TrainingResultsSidebar() {
     const { dictionary } = useLocaleStore(state => state);
     const { flashcardSet: { flashcardSet }, result, roundCount } = useTrainingStore((state) => state);
     const currentUser = useAuthStore(state => state.currentUser);
+
     const pointsInfo = {
         gainPoints: result?.validCount!,
-        range: getNestedFieldByPath(dictionary, getRang(currentUser!.rang!)?.name!),
+        range: getNestedFieldByPath(dictionary, getRang(currentUser?.rang!)?.name!),
         toNextLevel: findNextRang(currentUser?.rang!).pointsFrom - currentUser?.points!
     }
     const statsValues = [
