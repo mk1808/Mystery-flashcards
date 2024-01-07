@@ -53,14 +53,16 @@ async function getPermissionParams(request: NextRequest) {
 async function getStatusParams(params: any, request: NextRequest) {
     const statusParams = []
     const searchParams: string[] = params.getAll(SearchParams.STATUS);
-    if (searchParams.includes(StatusType.MINE)) {
+    try {
         const currentUser: UserT = await getUser(request);
-        statusParams.push({ "user._id": currentUser._id })
-    }
-    const flashcardSetIds = await getFlashcardSetIdsByUserFlashcardStatus(searchParams);
-    if (flashcardSetIds !== null) {
-        statusParams.push({ "_id": { $in: flashcardSetIds } })
-    }
+        if (searchParams.includes(StatusType.MINE)) {
+            statusParams.push({ "user._id": currentUser._id })
+        }
+        const flashcardSetIds = await getFlashcardSetIdsByUserFlashcardStatus(searchParams, currentUser._id!);
+        if (flashcardSetIds !== null) {
+            statusParams.push({ "_id": { $in: flashcardSetIds } })
+        }
+    } catch (e) { }
 
     if (statusParams.length > 0) {
         return { $or: statusParams };
@@ -68,7 +70,7 @@ async function getStatusParams(params: any, request: NextRequest) {
     return null
 }
 
-async function getFlashcardSetIdsByUserFlashcardStatus(params: string[]) {
+async function getFlashcardSetIdsByUserFlashcardStatus(params: string[], userId: string) {
     const statusParams = [];
     if (params.includes(StatusType.FAVORITE)) {
         statusParams.push({ isFavorite: true });
@@ -79,7 +81,7 @@ async function getFlashcardSetIdsByUserFlashcardStatus(params: string[]) {
     }
 
     if (statusParams.length > 0) {
-        const userFlashcards = await UserFlashcard.find({ $or: statusParams });
+        const userFlashcards = await UserFlashcard.find({ $or: statusParams, userId });
         return userFlashcards.map(userFlashcard => userFlashcard.flashcardSetId);
     }
     return null;
