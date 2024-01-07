@@ -3,18 +3,23 @@ import Table from '@/components/common/Table';
 import StartLearningModal from '@/components/flashcards/flashcardDetails/StartLearningModal';
 import { DirectionOptions } from '@/enums/DirectionOptions';
 import { LearnViewType } from '@/enums/LearnViewOptions';
+import { AnswerT } from '@/models/Answer';
 import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { createTrainingResult } from '@/utils/client/TrainingUtils';
+import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
 function ResultTable({ view }: { view: LearnViewType }) {
     const { dictionary } = useLocaleStore(state => state);
     const { allAnswers, flashcardSet, allFlashcards, direction } = useTrainingStore((state) => state);
     const { setView } = useTrainingStore((state) => state);
+    const router = useRouter();
     const allInfoObjects: TrainingResultForCard[] = createTrainingResult(allAnswers, allFlashcards);
     const columns = [dictionary.common.numberShortcut, dictionary.common.question, dictionary.common.answer, dictionary.common.correctAnswer, dictionary.common.correctAnswersPercent]
     useEffect(() => { setView(view) }, [view])
+
+    useEffect(() => { if (!flashcardSet?.flashcardSet) router.back() }, [flashcardSet])
 
     return (
         <>
@@ -43,17 +48,17 @@ function ResultTable({ view }: { view: LearnViewType }) {
         )
     }
 
-    function renderAnswersList(answers: any) {
+    function renderAnswersList(answers: AnswerT[]) {
         const tabToDisplay: any = [],
             length = answers.length;
-        answers.forEach((ans: any, index: number) => {
+        answers.forEach((ans, index) => {
             let isLast = length == index + 1;
             tabToDisplay.push(renderSingleAnswer(ans, isLast, index));
         });
         return tabToDisplay;
     }
 
-    function renderSingleAnswer(ans: any, isLast: boolean, index: number) {
+    function renderSingleAnswer(ans: AnswerT, isLast: boolean, index: number) {
         return (
             <span className={ans.isCorrect ? "" : "text-red-400"} key={index}>
                 {`${ans.givenAnswer}${isLast ? "" : ", "}`}

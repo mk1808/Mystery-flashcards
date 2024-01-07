@@ -48,7 +48,7 @@ function AnswerForm({ setIsValid, setWasChecked }: { setIsValid: (value: boolean
         } catch (errorResponse: any) { }
     };
     const onErrors = (errors: any) => { };
-    const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
+    const isValid = (name: string) => isFieldValid(name, formState);
     return (
         <form onSubmit={handleSubmit(onSubmit, onErrors)} id="answerForm">
             <MyInput

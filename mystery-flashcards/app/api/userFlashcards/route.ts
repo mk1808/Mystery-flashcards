@@ -1,3 +1,4 @@
+import { StatusType } from "@/enums/StatusOptions";
 import { UserT } from "@/models/User";
 import UserFlashcard, { UserFlashcardT } from "@/models/UserFlashcard";
 import { getUser } from "@/utils/server/authUtils";
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest) {
 }
 
 async function updateExistingUserFlashcard(existingUserFlashcard: UserFlashcardT, updatedUserFlashcard: UserFlashcardT) {
-    existingUserFlashcard.type = updatedUserFlashcard.type === "NONE" ? existingUserFlashcard.type : updatedUserFlashcard.type;
+    existingUserFlashcard.type = updatedUserFlashcard.type === StatusType.NONE ? existingUserFlashcard.type : updatedUserFlashcard.type;
     existingUserFlashcard.isFavorite = updatedUserFlashcard.isFavorite;
     return await UserFlashcard.findOneAndReplace({ _id: existingUserFlashcard._id }, existingUserFlashcard, { new: true });
 }

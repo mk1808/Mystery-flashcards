@@ -77,7 +77,7 @@ function Footer() {
         },
     ]
 
-    const changeLanguage = (lang: any) => {
+    const changeLanguage = (lang: string) => {
         router.push(pathname.replace(locale, lang));
     }
 

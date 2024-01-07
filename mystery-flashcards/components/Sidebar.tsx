@@ -23,11 +23,17 @@ function Sidebar({ children, drawerContent }: any) {
     function renderContent() {
         return (
             <div className="drawer-content flex flex-col items-center justify-start pt-10 ">
-                <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden mb-5">{dictionary.common.openSidebar}</label>
+                {renderLabel()}
                 <div className='w-full px-5 sidebarOpen:w-[1000px]'>
                     {children}
                 </div>
             </div>
+        )
+    }
+
+    function renderLabel() {
+        return dictionary.common.openSidebar && (
+            <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden mb-5">{dictionary.common.openSidebar}</label>
         )
     }
 

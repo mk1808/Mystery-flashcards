@@ -8,7 +8,7 @@ function ProvideLocale({
     dictionary
 }: {
     locale: string
-    dictionary: any
+    dictionary: Dictionary
 }) {
     const { setDictionary, setLocale } = useLocaleStore(state => state);
 

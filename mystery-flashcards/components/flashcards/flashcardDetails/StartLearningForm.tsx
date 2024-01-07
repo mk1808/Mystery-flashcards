@@ -1,6 +1,7 @@
 "use client"
 import MyRadioInputButton from '@/components/common/form/MyRadioInputButton';
 import { DirectionOptions } from '@/enums/DirectionOptions';
+import { LearnViewOptions } from '@/enums/LearnViewOptions';
 import { FlashcardSetT } from '@/models/FlashcardSet';
 import useLocaleStore from '@/stores/useLocaleStore';
 import { isFieldValid } from '@/utils/client/FormUtils';
@@ -24,12 +25,12 @@ function StartLearningForm({ flashcardSet }: { flashcardSet: FlashcardSetT }) {
         formState
     } = useForm<ChooseLearnTypeForm>({ mode: 'onBlur' });
 
-    const onSubmit = async (data: ChooseLearnTypeForm, e: any) => {
-        const path = data.type === "TEST" ? `/${locale}/learn/test/${flashcardSet._id}` : `/${locale}/learn/training/${flashcardSet._id}`;
-        router.push(path + `?${createPathParams({ direction: data.direction })}`)
-    };
     const onErrors = (errors: any) => { };
     const isValid = (name: string) => isFieldValid(name, formState, getFieldState);
+    const onSubmit = async (data: ChooseLearnTypeForm, e: any) => {
+        const learnType = data.type === LearnViewOptions.TEST ? "test" : "training";
+        router.push(`/${locale}/learn/${learnType}/${flashcardSet._id}?${createPathParams({ direction: data.direction })}`)
+    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit, onErrors)} id="chooseLearnTypeForm">

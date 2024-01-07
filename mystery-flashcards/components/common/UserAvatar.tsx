@@ -13,7 +13,7 @@ function UserAvatar(
     }: {
         currentUser: UserT,
         alt: string,
-        className?: any,
+        className?: string,
         width?: number,
         height?: number,
         imgClassName?: string

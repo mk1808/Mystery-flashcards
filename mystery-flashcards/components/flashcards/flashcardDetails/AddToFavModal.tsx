@@ -13,13 +13,16 @@ function AddToFavModal({ flashcardSet, userFlashcard }: { flashcardSet: Flashcar
     const { dictionary } = useLocaleStore(state => state);
     const isFav = userFlashcard?.isFavorite;
 
-    return <Modal modalTrigger={renderDialogTrigger()}
-        dialogHeader={renderDialogHeader()}
-        dialogContent={renderDialogContent()}
-        dialogActions={<AddToFavActions flashcardSet={flashcardSet} />}
-        width="xl:w-5/12 sm:w-[600px]"
-        disabled={isFav}
-    />
+    return (
+        <Modal
+            modalTrigger={renderDialogTrigger()}
+            dialogHeader={renderDialogHeader()}
+            dialogContent={renderDialogContent()}
+            dialogActions={renderDialogActions()}
+            width="xl:w-5/12 sm:w-[600px]"
+            disabled={isFav}
+        />
+    )
 
     function renderDialogTrigger() {
         return (
@@ -37,6 +40,10 @@ function AddToFavModal({ flashcardSet, userFlashcard }: { flashcardSet: Flashcar
 
     function renderDialogContent() {
         return <AddToFavContent flashcardSet={flashcardSet} />
+    }
+
+    function renderDialogActions() {
+        return <AddToFavActions flashcardSet={flashcardSet} />
     }
 }
 

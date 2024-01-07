@@ -10,19 +10,21 @@ import { FlashcardSetT } from '@/models/FlashcardSet';
 
 function AddWantToLearnModal({ flashcardSet, userFlashcard }: { flashcardSet: FlashcardSetT, userFlashcard: UserFlashcardT }) {
     const { dictionary } = useLocaleStore(state => state);
-    return <Modal modalTrigger={renderDialogTrigger()}
-        dialogHeader={renderDialogHeader()}
-        dialogContent={renderDialogContent()}
-        dialogActions={<AddWantToLearnActions flashcardSet={flashcardSet} userFlashcard={userFlashcard} />}
-        width="xl:w-5/12 sm:w-[600px]"
-    />
+
+    return (
+        <Modal
+            modalTrigger={renderDialogTrigger()}
+            dialogHeader={renderDialogHeader()}
+            dialogContent={renderDialogContent()}
+            dialogActions={renderDialogActions()}
+            width="xl:w-5/12 sm:w-[600px]"
+        />
+    )
 
     function renderDialogTrigger() {
         return (
             <div className="tooltip tooltip-bottom" id="addWantToLearn" data-tip={dictionary.common.wantToLearnTitle}>
-                <button className="btn btn-primary px-10 ml-2">
-                    <FolderPlusIcon className="h-6 w-6" />
-                </button>
+                <button className="btn btn-primary px-10 ml-2"> <FolderPlusIcon className="h-6 w-6" /> </button>
             </div>
         )
     }
@@ -33,6 +35,10 @@ function AddWantToLearnModal({ flashcardSet, userFlashcard }: { flashcardSet: Fl
 
     function renderDialogContent() {
         return <AddWantToLearnContent flashcardSet={flashcardSet} />
+    }
+
+    function renderDialogActions() {
+        return <AddWantToLearnActions flashcardSet={flashcardSet} userFlashcard={userFlashcard} />
     }
 }
 

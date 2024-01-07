@@ -1,11 +1,10 @@
 "use client"
-import { AlertType } from '@/enums/AlertType'
+import { StatusType } from '@/enums/StatusOptions'
+import useAlert from '@/hooks/useAlert'
 import { FlashcardSetT } from '@/models/FlashcardSet'
 import { UserFlashcardT } from '@/models/UserFlashcard'
-import useAlertStore from '@/stores/useAlertStore'
 import useLocaleStore from '@/stores/useLocaleStore'
 import { postUserFlashcardSet } from '@/utils/client/ApiUtils'
-import { getNestedFieldByPath } from '@/utils/server/objectUtils'
 import React from 'react'
 
 const emptyHeart = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -18,24 +17,28 @@ const fullHeart = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" f
 
 function AddToFavActions({ flashcardSet }: { flashcardSet: FlashcardSetT }) {
     const { dictionary } = useLocaleStore(state => state);
-    const addAlert = useAlertStore((state) => state.add)
-    const onSubmit = async () => {
+    const { addErrorAlert, addSuccessAlert } = useAlert();
+
+    async function onSubmit() {
         const body: UserFlashcardT = {
             flashcardSetId: flashcardSet._id,
-            type: "NONE",
+            type: StatusType.NONE,
             isFavorite: true
         }
         try {
-            const response = await postUserFlashcardSet(body);
-            document.getElementById("addToFavTrigger")!.innerHTML = response.isFavorite ? fullHeart : emptyHeart;
-            document.getElementById("addToFavTooltip")!.setAttribute("data-tip", dictionary.common.alreadyInFavorites);
-
-            addAlert({ type: AlertType.success, title: dictionary.common.addToFavSuccess })
+            updateTrigger(await postUserFlashcardSet(body));
+            addSuccessAlert(dictionary.common.addToFavSuccess);
         } catch (errorResponse: any) {
-            addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
+            addErrorAlert(errorResponse.body.message)
         }
-
     }
+
+    function updateTrigger(response: UserFlashcardT) {
+        const addToFavTrigger = document.getElementById("addToFavTrigger")!
+        addToFavTrigger.innerHTML = response.isFavorite ? fullHeart : emptyHeart;
+        addToFavTrigger.setAttribute("data-tip", dictionary.common.alreadyInFavorites);
+    }
+
     return (
         <>
             <button className="btn ml-3">{dictionary.common.close}</button>

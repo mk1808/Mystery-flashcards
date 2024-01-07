@@ -5,7 +5,7 @@ import { getAllIndexes } from "../server/arrayUtils";
 import { getPercentDisplay } from "./MathUtils";
 import { DirectionOptions, DirectionType } from "@/enums/DirectionOptions";
 
-export const updateAnswer = (answerForm: AnswerForm, flashcard: any, isValid: boolean): AnswerT => ({
+export const updateAnswer = (answerForm: AnswerForm, flashcard: FlashcardT, isValid: boolean): AnswerT => ({
     flashcardId: flashcard._id,
     isCorrect: isValid,
     givenAnswer: answerForm.givenAnswer
@@ -33,7 +33,7 @@ export const getUpdatedAnswerInfo = (currentFlashcard: FlashcardT, answer: Answe
     return { isValid, updatedAnswer, updatedResult }
 }
 
-export const getMainButtonAttrs = (wasChecked: boolean, dictionary: any): ButtonAttrs => {
+export const getMainButtonAttrs = (wasChecked: boolean, dictionary: Dictionary): ButtonAttrs => {
     const commonAttrs = { form: "answerForm" },
         title = wasChecked ? dictionary.common.continue : dictionary.common.confirmAnswer;
     return { ...commonAttrs, title: title, type: "submit" }
@@ -41,24 +41,24 @@ export const getMainButtonAttrs = (wasChecked: boolean, dictionary: any): Button
 
 const getResults = (userAnswers: (string | undefined)[], userAnswersValidity: boolean[]) => {
     const allAnswersNumber = userAnswers.length,
-        correctAnswersNumber = userAnswersValidity.filter((ans: any) => ans).length,
+        correctAnswersNumber = userAnswersValidity.filter((ans) => ans).length,
         percent = getPercentDisplay(correctAnswersNumber, allAnswersNumber);
     return { allAnswersNumber, correctAnswersNumber, percent };
 }
 
-export function createTrainingResult(allAnswers: AnswerT[], allFlashcards: FlashcardT[]):TrainingResultForCard[] {
-    const flashcardsIds = allFlashcards.map((card: any) => card._id),
+export function createTrainingResult(allAnswers: AnswerT[], allFlashcards: FlashcardT[]): TrainingResultForCard[] {
+    const flashcardsIds = allFlashcards.map((card) => card._id),
         uniqueIds = [...new Set(flashcardsIds)],
-        allInfoObjects: any = [];
+        allInfoObjects: TrainingResultForCard[] = [];
 
-    uniqueIds.forEach((id: any) => {
+    uniqueIds.forEach((id) => {
         const indexes = getAllIndexes(flashcardsIds, id),
             firstId = indexes[0],
             flashcard = allFlashcards[firstId],
-            answers: any = [],
+            answers: AnswerT[] = [],
             userAnswers: (string | undefined)[] = [],
             userAnswersValidity: boolean[] = [];
-        indexes.forEach((id: any) => {
+        indexes.forEach((id) => {
             const currentAnswer = allAnswers[id];
             answers.push(currentAnswer);
             userAnswers.push(currentAnswer.givenAnswer);

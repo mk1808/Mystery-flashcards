@@ -43,7 +43,7 @@ function MyMultiSelect({
         rules: { required, validate: validate },
     });
 
-    const [selected, setSelected] = useState<any[]>([])
+    const [selected, setSelected] = useState<Option[]>([])
     const [searchTextValue, setSearchTextValue] = useState<string>("")
 
     const optionDropdown = useRef<any>(null);
@@ -51,10 +51,10 @@ function MyMultiSelect({
     const inputContainer = useRef<any>(null);
 
     const stopPropagation = (event: any) => event.stopPropagation()
-    const onSelect = (option: any) => setSelected(selected => [...selected, option]);
-    const onDeselect = (option: any) => setSelected(selected => excludeFromArray([...selected], option, "value"));
+    const onSelect = (option: Option) => setSelected(selected => [...selected, option]);
+    const onDeselect = (option: Option) => setSelected(selected => excludeFromArray([...selected], option, "value"));
     const onSearchTextChange = (event: any) => setSearchTextValue(event.target.value);
-    const showOption = (optionLabel: any) => optionLabel?.toLowerCase().includes(searchTextValue.trim().toLowerCase());
+    const showOption = (optionLabel: string) => optionLabel?.toLowerCase().includes(searchTextValue.trim().toLowerCase());
     const getVisibleClass = (show: boolean) => show ? "visible" : "hidden";
     const focusSearchInput = () => optionSearchInput.current.focus();
     const getDisabled = () => ({ disabled });
@@ -123,7 +123,7 @@ function MyMultiSelect({
     }
 
     function onCheckboxChange(event: any) {
-        const option = options.find(option => option.value === event.target.value);
+        const option = options.find(option => option.value === event.target.value)!;
         if (event.target.checked) {
             onSelect(option);
         } else {
@@ -133,7 +133,7 @@ function MyMultiSelect({
         field.onBlur();
     }
 
-    function onClickOption(option: any) {
+    function onClickOption(option: Option) {
         if (multiple) {
             return;
         }
@@ -280,7 +280,7 @@ function MyMultiSelect({
         )
     }
 
-    function renderOption(option: { value: any, label: string }) {
+    function renderOption(option: Option) {
         const visibleClass = getVisibleClass(showOption(option.label));
         return (
             <label className={`label cursor-pointer justify-start hover:bg-gray-100 duration-150 select-option ${visibleClass}`} key={option.value} onClick={() => onClickOption(option)}>

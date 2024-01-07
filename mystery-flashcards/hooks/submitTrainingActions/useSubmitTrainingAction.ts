@@ -1,22 +1,18 @@
-import { AlertType } from '@/enums/AlertType';
-import useAlertStore from '@/stores/useAlertStore';
 import useLocaleStore from '@/stores/useLocaleStore';
 import useTrainingStore from '@/stores/useTrainingStore';
 import { patchAnswersAndReturnResults } from '@/utils/client/ApiUtils';
 import { getMainButtonAttrs } from '@/utils/client/TrainingUtils';
-import { getNestedFieldByPath } from '@/utils/server/objectUtils';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react'
+import useAlert from '../useAlert';
 
 function useSubmitTrainingAction(): MainAndOtherButton {
     const { dictionary, locale } = useLocaleStore(state => state);
     const { wasChecked, roundAnswers, flashcardSet: { flashcardSet } } = useTrainingStore((state) => state);
     const { setFinalResult } = useTrainingStore((state) => state);
-    const addAlert = useAlertStore((state) => state.add)
+    const { addErrorAlert } = useAlert()
     const router = useRouter();
 
-    const wasCheckedRef = useRef<any>(null)
-    wasCheckedRef.current = wasChecked;
     const flashcardSetRef = useRef<any>(null)
     flashcardSetRef.current = flashcardSet;
     const roundAnswersRef = useRef<any>(null)
@@ -29,11 +25,11 @@ function useSubmitTrainingAction(): MainAndOtherButton {
             setFinalResult(result);
             goToResults();
         } catch (errorResponse: any) {
-            addAlert({ type: AlertType.error, title: getNestedFieldByPath(dictionary, errorResponse.body.message) })
-        }
+            addErrorAlert(errorResponse.body.message);
+        }   
     }
-
-    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(wasCheckedRef.current, dictionary);
+    
+    const mainButtonAttrs: ButtonAttrs = getMainButtonAttrs(wasChecked, dictionary);
     const otherButtonAttrs: ButtonAttrs = {
         title: dictionary.common.endLearning,
         onClick: onFinishClick

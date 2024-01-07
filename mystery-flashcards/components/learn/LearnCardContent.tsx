@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 
 function LearnCardContent({ questionSide, answerSide }: { questionSide: ReactNode, answerSide: ReactNode }) {
     return (
-        <div className="grid sm:grid-cols-2 h-full">
+        <div className="flex-1 grid sm:grid-cols-2 h-full">
             <div className='grid grid-rows-2'>
                 {questionSide}
             </div>

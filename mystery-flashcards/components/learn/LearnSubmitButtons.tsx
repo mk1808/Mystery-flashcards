@@ -4,7 +4,6 @@ import React from 'react'
 
 function LearnSubmitButtons() {
     const { mainButtonAttrs, otherButtonAttrs } = useSubmitLearnActions()
-
     return (
         <div className='flex flex-row gap-2 md:gap-36 mt-12 items-center'>
             <button

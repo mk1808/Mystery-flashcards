@@ -4,7 +4,6 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useForm } from 'react-hook-form';
 import { isFieldValid } from "@/utils/client/FormUtils";
-import useAlertStore from '@/stores/useAlertStore';
 import MyInput from '@/components/common/form/MyInput';
 import MyMultiSelect from '@/components/common/form/MyMultiSelect';
 import { LangOptions } from '@/enums/LangOptions';
@@ -86,7 +85,7 @@ function FlashcardSetsFilters({ search }: { search: (data: FlashcardSearchDto) =
             renderSelect(SearchParams.STATUS, dictionary.common.status, dictionary.common.fillStatus, statusesOptions, true, statusFieldRefresh);
     }
 
-    function renderSelect(name: any, label: string, noValueLabel: string, options: any[], multiple = false, refresh?: number) {
+    function renderSelect(name: string, label: string, noValueLabel: string, options: Option[], multiple = false, refresh?: number) {
         return (
             <div className='mx-2'>
                 <MyMultiSelect

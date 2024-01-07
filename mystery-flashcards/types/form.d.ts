@@ -14,7 +14,7 @@ interface NewFlashcardSetForm {
     name: string,
     level: string,
     hashtags: string[],
-    flashcards: string,
+    flashcards: FlashcardsForm[],
     isPublic: boolean,
     lang1: string,
     lang2: string

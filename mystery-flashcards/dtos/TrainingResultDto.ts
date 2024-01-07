@@ -1,7 +1,8 @@
+import { UserT } from "@/models/User";
 import { UserFlashcardT } from "@/models/UserFlashcard";
 
 export interface TrainingResultDto {
-    userWithPoints?: any,
+    userWithPoints?: UserT,
     updatedUserFlashcard?: UserFlashcardT
-    newPoints?: any
+    newPoints?: number
 };
